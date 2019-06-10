@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package ethereum.eth.v1;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "protoc-gen-swagger/options/annotations.proto";
+
+option csharp_namespace = "Ethereum.Eth.V1";
+option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1;eth";
+option java_multiple_files = true;
+option java_outer_classname = "ExampleProto";
+option java_package = "org.ethereum.eth.v1";
+option php_namespace = "Ethereum\\Eth\\V1";
+
+service HelloService {
+	rpc SayHello(Hello) returns (Hello);
+}
+
+// Hello is a hello.
+message Hello {
+  int64 hello = 1;
+}
