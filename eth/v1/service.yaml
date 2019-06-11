@@ -1,0 +1,9 @@
+
+type: google.api.Service
+config_version: 3
+
+# gRPC gateway uses google/api/http.proto.
+http:
+  rules:
+  - selector: ethereum.eth.v1.HelloService.SayHello
+    get: "/v1/eth/hello"

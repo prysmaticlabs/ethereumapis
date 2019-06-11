@@ -4,13 +4,15 @@
 
 proto_library(
     name = "ethereum_eth_v1_proto",
-    srcs = ["example.proto"],
+    srcs = [
+        "example.proto",
+        "swagger.proto",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_proto",
         "@com_google_protobuf//:empty_proto",
         "@com_google_protobuf//:timestamp_proto",
-        "@go_googleapis//google/api:annotations_proto",
     ],
 )
 
@@ -28,7 +30,6 @@ go_proto_library(
     proto = ":ethereum_eth_v1_proto",
     visibility = ["//visibility:public"],
     deps = [
-        "@go_googleapis//google/api:annotations_go_proto",
         "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_go_proto",
     ],
 )
@@ -41,7 +42,7 @@ go_library(
 )
 
 ##############################################################################
-# OpenAPI (Swagger)
+# OpenAPI (Swagger) V2
 ##############################################################################
 load("@grpc_ecosystem_grpc_gateway//protoc-gen-swagger:defs.bzl", "protoc_gen_swagger")
 
@@ -49,4 +50,6 @@ protoc_gen_swagger(
     name = "swagger",
     proto = ":ethereum_eth_v1_proto",
     visibility = ["//visibility:public"],
+    grpc_api_configuration = ":service.yaml",
+    allow_merge = True,
 )
