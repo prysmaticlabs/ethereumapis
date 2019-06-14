@@ -22,16 +22,18 @@ option java_outer_classname = "AttestationProto";
 option java_package = "org.ethereum.eth.v1alpha1";
 option php_namespace = "Ethereum\\Eth\\v1alpha1";
 
-// TODO: Add field comments.
-
 message Attestation {
-  // TODO: ?
-  bytes aggregate_bitfield = 1;
+  // A bitfield representation of validator indicies that have voted exactly
+  // the same vote and have been aggregated into this attestation.
+  bytes aggregation_bitfield = 1;
 
   AttestationData data = 2; 
 
-  // TODO: ?
-  bytes custody_bitfield = 3;
+  // Not used in phase 0.
+  // 
+  // TODO: Add custody bitfield information.
+  // bytes custody_bitfield = 3;
+  reserved 3;
 
   // 96 byte BLS aggregate signature.
   bytes signature = 4;
@@ -41,25 +43,33 @@ message AttestationData {
   // 32 byte hash of the LMD GHOST block vote.
   bytes block_root = 1;
 
-  // TODO: define these FFG related fields.
+  // A recent justified epoch.
   uint64 source_epoch = 2;
 
-  bytes source_root = 3; // 32bytes
+  // The 32 byte hash of the state at the source epoch.
+  bytes source_root = 3;
 
+  // The epoch this attestation is targeting.
   uint64 target_epoch = 4;
 
-  bytes target_root = 5; //32bytes
+  // The 32 byte hash of the block that this attestation considers as the head
+  // of the beacon chain.
+  bytes target_root = 5; 
 
   // Crosslink voted by this attestation.
   Crosslink crosslink = 6;
 }
 
 message Crosslink {
-  // TODO: ?
+  // The shard that crosslinks to the beacon chain.
   uint64 shard = 1;
 
-  // TODO: ?
+  // Start epoch must match the parent crosslink's end epoch.
   uint64 start_epoch = 2;
+
+  // Ending epoch for this crosslink period. This field matches the attestation
+  // target epoch or the start epoch + MAX_EPOCHS_PER_CROSSLINK, whichever is
+  // less. 
   uint64 end_epoch = 3;
 
   // 32 byte hash of the parent crosslink.
