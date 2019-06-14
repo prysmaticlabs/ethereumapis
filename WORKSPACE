@@ -28,14 +28,12 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 
 gazelle_dependencies()
 
-# go_repository(
-#     name = "grpc_ecosystem_grpc_gateway",
-#     commit = "8fd5fd9d19ce68183a6b0934519dfe7fe6269612",  # v1.9.0
-#     importpath = "github.com/grpc-ecosystem/grpc-gateway",
-# )
-local_repository(
+go_repository(
     name = "grpc_ecosystem_grpc_gateway",
-    path = "/tmp/grpc-gateway",
+    commit = "bd773d8bfeb7b9bb60978103ab1ba73591790dad",
+    importpath = "github.com/grpc-ecosystem/grpc-gateway",
+    remote = "https://github.com/prestonvanloon/grpc-gateway",
+    vcs = "git",
 )
 
 go_repository(

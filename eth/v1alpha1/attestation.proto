@@ -39,6 +39,8 @@ message Attestation {
   bytes signature = 4;
 }
 
+// Attestation data includes information on Casper FFG vote.
+// See: https://arxiv.org/pdf/1710.09437.pdf
 message AttestationData {
   // 32 byte hash of the LMD GHOST block vote.
   bytes block_root = 1;
