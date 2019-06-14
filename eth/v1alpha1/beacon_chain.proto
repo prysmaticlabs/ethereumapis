@@ -1,0 +1,261 @@
+// Copyright 2019 Prysmatic Labs.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+syntax = "proto3";
+
+package ethereum.eth.v1alpha1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+import "eth/v1alpha1/attestation.proto";
+import "eth/v1alpha1/block.proto";
+import "eth/v1alpha1/state.proto";
+
+option csharp_namespace = "Ethereum.Eth.v1alpha1";
+option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1;eth";
+option java_multiple_files = true;
+option java_outer_classname = "BeaconChainProto";
+option java_package = "org.ethereum.eth.v1alpha1";
+option php_namespace = "Ethereum\\Eth\\v1alpha1";
+
+// Beacon chain API
+//
+// The beacon chain API can be used to access data relevant to the Ethereum 2.0
+// phase 0 beacon chain.
+service BeaconChain {
+    // TODO(preston): Batch requests?
+
+    // Retrieve attestations by block hash, slot, or epoch. The server may
+    // return an empty list when no attestations match the given filter
+    // criteria. This RPC should not return NOT_FOUND. Only one filter criteria
+    // should be used.
+    rpc GetAttestations(GetAttestationsRequest) returns (GetAttestationsResponse) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/attestations"
+        };
+    }
+
+    // Retrieve blocks by hash, slot, or epoch. The server may return multiple
+    // blocks in the case that a slot or epoch is provided as the filter
+    // criteria. The server may return an empty list when no blocks in their
+    // database match the filter criteria. This RPC should not return NOT_FOUND.
+    // Only one filter criteria should be used.
+    rpc GetBlocks(GetBlockRequest) returns (GetBlockResponse) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/blocks"
+        };
+    }
+
+    // Retrieve information about the head of the beacon chain from the view of
+    // the beacon chain node. This includes the head block slot and hash as well
+    // as information about the most recent finalized and justified slots.
+    rpc GetChainHead(google.protobuf.Empty) returns (ChainHead) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/chainhead"
+        };
+    }
+
+    // Retrieve the entire state of the beacon chain from the state root, slot,
+    // or epoch. This is considered an expensive RPC request and may not be 
+    // enabled by all beacon chain nodes. If more than one state exist at the 
+    // given slot or epoch, then the server will return the canonical state.
+    rpc GetState(GetStateRequest) returns (BeaconState) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/state"
+        };
+    }
+
+    // Retrieve validator balance for a given set of public keys at a specific 
+    // epoch in time.
+    rpc GetValidatorBalances(GetValidatorBalancesRequest) returns (ValidatorBalances) { 
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator/balances"
+        };
+    }
+
+    // Retrieve the current list of active validators. The request may include
+    // an optional historical epoch to retrieve a specific validator set in 
+    // time.
+    rpc GetValidators(GetValidatorsRequest) returns (Validators) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validators"
+        };
+    }
+
+    // Retrieve the active set changes for a given epoch. This data includes 
+    // any activations, voluntary exits, and involuntary ejections.
+    rpc GetValidatorActiveSetChanges(GetValidatorActiveSetChangesRequest) returns (ActiveSetChanges) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator/activesetchanges"
+        };
+    }
+
+    // Retrieve the current validator queue information.
+    rpc GetValidatorQueue(google.protobuf.Empty) returns (ValidatorQueue) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator/queue"
+        };
+    }
+}
+
+// Request for attestations.
+message GetAttestationsRequest {
+    // TODO(preston): Test oneof with gRPC gateway.
+
+    oneof query_filter {
+        // Filter attestations by a specific block hash.
+        bytes block_hash = 1;
+
+        // Filter attestations by slot number.
+        uint64 slot = 2;
+
+        // Filter attestions by epoch number.
+        uint64 epoch = 3;
+    }
+}
+
+message GetAttestationsResponse {
+    repeated Attestation attestations = 1;
+}
+
+message GetBlockRequest {
+    oneof query_filter {
+        // Block hash to return a single block.
+        bytes hash = 1;
+
+        // Slot to lookup a block. If the slot is not yet finalized, this
+        // criteria may yield multiple valid blocks if the node has seen blocks
+        // from another fork. 
+        uint64 slot = 2; 
+
+        // Epoch to lookup blocks. This method may return multiple blocks for a 
+        // slot if the epoch has not been finalized and the node has seen blocks
+        // from another fork.
+        uint64 epoch = 3;
+    }
+}
+
+message GetBlockResponse {
+    repeated Block blocks = 1;
+}
+
+// Information about the head of the beacon chain.
+message ChainHead {
+    // Block hash of the canonical head block in the beacon node.
+    bytes block_hash = 1;
+
+    // Slot of the head block.
+    uint64 block_slot = 2;
+
+    // Most recent finalized slot.
+    uint64 finalized_slot = 3;
+    
+    // Most recent finalized block hash.
+    bytes finalized_block_hash = 4;
+
+    // Most recent justified slot.
+    uint64 justified_slot = 5;
+
+    // Most recent justified block hash.
+    bytes justified_block_hash = 6;
+
+    // Previous justified slot.
+    uint64 previous_justified_slot = 7;
+
+    // Previous justified block hash.
+    bytes previous_justified_block_hash = 8;
+}
+
+message GetStateRequest {
+    oneof query_filter {
+        
+        bytes state_root = 1;
+
+        uint64 slot = 2; 
+
+        uint64 epoch = 3;
+    }
+}
+
+message GetValidatorBalancesRequest {
+    
+    uint64 epoch = 1;
+
+    repeated bytes public_keys = 2;
+}
+
+message ValidatorBalances {
+    message Balance {
+        bytes public_key = 1;
+
+        uint64 balance = 2;
+    }
+
+    repeated Balance balances = 1;
+}
+
+message GetValidatorsRequest {
+    // TODO(preston): Does this field actually require one of these filter?
+    oneof query_filter {
+        // Optional criteria to retrieve validators at a specific epoch. Omitting
+        // this field or setting it to zero will retrieve a response  with the
+        // current active validator set.
+        uint64 epoch = 1;
+
+        // Optional criteria to retrieve the genesis set of validators.
+        bool genesis = 2;
+    }
+}
+
+message Validators {
+    // Epoch which the state was considered to determine the active validator 
+    // set. This field is not optional. Zero value epoch indicates the validator
+    // set is from the Ethereum 2.0 genesis set.
+    uint64 epoch = 1;
+
+    // TODO: Add repeated validators.
+}
+
+
+message GetValidatorActiveSetChangesRequest {
+    uint64 epoch = 1;
+}
+
+message ActiveSetChanges {
+    // Epoch which the state was considered to determine the active validator 
+    // set. 
+    uint64 epoch = 1;
+
+    // Validator public keys that have been activated in this epoch.
+    repeated bytes activated_public_keys = 2;
+
+    // Validator public keys that have been voluntarily exited in this epoch.
+    repeated bytes exited_public_keys = 3;
+
+    // Validator public keys that have been involuntarily ejected in this epoch.
+    repeated bytes ejected_public_keys = 4;
+}
+
+message ValidatorQueue {
+    // TODO: Churn rate
+    uint64 churn_rate = 1;
+
+    // Ordered list of public keys awaiting activation. 0th index is the next 
+    // key to be processed.
+    repeated bytes activation_public_keys = 2;
+
+    // Ordered list of public keys awaiting exit. 0th index is the next key to
+    // be processed.
+    repeated bytes exit_public_keys = 3;
+}

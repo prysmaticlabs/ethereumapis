@@ -1,0 +1,70 @@
+// Copyright 2019 Prysmatic Labs.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+syntax = "proto3";
+
+package ethereum.eth.v1alpha1;
+
+option csharp_namespace = "Ethereum.Eth.v1alpha1";
+option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1;eth";
+option java_multiple_files = true;
+option java_outer_classname = "AttestationProto";
+option java_package = "org.ethereum.eth.v1alpha1";
+option php_namespace = "Ethereum\\Eth\\v1alpha1";
+
+// TODO: Add field comments.
+
+message Attestation {
+  // TODO: ?
+  bytes aggregate_bitfield = 1;
+
+  AttestationData data = 2; 
+
+  // TODO: ?
+  bytes custody_bitfield = 3;
+
+  // 96 byte BLS aggregate signature.
+  bytes signature = 4;
+}
+
+message AttestationData {
+  // 32 byte hash of the LMD GHOST block vote.
+  bytes block_root = 1;
+
+  // TODO: define these FFG related fields.
+  uint64 source_epoch = 2;
+
+  bytes source_root = 3; // 32bytes
+
+  uint64 target_epoch = 4;
+
+  bytes target_root = 5; //32bytes
+
+  // Crosslink voted by this attestation.
+  Crosslink crosslink = 6;
+}
+
+message Crosslink {
+  // TODO: ?
+  uint64 shard = 1;
+
+  // TODO: ?
+  uint64 start_epoch = 2;
+  uint64 end_epoch = 3;
+
+  // 32 byte hash of the parent crosslink.
+  bytes parent_root = 4;
+
+  // 32 byte hash of the crosslinked shard data since the previous crosslink.
+  bytes data_root = 5;
+}
