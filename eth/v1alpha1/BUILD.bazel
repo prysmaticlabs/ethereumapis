@@ -9,8 +9,8 @@ proto_library(
         "beacon_chain.proto",
         "block.proto",
         "node.proto",
-        "state.proto",
         "swagger.proto",
+        "validator.proto",
     ],
     visibility = ["//visibility:public"],
     deps = [

@@ -26,19 +26,15 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
     info: {
         title: "Ethereum 2.0 APIs";
         version: "v1alpha1";
-        contact: {
-            name: "Prysmatic Labs";
-            url: "https://prysmaticlabs.com";
-        };
         license: {
-            name: "Apache 2.0";
+            name: "Licenced under Apache 2.0";
             url: "http://www.apache.org/licenses/LICENSE-2.0";
         };
-        description: "API services provided by Prysm."
+        description: "Ethereum 2.0 APIs. TODO: Add a full description with GFM.";
     };
     external_docs: {
-        url: "https://github.com/prysmaticlabs/prysm";
-        description : "Prysm Github";
+        url: "https://github.com/ethereum/eth2.0-specs";
+        description : "Ethereum 2.0 Specification on Github";
     };
     host: "api.prylabs.net",
     schemes: HTTPS;

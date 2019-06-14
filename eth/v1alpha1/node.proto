@@ -52,8 +52,9 @@ service Node {
         };
     }
 
-    // Retrieve the list of services implemented and enabled by this node. Any 
-    // service not present in this list may return UNIMPLEMENTED or 
+    // Retrieve the list of services implemented and enabled by this node. 
+    // 
+    // Any service not present in this list may return UNIMPLEMENTED or 
     // PERMISSION_DENIED. The server may also support fetching services by grpc 
     // reflection. 
     rpc GetImplementedServices(google.protobuf.Empty) returns (ImplementedServices) {

@@ -20,7 +20,7 @@ import "google/protobuf/empty.proto";
 
 import "eth/v1alpha1/attestation.proto";
 import "eth/v1alpha1/block.proto";
-import "eth/v1alpha1/state.proto";
+import "eth/v1alpha1/validator.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1alpha1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1;eth";
@@ -36,21 +36,23 @@ option php_namespace = "Ethereum\\Eth\\v1alpha1";
 service BeaconChain {
     // TODO(preston): Batch requests?
 
-    // Retrieve attestations by block hash, slot, or epoch. The server may
-    // return an empty list when no attestations match the given filter
-    // criteria. This RPC should not return NOT_FOUND. Only one filter criteria
-    // should be used.
+    // Retrieve attestations by block hash, slot, or epoch. 
+    // 
+    // The server may return an empty list when no attestations match the given 
+    // filter criteria. This RPC should not return NOT_FOUND. Only one filter 
+    // criteria should be used.
     rpc GetAttestations(GetAttestationsRequest) returns (GetAttestationsResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/attestations"
         };
     }
 
-    // Retrieve blocks by hash, slot, or epoch. The server may return multiple
-    // blocks in the case that a slot or epoch is provided as the filter
-    // criteria. The server may return an empty list when no blocks in their
-    // database match the filter criteria. This RPC should not return NOT_FOUND.
-    // Only one filter criteria should be used.
+    // Retrieve blocks by hash, slot, or epoch. 
+    // 
+    // The server may return multiple blocks in the case that a slot or epoch is
+    // provided as the filter criteria. The server may return an empty list when
+    // no blocks in their database match the filter criteria. This RPC should 
+    // not return NOT_FOUND. Only one filter criteria should be used.
     rpc GetBlocks(GetBlockRequest) returns (GetBlockResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/blocks"
@@ -58,21 +60,13 @@ service BeaconChain {
     }
 
     // Retrieve information about the head of the beacon chain from the view of
-    // the beacon chain node. This includes the head block slot and hash as well
-    // as information about the most recent finalized and justified slots.
+    // the beacon chain node. 
+    // 
+    // This includes the head block slot and hash as well as information about
+    // the most recent finalized and justified slots.
     rpc GetChainHead(google.protobuf.Empty) returns (ChainHead) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/chainhead"
-        };
-    }
-
-    // Retrieve the entire state of the beacon chain from the state root, slot,
-    // or epoch. This is considered an expensive RPC request and may not be 
-    // enabled by all beacon chain nodes. If more than one state exist at the 
-    // given slot or epoch, then the server will return the canonical state.
-    rpc GetState(GetStateRequest) returns (BeaconState) {
-        option (google.api.http) = {
-            get: "/eth/v1alpha1/beacon/state"
         };
     }
 
@@ -84,17 +78,20 @@ service BeaconChain {
         };
     }
 
-    // Retrieve the current list of active validators. The request may include
-    // an optional historical epoch to retrieve a specific validator set in 
-    // time.
+    // Retrieve the current list of active validators. 
+    //
+    // The request may include an optional historical epoch to retrieve a 
+    // specific validator set in time.
     rpc GetValidators(GetValidatorsRequest) returns (Validators) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validators"
         };
     }
 
-    // Retrieve the active set changes for a given epoch. This data includes 
-    // any activations, voluntary exits, and involuntary ejections.
+    // Retrieve the active set changes for a given epoch. 
+    // 
+    // This data includes any activations, voluntary exits, and involuntary
+    // ejections.
     rpc GetValidatorActiveSetChanges(GetValidatorActiveSetChangesRequest) returns (ActiveSetChanges) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validator/activesetchanges"
@@ -224,7 +221,7 @@ message Validators {
     // set is from the Ethereum 2.0 genesis set.
     uint64 epoch = 1;
 
-    // TODO: Add repeated validators.
+    repeated Validator validators = 2;
 }
 
 
