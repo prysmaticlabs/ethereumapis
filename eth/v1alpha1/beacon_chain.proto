@@ -104,6 +104,16 @@ service BeaconChain {
             get: "/eth/v1alpha1/validator/queue"
         };
     }
+
+    // Retrieve the validator assignments for a given epoch.
+    //
+    // This request may specify optional validator indices or public keys to
+    // filter validator assignments.
+    rpc GetValidatorAssignments(GetValidatorAssignmentsRequest) returns (ValidatorAssignments) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator/assignments"
+        };
+    }
 }
 
 // Request for attestations.
@@ -186,10 +196,14 @@ message GetStateRequest {
 }
 
 message GetValidatorBalancesRequest {
-    
+    // Retrieve validator balance at the given epoch.
     uint64 epoch = 1;
 
+    // Validator public keys to filter validators for the given epoch.
     repeated bytes public_keys = 2;
+        
+    // Validator indicies to filter validators for the given epoch.
+    repeated uint64 indices = 3;
 }
 
 message ValidatorBalances {
@@ -255,4 +269,19 @@ message ValidatorQueue {
     // Ordered list of public keys awaiting exit. 0th index is the next key to
     // be processed.
     repeated bytes exit_public_keys = 3;
+}
+
+message GetValidatorAssignmentsRequest {
+    // Retrieve the validator assignments at the given epoch.
+    uint64 epoch = 1;
+
+    // Validator public keys to filter assignments for the given epoch.
+    repeated bytes public_keys = 2;
+        
+    // Validator indicies to filter assignments for the given epoch.
+    repeated uint64 indices = 3;
+}
+
+message ValidatorAssignments {
+
 }
