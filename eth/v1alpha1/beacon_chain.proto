@@ -114,6 +114,16 @@ service BeaconChain {
             get: "/eth/v1alpha1/validator/assignments"
         };
     }
+
+    // Retrieve the validator participation information for a given epoch.
+    //
+    // This method returns information about the global participation of 
+    // validator attestations.
+    rpc GetValidatorParticipation(GetValidatorParticipationRequest) returns (ValidatorParticipation) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator/participation"
+        };
+    }
 }
 
 // Request for attestations.
@@ -184,17 +194,6 @@ message ChainHead {
     bytes previous_justified_block_hash = 8;
 }
 
-message GetStateRequest {
-    oneof query_filter {
-        
-        bytes state_root = 1;
-
-        uint64 slot = 2; 
-
-        uint64 epoch = 3;
-    }
-}
-
 message GetValidatorBalancesRequest {
     // Retrieve validator balance at the given epoch.
     uint64 epoch = 1;
@@ -208,9 +207,14 @@ message GetValidatorBalancesRequest {
 
 message ValidatorBalances {
     message Balance {
+        // Validator's public key. 
         bytes public_key = 1;
 
-        uint64 balance = 2;
+        // Validator's index in the validator set.
+        uint64 index = 2;
+
+        // Validator's balance in gwei.
+        uint64 balance = 3;
     }
 
     repeated Balance balances = 1;
@@ -283,5 +287,28 @@ message GetValidatorAssignmentsRequest {
 }
 
 message ValidatorAssignments {
+    // TODO
+}
 
+message GetValidatorParticipationRequest {
+    // Epoch to request participation information.
+    uint64 epoch = 1;
+}
+
+message ValidatorParticipation {
+    // Epoch which this message is applicable.
+    uint64 epoch = 1;
+
+    // Whether or not epoch has been finalized.
+    bool finalized = 2;
+
+    // Percentage of validator participation in the given epoch. This field
+    // contains a value between 0 and 1.
+    float global_participation_rate = 3;
+
+    // The total amount of ether, in gwei, that has been used in voting.
+    uint64 voted_ether = 4;
+
+    // The total amount of ether, in gwei, that is eligible for voting.
+    uint64 eligible_ether = 5;   
 }
