@@ -29,10 +29,10 @@ message Block {
     // Beacon chain slot that this block represents.
     uint64 slot = 1; 
 
-    // 32 byte hash of the parent block.
+    // 32 byte root of the parent block.
     bytes parent_root = 2;
 
-    // 32 byte hash of the resulting state after processing this block.
+    // 32 byte root of the resulting state after processing this block.
     bytes state_root = 3;
 
     // The block body itself.
@@ -54,16 +54,22 @@ message BlockBody {
     // is not used for anything other than a fun message.
     bytes graffiti = 3; 
 
+    // The max proposer slashings allowed in a block is 16
     repeated ProposerSlashing proposer_slashings = 4;
 
+    // The max attester slashings allowed in a block is 1
     repeated AttesterSlashing attester_slashings = 5;
 
+    // The max attestations allowed in a block is 128
     repeated Attestation attestations = 6;
 
+    // The max deposits allowed in a block is 16
     repeated Deposit deposits = 7;
 
+    // The max voluntary exits allowed in a block is 16
     repeated VoluntaryExit voluntary_exits = 8;
 
+    // The max transfers allowed in a block is 0
     repeated Transfer transfers = 9;
 }
 
@@ -116,7 +122,7 @@ message Deposit {
 // A message that represents a validator signaling that they want to voluntarily
 // withdrawal from the active validator set.
 message VoluntaryExit {
-    // Minimum epoch for processing exit.
+    // The epoch on when exit request becomes valid.
     uint64 epoch = 1; 
 
     // Index of the exiting validator.
@@ -156,7 +162,7 @@ message Eth1Data {
     // inclusion.
     bytes block_hash = 1;
 
-    // The 32 byte deposit root tree for the last deposit included in this
+    // The 32 byte deposit tree root for the last deposit included in this
     // block.
     bytes deposit_root = 2;
 
@@ -166,19 +172,19 @@ message Eth1Data {
 }
 
 // A beacon block header is essentially a beacon block with only a reference to
-// the beacon body as a 32 byte hash. This type of message is more lightweight
-// than a full beacon block.
+// the beacon body as a 32 byte merkle tree root. This type of message is more
+// lightweight than a full beacon block.
 message BeaconBlockHeader {
     // Beacon chain slot that this block represents.
     uint64 slot = 1; 
 
-    // 32 byte hash of the parent block.
+    // 32 byte merkle tree root of the parent ssz encoded block.
     bytes parent_root = 2;
 
-    // 32 byte hash of the resulting state after processing this block.
+    // 32 byte merkle tree root of the resulting ssz encoded state after processing this block.
     bytes state_root = 3;
 
-    // 32 byte hash of the block body.
+    // 32 byte merkle tree root of the ssz encoded block body.
     bytes body_root = 4;
 
     // 96 byte BLS signature from the validator that produced this block.
