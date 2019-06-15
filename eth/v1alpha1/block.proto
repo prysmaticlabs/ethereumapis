@@ -172,8 +172,8 @@ message Eth1Data {
 }
 
 // A beacon block header is essentially a beacon block with only a reference to
-// the beacon body as a 32 byte hash. This type of message is more lightweight
-// than a full beacon block.
+// the beacon body as a 32 byte merkle tree root. This type of message is more
+// lightweight than a full beacon block.
 message BeaconBlockHeader {
     // Beacon chain slot that this block represents.
     uint64 slot = 1; 
