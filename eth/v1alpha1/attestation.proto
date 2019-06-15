@@ -42,19 +42,19 @@ message Attestation {
 // Attestation data includes information on Casper FFG vote.
 // See: https://arxiv.org/pdf/1710.09437.pdf
 message AttestationData {
-  // 32 byte hash of the LMD GHOST block vote.
+  // 32 byte root of the LMD GHOST block vote.
   bytes block_root = 1;
 
   // A recent justified epoch.
   uint64 source_epoch = 2;
 
-  // The 32 byte hash of the state at the source epoch.
+  // The 32 byte root of the state at the source epoch.
   bytes source_root = 3;
 
   // The epoch this attestation is targeting.
   uint64 target_epoch = 4;
 
-  // The 32 byte hash of the block that this attestation considers as the head
+  // The 32 byte root of the block that this attestation considers as the head
   // of the beacon chain.
   bytes target_root = 5; 
 
@@ -74,9 +74,9 @@ message Crosslink {
   // less. 
   uint64 end_epoch = 3;
 
-  // 32 byte hash of the parent crosslink.
+  // 32 byte root of the parent crosslink.
   bytes parent_root = 4;
 
-  // 32 byte hash of the crosslinked shard data since the previous crosslink.
+  // 32 byte root of the crosslinked shard data since the previous crosslink.
   bytes data_root = 5;
 }

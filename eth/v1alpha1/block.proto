@@ -162,7 +162,7 @@ message Eth1Data {
     // inclusion.
     bytes block_hash = 1;
 
-    // The 32 byte deposit root tree for the last deposit included in this
+    // The 32 byte deposit tree root for the last deposit included in this
     // block.
     bytes deposit_root = 2;
 
@@ -178,13 +178,13 @@ message BeaconBlockHeader {
     // Beacon chain slot that this block represents.
     uint64 slot = 1; 
 
-    // 32 byte root of the parent block.
+    // 32 byte merkle tree root of the parent ssz encoded block.
     bytes parent_root = 2;
 
-    // 32 byte root of the resulting state after processing this block.
+    // 32 byte merkle tree root of the resulting ssz encoded state after processing this block.
     bytes state_root = 3;
 
-    // 32 byte root of the block body.
+    // 32 byte merkle tree root of the ssz encoded block body.
     bytes body_root = 4;
 
     // 96 byte BLS signature from the validator that produced this block.

@@ -36,7 +36,7 @@ option php_namespace = "Ethereum\\Eth\\v1alpha1";
 service BeaconChain {
     // TODO(preston): Batch requests?
 
-    // Retrieve attestations by block hash, slot, or epoch. 
+    // Retrieve attestations by block root, slot, or epoch. 
     // 
     // The server may return an empty list when no attestations match the given 
     // filter criteria. This RPC should not return NOT_FOUND. Only one filter 
@@ -47,7 +47,7 @@ service BeaconChain {
         };
     }
 
-    // Retrieve blocks by hash, slot, or epoch. 
+    // Retrieve blocks by root, slot, or epoch. 
     // 
     // The server may return multiple blocks in the case that a slot or epoch is
     // provided as the filter criteria. The server may return an empty list when
@@ -62,7 +62,7 @@ service BeaconChain {
     // Retrieve information about the head of the beacon chain from the view of
     // the beacon chain node. 
     // 
-    // This includes the head block slot and hash as well as information about
+    // This includes the head block slot and root as well as information about
     // the most recent finalized and justified slots.
     rpc GetChainHead(google.protobuf.Empty) returns (ChainHead) {
         option (google.api.http) = {
@@ -131,8 +131,8 @@ message ListAttestationsRequest {
     // TODO(preston): Test oneof with gRPC gateway.
 
     oneof query_filter {
-        // Filter attestations by a specific block hash.
-        bytes block_hash = 1;
+        // Filter attestations by a specific block root.
+        bytes block_root = 1;
 
         // Filter attestations by slot number.
         uint64 slot = 2;
@@ -148,8 +148,8 @@ message ListAttestationsResponse {
 
 message ListBlocksRequest {
     oneof query_filter {
-        // Block hash to return a single block.
-        bytes hash = 1;
+        // Block rootrorrrrasdfasdfr to return a single block.
+        bytes root = 1;
 
         // Slot to lookup a block. If the slot is not yet finalized, this
         // criteria may yield multiple valid blocks if the node has seen blocks
@@ -169,8 +169,8 @@ message ListBlocksResponse {
 
 // Information about the head of the beacon chain.
 message ChainHead {
-    // 32 byte block hash of the canonical head block in the beacon node.
-    bytes block_hash = 1;
+    // 32 byte merkle tree root of the canonical head block in the beacon node.
+    bytes block_root = 1;
 
     // Slot of the head block.
     uint64 block_slot = 2;
@@ -178,20 +178,20 @@ message ChainHead {
     // Most recent finalized slot.
     uint64 finalized_slot = 3;
     
-    // Most recent 32 byte finalized block hash.
-    bytes finalized_block_hash = 4;
+    // Most recent 32 byte finalized block root.
+    bytes finalized_block_root = 4;
 
     // Most recent justified slot.
     uint64 justified_slot = 5;
 
-    // Most recent 32 byte justified block hash.
-    bytes justified_block_hash = 6;
+    // Most recent 32 byte justified block root.
+    bytes justified_block_root = 6;
 
     // Previous justified slot.
     uint64 previous_justified_slot = 7;
 
-    // Previous 32 byte justified block hash.
-    bytes previous_justified_block_hash = 8;
+    // Previous 32 byte justified block root.
+    bytes previous_justified_block_root = 8;
 }
 
 message GetValidatorBalancesRequest {
