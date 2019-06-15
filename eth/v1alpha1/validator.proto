@@ -24,7 +24,7 @@ option php_namespace = "Ethereum\\Eth\\v1alpha1";
 
 // An Ethereum 2.0 validator.
 message Validator {
-    // 96 byte BLS public key.
+    // 96 byte BLS public key used for the validator's activities.
     bytes public_key = 1;
 
     // 32 byte hash of the withdrawal destination public key.

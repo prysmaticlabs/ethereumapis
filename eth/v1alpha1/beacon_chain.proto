@@ -41,7 +41,7 @@ service BeaconChain {
     // The server may return an empty list when no attestations match the given 
     // filter criteria. This RPC should not return NOT_FOUND. Only one filter 
     // criteria should be used.
-    rpc GetAttestations(GetAttestationsRequest) returns (GetAttestationsResponse) {
+    rpc ListAttestations(ListAttestationsRequest) returns (ListAttestationsResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/attestations"
         };
@@ -53,7 +53,7 @@ service BeaconChain {
     // provided as the filter criteria. The server may return an empty list when
     // no blocks in their database match the filter criteria. This RPC should 
     // not return NOT_FOUND. Only one filter criteria should be used.
-    rpc GetBlocks(GetBlockRequest) returns (GetBlockResponse) {
+    rpc ListBlocks(ListBlocksRequest) returns (ListBlocksResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/blocks"
         };
@@ -109,7 +109,7 @@ service BeaconChain {
     //
     // This request may specify optional validator indices or public keys to
     // filter validator assignments.
-    rpc GetValidatorAssignments(GetValidatorAssignmentsRequest) returns (ValidatorAssignments) {
+    rpc ListValidatorAssignments(ListValidatorAssignmentsRequest) returns (ValidatorAssignments) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validator/assignments"
         };
@@ -127,7 +127,7 @@ service BeaconChain {
 }
 
 // Request for attestations.
-message GetAttestationsRequest {
+message ListAttestationsRequest {
     // TODO(preston): Test oneof with gRPC gateway.
 
     oneof query_filter {
@@ -142,11 +142,11 @@ message GetAttestationsRequest {
     }
 }
 
-message GetAttestationsResponse {
+message ListAttestationsResponse {
     repeated Attestation attestations = 1;
 }
 
-message GetBlockRequest {
+message ListBlocksRequest {
     oneof query_filter {
         // Block hash to return a single block.
         bytes hash = 1;
@@ -163,13 +163,13 @@ message GetBlockRequest {
     }
 }
 
-message GetBlockResponse {
+message ListBlocksResponse {
     repeated Block blocks = 1;
 }
 
 // Information about the head of the beacon chain.
 message ChainHead {
-    // Block hash of the canonical head block in the beacon node.
+    // 32 byte block hash of the canonical head block in the beacon node.
     bytes block_hash = 1;
 
     // Slot of the head block.
@@ -178,19 +178,19 @@ message ChainHead {
     // Most recent finalized slot.
     uint64 finalized_slot = 3;
     
-    // Most recent finalized block hash.
+    // Most recent 32 byte finalized block hash.
     bytes finalized_block_hash = 4;
 
     // Most recent justified slot.
     uint64 justified_slot = 5;
 
-    // Most recent justified block hash.
+    // Most recent 32 byte justified block hash.
     bytes justified_block_hash = 6;
 
     // Previous justified slot.
     uint64 previous_justified_slot = 7;
 
-    // Previous justified block hash.
+    // Previous 32 byte justified block hash.
     bytes previous_justified_block_hash = 8;
 }
 
@@ -198,16 +198,16 @@ message GetValidatorBalancesRequest {
     // Retrieve validator balance at the given epoch.
     uint64 epoch = 1;
 
-    // Validator public keys to filter validators for the given epoch.
+    // Validator 96 byte BLS public keys to filter validators for the given epoch.
     repeated bytes public_keys = 2;
         
-    // Validator indicies to filter validators for the given epoch.
+    // Validator indices to filter validators for the given epoch.
     repeated uint64 indices = 3;
 }
 
 message ValidatorBalances {
     message Balance {
-        // Validator's public key. 
+        // Validator's 96 byte BLS public key. 
         bytes public_key = 1;
 
         // Validator's index in the validator set.
@@ -252,13 +252,13 @@ message ActiveSetChanges {
     // set. 
     uint64 epoch = 1;
 
-    // Validator public keys that have been activated in this epoch.
+    // 96 byte validator public keys that have been activated in this epoch.
     repeated bytes activated_public_keys = 2;
 
-    // Validator public keys that have been voluntarily exited in this epoch.
+    // 96 byte validator public keys that have been voluntarily exited in this epoch.
     repeated bytes exited_public_keys = 3;
 
-    // Validator public keys that have been involuntarily ejected in this epoch.
+    // 96 byte validator public keys that have been involuntarily ejected in this epoch.
     repeated bytes ejected_public_keys = 4;
 }
 
@@ -266,8 +266,8 @@ message ValidatorQueue {
     // TODO: Churn rate
     uint64 churn_rate = 1;
 
-    // Ordered list of public keys awaiting activation. 0th index is the next 
-    // key to be processed.
+    // Ordered list of 96 byte public keys awaiting activation. 0th index is the
+    // next key to be processed.
     repeated bytes activation_public_keys = 2;
 
     // Ordered list of public keys awaiting exit. 0th index is the next key to
@@ -275,11 +275,11 @@ message ValidatorQueue {
     repeated bytes exit_public_keys = 3;
 }
 
-message GetValidatorAssignmentsRequest {
+message ListValidatorAssignmentsRequest {
     // Retrieve the validator assignments at the given epoch.
     uint64 epoch = 1;
 
-    // Validator public keys to filter assignments for the given epoch.
+    // 96 byte validator public keys to filter assignments for the given epoch.
     repeated bytes public_keys = 2;
         
     // Validator indicies to filter assignments for the given epoch.
@@ -287,7 +287,31 @@ message GetValidatorAssignmentsRequest {
 }
 
 message ValidatorAssignments {
-    // TODO
+    message CommitteeAssignment {
+        // 
+        repeated uint64 crosslink_committees = 1;
+        
+        // The shard index of which the validator must perform the attestation
+        // or block proposal.
+        uint64 shard = 2;
+
+        // Beacon chain slot in which the validator must perform its assigned 
+        // duty.
+        uint64 slot = 3;
+
+        // Whether or not the validator is assigned to propose at this slot. If
+        // This field is false, then they are only to attest during the
+        // assignment time.
+        bool proposer = 4;
+
+        // 96 byte BLS public key 
+        bytes public_key = 5;
+    }
+
+    // The epoch for which this set of validator assignments is valid.
+    uint64 epoch = 1;
+
+    repeated CommitteeAssignment assignments = 2;
 }
 
 message GetValidatorParticipationRequest {
