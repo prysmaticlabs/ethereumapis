@@ -148,7 +148,7 @@ message ListAttestationsResponse {
 
 message ListBlocksRequest {
     oneof query_filter {
-        // Block rootrorrrrasdfasdfr to return a single block.
+        // Block root filter to return a single block.
         bytes root = 1;
 
         // Slot to lookup a block. If the slot is not yet finalized, this
