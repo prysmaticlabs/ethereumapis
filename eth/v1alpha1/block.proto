@@ -120,7 +120,7 @@ message Deposit {
 }
 
 // A message that represents a validator signaling that they want to voluntarily
-// withdrawal from the active validator set.
+// withdraw from the active validator set.
 message VoluntaryExit {
     // The epoch on when exit request becomes valid.
     uint64 epoch = 1; 

@@ -70,7 +70,7 @@ service BeaconChain {
         };
     }
 
-    // Retrieve validator balance for a given set of public keys at a specific 
+    // Retrieve validator balances for a given set of public keys at a specific 
     // epoch in time.
     rpc GetValidatorBalances(GetValidatorBalancesRequest) returns (ValidatorBalances) { 
         option (google.api.http) = {
@@ -221,7 +221,6 @@ message ValidatorBalances {
 }
 
 message GetValidatorsRequest {
-    // TODO(preston): Does this field actually require one of these filter?
     oneof query_filter {
         // Optional criteria to retrieve validators at a specific epoch. Omitting
         // this field or setting it to zero will retrieve a response  with the
