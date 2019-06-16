@@ -39,7 +39,7 @@ message Attestation {
   bytes signature = 4;
 }
 
-// Attestation data includes information on Casper FFG vote.
+// Attestation data includes information on Casper the Friendly Finality Gadget's votes
 // See: https://arxiv.org/pdf/1710.09437.pdf
 message AttestationData {
   // 32 byte root of the LMD GHOST block vote.
