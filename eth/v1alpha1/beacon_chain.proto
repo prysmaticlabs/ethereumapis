@@ -72,9 +72,9 @@ service BeaconChain {
 
     // Retrieve validator balance for a given set of public keys at a specific 
     // epoch in time.
-    rpc GetValidatorBalances(GetValidatorBalancesRequest) returns (ValidatorBalances) { 
+    rpc ListValidatorBalances(GetValidatorBalancesRequest) returns (ValidatorBalances) { 
         option (google.api.http) = {
-            get: "/eth/v1alpha1/validator/balances"
+            get: "/eth/v1alpha1/validators/balances"
         };
     }
 
@@ -94,14 +94,14 @@ service BeaconChain {
     // ejections.
     rpc GetValidatorActiveSetChanges(GetValidatorActiveSetChangesRequest) returns (ActiveSetChanges) {
         option (google.api.http) = {
-            get: "/eth/v1alpha1/validator/activesetchanges"
+            get: "/eth/v1alpha1/validators/activesetchanges"
         };
     }
 
     // Retrieve the current validator queue information.
     rpc GetValidatorQueue(google.protobuf.Empty) returns (ValidatorQueue) {
         option (google.api.http) = {
-            get: "/eth/v1alpha1/validator/queue"
+            get: "/eth/v1alpha1/validators/queue"
         };
     }
 
@@ -111,7 +111,7 @@ service BeaconChain {
     // filter validator assignments.
     rpc ListValidatorAssignments(ListValidatorAssignmentsRequest) returns (ValidatorAssignments) {
         option (google.api.http) = {
-            get: "/eth/v1alpha1/validator/assignments"
+            get: "/eth/v1alpha1/validators/assignments"
         };
     }
 
@@ -121,7 +121,7 @@ service BeaconChain {
     // validator attestations.
     rpc GetValidatorParticipation(GetValidatorParticipationRequest) returns (ValidatorParticipation) {
         option (google.api.http) = {
-            get: "/eth/v1alpha1/validator/participation"
+            get: "/eth/v1alpha1/validators/participation"
         };
     }
 }
@@ -198,7 +198,8 @@ message GetValidatorBalancesRequest {
     // Retrieve validator balance at the given epoch.
     uint64 epoch = 1;
 
-    // Validator 96 byte BLS public keys to filter validators for the given epoch.
+    // Validator 96 byte BLS public keys to filter validators for the given
+    // epoch.
     repeated bytes public_keys = 2;
         
     // Validator indices to filter validators for the given epoch.
@@ -223,9 +224,9 @@ message ValidatorBalances {
 message GetValidatorsRequest {
     // TODO(preston): Does this field actually require one of these filter?
     oneof query_filter {
-        // Optional criteria to retrieve validators at a specific epoch. Omitting
-        // this field or setting it to zero will retrieve a response  with the
-        // current active validator set.
+        // Optional criteria to retrieve validators at a specific epoch. 
+        // Omitting this field or setting it to zero will retrieve a response
+        // with the current active validator set.
         uint64 epoch = 1;
 
         // Optional criteria to retrieve the genesis set of validators.
@@ -255,16 +256,19 @@ message ActiveSetChanges {
     // 96 byte validator public keys that have been activated in this epoch.
     repeated bytes activated_public_keys = 2;
 
-    // 96 byte validator public keys that have been voluntarily exited in this epoch.
+    // 96 byte validator public keys that have been voluntarily exited in this
+    // epoch.
     repeated bytes exited_public_keys = 3;
 
-    // 96 byte validator public keys that have been involuntarily ejected in this epoch.
+    // 96 byte validator public keys that have been involuntarily ejected in 
+    // this epoch.
     repeated bytes ejected_public_keys = 4;
 }
 
 message ValidatorQueue {
-    // TODO: Churn rate
-    uint64 churn_rate = 1;
+    // The amount of ether in gwei allowed to enter or exit the active 
+    // validator set.
+    uint64 churn_limit = 1;
 
     // Ordered list of 96 byte public keys awaiting activation. 0th index is the
     // next key to be processed.

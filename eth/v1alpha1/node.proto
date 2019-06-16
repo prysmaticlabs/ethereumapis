@@ -57,7 +57,7 @@ service Node {
     // Any service not present in this list may return UNIMPLEMENTED or 
     // PERMISSION_DENIED. The server may also support fetching services by grpc 
     // reflection. 
-    rpc GetImplementedServices(google.protobuf.Empty) returns (ImplementedServices) {
+    rpc ListImplementedServices(google.protobuf.Empty) returns (ImplementedServices) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/node/services"
         };
@@ -90,6 +90,5 @@ message Version {
 }
 
 message ImplementedServices {
-    // TODO: Is this the best approach?
     repeated string services = 1;
 }
