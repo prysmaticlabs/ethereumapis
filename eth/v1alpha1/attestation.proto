@@ -48,14 +48,13 @@ message AttestationData {
   // A recent justified epoch.
   uint64 source_epoch = 2;
 
-  // The 32 byte root of the state at the source epoch.
+  // The 32 byte root of the epoch boundary block at the source epoch.
   bytes source_root = 3;
 
   // The epoch this attestation is targeting.
   uint64 target_epoch = 4;
 
-  // The 32 byte root of the block that this attestation considers as the head
-  // of the beacon chain.
+  // The 32 byte root of the block at the most recent epoch boundary.
   bytes target_root = 5; 
 
   // Crosslink voted by this attestation.

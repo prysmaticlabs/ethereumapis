@@ -137,7 +137,7 @@ message ListAttestationsRequest {
         // Filter attestations by slot number.
         uint64 slot = 2;
 
-        // Filter attestions by epoch number.
+        // Filter attestations by epoch number.
         uint64 epoch = 3;
     }
 }
@@ -288,7 +288,7 @@ message ListValidatorAssignmentsRequest {
 
 message ValidatorAssignments {
     message CommitteeAssignment {
-        // 
+        // The list of validators in the committee.
         repeated uint64 crosslink_committees = 1;
         
         // The shard index of which the validator must perform the attestation
