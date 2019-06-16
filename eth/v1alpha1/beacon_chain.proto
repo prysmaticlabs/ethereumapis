@@ -288,8 +288,10 @@ message ListValidatorAssignmentsRequest {
 
 message ValidatorAssignments {
     message CommitteeAssignment {
-        // The list of validator indices that are in the same committee as requested validator,
-        // everyone in the committee is assigned to attest at the same slot and same shard.
+        // Crosslink committees is responsible for crosslinking shard data back to the beacon chain,
+        // they also attest and produce beacon chain blocks. This is a list of validator indices that
+        // are in the same committee as requested validator, everyone in the committee is assigned to the
+        // same slot and same shard.
         repeated uint64 crosslink_committees = 1;
         
         // The shard index of which the validator must perform the attestation
