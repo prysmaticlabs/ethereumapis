@@ -359,5 +359,5 @@ message ValidatorParticipation {
 }
 
 message ListPendingAttestationsResponse {
-  repeated Attestation attestations = 1;
+  repeated Attestation pending_attestations = 1;
 }
