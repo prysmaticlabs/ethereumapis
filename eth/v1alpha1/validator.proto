@@ -1,0 +1,54 @@
+// Copyright 2019 Prysmatic Labs.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+syntax = "proto3";
+
+package ethereum.eth.v1alpha1;
+
+option csharp_namespace = "Ethereum.Eth.v1alpha1";
+option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1;eth";
+option java_multiple_files = true;
+option java_outer_classname = "ValidatorProto";
+option java_package = "org.ethereum.eth.v1alpha1";
+option php_namespace = "Ethereum\\Eth\\v1alpha1";
+
+// An Ethereum 2.0 validator.
+message Validator {
+    // 96 byte BLS public key used for the validator's activities.
+    bytes public_key = 1;
+
+    // 32 byte hash of the withdrawal destination public key.
+    bytes withdrawal_credentials = 2;
+
+    // Epoch when the validator became eligible for activation. This field may
+    // be zero if the validator was present in the Ethereum 2.0 genesis.
+    uint64 activation_eligiblity_epoch = 3;
+
+    // Epoch when the validator was activated. This field may be zero if the
+    // validator was present in the Ethereum 2.0 genesis.
+    uint64 activation_epoch = 4;
+
+    // Epoch when the validator was exited. This field may be zero if the
+    // validator has not exited.
+    uint64 exit_epoch = 5;
+
+    // Epoch when the validator is eligible to withdraw their funds. This field
+    // may be zero if the validator has not exited.
+    uint64 withdrawable_epoch = 6;
+
+    // Whether or not the validator has been slashed.
+    bool slashed = 7;
+
+    // The validators current effective balance in gwei.
+    uint64 effective_balance = 8;
+}

@@ -1,0 +1,70 @@
+##############################################################################
+# Common
+##############################################################################
+
+proto_library(
+    name = "proto",
+    srcs = [
+        "attestation.proto",
+        "beacon_chain.proto",
+        "block.proto",
+        "node.proto",
+        "swagger.proto",
+        "validator.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_proto",
+        "@com_google_protobuf//:empty_proto",
+        "@com_google_protobuf//:timestamp_proto",
+        "@go_googleapis//google/api:annotations_proto",
+    ],
+)
+
+##############################################################################
+# Java
+##############################################################################
+
+java_proto_library(
+    name = "java_proto",
+    deps = [":proto"],
+)
+
+##############################################################################
+# Go
+##############################################################################
+# gazelle:ignore
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+
+go_proto_library(
+    name = "go_proto",
+    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
+    importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1",
+    proto = ":proto",
+    visibility = ["//visibility:public"],
+    deps = [
+        "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_go_proto",
+
+                "@go_googleapis//google/api:annotations_go_proto",
+    ],
+)
+
+go_library(
+    name = "go_default_library",
+    embed = [":go_proto"],
+    importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1",
+    visibility = ["//visibility:public"],
+)
+
+##############################################################################
+# OpenAPI (Swagger) V2
+##############################################################################
+load("@grpc_ecosystem_grpc_gateway//protoc-gen-swagger:defs.bzl", "protoc_gen_swagger")
+
+protoc_gen_swagger(
+    name = "swagger",
+    proto = ":proto",
+    visibility = ["//visibility:public"],
+    allow_merge = True,
+)
