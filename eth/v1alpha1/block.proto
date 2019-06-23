@@ -150,7 +150,7 @@ message Transfer {
     // Fee in gwei for the block proposer to include this transfer.
     uint64 fee = 4;
 
-    // Slot at which transfer must be processed.
+    // Slot at which transfer must be processed. This is used for replay protection.
     uint64 slot = 5;
 
     // 48 byte sender's withdrawal public key.
