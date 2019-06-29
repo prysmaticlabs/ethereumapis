@@ -59,8 +59,7 @@ service BeaconNodeValidator {
     //
     // The validator sends the newly signed beacon block to the beacon node so the beacon block can
     // be included in the beacon chain. The beacon node is expected to validate and process the
-    // beacon block into its state, however if the beacon block fails validation, it will still
-    // be broadcasted to the rest of the network but a different status code is returned.
+    // beacon block into its state.
     rpc ProposeBlock(Block) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/block"
@@ -81,8 +80,7 @@ service BeaconNodeValidator {
     //
     // The validator sends the newly signed attestation to the beacon node for the attestation to
     // be included in the beacon chain. The beacon node is expected to validate and aggregate the
-    // attestations into the state, if the attestation fails validation, it'd still be broadcasted but a
-    // different status code is returned.
+    // attestations into the state.
     rpc ProposeAttestation(Attestation) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/attestation"
