@@ -36,7 +36,7 @@ service BeaconNodeValidator {
     // Validator duties should be polled every epoch, but due to chain reorg of >MIN_SEED_LOOKAHEAD could occur,
     // the validator duties could chain. For complete safety, it is recommended to poll at every slot to ensure
     // validator is fully aware of any sudden chain reorg.
-    rpc Duties(DutiesRequest) returns (DutiesResponse) {
+    rpc GetDuties(DutiesRequest) returns (DutiesResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validator/duties"
         };
@@ -47,7 +47,7 @@ service BeaconNodeValidator {
     // The server returns a new beacon block, without proposer signature, that can be
     // proposed on the beacon chain. The block should be filled with all the necessary
     // data for proposer to sign.
-    rpc Block(BlockRequest) returns (Block) {
+    rpc GetBlock(BlockRequest) returns (Block) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validator/block"
         };
@@ -57,7 +57,7 @@ service BeaconNodeValidator {
     //
     // The validator sends the newly signed beacon block to the beacon node so the beacon block can
     // be included in the beacon chain. The beacon node is expected to validate and process the
-    // beacon block into its state, however if the beacon block fails validator, it will still
+    // beacon block into its state, however if the beacon block fails validation, it will still
     // be broadcasted to the rest of the network but a different status code is returned.
     rpc ProposeBlock(Block) returns (google.protobuf.Empty) {
         option (google.api.http) = {
@@ -65,11 +65,11 @@ service BeaconNodeValidator {
         };
     }
 
-    // Retrieves the latest valid attestation to be attested on the beacon chain.
+    // Retrieves the latest valid attestation data to be attested on the beacon chain.
     //
     // The server returns the latest valid attestation data which represents the correct vote
     // for the head of the beacon chain,
-    rpc Attestation(AttestationRequest) returns (AttestationData) {
+    rpc GetAttestationData(AttestationDataRequest) returns (AttestationData) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validator/attestation"
         };
@@ -79,7 +79,7 @@ service BeaconNodeValidator {
     //
     // The validator sends the newly signed attestation to the beacon node for the attestation to
     // be included in the beacon chain. The beacon node is expected to validate and aggregate the
-    // attestations into the state, if the attestation fails validator, it'd still be broadcasted but a
+    // attestations into the state, if the attestation fails validation, it'd still be broadcasted but a
     // different status code is returned.
     rpc ProposeAttestation(Attestation) returns (google.protobuf.Empty) {
         option (google.api.http) = {
@@ -120,7 +120,7 @@ message BlockRequest {
 
 message AttestationRequest {
     // The proof of custody bit reported by the requesting validator. To be used in phase 1.
-    bytes poc_bit = 1;
+    bytes proof_of_custody_bit = 1;
     // Slot for which the attestation should be proposed.
     uint64 slot = 2;
     // Shard for which the attestation is to be proposed.
