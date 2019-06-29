@@ -66,5 +66,5 @@ protoc_gen_swagger(
     name = "swagger",
     proto = ":proto",
     visibility = ["//visibility:public"],
-    allow_merge = True,
+    single_output = True,
 )
