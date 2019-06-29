@@ -30,10 +30,8 @@ gazelle_dependencies()
 
 go_repository(
     name = "grpc_ecosystem_grpc_gateway",
-    commit = "bd773d8bfeb7b9bb60978103ab1ba73591790dad",
+    commit = "740ef2ee80c49ed4a272e8c3b54ebf352109f572",
     importpath = "github.com/grpc-ecosystem/grpc-gateway",
-    remote = "https://github.com/prestonvanloon/grpc-gateway",
-    vcs = "git",
 )
 
 go_repository(
