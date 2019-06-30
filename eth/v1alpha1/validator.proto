@@ -32,7 +32,10 @@ option php_namespace = "Ethereum\\Eth\\v1alpha1";
 // The beacon node validator API enables a validator to connect
 // and perform its obligations on the Ethereum 2.0 phase 0 beacon chain.
 service BeaconNodeValidator {
-    // Retrieves validator duties for the requested validators.
+    // Retrieves validator duties for the requested validators. The duties consist of:
+    //  Proposer - the validator that creates a beacon chain block.
+    //  Attester — a validator that is part of a committee that needs to sign off on a beacon chain
+    //   block while simultaneously creating a cross link to a recent shard block on a particular shard chain.
     //
     // The server returns a list of duties which are the actions should be performed by validators for a given epoch.
     // Validator duties should be polled every epoch, but due to chain reorg of >MIN_SEED_LOOKAHEAD could occur,
@@ -55,7 +58,7 @@ service BeaconNodeValidator {
         };
     }
 
-    // Sends the newly signed beacon block to beacon node to be broadcasted to the rest of the network.
+    // Sends the newly signed beacon block to beacon node.
     //
     // The validator sends the newly signed beacon block to the beacon node so the beacon block can
     // be included in the beacon chain. The beacon node is expected to validate and process the
@@ -76,7 +79,7 @@ service BeaconNodeValidator {
         };
     }
 
-    // Sends the newly signed attestation to beacon node to be broadcasted to the rest of the network.
+    // Sends the newly signed attestation to beacon node.
     //
     // The validator sends the newly signed attestation to the beacon node for the attestation to
     // be included in the beacon chain. The beacon node is expected to validate and aggregate the
@@ -120,7 +123,8 @@ message BlockRequest {
 }
 
 message AttestationDataRequest {
-    // The proof of custody bit (1 byte) reported by the requesting validator. To be used in phase 1.
+    // The proof of custody bit is a byte with a single bit set as reported
+    // by the requesting validator. To be used in phase 1.
     bytes proof_of_custody_bit = 1;
     // Slot for which the attestation should be proposed.
     uint64 slot = 2;
