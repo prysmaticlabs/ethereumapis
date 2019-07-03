@@ -27,12 +27,12 @@ message Attestation {
 
   // A bitfield representation of validator indices that have voted exactly
   // the same vote and have been aggregated into this attestation.
-  bytes aggregation_bitfield = 2;
+  bytes aggregation_bits = 2;
 
   // Not used in phase 0.
   // 
   // TODO: Add custody bitfield information.
-  // bytes custody_bitfield = 3;
+  // bytes custody_bits = 3;
   reserved 3;
 
   // 96 byte BLS aggregate signature.
