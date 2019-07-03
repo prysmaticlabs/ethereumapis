@@ -23,11 +23,11 @@ option java_package = "org.ethereum.eth.v1alpha1";
 option php_namespace = "Ethereum\\Eth\\v1alpha1";
 
 message Attestation {
+  AttestationData data = 1;
+
   // A bitfield representation of validator indices that have voted exactly
   // the same vote and have been aggregated into this attestation.
-  bytes aggregation_bitfield = 1;
-
-  AttestationData data = 2; 
+  bytes aggregation_bitfield = 2;
 
   // Not used in phase 0.
   // 
@@ -46,17 +46,11 @@ message AttestationData {
   // 32 byte root of the LMD GHOST block vote.
   bytes block_root = 1;
 
-  // A recent justified epoch.
-  uint64 source_epoch = 2;
+  // the most recent justified checkpoint in the beacon state
+  Checkpoint source = 2;
 
-  // The 32 byte root of the epoch boundary block at the source epoch.
-  bytes source_root = 3;
-
-  // The epoch this attestation is targeting.
-  uint64 target_epoch = 4;
-
-  // The 32 byte root of the block at the most recent epoch boundary.
-  bytes target_root = 5; 
+  // the checkpoint attempting to be justified for the current epoch and its epoch boundary block
+  Checkpoint target = 3;
 
   // Crosslink voted by this attestation.
   Crosslink crosslink = 6;
@@ -66,17 +60,24 @@ message Crosslink {
   // The shard that crosslinks to the beacon chain.
   uint64 shard = 1;
 
+  // 32 byte root of the parent crosslink.
+  bytes parent_root = 2;
+
   // Start epoch must match the parent crosslink's end epoch.
-  uint64 start_epoch = 2;
+  uint64 start_epoch = 3;
 
   // Ending epoch for this crosslink period. This field matches the attestation
   // target epoch or the start epoch + MAX_EPOCHS_PER_CROSSLINK, whichever is
   // less. 
-  uint64 end_epoch = 3;
-
-  // 32 byte root of the parent crosslink.
-  bytes parent_root = 4;
+  uint64 end_epoch = 4;
 
   // 32 byte root of the crosslinked shard data since the previous crosslink.
   bytes data_root = 5;
+}
+
+message Checkpoint {
+  // epoch of the check point referencing.
+  uint64 epoch = 1;
+  // block root of the check point referencing.
+  bytes root = 2;
 }
