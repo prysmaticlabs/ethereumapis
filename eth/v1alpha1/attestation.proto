@@ -76,8 +76,11 @@ message Crosslink {
 }
 
 message Checkpoint {
-  // epoch of the check point referencing.
+  // A checkpoint is every epoch's first slot. The goal of Casper FFG
+  // is to link the check points together for justification and finalization.
+
+  // epoch of the check point reference to.
   uint64 epoch = 1;
-  // block root of the check point referencing.
+  // block root of the check point reference to.
   bytes root = 2;
 }
