@@ -23,11 +23,11 @@ option java_package = "org.ethereum.eth.v1alpha1";
 option php_namespace = "Ethereum\\Eth\\v1alpha1";
 
 message Attestation {
+  AttestationData data = 1;
+  
   // A bitfield representation of validator indices that have voted exactly
   // the same vote and have been aggregated into this attestation.
-  bytes aggregation_bitfield = 1;
-
-  AttestationData data = 2; 
+  bytes aggregation_bitfield = 2;
 
   // Not used in phase 0.
   // 
