@@ -53,7 +53,7 @@ message AttestationData {
   Checkpoint target = 3;
 
   // Crosslink voted by this attestation.
-  Crosslink crosslink = 6;
+  Crosslink crosslink = 4;
 }
 
 message Crosslink {
