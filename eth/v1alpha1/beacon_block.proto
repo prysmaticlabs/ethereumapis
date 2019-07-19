@@ -20,12 +20,12 @@ import "eth/v1alpha1/attestation.proto";
 option csharp_namespace = "Ethereum.Eth.v1alpha1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1;eth";
 option java_multiple_files = true;
-option java_outer_classname = "BlockProto";
+option java_outer_classname = "BeaconBlockProto";
 option java_package = "org.ethereum.eth.v1alpha1";
 option php_namespace = "Ethereum\\Eth\\v1alpha1";
 
 // The Ethereum 2.0 beacon block.
-message Block {
+message BeaconBlock {
     // Beacon chain slot that this block represents.
     uint64 slot = 1; 
 
@@ -36,14 +36,14 @@ message Block {
     bytes state_root = 3;
 
     // The block body itself.
-    BlockBody body = 4;
+    BeaconBlockBody body = 4;
 
     // 96 byte BLS signature from the validator that produced this block.
     bytes signature = 5;
 }
 
 // The block body of an Ethereum 2.0 beacon block.
-message BlockBody {
+message BeaconBlockBody {
     // The validators RANDAO reveal 96 byte value.
     bytes randao_reveal = 1;
 

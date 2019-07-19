@@ -19,7 +19,7 @@ import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
 import "eth/v1alpha1/attestation.proto";
-import "eth/v1alpha1/block.proto";
+import "eth/v1alpha1/beacon_block.proto";
 import "eth/v1alpha1/validator.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1alpha1";
@@ -179,7 +179,7 @@ message ListBlocksRequest {
 }
 
 message ListBlocksResponse {
-    repeated Block blocks = 1;
+    repeated BeaconBlock blocks = 1;
 }
 
 // Information about the head of the beacon chain.
