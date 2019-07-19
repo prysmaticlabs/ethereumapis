@@ -1,6 +1,7 @@
 # Ethereum APIs
 
 [![Build status](https://badge.buildkite.com/62be08099e9e228b165c2dba69c637eb9ca7a1ca95efd54b9f.svg?branch=master)](https://buildkite.com/prysmatic-labs/ethereum-apis)
+[![ETH2.0_Spec_Version 0.8.0](https://img.shields.io/badge/ETH2.0%20Spec%20Version-v0.8.0-blue.svg)](https://github.com/ethereum/eth2.0-specs/commit/8d324b7497bcb558e0183a30002d78d18704e3fa)
 
 This repository hosts service interface definitions of Ethereum (2.0) APIs. These [protocol buffer](https://developers.google.com/protocol-buffers/) service definitions support gRPC and JSON over HTTP protocols.
 
