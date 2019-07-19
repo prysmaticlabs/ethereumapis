@@ -17,7 +17,7 @@ package ethereum.eth.v1alpha1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
-import "eth/v1alpha1/block.proto";
+import "eth/v1alpha1/beacon_block.proto";
 import "eth/v1alpha1/attestation.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1alpha1";
@@ -53,7 +53,7 @@ service BeaconNodeValidator {
     // The server returns a new beacon block, without proposer signature, that can be
     // proposed on the beacon chain. The block should be filled with all the necessary
     // data for proposer to sign.
-    rpc GetBlock(BlockRequest) returns (Block) {
+    rpc GetBlock(BlockRequest) returns (BeaconBlock) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validator/block"
         };
@@ -64,7 +64,7 @@ service BeaconNodeValidator {
     // The validator sends the newly signed beacon block to the beacon node so the beacon block can
     // be included in the beacon chain. The beacon node is expected to validate and process the
     // beacon block into its state.
-    rpc ProposeBlock(Block) returns (google.protobuf.Empty) {
+    rpc ProposeBlock(BlockRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/block"
         };
