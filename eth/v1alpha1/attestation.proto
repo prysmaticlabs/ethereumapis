@@ -29,11 +29,10 @@ message Attestation {
   // the same vote and have been aggregated into this attestation.
   bytes aggregation_bits = 2;
 
+  // Custody bits is used for proof of custody game to ensure validator has
+  // legitimately downloaded and verified shard data.
   // Not used in phase 0.
-  // 
-  // TODO: Add custody bitfield information.
-  // bytes custody_bits = 3;
-  reserved 3;
+  bytes custody_bits = 3;
 
   // 96 byte BLS aggregate signature.
   bytes signature = 4;
@@ -44,7 +43,7 @@ message AttestationData {
   // See: https://arxiv.org/pdf/1710.09437.pdf
 
   // 32 byte root of the LMD GHOST block vote.
-  bytes block_root = 1;
+  bytes beacon_block_root = 1;
 
   // the most recent justified checkpoint in the beacon state
   Checkpoint source = 2;
