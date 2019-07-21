@@ -43,7 +43,7 @@ message AttestationData {
   // See: https://arxiv.org/pdf/1710.09437.pdf
 
   // 32 byte root of the LMD GHOST block vote.
-  bytes block_root = 1;
+  bytes beacon_block_root = 1;
 
   // the most recent justified checkpoint in the beacon state
   Checkpoint source = 2;
