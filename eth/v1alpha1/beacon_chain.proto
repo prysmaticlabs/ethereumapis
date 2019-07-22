@@ -47,18 +47,18 @@ service BeaconChain {
         };
     }
 
-    // Retrieve pending attestations.
+    // Retrieve pool attestations.
     //
     // The server returns a list of attestations that have been seen but not
-    // yet processed. Pending attestations eventually expire as the slot
+    // yet processed. Pool attestations eventually expire as the slot
     // advances, so an attestation missing from this request does not imply
     // that it was included in a block. The attestation may have expired.
     // Refer to the ethereum 2.0 specification for more details on how
     // attestations are processed and when they are no longer valid.
     // https://github.com/ethereum/eth2.0-specs/blob/dev/specs/core/0_beacon-chain.md#attestations
-    rpc ListPendingAttestations(google.protobuf.Empty) returns (ListPendingAttestationsResponse) {
+    rpc ListPoolAttestations(google.protobuf.Empty) returns (ListPoolAttestationsResponse) {
         option (google.api.http) = {
-            get: "/eth/v1alpha1/beacon/attestations/pending"
+            get: "/eth/v1alpha1/beacon/attestations/pool"
         };
     }
 
@@ -358,6 +358,6 @@ message ValidatorParticipation {
     uint64 eligible_ether = 5;   
 }
 
-message ListPendingAttestationsResponse {
-  repeated Attestation pending_attestations = 1;
+message ListPoolAttestationsResponse {
+  repeated Attestation pool_attestations = 1;
 }
