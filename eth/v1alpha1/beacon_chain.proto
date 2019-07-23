@@ -270,7 +270,7 @@ message Validators {
     // This field is optional.
     string next_page_token = 3;
 
-    // Total count of Validator in this response.
+    // Total count of Validators matching the request filter.
     int32 total_size = 4;
 }
 
