@@ -365,7 +365,7 @@ message ValidatorAssignments {
     // A pagination token returned from a previous call to `ListValidatorAssignmentsRequest`
     // that indicates where this listing should continue from.
     // This field is optional.
-    string page_token = 3;
+    string next_page_token = 3;
 }
 
 message GetValidatorParticipationRequest {
