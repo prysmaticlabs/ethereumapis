@@ -249,15 +249,15 @@ message GetValidatorsRequest {
 
     // The maximum number of Validators to return in the response.
     // This field is optional.
-    uint64 page_size = 3;
+    int32 page_size = 3;
 
     // A pagination token returned from a previous call to `GetValidators`
     // that indicates where this listing should continue from.
     // This field is optional.
-    uint64 page_token = 4;
+    string page_token = 4;
 
-    // Total count of validators.
-    uint64 total_size = 5;
+    // Total count of Validator to return.
+    int32 total_size = 5;
 }
 
 message Validators {
@@ -267,8 +267,12 @@ message Validators {
     uint64 epoch = 1;
 
     repeated Validator validators = 2;
-}
 
+    // A pagination token returned from a previous call to `GetValidators`
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 3;
+}
 
 message GetValidatorActiveSetChangesRequest {
     uint64 epoch = 1;
@@ -314,6 +318,18 @@ message ListValidatorAssignmentsRequest {
         
     // Validator indicies to filter assignments for the given epoch.
     repeated uint64 indices = 3;
+
+    // The maximum number of ValidatorAssignments to return in the response.
+    // This field is optional.
+    int32 page_size = 4;
+
+    // A pagination token returned from a previous call to `ListValidatorAssignments`
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 5;
+
+    // Total count of CommitteeAssignment to return.
+    int32 total_size = 6;
 }
 
 message ValidatorAssignments {
@@ -345,6 +361,11 @@ message ValidatorAssignments {
     uint64 epoch = 1;
 
     repeated CommitteeAssignment assignments = 2;
+
+    // A pagination token returned from a previous call to `ListValidatorAssignmentsRequest`
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 3;
 }
 
 message GetValidatorParticipationRequest {
