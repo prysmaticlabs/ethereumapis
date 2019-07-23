@@ -255,9 +255,6 @@ message GetValidatorsRequest {
     // that indicates where this listing should continue from.
     // This field is optional.
     string page_token = 4;
-
-    // Total count of Validator to return.
-    int32 total_size = 5;
 }
 
 message Validators {
@@ -272,6 +269,9 @@ message Validators {
     // that indicates from where listing should continue.
     // This field is optional.
     string next_page_token = 3;
+
+    // Total count of Validator in this response.
+    int32 total_size = 4;
 }
 
 message GetValidatorActiveSetChangesRequest {
@@ -327,9 +327,6 @@ message ListValidatorAssignmentsRequest {
     // that indicates where this listing should continue from.
     // This field is optional.
     string page_token = 5;
-
-    // Total count of CommitteeAssignment to return.
-    int32 total_size = 6;
 }
 
 message ValidatorAssignments {
@@ -366,6 +363,9 @@ message ValidatorAssignments {
     // that indicates where this listing should continue from.
     // This field is optional.
     string next_page_token = 3;
+
+    // Total count of CommitteeAssignment in this response.
+    int32 total_size = 4;
 }
 
 message GetValidatorParticipationRequest {
