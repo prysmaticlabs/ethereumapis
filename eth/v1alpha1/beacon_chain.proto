@@ -364,7 +364,7 @@ message ValidatorAssignments {
     // This field is optional.
     string next_page_token = 3;
 
-    // Total count of CommitteeAssignment in this response.
+    // Total count of CommitteeAssignments matching the request filter.
     int32 total_size = 4;
 }
 
