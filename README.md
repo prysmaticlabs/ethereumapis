@@ -3,6 +3,8 @@
 [![Build status](https://badge.buildkite.com/62be08099e9e228b165c2dba69c637eb9ca7a1ca95efd54b9f.svg?branch=master)](https://buildkite.com/prysmatic-labs/ethereum-apis)
 [![Discord](https://user-images.githubusercontent.com/7288322/34471967-1df7808a-efbb-11e7-9088-ed0b04151291.png)](https://discord.gg/KSA7rPr)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/prysmaticlabs/geth-sharding?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![ETH2.0_Spec_Version 0.8.1](https://img.shields.io/badge/ETH2.0%20Spec%20Version-v0.8.1-blue.svg)](https://github.com/ethereum/eth2.0-specs/commit/452ecf8e27c7852c7854597f2b1bb4a62b80c7ec)
+
 
 This repository hosts [Prysm](https://github.com/prysmaticlabs/prysm/)'s service interface definitions for the Ethereum 2.0 API. These [protocol buffer](https://developers.google.com/protocol-buffers/) service definitions support [gRPC](https://grpc.io/) as well as JSON over HTTP.
 
