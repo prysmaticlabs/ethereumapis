@@ -25,9 +25,11 @@ def _collect_includes(gen_dir, srcs):
 
     return includes
 
-# protoc -I$(GOOGLEAPIS_DIR) -I. --include_imports --include_source_info \
-#  --descriptor_set_out=proto.pb test/proto/bookstore.proto
 def _proto_descriptor_set_impl(ctx):
+    """
+    Build a descriptor set with imports and source info. Also see
+    https://www.envoyproxy.io/docs/envoy/latest/configuration/http_filters/grpc_json_transcoder_filter#how-to-generate-proto-descriptor-set.
+    """
     proto = ctx.attr.proto[ProtoInfo]
     inputs = proto.direct_sources + ctx.files._well_known_protos + proto.transitive_sources.to_list()
 
