@@ -195,7 +195,7 @@ message ListBlocksRequest {
     }
 
     // Optional criteria to filter only the canonical blocks.
-    bool canonical = 4;
+    bool canonical = 4 [default=true];
         
     // The maximum number of Blocks to return in the response.
     // This field is optional.
