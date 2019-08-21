@@ -194,7 +194,8 @@ message ListBlocksRequest {
         uint64 epoch = 3;
     }
 
-    // Optional criteria to include the non-canonical blocks.
+    // Optional criteria to include any non-canonical blocks matching the 
+    // request.
     bool include_noncanonical = 4;
         
     // The maximum number of Blocks to return in the response.
