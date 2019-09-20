@@ -264,7 +264,7 @@ message GetValidatorBalancesRequest {
 
     // Validator 48 byte BLS public keys to filter validators for the given
     // epoch.
-    repeated bytes public_keys = 3 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
+    repeated bytes public_keys = 3;
         
     // Validator indices to filter validators for the given epoch.
     repeated uint64 indices = 4;
