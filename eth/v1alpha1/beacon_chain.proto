@@ -345,9 +345,8 @@ message ActiveSetChanges {
     // epoch.
     repeated bytes exited_public_keys = 3;
 
-    // 48 byte validator public keys that have been involuntarily ejected in 
-    // this epoch.
-    repeated bytes ejected_public_keys = 4;
+    // 48 byte validator public keys that have been slashed in this epoch.
+    repeated bytes slashed_public_keys = 4;
 }
 
 message ValidatorQueue {
