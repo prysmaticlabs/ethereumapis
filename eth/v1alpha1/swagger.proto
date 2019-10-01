@@ -24,7 +24,7 @@ option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1;eth";
 
 option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
     info: {
-        title: "Ethereum Serenity API's";
+        title: "Ethereum Serenity APIs";
         version: "v1alpha1";
         license: {
             name: "Licenced under Apache 2.0";
