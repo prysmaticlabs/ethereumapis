@@ -324,7 +324,13 @@ message Validators {
 }
 
 message GetValidatorActiveSetChangesRequest {
-    uint64 epoch = 1;
+    oneof query_filter {
+        // Optional criteria to retrieve balances at a specific epoch.
+        uint64 epoch = 1;
+
+        // Optional criteria to retrieve the genesis list of balances.
+        bool genesis = 2;
+    }
 }
 
 message ActiveSetChanges {
@@ -339,9 +345,11 @@ message ActiveSetChanges {
     // epoch.
     repeated bytes exited_public_keys = 3;
 
-    // 48 byte validator public keys that have been involuntarily ejected in 
-    // this epoch.
-    repeated bytes ejected_public_keys = 4;
+    // 48 byte validator public keys that have been slashed in this epoch.
+    repeated bytes slashed_public_keys = 4;
+
+    // 48 byte validator public keys that have been involuntarily ejected in this epoch.
+    repeated bytes ejected_public_keys = 5;
 }
 
 message ValidatorQueue {
@@ -359,23 +367,27 @@ message ValidatorQueue {
 }
 
 message ListValidatorAssignmentsRequest {
-    // Retrieve the validator assignments at the given epoch.
-    uint64 epoch = 1;
+    oneof query_filter {
+        // Epoch to validator assignments for.
+        uint64 epoch = 1;
 
+        // Whether or not to query for the genesis information.
+        bool genesis = 2;
+    }
     // 48 byte validator public keys to filter assignments for the given epoch.
-    repeated bytes public_keys = 2;
+    repeated bytes public_keys = 3;
         
     // Validator indicies to filter assignments for the given epoch.
-    repeated uint64 indices = 3;
+    repeated uint64 indices = 4;
 
     // The maximum number of ValidatorAssignments to return in the response.
     // This field is optional.
-    int32 page_size = 4;
+    int32 page_size = 5;
 
     // A pagination token returned from a previous call to `ListValidatorAssignments`
     // that indicates where this listing should continue from.
     // This field is optional.
-    string page_token = 5;
+    string page_token = 6;
 }
 
 message ValidatorAssignments {
@@ -418,8 +430,13 @@ message ValidatorAssignments {
 }
 
 message GetValidatorParticipationRequest {
-    // Epoch to request participation information.
-    uint64 epoch = 1;
+    oneof query_filter {
+        // Epoch to request participation information.
+        uint64 epoch = 1;
+
+        // Whether or not to query for the genesis information.
+        bool genesis = 2;
+    }
 }
 
 message ValidatorParticipationResponse {
