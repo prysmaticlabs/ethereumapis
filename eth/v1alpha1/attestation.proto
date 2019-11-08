@@ -42,17 +42,20 @@ message AttestationData {
   // Attestation data includes information on Casper the Friendly Finality Gadget's votes
   // See: https://arxiv.org/pdf/1710.09437.pdf
 
+  // Slot of the attestation attesting for.
+  uint64 slot = 1;
+
+  // The committee index that submitted this attestation.
+  uint64 index = 2;
+
   // 32 byte root of the LMD GHOST block vote.
-  bytes beacon_block_root = 1;
+  bytes beacon_block_root = 3;
 
   // the most recent justified checkpoint in the beacon state
-  Checkpoint source = 2;
+  Checkpoint source = 4;
 
   // the checkpoint attempting to be justified for the current epoch and its epoch boundary block
-  Checkpoint target = 3;
-
-  // Crosslink voted by this attestation.
-  Crosslink crosslink = 4;
+  Checkpoint target = 5;
 }
 
 message Crosslink {

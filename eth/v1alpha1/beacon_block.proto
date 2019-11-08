@@ -71,10 +71,6 @@ message BeaconBlockBody {
 
     // At most MAX_VOLUNTARY_EXITS.
     repeated VoluntaryExit voluntary_exits = 8;
-
-    // At most MAX_TRANSFERS.
-    // Note: this is always empty for phase 0.
-    repeated Transfer transfers = 9;
 }
 
 // Proposer slashings are proofs that a slashable offense has been committed by
