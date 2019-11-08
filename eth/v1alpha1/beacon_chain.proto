@@ -147,18 +147,41 @@ message ListAttestationsRequest {
 
     oneof query_filter {
         // Filter attestations by a specific block root.
-        bytes block_root = 1;
+        bytes head_block_root = 1;
 
-        // Filter attestations by slot number.
-        uint64 slot = 2;
+        // Filter attestations by source epoch.
+        uint64 source_epoch = 2;
 
-        // Filter attestations by epoch number.
-        uint64 epoch = 3;
+        // Filter attestations by target root.
+        bytes source_root = 3;
+
+        // Filter attestations by target epoch.
+        uint64 target_epoch = 4;
+
+        // Filter attestations by target root.
+        bytes target_root = 5;
     }
+
+    // The maximum number of Attestations to return in the response.
+    // This field is optional.
+    int32 page_size = 6;
+
+    // A pagination token returned from a previous call to `ListAttestations`
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 7;
 }
 
 message ListAttestationsResponse {
     repeated Attestation attestations = 1;
+
+    // A pagination token returned from a previous call to `ListAttestations`
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 2;
+
+    // Total count of Attestations matching the request filter.
+    int32 total_size = 3;
 }
 
 message ListBlocksRequest {
@@ -176,10 +199,31 @@ message ListBlocksRequest {
         // from another fork.
         uint64 epoch = 3;
     }
+
+    // Optional criteria to include any non-canonical blocks matching the 
+    // request.
+    bool include_noncanonical = 4;
+        
+    // The maximum number of Blocks to return in the response.
+    // This field is optional.
+    int32 page_size = 5;
+
+    // A pagination token returned from a previous call to `ListBlocks`
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 6;
 }
 
 message ListBlocksResponse {
     repeated BeaconBlock blocks = 1;
+
+    // A pagination token returned from a previous call to `ListBlocks`
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 2;
+
+    // Total count of Blocks matching the request filter.
+    int32 total_size = 3;
 }
 
 // Information about the head of the beacon chain.
@@ -210,20 +254,37 @@ message ChainHead {
 }
 
 message GetValidatorBalancesRequest {
-    // Retrieve validator balance at the given epoch.
-    uint64 epoch = 1;
+    oneof query_filter {
+        // Optional criteria to retrieve balances at a specific epoch.
+        uint64 epoch = 1;
 
-    // Validator 96 byte BLS public keys to filter validators for the given
+        // Optional criteria to retrieve the genesis list of balances.
+        bool genesis = 2;
+    }
+
+    // Validator 48 byte BLS public keys to filter validators for the given
     // epoch.
-    repeated bytes public_keys = 2;
+    repeated bytes public_keys = 3;
         
     // Validator indices to filter validators for the given epoch.
-    repeated uint64 indices = 3;
+    repeated uint64 indices = 4;
+
+    // The maximum number of Validators to return in the response.
+    // This field is optional.
+    int32 page_size = 5;
+
+    // A pagination token returned from a previous call to `GetValidators`
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 6;
 }
 
 message ValidatorBalances {
+    // Epoch which the state was considered to determine the validator balances.
+    uint64 epoch = 1;
+
     message Balance {
-        // Validator's 96 byte BLS public key. 
+        // Validator's 48 byte BLS public key.
         bytes public_key = 1;
 
         // Validator's index in the validator set.
@@ -233,7 +294,14 @@ message ValidatorBalances {
         uint64 balance = 3;
     }
 
-    repeated Balance balances = 1;
+    repeated Balance balances = 2;
+
+    // A pagination token returned from a previous call to `GetListValidatorBalances`
+    // that indicates from where listing should continue.
+    string next_page_token = 3;
+
+    // Total count of items matching the request filter.
+    int32 total_size = 4;
 }
 
 message GetValidatorsRequest {
@@ -275,7 +343,13 @@ message Validators {
 }
 
 message GetValidatorActiveSetChangesRequest {
-    uint64 epoch = 1;
+    oneof query_filter {
+        // Optional criteria to retrieve balances at a specific epoch.
+        uint64 epoch = 1;
+
+        // Optional criteria to retrieve the genesis list of balances.
+        bool genesis = 2;
+    }
 }
 
 message ActiveSetChanges {
@@ -283,16 +357,18 @@ message ActiveSetChanges {
     // set. 
     uint64 epoch = 1;
 
-    // 96 byte validator public keys that have been activated in this epoch.
+    // 48 byte validator public keys that have been activated in this epoch.
     repeated bytes activated_public_keys = 2;
 
-    // 96 byte validator public keys that have been voluntarily exited in this
+    // 48 byte validator public keys that have been voluntarily exited in this
     // epoch.
     repeated bytes exited_public_keys = 3;
 
-    // 96 byte validator public keys that have been involuntarily ejected in 
-    // this epoch.
-    repeated bytes ejected_public_keys = 4;
+    // 48 byte validator public keys that have been slashed in this epoch.
+    repeated bytes slashed_public_keys = 4;
+
+    // 48 byte validator public keys that have been involuntarily ejected in this epoch.
+    repeated bytes ejected_public_keys = 5;
 }
 
 message ValidatorQueue {
@@ -300,7 +376,7 @@ message ValidatorQueue {
     // validator set.
     uint64 churn_limit = 1;
 
-    // Ordered list of 96 byte public keys awaiting activation. 0th index is the
+    // Ordered list of 48 byte public keys awaiting activation. 0th index is the
     // next key to be processed.
     repeated bytes activation_public_keys = 2;
 
@@ -310,23 +386,27 @@ message ValidatorQueue {
 }
 
 message ListValidatorAssignmentsRequest {
-    // Retrieve the validator assignments at the given epoch.
-    uint64 epoch = 1;
+    oneof query_filter {
+        // Epoch to validator assignments for.
+        uint64 epoch = 1;
 
-    // 96 byte validator public keys to filter assignments for the given epoch.
-    repeated bytes public_keys = 2;
+        // Whether or not to query for the genesis information.
+        bool genesis = 2;
+    }
+    // 48 byte validator public keys to filter assignments for the given epoch.
+    repeated bytes public_keys = 3;
         
     // Validator indicies to filter assignments for the given epoch.
-    repeated uint64 indices = 3;
+    repeated uint64 indices = 4;
 
     // The maximum number of ValidatorAssignments to return in the response.
     // This field is optional.
-    int32 page_size = 4;
+    int32 page_size = 5;
 
     // A pagination token returned from a previous call to `ListValidatorAssignments`
     // that indicates where this listing should continue from.
     // This field is optional.
-    string page_token = 5;
+    string page_token = 6;
 }
 
 message ValidatorAssignments {
@@ -349,7 +429,7 @@ message ValidatorAssignments {
         // assignment time.
         bool proposer = 4;
 
-        // 96 byte BLS public key 
+        // 48 byte BLS public key 
         bytes public_key = 5;
     }
 
@@ -368,28 +448,26 @@ message ValidatorAssignments {
 }
 
 message GetValidatorParticipationRequest {
-    // Epoch to request participation information.
-    uint64 epoch = 1;
+    oneof query_filter {
+        // Epoch to request participation information.
+        uint64 epoch = 1;
+
+        // Whether or not to query for the genesis information.
+        bool genesis = 2;
+    }
 }
 
-message ValidatorParticipation {
+message ValidatorParticipationResponse {
     // Epoch which this message is applicable.
     uint64 epoch = 1;
 
     // Whether or not epoch has been finalized.
     bool finalized = 2;
 
-    // Percentage of validator participation in the given epoch. This field
-    // contains a value between 0 and 1.
-    float global_participation_rate = 3;
-
-    // The total amount of ether, in gwei, that has been used in voting.
-    uint64 voted_ether = 4;
-
-    // The total amount of ether, in gwei, that is eligible for voting.
-    uint64 eligible_ether = 5;   
+    // The actual validator participation metrics.
+    ValidatorParticipation participation = 3;
 }
 
 message AttestationPoolResponse {
-  repeated Attestation attestations = 1;
+    repeated Attestation attestations = 1;
 }

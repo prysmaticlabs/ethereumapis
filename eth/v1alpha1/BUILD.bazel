@@ -1,3 +1,5 @@
+load("//tools:proto_descriptor_sets.bzl", "proto_descriptor_set")
+
 ##############################################################################
 # Common
 ##############################################################################
@@ -19,6 +21,11 @@ proto_library(
         "@com_google_protobuf//:timestamp_proto",
         "@go_googleapis//google/api:annotations_proto",
     ],
+)
+
+proto_descriptor_set(
+    name = "proto_descriptor_set",
+    proto = ":proto",
 )
 
 ##############################################################################
@@ -45,8 +52,7 @@ go_proto_library(
     visibility = ["//visibility:public"],
     deps = [
         "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_go_proto",
-
-                "@go_googleapis//google/api:annotations_go_proto",
+        "@go_googleapis//google/api:annotations_go_proto",
     ],
 )
 
@@ -67,4 +73,5 @@ protoc_gen_swagger(
     proto = ":proto",
     visibility = ["//visibility:public"],
     single_output = True,
+    json_names_for_fields = True,
 )

@@ -72,9 +72,9 @@ service BeaconNodeValidator {
 
     // Retrieves the latest valid attestation data to be attested on the beacon chain.
     //
-    // The server returns the latest valid attestation data which represents the correct vote
+    // The server returns the latest valid attestation which represents the correct vote
     // for the head of the beacon chain,
-    rpc GetAttestationData(AttestationDataRequest) returns (AttestationData) {
+    rpc GetAttestationData(AttestationDataRequest) returns (Attestation) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validator/attestation"
         };
@@ -102,7 +102,7 @@ message DutiesRequest {
 message DutiesResponse {
     repeated Duty duties = 1;
     message Duty {
-        // 96 byte BLS public key for the validator who's assigned to perform the following duty.
+        // 48 byte BLS public key for the validator who's assigned to perform the following duty.
         bytes public_key = 1;
         // Slot at which a validator must attest.
         uint64 attestation_slot = 2;
@@ -136,7 +136,7 @@ message AttestationDataRequest {
 
 // An Ethereum 2.0 validator.
 message Validator {
-    // 96 byte BLS public key used for the validator's activities.
+    // 48 byte BLS public key used for the validator's activities.
     bytes public_key = 1;
 
     // 32 byte hash of the withdrawal destination public key.
@@ -164,3 +164,17 @@ message Validator {
     // may be zero if the validator has not exited.
     uint64 withdrawable_epoch = 8;
 }
+
+// ValidatorParticipation stores participation metrics during a given epoch.
+message ValidatorParticipation {
+    // Percentage of validator participation in the given epoch. This field
+    // contains a value between 0 and 1.
+    float global_participation_rate = 1;
+
+    // The total amount of ether, in gwei, that has been used in voting.
+    uint64 voted_ether = 2;
+
+    // The total amount of ether, in gwei, that is eligible for voting.
+    uint64 eligible_ether = 3;   
+}
+
