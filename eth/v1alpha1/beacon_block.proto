@@ -168,10 +168,11 @@ message BeaconBlockHeader {
 }
 
 message IndexedAttestation {
-    repeated uint64 attesting_indices = 1;
+    repeated uint64 custody_bit_0_indices = 1;
+    repeated uint64 custody_bit_1_indices = 2;
 
-    AttestationData data = 2;
+    AttestationData data = 3;
 
     // 96 bytes aggregate signature.
-    bytes signature = 3;
+    bytes signature = 4;
 }

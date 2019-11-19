@@ -29,8 +29,13 @@ message Attestation {
 
   AttestationData data = 2;
 
+  // Custody bits is used for proof of custody game to ensure validator has
+  // legitimately downloaded and verified shard data.
+  // Not used in phase 0.
+  bytes custody_bits = 3;
+
   // 96 byte BLS aggregate signature.
-  bytes signature = 3;
+  bytes signature = 4;
 }
 
 message AttestationData {
