@@ -96,7 +96,7 @@ service BeaconChain {
     // Retrieve the current validator registry.
     //
     // The request may include an optional historical epoch to retrieve a 
-    // specific validator set in time. Can also filter to retrieve active validators.
+    // specific validator set in time.
     rpc ListValidators(ListValidatorsRequest) returns (Validators) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validators"
