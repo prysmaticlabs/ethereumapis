@@ -313,7 +313,7 @@ message BeaconCommittees {
     // The epoch for which the committees in the response belong to.
     uint64 epoch = 1;
 
-    // A list of committees of validators for given  epoch.
+    // A list of committees of validators for given epoch.
     repeated CommitteeItem committees = 2;
 
     // The number of active validators at the given epoch.
