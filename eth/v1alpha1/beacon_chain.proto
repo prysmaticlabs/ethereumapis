@@ -327,7 +327,6 @@ message BeaconCommittees {
     int32 total_size = 5;
 }
 
-
 message ListValidatorBalancesRequest {
     oneof query_filter {
         // Optional criteria to retrieve balances at a specific epoch.
