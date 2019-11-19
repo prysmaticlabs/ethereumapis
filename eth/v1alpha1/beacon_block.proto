@@ -132,30 +132,6 @@ message VoluntaryExit {
     bytes signature = 3;
 }
 
-// A beacon chain transfer is a ETH currency transfer between two validators.
-message Transfer {
-    // Validator index of the sender.
-    uint64 sender_index = 1;
-
-    // Validator index of the recipient. 
-    uint64 recipient_index = 2;
-
-    // Amount in gwei sent to the recipient.
-    uint64 amount = 3; 
-
-    // Fee in gwei for the block proposer to include this transfer.
-    uint64 fee = 4;
-
-    // Slot at which transfer must be processed. This is used for replay protection.
-    uint64 slot = 5;
-
-    // 48 byte sender's withdrawal public key.
-    bytes sender_withdrawal_public_key = 6;
-
-    // 96 byte signature from the sender's withdrawal key.
-    bytes signature = 7;
-}
-
 // Eth1Data represents references to the Ethereum 1.x deposit contract.
 message Eth1Data {
     // The 32 byte deposit tree root for the last deposit included in this
