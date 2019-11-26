@@ -47,7 +47,7 @@ load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 
 go_proto_library(
     name = "go_proto",
-    compilers = ["//:grpc_proto_compiler"],
+    compilers = ["@prysm//:grpc_proto_compiler"],
     importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1",
     proto = ":proto",
     visibility = ["//visibility:public"],
