@@ -11,12 +11,10 @@ proto_library(
         "beacon_block.proto",
         "beacon_chain.proto",
         "node.proto",
-        "swagger.proto",
         "validator.proto",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_proto",
         "@com_google_protobuf//:empty_proto",
         "@com_google_protobuf//:timestamp_proto",
         "@go_googleapis//google/api:annotations_proto",
@@ -52,7 +50,6 @@ go_proto_library(
     proto = ":proto",
     visibility = ["//visibility:public"],
     deps = [
-        "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_go_proto",
         "@com_github_prysmaticlabs_go_bitfield//:go_default_library",
         "@go_googleapis//google/api:annotations_go_proto",
     ],
@@ -61,11 +58,11 @@ go_proto_library(
 go_proto_library(
     name = "go_grpc_gateway_library",
     compilers = [
-        "//:grpc_nogogo_proto_compiler",
+        "@prysm//:grpc_nogogo_proto_compiler",
         "@grpc_ecosystem_grpc_gateway//protoc-gen-grpc-gateway:go_gen_grpc_gateway",
     ],
     importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1_gateway",
-    proto = ":v1alpha1_proto",
+    proto = ":proto",
     visibility = ["//visibility:public"],
     deps = [
         "@com_github_gogo_protobuf//gogoproto:go_default_library",
@@ -83,15 +80,3 @@ go_library(
     visibility = ["//visibility:public"],
 )
 
-##############################################################################
-# OpenAPI (Swagger) V2
-##############################################################################
-load("@grpc_ecosystem_grpc_gateway//protoc-gen-swagger:defs.bzl", "protoc_gen_swagger")
-
-protoc_gen_swagger(
-    name = "swagger",
-    proto = ":proto",
-    visibility = ["//visibility:public"],
-    single_output = True,
-    json_names_for_fields = True,
-)
