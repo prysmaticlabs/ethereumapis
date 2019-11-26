@@ -27,14 +27,14 @@ option php_namespace = "Ethereum\\Eth\\v1alpha1";
 message Attestation {
   // A bitfield representation of validator indices that have voted exactly
   // the same vote and have been aggregated into this attestation.
-  bytes aggregation_bits = 1 [(gogoproto.moretags) = "ssz-max:\"2048\"", (gogoproto.casttype) = "github.com/prysmaticlabs/go-bitfield.Bitlist"];;
+  bytes aggregation_bits = 1 [(gogoproto.moretags) = "ssz-max:\"2048\"", (gogoproto.casttype) = "github.com/prysmaticlabs/go-bitfield.Bitlist"];
 
   AttestationData data = 2;
 
   // Custody bits is used for proof of custody game to ensure validator has
   // legitimately downloaded and verified shard data.
   // Not used in phase 0.
-  bytes custody_bits = 3 [(gogoproto.moretags) = "ssz-max:\"2048\"", (gogoproto.casttype) = "github.com/prysmaticlabs/go-bitfield.Bitlist"];;
+  bytes custody_bits = 3 [(gogoproto.moretags) = "ssz-max:\"2048\"", (gogoproto.casttype) = "github.com/prysmaticlabs/go-bitfield.Bitlist"];
 
   // 96 byte BLS aggregate signature.
   bytes signature = 4 [(gogoproto.moretags) = "ssz-size:\"96\""];
