@@ -144,7 +144,7 @@ service BeaconChain {
     //
     // This method returns information about the global participation of 
     // validator attestations.
-    rpc GetValidatorParticipation(GetValidatorParticipationRequest) returns (ValidatorParticipation) {
+    rpc GetValidatorParticipation(GetValidatorParticipationRequest) returns (ValidatorParticipationResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validators/participation"
         };
