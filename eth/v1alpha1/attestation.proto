@@ -15,6 +15,8 @@ syntax = "proto3";
 
 package ethereum.eth.v1alpha1;
 
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
 option csharp_namespace = "Ethereum.Eth.v1alpha1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1;eth";
 option java_multiple_files = true;
@@ -25,17 +27,17 @@ option php_namespace = "Ethereum\\Eth\\v1alpha1";
 message Attestation {
   // A bitfield representation of validator indices that have voted exactly
   // the same vote and have been aggregated into this attestation.
-  bytes aggregation_bits = 1;
+  bytes aggregation_bits = 1 [(gogoproto.moretags) = "ssz-max:\"2048\"", (gogoproto.casttype) = "github.com/prysmaticlabs/go-bitfield.Bitlist"];;
 
   AttestationData data = 2;
 
   // Custody bits is used for proof of custody game to ensure validator has
   // legitimately downloaded and verified shard data.
   // Not used in phase 0.
-  bytes custody_bits = 3;
+  bytes custody_bits = 3 [(gogoproto.moretags) = "ssz-max:\"2048\"", (gogoproto.casttype) = "github.com/prysmaticlabs/go-bitfield.Bitlist"];;
 
   // 96 byte BLS aggregate signature.
-  bytes signature = 4;
+  bytes signature = 4 [(gogoproto.moretags) = "ssz-size:\"96\""];
 }
 
 message AttestationData {
@@ -49,7 +51,7 @@ message AttestationData {
   uint64 committee_index = 2;
 
   // 32 byte root of the LMD GHOST block vote.
-  bytes beacon_block_root = 3;
+  bytes beacon_block_root = 3 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
   // the most recent justified checkpoint in the beacon state
   Checkpoint source = 4;
@@ -84,5 +86,5 @@ message Checkpoint {
   // epoch of the check point reference to.
   uint64 epoch = 1;
   // block root of the check point reference to.
-  bytes root = 2;
+  bytes root = 2 [(gogoproto.moretags) = "ssz-size:\"32\""];
 }

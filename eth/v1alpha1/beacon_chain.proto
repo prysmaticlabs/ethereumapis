@@ -15,6 +15,7 @@ syntax = "proto3";
 
 package ethereum.eth.v1alpha1;
 
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
@@ -247,7 +248,7 @@ message BeaconBlockContainer {
 // Information about the head of the beacon chain.
 message ChainHead {
     // 32 byte merkle tree root of the canonical head block in the beacon node.
-    bytes head_block_root = 1;
+    bytes head_block_root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
     // Slot of the head block.
     uint64 head_block_slot = 2;
@@ -262,7 +263,7 @@ message ChainHead {
     uint64 finalized_epoch = 5;
     
     // Most recent 32 byte finalized block root.
-    bytes finalized_block_root = 6;
+    bytes finalized_block_root = 6 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
     // Most recent slot that contains the justified block.
     uint64 justified_block_slot = 7;
@@ -271,7 +272,7 @@ message ChainHead {
     uint64 justified_epoch = 8;
     
     // Most recent 32 byte justified block root.
-    bytes justified_block_root = 9;
+    bytes justified_block_root = 9 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
     // Most recent slot that contains the previous justified block.
     uint64 previous_justified_slot = 10;
@@ -280,7 +281,7 @@ message ChainHead {
     uint64 previous_justified_epoch = 11;
 
     // Previous 32 byte justified block root.
-    bytes previous_justified_block_root = 12;
+    bytes previous_justified_block_root = 12 [(gogoproto.moretags) = "ssz-size:\"32\""];
 }
 
 message ListCommitteesRequest {
@@ -338,7 +339,7 @@ message ListValidatorBalancesRequest {
 
     // Validator 48 byte BLS public keys to filter validators for the given
     // epoch.
-    repeated bytes public_keys = 3;
+    repeated bytes public_keys = 3 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
         
     // Validator indices to filter validators for the given epoch.
     repeated uint64 indices = 4;
@@ -359,7 +360,7 @@ message ValidatorBalances {
 
     message Balance {
         // Validator's 48 byte BLS public key.
-        bytes public_key = 1;
+        bytes public_key = 1 [(gogoproto.moretags) = "ssz-size:\"48\""];
 
         // Validator's index in the validator set.
         uint64 index = 2;
@@ -435,17 +436,17 @@ message ActiveSetChanges {
     uint64 epoch = 1;
 
     // 48 byte validator public keys that have been activated in this epoch.
-    repeated bytes activated_public_keys = 2;
+    repeated bytes activated_public_keys = 2 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
 
     // 48 byte validator public keys that have been voluntarily exited in this
     // epoch.
-    repeated bytes exited_public_keys = 3;
+    repeated bytes exited_public_keys = 3 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
 
     // 48 byte validator public keys that have been slashed in this epoch.
-    repeated bytes slashed_public_keys = 4;
+    repeated bytes slashed_public_keys = 4 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
 
     // 48 byte validator public keys that have been involuntarily ejected in this epoch.
-    repeated bytes ejected_public_keys = 5;
+    repeated bytes ejected_public_keys = 5 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
 }
 
 message ValidatorQueue {
@@ -455,11 +456,11 @@ message ValidatorQueue {
 
     // Ordered list of 48 byte public keys awaiting activation. 0th index is the
     // next key to be processed.
-    repeated bytes activation_public_keys = 2;
+    repeated bytes activation_public_keys = 2 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
 
     // Ordered list of public keys awaiting exit. 0th index is the next key to
     // be processed.
-    repeated bytes exit_public_keys = 3;
+    repeated bytes exit_public_keys = 3 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
 }
 
 message ListValidatorAssignmentsRequest {
@@ -471,7 +472,7 @@ message ListValidatorAssignmentsRequest {
         bool genesis = 2;
     }
     // 48 byte validator public keys to filter assignments for the given epoch.
-    repeated bytes public_keys = 3;
+    repeated bytes public_keys = 3 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
         
     // Validator indicies to filter assignments for the given epoch.
     repeated uint64 indices = 4;
@@ -506,7 +507,7 @@ message ValidatorAssignments {
         uint64 proposer_slot = 4;
 
         // 48 byte BLS public key.
-        bytes public_key = 5;
+        bytes public_key = 5 [(gogoproto.moretags) = "ssz-size:\"48\""];
     }
 
     // The epoch for which this set of validator assignments is valid.
