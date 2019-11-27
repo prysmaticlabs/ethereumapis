@@ -48,7 +48,7 @@ message AttestationData {
   uint64 slot = 1;
 
   // The committee index that submitted this attestation.
-  uint64 index = 2;
+  uint64 committee_index = 2;
 
   // 32 byte root of the LMD GHOST block vote.
   bytes beacon_block_root = 3 [(gogoproto.moretags) = "ssz-size:\"32\""];
