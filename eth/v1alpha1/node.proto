@@ -110,6 +110,13 @@ message Peer {
     // The address of the peer, as a full multiaddr, for example:
     // /ip4/37.221.192.134/tcp/13000/p2p/16Uiu2HAm8maLMjag1TAUM52zPfmLbVMGFdwUAWgoHu1HDQLR6e17
     string address = 1;
-    // The direction of the connection, must be either "inbound" or "outbound".
-    string direction = 2;
+    // The direction of the connection (inbound/outbound).
+    PeerDirection direction = 2;
+}
+
+// PeerDirection states the direction of the connection to a peer.
+enum PeerDirection {
+  UNKNOWN = 0;
+  INBOUND = 1;
+  OUTBOUND = 2;
 }
