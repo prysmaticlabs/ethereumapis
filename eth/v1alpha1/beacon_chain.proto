@@ -40,7 +40,8 @@ service BeaconChain {
     // 
     // The server may return an empty list when no attestations match the given 
     // filter criteria. This RPC should not return NOT_FOUND. Only one filter 
-    // criteria should be used.
+    // criteria should be used. This endpoint allows for retrieval of genesis
+    // information via a boolean query filter.
     rpc ListAttestations(ListAttestationsRequest) returns (ListAttestationsResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/attestations"
@@ -67,7 +68,8 @@ service BeaconChain {
     // The server may return multiple blocks in the case that a slot or epoch is
     // provided as the filter criteria. The server may return an empty list when
     // no blocks in their database match the filter criteria. This RPC should 
-    // not return NOT_FOUND. Only one filter criteria should be used.
+    // not return NOT_FOUND. Only one filter criteria should be used. This endpoint
+    // allows for retrieval of genesis information via a boolean query filter.
     rpc ListBlocks(ListBlocksRequest) returns (ListBlocksResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/blocks"
@@ -89,6 +91,7 @@ service BeaconChain {
     //
     // If no filter criteria is specified, the response returns
     // all beacon committees for the current epoch. The results are paginated by default.
+    // This endpoint allows for retrieval of genesis information via a boolean query filter.
     rpc ListBeaconCommittees(ListCommitteesRequest) returns (BeaconCommittees) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/committees"
@@ -96,7 +99,8 @@ service BeaconChain {
     }
 
     // Retrieve validator balances for a given set of public keys at a specific 
-    // epoch in time.
+    // epoch in time. This endpoint allows for retrieval of genesis information
+    // via a boolean query filter.
     rpc ListValidatorBalances(ListValidatorBalancesRequest) returns (ValidatorBalances) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validators/balances"
@@ -106,7 +110,8 @@ service BeaconChain {
     // Retrieve the current validator registry.
     //
     // The request may include an optional historical epoch to retrieve a 
-    // specific validator set in time.
+    // specific validator set in time. This endpoint allows for retrieval of genesis
+    // information via a boolean query filter.
     rpc ListValidators(ListValidatorsRequest) returns (Validators) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validators"
@@ -116,7 +121,8 @@ service BeaconChain {
     // Retrieve the active set changes for a given epoch. 
     // 
     // This data includes any activations, voluntary exits, and involuntary
-    // ejections.
+    // ejections. This endpoint allows for retrieval of genesis
+    // information via a boolean query filter.
     rpc GetValidatorActiveSetChanges(GetValidatorActiveSetChangesRequest) returns (ActiveSetChanges) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validators/activesetchanges"
@@ -133,7 +139,8 @@ service BeaconChain {
     // Retrieve the validator assignments for a given epoch.
     //
     // This request may specify optional validator indices or public keys to
-    // filter validator assignments.
+    // filter validator assignments. This endpoint allows for retrieval of genesis
+    // information via a boolean query filter.
     rpc ListValidatorAssignments(ListValidatorAssignmentsRequest) returns (ValidatorAssignments) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validators/assignments"
@@ -143,7 +150,8 @@ service BeaconChain {
     // Retrieve the validator participation information for a given epoch.
     //
     // This method returns information about the global participation of 
-    // validator attestations.
+    // validator attestations. This endpoint allows for retrieval of genesis
+    // information via a boolean query filter.
     rpc GetValidatorParticipation(GetValidatorParticipationRequest) returns (ValidatorParticipationResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validators/participation"
@@ -170,16 +178,19 @@ message ListAttestationsRequest {
 
         // Filter attestations by target root.
         bytes target_root = 5;
+
+        // Optional criteria to retrieve genesis attestations.
+        bool genesis = 6;
     }
 
     // The maximum number of Attestations to return in the response.
     // This field is optional.
-    int32 page_size = 6;
+    int32 page_size = 7;
 
     // A pagination token returned from a previous call to `ListAttestations`
     // that indicates where this listing should continue from.
     // This field is optional.
-    string page_token = 7;
+    string page_token = 8;
 }
 
 message ListAttestationsResponse {
@@ -208,20 +219,23 @@ message ListBlocksRequest {
         // slot if the epoch has not been finalized and the node has seen blocks
         // from another fork.
         uint64 epoch = 3;
+
+        // Optional criteria to retrieve genesis block.
+        bool genesis = 4;
     }
 
     // Optional criteria to include any non-canonical blocks matching the 
     // request.
-    bool include_noncanonical = 4;
+    bool include_noncanonical = 5;
         
     // The maximum number of Blocks to return in the response.
     // This field is optional.
-    int32 page_size = 5;
+    int32 page_size = 6;
 
     // A pagination token returned from a previous call to `ListBlocks`
     // that indicates where this listing should continue from.
     // This field is optional.
-    string page_token = 6;
+    string page_token = 7;
 }
 
 message ListBlocksResponse {
