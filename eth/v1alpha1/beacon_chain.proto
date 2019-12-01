@@ -81,7 +81,11 @@ service BeaconChain {
     // 
     // This includes the head block slot and root as well as information about
     // the most recent finalized and justified slots.
-    rpc StreamChainHead(google.protobuf.Empty) returns (stream ChainHead);
+    rpc StreamChainHead(google.protobuf.Empty) returns (stream ChainHead) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/streamchainhead"
+        };
+    }
 
     // Retrieve information about the head of the beacon chain from the view of
     // the beacon chain node. 
