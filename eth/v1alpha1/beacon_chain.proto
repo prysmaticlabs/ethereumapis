@@ -342,7 +342,7 @@ message ListCommitteesRequest {
 message BeaconCommittees {
     message CommitteeItem {
         // A committee is a list of validator indices participating in consensus at a slot.
-        repeated uint64 committee = 1;
+        repeated uint64 validator_indices = 1;
     }
 
     message CommitteesList {
