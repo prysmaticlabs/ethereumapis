@@ -235,11 +235,6 @@ message ListBlocksRequest {
         // from another fork. 
         uint64 slot = 2; 
 
-        // Epoch to lookup blocks. This method may return multiple blocks for a 
-        // slot if the epoch has not been finalized and the node has seen blocks
-        // from another fork.
-        uint64 epoch = 3;
-
         // Optional criteria to retrieve genesis block.
         bool genesis = 4;
     }
