@@ -129,6 +129,15 @@ service BeaconChain {
         };
     }
 
+    // Retrieve information about a specific validator in the registry.
+    //
+    // This request may query by validator index or public key.
+    rpc GetValidator(GetValidatorRequest) returns (Validator) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator"
+        };
+    }
+
     // Retrieve the active set changes for a given epoch. 
     // 
     // This data includes any activations, voluntary exits, and involuntary
@@ -425,6 +434,16 @@ message ListValidatorsRequest {
     // that indicates where this listing should continue from.
     // This field is optional.
     string page_token = 5;
+}
+
+message GetValidatorRequest {
+    oneof query_filter {
+        // Validator index in the registry.
+        uint64 index = 1;
+
+        // 48 byte validator public key.
+        bytes public_key = 2;
+    }
 }
 
 message Validators {
