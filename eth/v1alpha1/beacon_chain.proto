@@ -350,11 +350,16 @@ message BeaconCommittees {
         repeated uint64 committee = 1;
     }
 
+    message CommitteesList {
+        // A list of committees.
+        repeated CommitteeItem committees = 1;
+    }
+
     // The epoch for which the committees in the response belong to.
     uint64 epoch = 1;
 
     // A map of validator committees by slot.
-    map<uint64, repeated CommitteeItem> committees = 2;
+    map<uint64, CommitteesList> committees = 2;
 
     // The number of active validators at the given epoch.
     uint64 active_validator_count = 3;
