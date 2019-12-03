@@ -437,11 +437,13 @@ message ListValidatorsRequest {
 }
 
 message GetValidatorRequest {
-    // Validator index in the registry.
-    uint64 index = 1;
+    oneof query_filter {
+        // Validator index in the registry.
+        uint64 index = 1;
 
-    // 48 byte validator public key.
-    bytes public_key = 2;
+        // 48 byte validator public key.
+        bytes public_key = 2;
+    }
 }
 
 message Validators {
