@@ -244,7 +244,7 @@ message ListBlocksRequest {
         uint64 slot = 2; 
 
         // Optional criteria to retrieve genesis block.
-        bool genesis = 4;
+         bool genesis = 3;
     }
 
     // Optional criteria to include any non-canonical blocks matching the 
