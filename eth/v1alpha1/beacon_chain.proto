@@ -341,17 +341,20 @@ message ListCommitteesRequest {
 
 message BeaconCommittees {
     message CommitteeItem {
-        // A committee of validator indices that need to attest to beacon blocks.
-        repeated uint64 committee = 1;
-
-        // The slot at which the committee is assigned to.
-        uint64 slot = 2;
+        // A committee is a list of validator indices participating in consensus at a slot.
+        repeated uint64 validator_indices = 1;
     }
+
+    message CommitteesList {
+        // A list of committees.
+        repeated CommitteeItem committees = 1;
+    }
+
     // The epoch for which the committees in the response belong to.
     uint64 epoch = 1;
 
-    // A list of committees of validators for given epoch.
-    repeated CommitteeItem committees = 2;
+    // A map of validator committees by slot.
+    map<uint64, CommitteesList> committees = 2;
 
     // The number of active validators at the given epoch.
     uint64 active_validator_count = 3;
