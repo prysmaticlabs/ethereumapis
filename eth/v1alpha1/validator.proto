@@ -149,19 +149,21 @@ message Validator {
     bool slashed = 4;
 
     // Epoch when the validator became eligible for activation. This field may
-    // be zero if the validator was present in the Ethereum 2.0 genesis.
+    // be zero if the validator was present in the Ethereum 2.0 genesis. This
+    // field is FAR_FUTURE_EPOCH if the validator has not been activated.
     uint64 activation_eligibility_epoch = 5;
 
     // Epoch when the validator was activated. This field may be zero if the
-    // validator was present in the Ethereum 2.0 genesis.
+    // validator was present in the Ethereum 2.0 genesis. This field is
+    // FAR_FUTURE_EPOCH if the validator has not been activated.
     uint64 activation_epoch = 6;
 
-    // Epoch when the validator was exited. This field may be zero if the
-    // validator has not exited.
+    // Epoch when the validator was exited. This field is FAR_FUTURE_EPOCH if
+    // the validator has not exited.
     uint64 exit_epoch = 7;
 
     // Epoch when the validator is eligible to withdraw their funds. This field
-    // may be zero if the validator has not exited.
+    // is FAR_FUTURE_EPOCH if the validator has not exited.
     uint64 withdrawable_epoch = 8;
 }
 
