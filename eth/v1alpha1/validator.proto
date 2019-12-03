@@ -90,6 +90,16 @@ service BeaconNodeValidator {
             post: "/eth/v1alpha1/validator/attestation"
         };
     }
+
+    // Request to leave the list of active validators.
+    //
+    // The beacon node is expected to validate the request and make it available for inclusion in
+    // the next proposed block.
+    rpc RequestExit(VoluntaryExit) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/eth/v1alpha1/validator/exit"
+        };
+    }
 }
 
 message DutiesRequest {
