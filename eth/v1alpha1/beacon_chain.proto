@@ -48,6 +48,14 @@ service BeaconChain {
         };
     }
 
+    // Server-side stream of attestations as they are received by
+    // by the beacon chain node. 
+    rpc StreamAttestations(ListAttestationsRequest) returns (stream Attestation) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/attestations/stream"
+        };
+    }
+
     // Retrieve attestations from pool.
     //
     // The server returns a list of attestations that have been seen but not
@@ -83,7 +91,7 @@ service BeaconChain {
     // the most recent finalized and justified slots.
     rpc StreamChainHead(google.protobuf.Empty) returns (stream ChainHead) {
         option (google.api.http) = {
-            get: "/eth/v1alpha1/beacon/streamchainhead"
+            get: "/eth/v1alpha1/beacon/chainhead/stream"
         };
     }
 
@@ -338,17 +346,15 @@ message ListCommitteesRequest {
 
 message BeaconCommittees {
     message CommitteeItem {
-        // A committee of validator indices that need to attest to beacon blocks.
+        // A committee is a list of validator indices participating in consensus at a slot.
         repeated uint64 committee = 1;
-
-        // The slot at which the committee is assigned to.
-        uint64 slot = 2;
     }
+
     // The epoch for which the committees in the response belong to.
     uint64 epoch = 1;
 
-    // A list of committees of validators for given epoch.
-    repeated CommitteeItem committees = 2;
+    // A map of validator committees by slot.
+    map<uint64, repeated CommitteeItem> committees = 2;
 
     // The number of active validators at the given epoch.
     uint64 active_validator_count = 3;
