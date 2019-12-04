@@ -50,7 +50,7 @@ service BeaconChain {
 
     // Server-side stream of attestations as they are received by
     // by the beacon chain node. 
-    rpc StreamAttestations(ListAttestationsRequest) returns (stream Attestation) {
+    rpc StreamAttestations(google.protobuf.Empty) returns (stream Attestation) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/attestations/stream"
         };
