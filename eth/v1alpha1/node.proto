@@ -62,6 +62,13 @@ service Node {
             get: "/eth/v1alpha1/node/services"
         };
     }
+
+    // Retrieve the list of peers currently connected to this node.
+    rpc ListPeers(google.protobuf.Empty) returns (Peers) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/node/peers"
+        };
+    }
 }
 
 // Information about the current network sync status of the node.
@@ -91,4 +98,25 @@ message Version {
 
 message ImplementedServices {
     repeated string services = 1;
+}
+
+// Peers is a list of peer messages.
+message Peers {
+    repeated Peer peers = 1;
+}
+
+// Peer provides details of a peer on the network.
+message Peer {
+    // The address of the peer, as a full multiaddr, for example:
+    // /ip4/37.221.192.134/tcp/13000/p2p/16Uiu2HAm8maLMjag1TAUM52zPfmLbVMGFdwUAWgoHu1HDQLR6e17
+    string address = 1;
+    // The direction of the connection (inbound/outbound).
+    PeerDirection direction = 2;
+}
+
+// PeerDirection states the direction of the connection to a peer.
+enum PeerDirection {
+  UNKNOWN = 0;
+  INBOUND = 1;
+  OUTBOUND = 2;
 }

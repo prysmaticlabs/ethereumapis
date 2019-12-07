@@ -40,10 +40,19 @@ service BeaconChain {
     // 
     // The server may return an empty list when no attestations match the given 
     // filter criteria. This RPC should not return NOT_FOUND. Only one filter 
-    // criteria should be used.
+    // criteria should be used. This endpoint allows for retrieval of genesis
+    // information via a boolean query filter.
     rpc ListAttestations(ListAttestationsRequest) returns (ListAttestationsResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/attestations"
+        };
+    }
+
+    // Server-side stream of attestations as they are received by
+    // by the beacon chain node. 
+    rpc StreamAttestations(google.protobuf.Empty) returns (stream Attestation) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/attestations/stream"
         };
     }
 
@@ -67,10 +76,22 @@ service BeaconChain {
     // The server may return multiple blocks in the case that a slot or epoch is
     // provided as the filter criteria. The server may return an empty list when
     // no blocks in their database match the filter criteria. This RPC should 
-    // not return NOT_FOUND. Only one filter criteria should be used.
+    // not return NOT_FOUND. Only one filter criteria should be used. This endpoint
+    // allows for retrieval of genesis information via a boolean query filter.
     rpc ListBlocks(ListBlocksRequest) returns (ListBlocksResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/blocks"
+        };
+    }
+
+    // Server-side stream of information about the head of the beacon chain 
+    // from the view of the beacon chain node. 
+    // 
+    // This includes the head block slot and root as well as information about
+    // the most recent finalized and justified slots.
+    rpc StreamChainHead(google.protobuf.Empty) returns (stream ChainHead) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/chainhead/stream"
         };
     }
 
@@ -85,28 +106,51 @@ service BeaconChain {
         };
     }
 
+    // Retrieve the beacon chain committees for a given epoch.
+    //
+    // If no filter criteria is specified, the response returns
+    // all beacon committees for the current epoch. The results are paginated by default.
+    // This endpoint allows for retrieval of genesis information via a boolean query filter.
+    rpc ListBeaconCommittees(ListCommitteesRequest) returns (BeaconCommittees) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/committees"
+        };
+    }
+
     // Retrieve validator balances for a given set of public keys at a specific 
-    // epoch in time.
-    rpc ListValidatorBalances(GetValidatorBalancesRequest) returns (ValidatorBalances) { 
+    // epoch in time. This endpoint allows for retrieval of genesis information
+    // via a boolean query filter.
+    rpc ListValidatorBalances(ListValidatorBalancesRequest) returns (ValidatorBalances) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validators/balances"
         };
     }
 
-    // Retrieve the current list of active validators. 
+    // Retrieve the current validator registry.
     //
     // The request may include an optional historical epoch to retrieve a 
-    // specific validator set in time.
-    rpc GetValidators(GetValidatorsRequest) returns (Validators) {
+    // specific validator set in time. This endpoint allows for retrieval of genesis
+    // information via a boolean query filter.
+    rpc ListValidators(ListValidatorsRequest) returns (Validators) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validators"
+        };
+    }
+
+    // Retrieve information about a specific validator in the registry.
+    //
+    // This request may query by validator index or public key.
+    rpc GetValidator(GetValidatorRequest) returns (Validator) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator"
         };
     }
 
     // Retrieve the active set changes for a given epoch. 
     // 
     // This data includes any activations, voluntary exits, and involuntary
-    // ejections.
+    // ejections. This endpoint allows for retrieval of genesis
+    // information via a boolean query filter.
     rpc GetValidatorActiveSetChanges(GetValidatorActiveSetChangesRequest) returns (ActiveSetChanges) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validators/activesetchanges"
@@ -123,7 +167,8 @@ service BeaconChain {
     // Retrieve the validator assignments for a given epoch.
     //
     // This request may specify optional validator indices or public keys to
-    // filter validator assignments.
+    // filter validator assignments. This endpoint allows for retrieval of genesis
+    // information via a boolean query filter.
     rpc ListValidatorAssignments(ListValidatorAssignmentsRequest) returns (ValidatorAssignments) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validators/assignments"
@@ -133,8 +178,9 @@ service BeaconChain {
     // Retrieve the validator participation information for a given epoch.
     //
     // This method returns information about the global participation of 
-    // validator attestations.
-    rpc GetValidatorParticipation(GetValidatorParticipationRequest) returns (ValidatorParticipation) {
+    // validator attestations. This endpoint allows for retrieval of genesis
+    // information via a boolean query filter.
+    rpc GetValidatorParticipation(GetValidatorParticipationRequest) returns (ValidatorParticipationResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validators/participation"
         };
@@ -160,16 +206,19 @@ message ListAttestationsRequest {
 
         // Filter attestations by target root.
         bytes target_root = 5;
+
+        // Optional criteria to retrieve genesis attestations.
+        bool genesis = 6;
     }
 
     // The maximum number of Attestations to return in the response.
     // This field is optional.
-    int32 page_size = 6;
+    int32 page_size = 7;
 
     // A pagination token returned from a previous call to `ListAttestations`
     // that indicates where this listing should continue from.
     // This field is optional.
-    string page_token = 7;
+    string page_token = 8;
 }
 
 message ListAttestationsResponse {
@@ -194,28 +243,26 @@ message ListBlocksRequest {
         // from another fork. 
         uint64 slot = 2; 
 
-        // Epoch to lookup blocks. This method may return multiple blocks for a 
-        // slot if the epoch has not been finalized and the node has seen blocks
-        // from another fork.
-        uint64 epoch = 3;
+        // Optional criteria to retrieve genesis block.
+        bool genesis = 3;
     }
 
     // Optional criteria to include any non-canonical blocks matching the 
     // request.
-    bool include_noncanonical = 4;
+    bool include_noncanonical = 5;
         
     // The maximum number of Blocks to return in the response.
     // This field is optional.
-    int32 page_size = 5;
+    int32 page_size = 6;
 
     // A pagination token returned from a previous call to `ListBlocks`
     // that indicates where this listing should continue from.
     // This field is optional.
-    string page_token = 6;
+    string page_token = 7;
 }
 
 message ListBlocksResponse {
-    repeated BeaconBlock blocks = 1;
+    repeated BeaconBlockContainer blockContainers = 1;
 
     // A pagination token returned from a previous call to `ListBlocks`
     // that indicates from where listing should continue.
@@ -226,34 +273,85 @@ message ListBlocksResponse {
     int32 total_size = 3;
 }
 
-// Information about the head of the beacon chain.
-message ChainHead {
-    // 32 byte merkle tree root of the canonical head block in the beacon node.
-    bytes block_root = 1;
-
-    // Slot of the head block.
-    uint64 block_slot = 2;
-
-    // Most recent finalized slot.
-    uint64 finalized_slot = 3;
-    
-    // Most recent 32 byte finalized block root.
-    bytes finalized_block_root = 4;
-
-    // Most recent justified slot.
-    uint64 justified_slot = 5;
-
-    // Most recent 32 byte justified block root.
-    bytes justified_block_root = 6;
-
-    // Previous justified slot.
-    uint64 previous_justified_slot = 7;
-
-    // Previous 32 byte justified block root.
-    bytes previous_justified_block_root = 8;
+// A container that contains both the beacon block
+// and its corresponding root.
+message BeaconBlockContainer {
+    BeaconBlock block = 1;
+    // 32 byte merkle tree root of contained beacon block.
+    bytes block_root = 2;
 }
 
-message GetValidatorBalancesRequest {
+// Information about the head of the beacon chain.
+message ChainHead {
+    // Slot of the head block.
+    uint64 head_slot = 1;
+
+    // Epoch of the head block.
+    uint64 head_epoch = 2;
+
+    // 32 byte merkle tree root of the canonical head block in the beacon node.
+    bytes head_block_root = 3;
+
+    // Most recent slot that contains the finalized block.
+    uint64 finalized_slot = 4;
+    
+    // Epoch of the finalized block.
+    uint64 finalized_epoch = 5;
+    
+    // Most recent 32 byte finalized block root.
+    bytes finalized_block_root = 6;
+
+    // Most recent slot that contains the justified block.
+    uint64 justified_slot = 7;
+
+    // Epoch of the justified block.
+    uint64 justified_epoch = 8;
+    
+    // Most recent 32 byte justified block root.
+    bytes justified_block_root = 9;
+
+    // Most recent slot that contains the previous justified block.
+    uint64 previous_justified_slot = 10;
+    
+    // Epoch of the previous justified block.
+    uint64 previous_justified_epoch = 11;
+
+    // Previous 32 byte justified block root.
+    bytes previous_justified_block_root = 12;
+}
+
+message ListCommitteesRequest {
+    oneof query_filter {
+        // Optional criteria to retrieve data at a specific epoch.
+        uint64 epoch = 1;
+
+        // Optional criteria to retrieve genesis data.
+        bool genesis = 2;
+    }
+}
+
+message BeaconCommittees {
+    message CommitteeItem {
+        // A committee is a list of validator indices participating in consensus at a slot.
+        repeated uint64 validator_indices = 1;
+    }
+
+    message CommitteesList {
+        // A list of committees.
+        repeated CommitteeItem committees = 1;
+    }
+
+    // The epoch for which the committees in the response belong to.
+    uint64 epoch = 1;
+
+    // A map of validator committees by slot.
+    map<uint64, CommitteesList> committees = 2;
+
+    // The number of active validators at the given epoch.
+    uint64 active_validator_count = 3;
+}
+
+message ListValidatorBalancesRequest {
     oneof query_filter {
         // Optional criteria to retrieve balances at a specific epoch.
         uint64 epoch = 1;
@@ -268,11 +366,23 @@ message GetValidatorBalancesRequest {
         
     // Validator indices to filter validators for the given epoch.
     repeated uint64 indices = 4;
+
+    // The maximum number of Validators to return in the response.
+    // This field is optional.
+    int32 page_size = 5;
+
+    // A pagination token returned from a previous call to `GetValidators`
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 6;
 }
 
 message ValidatorBalances {
+    // Epoch which the state was considered to determine the validator balances.
+    uint64 epoch = 1;
+
     message Balance {
-        // Validator's 48 byte BLS public key. 
+        // Validator's 48 byte BLS public key.
         bytes public_key = 1;
 
         // Validator's index in the validator set.
@@ -282,10 +392,17 @@ message ValidatorBalances {
         uint64 balance = 3;
     }
 
-    repeated Balance balances = 1;
+    repeated Balance balances = 2;
+
+    // A pagination token returned from a previous call to `GetListValidatorBalances`
+    // that indicates from where listing should continue.
+    string next_page_token = 3;
+
+    // Total count of items matching the request filter.
+    int32 total_size = 4;
 }
 
-message GetValidatorsRequest {
+message ListValidatorsRequest {
     oneof query_filter {
         // Optional criteria to retrieve validators at a specific epoch. 
         // Omitting this field or setting it to zero will retrieve a response
@@ -296,14 +413,27 @@ message GetValidatorsRequest {
         bool genesis = 2;
     }
 
+    // Specify whether or not you want to retrieve only active validators.
+    bool active = 3;
+
     // The maximum number of Validators to return in the response.
     // This field is optional.
-    int32 page_size = 3;
+    int32 page_size = 4;
 
     // A pagination token returned from a previous call to `GetValidators`
     // that indicates where this listing should continue from.
     // This field is optional.
-    string page_token = 4;
+    string page_token = 5;
+}
+
+message GetValidatorRequest {
+    oneof query_filter {
+        // Validator index in the registry.
+        uint64 index = 1;
+
+        // 48 byte validator public key.
+        bytes public_key = 2;
+    }
 }
 
 message Validators {
@@ -392,26 +522,24 @@ message ListValidatorAssignmentsRequest {
 
 message ValidatorAssignments {
     message CommitteeAssignment {
-        // Crosslink committees is responsible for crosslinking shard data back to the beacon chain,
+        // Beacon committees is responsible for crosslinking committee data back to the beacon chain,
         // they also attest and produce beacon chain blocks. This is a list of validator indices that
         // are in the same committee as requested validator, everyone in the committee is assigned to the
-        // same slot and same shard.
-        repeated uint64 crosslink_committees = 1;
-        
-        // The shard index of which the validator must perform the attestation
-        // or block proposal.
-        uint64 shard = 2;
+        // same slot and same committee.
+        repeated uint64 beacon_committees = 1;
 
-        // Beacon chain slot in which the validator must perform its assigned 
-        // duty.
-        uint64 slot = 3;
+        // Committee index represents the committee of validator that's in.
+        uint64 committee_index = 2;
 
-        // Whether or not the validator is assigned to propose at this slot. If
-        // This field is false, then they are only to attest during the
-        // assignment time.
-        bool proposer = 4;
+        // Beacon chain slot in which the validator must perform its assigned
+        // duty as an attester.
+        uint64 attester_slot = 3;
 
-        // 48 byte BLS public key 
+        // Beacon chain slot in which the validator must perform its assigned
+        // duty as an attester.
+        uint64 proposer_slot = 4;
+
+        // 48 byte BLS public key.
         bytes public_key = 5;
     }
 

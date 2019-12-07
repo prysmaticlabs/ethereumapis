@@ -52,8 +52,7 @@ go_proto_library(
     visibility = ["//visibility:public"],
     deps = [
         "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_go_proto",
-
-                "@go_googleapis//google/api:annotations_go_proto",
+        "@go_googleapis//google/api:annotations_go_proto",
     ],
 )
 
@@ -74,4 +73,5 @@ protoc_gen_swagger(
     proto = ":proto",
     visibility = ["//visibility:public"],
     single_output = True,
+    json_names_for_fields = True,
 )
