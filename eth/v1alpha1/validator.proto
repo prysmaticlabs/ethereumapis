@@ -131,6 +131,8 @@ message BlockRequest {
     uint64 slot = 1;
     // Validator's 32 byte randao reveal secret of the current epoch.
     bytes randao_reveal = 2;
+    // Validator's 32 byte graffiti message for the new block.
+    bytes graffiti = 3;
 }
 
 message AttestationDataRequest {
