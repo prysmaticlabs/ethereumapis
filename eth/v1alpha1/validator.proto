@@ -175,70 +175,85 @@ service BeaconNodeValidator {
 }
 
 message DomainRequest {
-	// The epoch for which the domain is being requested.
+    // The epoch for which the domain is being requested.
     uint64 epoch = 1;
-	// The bytes domain specified by the validator.
+    // The bytes domain specified by the validator.
     bytes domain = 2;
 }
 
 message DomainResponse {
-	// The signature domain is a number used by validators when
-	// signing data related to block proposals and attestations.
+    // The signature domain is a number used by validators when
+    // signing data related to block proposals and attestations.
     uint64 signature_domain = 1;
 }
 
 message ValidatorActivationRequest {
-	// A list of 48 byte validator public keys.
+    // A list of 48 byte validator public keys.
     repeated bytes public_keys = 1;
 }
 
 message ValidatorActivationResponse {
     message Status {
-		// A 48 byte validator public key.
+        // A 48 byte validator public key.
         bytes public_key = 1;
-		// A wrapper representing a validator's status object.
+        // A wrapper representing a validator's status object.
         ValidatorStatusResponse status = 2;
     }
-	// A list of validator statuses mapped 1-to-1 with the public keys
-	// in the request.
+    // A list of validator statuses mapped 1-to-1 with the public keys
+    // in the request.
     repeated Status statuses = 2;
 }
 
 message ChainStartResponse {
-	// A boolean specifying whether or not the chain has started.
+    // A boolean specifying whether or not the chain has started.
     bool started = 1;
-	// The genesis time of the beacon chain.
+    // The genesis time of the beacon chain.
     uint64 genesis_time = 2;
 }
 
 message ValidatorIndexRequest {
-	// A 48 byte validator public key.
+    // A 48 byte validator public key.
     bytes public_key = 1;
 }
 
 message ValidatorIndexResponse {
-	// The validator's index in the beacon chain state's validator registry.
+    // The validator's index in the beacon chain state's validator registry.
     uint64 index = 1;
 }
 
 message ValidatorPerformanceRequest {
-	// A list of 48 byte validator public keys.
+    // A list of 48 byte validator public keys.
     repeated bytes public_keys = 2;
 }
 
 message ValidatorPerformanceResponse {
+    // A list of validator balances mapped 1-to-1 with the request's
+	// public keys.
     repeated uint64 balances = 1;
+	// The total number of validators in the beacon chain.
     uint64 total_validators = 2;
+	// The total number of active validators in the beacon chain.
     uint64 total_active_validators = 3;
+	// The total number of validators from the request not found in
+	// in the beacon chain.
     repeated bytes missing_validators = 4;
+	// The average active validator balance in the beacon chain.
     float average_active_validator_balance = 5;
 }
 
 message ValidatorStatusResponse {
+    // The corresponding validator status.
     ValidatorStatus status = 1;
+    // The block number of the Ethereum proof-of-work chain
+	// where the deposit for the validator was included.
     uint64 eth1_deposit_block_number = 2;
+    // The slot in the beacon chain in which the validator's
+    // deposit was included in a block.
     int64 deposit_inclusion_slot = 3;
+    // The epoch in the beacon chain in which the validator
+    // is determined as active.
     int64 activation_epoch = 4;
+    // The position in the activation queue of pending validators.
     int64 position_in_activation_queue = 5;
 }
 
