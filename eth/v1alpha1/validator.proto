@@ -241,6 +241,22 @@ message ValidatorPerformanceResponse {
     float average_active_validator_balance = 5;
 }
 
+message ValidatorStatusRequest {
+    // A 48 byte validator public key.
+    bytes public_key = 1;
+}
+
+enum ValidatorStatus {
+  UNKNOWN_STATUS = 0;
+  DEPOSIT_RECEIVED = 1;
+  PENDING_ACTIVE = 2;
+  ACTIVE = 3;
+  INITIATED_EXIT = 4;
+  WITHDRAWABLE = 5;
+  EXITED = 6;
+  EXITED_SLASHED = 7;
+}
+
 message ValidatorStatusResponse {
     // The corresponding validator status.
     ValidatorStatus status = 1;
