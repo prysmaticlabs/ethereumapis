@@ -31,10 +31,8 @@ gazelle_dependencies()
 # TODO: Update to master commit after https://github.com/grpc-ecosystem/grpc-gateway/pull/1077 merges.
 go_repository(
     name = "grpc_ecosystem_grpc_gateway",
-    commit = "70fc48afe5b7473aa1e6796e5013ae63dce74043",
+    commit = "3c06998610d4d2edea99d12228b1f6ea2d943ce4",
     importpath = "github.com/grpc-ecosystem/grpc-gateway",
-    remote = "https://github.com/prestonvanloon/grpc-gateway",
-    vcs = "git",
 )
 
 go_repository(
