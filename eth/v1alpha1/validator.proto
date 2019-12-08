@@ -93,16 +93,6 @@ service BeaconNodeValidator {
         };
     }
 
-    // ValidatorPerformance reports a validator's latest balance along with other important 
-    // metrics on rewards and penalties throughout its lifecycle in the beacon chain.
-    // The request takes in a list of validator public keys and returns a performance report
-    // for all of them respectively.
-    rpc ValidatorPerformance(ValidatorPerformanceRequest) returns (ValidatorPerformanceResponse) {
-        option (google.api.http) = {
-            get: "/eth/v1alpha1/validator/performance"
-        };
-    }
-
 	// ValidatorStatus returns a validator's status based on the current epoch.
 	// The request can specify either a validator's public key or validator index.
 	// 
@@ -201,7 +191,7 @@ message ValidatorActivationResponse {
     }
     // A list of validator statuses mapped 1-to-1 with the public keys
     // in the request.
-    repeated Status statuses = 2;
+    repeated Status statuses = 1;
 }
 
 message ChainStartResponse {
@@ -219,26 +209,6 @@ message ValidatorIndexRequest {
 message ValidatorIndexResponse {
     // The validator's index in the beacon chain state's validator registry.
     uint64 index = 1;
-}
-
-message ValidatorPerformanceRequest {
-    // A list of 48 byte validator public keys.
-    repeated bytes public_keys = 2;
-}
-
-message ValidatorPerformanceResponse {
-    // A list of validator balances mapped 1-to-1 with the request's
-	// public keys.
-    repeated uint64 balances = 1;
-	// The total number of validators in the beacon chain.
-    uint64 total_validators = 2;
-	// The total number of active validators in the beacon chain.
-    uint64 total_active_validators = 3;
-	// The total number of validators from the request not found in
-	// in the beacon chain.
-    repeated bytes missing_validators = 4;
-	// The average active validator balance in the beacon chain.
-    float average_active_validator_balance = 5;
 }
 
 message ValidatorStatusRequest {
