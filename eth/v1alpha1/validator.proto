@@ -167,6 +167,7 @@ service BeaconNodeValidator {
 message DomainRequest {
     // The epoch for which the domain is being requested.
     uint64 epoch = 1;
+
     // The bytes domain specified by the validator.
     bytes domain = 2;
 }
@@ -186,6 +187,7 @@ message ValidatorActivationResponse {
     message Status {
         // A 48 byte validator public key.
         bytes public_key = 1;
+
         // A wrapper representing a validator's status object.
         ValidatorStatusResponse status = 2;
     }
@@ -197,6 +199,7 @@ message ValidatorActivationResponse {
 message ChainStartResponse {
     // A boolean specifying whether or not the chain has started.
     bool started = 1;
+
     // The genesis time of the beacon chain.
     uint64 genesis_time = 2;
 }
@@ -230,15 +233,19 @@ enum ValidatorStatus {
 message ValidatorStatusResponse {
     // The corresponding validator status.
     ValidatorStatus status = 1;
+
     // The block number of the Ethereum proof-of-work chain
 	// where the deposit for the validator was included.
     uint64 eth1_deposit_block_number = 2;
+
     // The slot in the beacon chain in which the validator's
     // deposit was included in a block.
     int64 deposit_inclusion_slot = 3;
+
     // The epoch in the beacon chain in which the validator
     // is determined as active.
     int64 activation_epoch = 4;
+
     // The position in the activation queue of pending validators.
     int64 position_in_activation_queue = 5;
 }
@@ -246,6 +253,7 @@ message ValidatorStatusResponse {
 message DutiesRequest {
     // Epoch at which validators should perform their duties.
     uint64 epoch = 1;
+
     // Array of byte encoded BLS public keys.
     repeated bytes public_keys = 2;
 }
@@ -255,14 +263,19 @@ message DutiesResponse {
     message Duty {
         // The committee a validator is assigned to.
         repeated uint64 committee = 1;
+
         // The index into the committee where the validator belongs in.
         uint64 committee_index = 2;
+
         // Slot at which a validator must attest.
         uint64 attester_slot = 3;
+
         // Slot at which a validator must propose a beacon chain block.
         uint64 proposer_slot = 4;
+
         // 48 byte BLS public key for the validator who's assigned to perform a duty.
         bytes public_key = 5;
+
         // The current status of the validator assigned to perform the duty.
         ValidatorStatus status = 6;
     }
@@ -271,8 +284,10 @@ message DutiesResponse {
 message BlockRequest {
     // Slot for which the block should be proposed.
     uint64 slot = 1;
+
     // Validator's 32 byte randao reveal secret of the current epoch.
     bytes randao_reveal = 2;
+
     // Validator's 32 byte graffiti message for the new block.
     bytes graffiti = 3;
 }
