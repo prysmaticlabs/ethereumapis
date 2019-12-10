@@ -48,6 +48,68 @@ service BeaconNodeValidator {
         };
     }
 
+    // DomainData fetches the current BLS signature domain version information from the
+    // running beacon node's state. This information is used when validators sign
+    // blocks and attestations appropriately based on their duty.
+    rpc DomainData(DomainRequest) returns (DomainResponse) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator/domain"
+        };
+    }
+
+    // WaitForActivation checks if a validator public key exists in the active validator 
+    // registry of the current beacon state. If the validator is NOT yet active, it starts a 
+    // server-side stream which updates the client whenever the validator becomes active in
+    // the beacon node's state.
+    //
+    // The input to this endpoint is a list of validator public keys, and the corresponding
+    // stream will respond until at least a single corresponding validator to those
+    // keys is activated.
+    rpc WaitForActivation(ValidatorActivationRequest) returns (stream ValidatorActivationResponse) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator/activation/stream"
+        };
+    }
+
+    // WaitForChainStart queries the logs of the Validator Deposit Contract on the Ethereum
+    // proof-of-work chain to verify the beacon chain has started its runtime and 
+    // validators are ready to begin their responsibilities. 
+    //
+    // If the chain has not yet started, this endpoint starts a server-side stream which updates
+    // the client when the beacon chain is ready.
+    rpc WaitForChainStart(google.protobuf.Empty) returns (stream ChainStartResponse) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator/chainstart/stream"
+        };
+    }
+
+    // ValidatorIndex retrieves a validator's index location in the beacon state's
+    // validator registry looking up whether the validator exists based on its
+    // public key. This method returns NOT_FOUND if no index is found for the public key
+    // specified in the request.
+    rpc ValidatorIndex(ValidatorIndexRequest) returns (ValidatorIndexResponse) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator/index"
+        };
+    }
+
+	// ValidatorStatus returns a validator's status based on the current epoch.
+	// The request can specify either a validator's public key or validator index.
+	// 
+	// The status response can be one of the following:
+	//	PENDING_ACTIVE - validator is waiting to get activated.
+	//	ACTIVE - validator is active.
+	//	INITIATED_EXIT - validator has initiated an an exit request.
+	//	WITHDRAWABLE - validator's deposit can be withdrawn after lock up period.
+	//	EXITED - validator has exited, means the deposit has been withdrawn.
+	//	EXITED_SLASHED - validator was forcefully exited due to slashing. 
+	//	UNKNOWN - validator does not have a known status in the network.
+    rpc ValidatorStatus(ValidatorStatusRequest) returns (ValidatorStatusResponse) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator/status"
+        };
+    }
+
     // Retrieves the latest valid beacon block to be proposed on the beacon chain.
     //
     // The server returns a new beacon block, without proposer signature, that can be
@@ -64,7 +126,7 @@ service BeaconNodeValidator {
     // The validator sends the newly signed beacon block to the beacon node so the beacon block can
     // be included in the beacon chain. The beacon node is expected to validate and process the
     // beacon block into its state.
-    rpc ProposeBlock(BlockRequest) returns (google.protobuf.Empty) {
+    rpc ProposeBlock(BeaconBlock) returns (ProposeResponse) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/block"
         };
@@ -72,7 +134,7 @@ service BeaconNodeValidator {
 
     // Retrieves the latest valid attestation data to be attested on the beacon chain.
     //
-    // The server returns the latest valid attestation which represents the correct vote
+    // The server returns the latest valid data which represents the correct vote
     // for the head of the beacon chain,
     rpc GetAttestationData(AttestationDataRequest) returns (AttestationData) {
         option (google.api.http) = {
@@ -85,7 +147,7 @@ service BeaconNodeValidator {
     // The validator sends the newly signed attestation to the beacon node for the attestation to
     // be included in the beacon chain. The beacon node is expected to validate and aggregate the
     // attestations into the state.
-    rpc ProposeAttestation(Attestation) returns (google.protobuf.Empty) {
+    rpc ProposeAttestation(Attestation) returns (AttestResponse) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/attestation"
         };
@@ -100,6 +162,85 @@ service BeaconNodeValidator {
             post: "/eth/v1alpha1/validator/exit"
         };
     }
+}
+
+message DomainRequest {
+    // The epoch for which the domain is being requested.
+    uint64 epoch = 1;
+    // The bytes domain specified by the validator.
+    bytes domain = 2;
+}
+
+message DomainResponse {
+    // The signature domain is a number used by validators when
+    // signing data related to block proposals and attestations.
+    uint64 signature_domain = 1;
+}
+
+message ValidatorActivationRequest {
+    // A list of 48 byte validator public keys.
+    repeated bytes public_keys = 1;
+}
+
+message ValidatorActivationResponse {
+    message Status {
+        // A 48 byte validator public key.
+        bytes public_key = 1;
+        // A wrapper representing a validator's status object.
+        ValidatorStatusResponse status = 2;
+    }
+    // A list of validator statuses mapped 1-to-1 with the public keys
+    // in the request.
+    repeated Status statuses = 1;
+}
+
+message ChainStartResponse {
+    // A boolean specifying whether or not the chain has started.
+    bool started = 1;
+    // The genesis time of the beacon chain.
+    uint64 genesis_time = 2;
+}
+
+message ValidatorIndexRequest {
+    // A 48 byte validator public key.
+    bytes public_key = 1;
+}
+
+message ValidatorIndexResponse {
+    // The validator's index in the beacon chain state's validator registry.
+    uint64 index = 1;
+}
+
+message ValidatorStatusRequest {
+    // A 48 byte validator public key.
+    bytes public_key = 1;
+}
+
+enum ValidatorStatus {
+  UNKNOWN_STATUS = 0;
+  DEPOSIT_RECEIVED = 1;
+  PENDING_ACTIVE = 2;
+  ACTIVE = 3;
+  INITIATED_EXIT = 4;
+  WITHDRAWABLE = 5;
+  EXITED = 6;
+  EXITED_SLASHED = 7;
+}
+
+message ValidatorStatusResponse {
+    // The corresponding validator status.
+    ValidatorStatus status = 1;
+    // The block number of the Ethereum proof-of-work chain
+	// where the deposit for the validator was included.
+    uint64 eth1_deposit_block_number = 2;
+    // The slot in the beacon chain in which the validator's
+    // deposit was included in a block.
+    int64 deposit_inclusion_slot = 3;
+    // The epoch in the beacon chain in which the validator
+    // is determined as active.
+    int64 activation_epoch = 4;
+    // The position in the activation queue of pending validators.
+    int64 position_in_activation_queue = 5;
 }
 
 message DutiesRequest {
@@ -135,6 +276,11 @@ message BlockRequest {
     bytes graffiti = 3;
 }
 
+message ProposeResponse {
+    // The block root of the successfully proposed beacon block.
+    bytes block_root = 1;
+}
+
 message AttestationDataRequest {
     // Slot for which the attestation should be created.
     uint64 slot = 1;
@@ -143,6 +289,10 @@ message AttestationDataRequest {
     uint64 committee_index = 2;
 }
 
+message AttestResponse {
+    // The root of the attestation data successfully submitted to the beacon node.
+    bytes attestation_data_root = 1;
+}
 
 // An Ethereum 2.0 validator.
 message Validator {
