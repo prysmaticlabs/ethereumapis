@@ -253,17 +253,18 @@ message DutiesRequest {
 message DutiesResponse {
     repeated Duty duties = 1;
     message Duty {
-        // 48 byte BLS public key for the validator who's assigned to perform the following duty.
-        bytes public_key = 1;
+        // The committee a validator is assigned to.
+        repeated uint64 committee = 1;
+        // The index into the committee where the validator belongs in.
+        uint64 committee_index = 2;
         // Slot at which a validator must attest.
-        uint64 attestation_slot = 2;
-        // Shard at which a validator must attest.
-        uint64 attestation_shard = 3;
-        // Slot at which a validator must propose on beacon chain,
-        // when returns 0, the block production is not required, meaning
-        // the validator did not get assigned to be a proposer for the
-        // input epoch.
-        uint64 block_proposal_slot = 4;
+        uint64 attester_slot = 3;
+        // Slot at which a validator must propose a beacon chain block.
+        uint64 proposer_slot = 4;
+        // 48 byte BLS public key for the validator who's assigned to perform a duty.
+        bytes public_key = 5;
+        // The current status of the validator assigned to perform the duty.
+        ValidatorStatus status = 6;
     }
 }
 
