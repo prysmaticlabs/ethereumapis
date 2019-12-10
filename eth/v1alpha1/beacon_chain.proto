@@ -452,7 +452,12 @@ message Validators {
     // set is from the Ethereum 2.0 genesis set.
     uint64 epoch = 1;
 
-    repeated Validator validators = 2;
+    message ValidatorContainer {
+        uint64 index = 1;
+        Validator validator = 2; 
+    }
+
+    repeated ValidatorContainer validator_list = 2;
 
     // A pagination token returned from a previous call to `GetValidators`
     // that indicates from where listing should continue.
@@ -478,18 +483,30 @@ message ActiveSetChanges {
     // set. 
     uint64 epoch = 1;
 
-    // 48 byte validator public keys that have been activated in this epoch.
+    // 48 byte validator public keys that have been activated in the given epoch.
     repeated bytes activated_public_keys = 2;
+
+    // Indices of validators activated in the given epoch.
+    repeated uint64 activated_indices = 3;
 
     // 48 byte validator public keys that have been voluntarily exited in this
     // epoch.
-    repeated bytes exited_public_keys = 3;
+    repeated bytes exited_public_keys = 4;
+
+    // Indices of validators exited in the given epoch.
+    repeated uint64 exited_indices = 5;
 
     // 48 byte validator public keys that have been slashed in this epoch.
-    repeated bytes slashed_public_keys = 4;
+    repeated bytes slashed_public_keys = 6;
+
+    // Indices of validators slashed in the given epoch.
+    repeated uint64 slashed_indices = 7;
 
     // 48 byte validator public keys that have been involuntarily ejected in this epoch.
-    repeated bytes ejected_public_keys = 5;
+    repeated bytes ejected_public_keys = 8;
+
+    // Indices of validators ejected in the given epoch.
+    repeated uint64 ejected_indices = 9;
 }
 
 message ValidatorPerformanceRequest {
