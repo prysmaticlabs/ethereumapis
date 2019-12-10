@@ -1,5 +1,3 @@
-load("//tools:proto_descriptor_sets.bzl", "proto_descriptor_set")
-
 ##############################################################################
 # Common
 ##############################################################################
@@ -21,11 +19,6 @@ proto_library(
         "@com_google_protobuf//:timestamp_proto",
         "@go_googleapis//google/api:annotations_proto",
     ],
-)
-
-proto_descriptor_set(
-    name = "proto_descriptor_set",
-    proto = ":proto",
 )
 
 ##############################################################################

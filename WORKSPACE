@@ -28,11 +28,13 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 
 gazelle_dependencies()
 
-# TODO: Update to master commit after https://github.com/grpc-ecosystem/grpc-gateway/pull/1077 merges.
+# TODO: Update to master commit after https://github.com/grpc-ecosystem/grpc-gateway/pull/1095 merges.
 go_repository(
     name = "grpc_ecosystem_grpc_gateway",
-    commit = "3c06998610d4d2edea99d12228b1f6ea2d943ce4",
+    commit = "612e0b66de31f32b2d248b7d491db3add169f23c",
     importpath = "github.com/grpc-ecosystem/grpc-gateway",
+    remote = "https://github.com/Yannic/grpc-gateway",
+    vcs = "git",
 )
 
 go_repository(
