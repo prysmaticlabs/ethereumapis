@@ -282,13 +282,11 @@ message ProposeResponse {
 }
 
 message AttestationDataRequest {
-    // The proof of custody bit is a byte with a single bit set as reported
-    // by the requesting validator. To be used for proof of custody game in phase 1.
-    bytes proof_of_custody_bit = 1;
-    // Slot for which the attestation should be proposed.
-    uint64 slot = 2;
-    // Shard for which the attestation is to be proposed.
-    uint64 shard = 3;
+    // Slot for which the attestation should be created.
+    uint64 slot = 1;
+
+    // Committee index the attestation should be created for.
+    uint64 committee_index = 2;
 }
 
 message AttestResponse {
