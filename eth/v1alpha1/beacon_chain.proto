@@ -504,6 +504,9 @@ message ActiveSetChanges {
 message ValidatorPerformanceRequest {
     // A list of 48 byte validator public keys.
     repeated bytes public_keys = 1;
+
+    // The slot at which the performance is being requested.
+    uint64 slot = 2;
 }
 
 message ValidatorPerformanceResponse {
