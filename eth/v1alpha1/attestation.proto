@@ -34,14 +34,14 @@ message Attestation {
 }
 
 message AggregateAttestationAndProof {
-    // index is the aggregator's index
-    uint64 index = 1;
+    // The aggregator index that submitted this aggregated attestation and proof.
+    uint64 aggregator_index = 1;
 
-    // selection_proof is the signature of the slot aggregator signed to
-    bytes selection_proof = 2;
-
-    // aggregate is the constructed aggregated attestation
+    // The aggregated attestation that was submitted.
     Attestation aggregate = 3;
+
+    // The selection proof signed by the aggregator, which is the signature of the slot to aggregate.
+    bytes selection_proof = 2;
 }
 
 message AttestationData {
