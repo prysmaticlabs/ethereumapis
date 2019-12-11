@@ -33,6 +33,17 @@ message Attestation {
     bytes signature = 3;
 }
 
+message AggregateAttestationAndProof {
+    // index is the aggregator's index
+    uint64 index = 1;
+
+    // selection_proof is the signature of the slot aggregator signed to
+    bytes selection_proof = 2;
+
+    // aggregate is the constructed aggregated attestation
+    Attestation aggregate = 3;
+}
+
 message AttestationData {
     // Attestation data includes information on Casper the Friendly Finality Gadget's votes
     // See: https://arxiv.org/pdf/1710.09437.pdf
