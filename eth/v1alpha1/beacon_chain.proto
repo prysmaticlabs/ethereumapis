@@ -253,8 +253,12 @@ message ListBlocksRequest {
         // from another fork. 
         uint64 slot = 2; 
 
+        // The epoch number for which to retrieve blocks. If specified, this
+        // will return all blocks found within the span of the specified epoch.
+        uint64 epoch = 3; 
+
         // Optional criteria to retrieve genesis block.
-        bool genesis = 3;
+        bool genesis = 4;
     }
 
     // Optional criteria to include any non-canonical blocks matching the 
@@ -286,9 +290,14 @@ message ListBlocksResponse {
 // A container that contains both the beacon block
 // and its corresponding root.
 message BeaconBlockContainer {
+    // The contained Ethereum beacon block.
     BeaconBlock block = 1;
+
     // 32 byte merkle tree root of contained beacon block.
     bytes block_root = 2;
+    
+    // Whether or not the contained block is canonical.
+    bool is_canonical = 3;
 }
 
 // Information about the head of the beacon chain.
