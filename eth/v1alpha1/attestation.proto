@@ -40,7 +40,7 @@ message AggregateAttestationAndProof {
     // The aggregated attestation that was submitted.
     Attestation aggregate = 3;
 
-    // The selection proof signed by the aggregator, which is the signature of the slot to aggregate.
+    // 96 byte selection proof signed by the aggregator, which is the signature of the slot to aggregate.
     bytes selection_proof = 2;
 }
 
