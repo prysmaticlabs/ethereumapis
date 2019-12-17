@@ -164,6 +164,16 @@ service BeaconChain {
         };
     }
 
+    // GetValidatorPerformance reports a validator's latest balance along with other important 
+    // metrics on rewards and penalties throughout its lifecycle in the beacon chain.
+    // The request takes in a list of validator public keys and returns a performance report
+    // for all of them respectively.
+    rpc GetValidatorPerformance(ValidatorPerformanceRequest) returns (ValidatorPerformanceResponse) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validators/performance"
+        };
+    }
+
     // Retrieve the validator assignments for a given epoch.
     //
     // This request may specify optional validator indices or public keys to
@@ -506,6 +516,29 @@ message ActiveSetChanges {
 
     // Indices of validators ejected in the given epoch.
     repeated uint64 ejected_indices = 9;
+}
+
+message ValidatorPerformanceRequest {
+    // A list of 48 byte validator public keys.
+    repeated bytes public_keys = 1;
+
+    // The slot at which the performance is being requested.
+    uint64 slot = 2;
+}
+
+message ValidatorPerformanceResponse {
+    // A list of validator balances mapped 1-to-1 with the request's
+	// public keys.
+    repeated uint64 balances = 1;
+	// The total number of validators in the beacon chain.
+    uint64 total_validators = 2;
+	// The total number of active validators in the beacon chain.
+    uint64 total_active_validators = 3;
+	// The total number of validators from the request not found in
+	// in the beacon chain.
+    repeated bytes missing_validators = 4;
+	// The average active validator balance in the beacon chain.
+    float average_active_validator_balance = 5;
 }
 
 message ValidatorQueue {
