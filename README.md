@@ -9,7 +9,7 @@
 This repository hosts [Prysm](https://github.com/prysmaticlabs/prysm/)'s service interface definitions for the Ethereum 2.0 API. These [protocol buffer](https://developers.google.com/protocol-buffers/) service definitions support [gRPC](https://grpc.io/) as well as JSON over HTTP.
 
 ### Need assistance?
-More indepth descriptions of each service are available in [this section](https://prysmaticlabs.gitbook.io/prysm/how-prysm-works/ethereum-2.0-public-api) of our official documentation. For more general information on the functionality of gRPC and protocol buffers, see the [gRPC guide](https://grpc.io/docs/guides/). If you still have questions, feel free to stop by either our [Discord](https://discord.gg/KSA7rPr) or [Gitter](https://gitter.im/prysmaticlabs/geth-sharding?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) and a member of the team or our community will be happy to assist you.
+More indepth descriptions of each service are available in [this section](https://prysmaticlabs.gitbook.io/prysm/how-prysm-works/ethereum-2.0-public-api-1) of our official documentation. For more general information on the functionality of gRPC and protocol buffers, see the [gRPC guide](https://grpc.io/docs/guides/). If you still have questions, feel free to stop by either our [Discord](https://discord.gg/KSA7rPr) or [Gitter](https://gitter.im/prysmaticlabs/geth-sharding?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) and a member of the team or our community will be happy to assist you.
 
 ## Services
 
