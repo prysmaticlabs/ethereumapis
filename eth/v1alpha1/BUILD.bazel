@@ -1,3 +1,4 @@
+load("@rules_proto//proto:defs.bzl", "proto_library")
 load("//tools:proto_descriptor_sets.bzl", "proto_descriptor_set")
 
 ##############################################################################
@@ -16,10 +17,10 @@ proto_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_proto",
         "@com_google_protobuf//:empty_proto",
         "@com_google_protobuf//:timestamp_proto",
         "@go_googleapis//google/api:annotations_proto",
+        "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_proto",
     ],
 )
 
@@ -51,8 +52,8 @@ go_proto_library(
     proto = ":proto",
     visibility = ["//visibility:public"],
     deps = [
-        "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_go_proto",
         "@go_googleapis//google/api:annotations_go_proto",
+        "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_go_proto",
     ],
 )
 
@@ -70,8 +71,8 @@ load("@grpc_ecosystem_grpc_gateway//protoc-gen-swagger:defs.bzl", "protoc_gen_sw
 
 protoc_gen_swagger(
     name = "swagger",
-    proto = ":proto",
-    visibility = ["//visibility:public"],
-    single_output = True,
     json_names_for_fields = True,
+    proto = ":proto",
+    single_output = True,
+    visibility = ["//visibility:public"],
 )

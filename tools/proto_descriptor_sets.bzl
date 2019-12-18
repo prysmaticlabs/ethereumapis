@@ -1,3 +1,4 @@
+load("@rules_proto//proto:defs.bzl", "ProtoInfo")
 
 def _collect_includes(gen_dir, srcs):
     """Build an include path mapping.
