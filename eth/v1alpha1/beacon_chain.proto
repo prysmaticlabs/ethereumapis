@@ -164,16 +164,6 @@ service BeaconChain {
         };
     }
 
-    // GetValidatorPerformance reports a validator's latest balance along with other important 
-    // metrics on rewards and penalties throughout its lifecycle in the beacon chain.
-    // The request takes in a list of validator public keys and returns a performance report
-    // for all of them respectively.
-    rpc GetValidatorPerformance(ValidatorPerformanceRequest) returns (ValidatorPerformanceResponse) {
-        option (google.api.http) = {
-            get: "/eth/v1alpha1/validators/performance"
-        };
-    }
-
     // Retrieve the validator assignments for a given epoch.
     //
     // This request may specify optional validator indices or public keys to
@@ -253,22 +243,22 @@ message ListBlocksRequest {
         // from another fork. 
         uint64 slot = 2; 
 
-        // Optional criteria to retrieve genesis block.
-        bool genesis = 3;
-    }
+        // The epoch number for which to retrieve blocks. If specified, this
+        // will return all blocks found within the span of the specified epoch.
+        uint64 epoch = 3; 
 
-    // Optional criteria to include any non-canonical blocks matching the 
-    // request.
-    bool include_noncanonical = 5;
+        // Optional criteria to retrieve genesis block.
+        bool genesis = 4;
+    }
         
     // The maximum number of Blocks to return in the response.
     // This field is optional.
-    int32 page_size = 6;
+    int32 page_size = 5;
 
     // A pagination token returned from a previous call to `ListBlocks`
     // that indicates where this listing should continue from.
     // This field is optional.
-    string page_token = 7;
+    string page_token = 6;
 }
 
 message ListBlocksResponse {
@@ -286,7 +276,9 @@ message ListBlocksResponse {
 // A container that contains both the beacon block
 // and its corresponding root.
 message BeaconBlockContainer {
+    // The contained Ethereum beacon block.
     BeaconBlock block = 1;
+
     // 32 byte merkle tree root of contained beacon block.
     bytes block_root = 2;
 }
@@ -490,26 +482,6 @@ message ActiveSetChanges {
 
     // 48 byte validator public keys that have been involuntarily ejected in this epoch.
     repeated bytes ejected_public_keys = 5;
-}
-
-message ValidatorPerformanceRequest {
-    // A list of 48 byte validator public keys.
-    repeated bytes public_keys = 1;
-}
-
-message ValidatorPerformanceResponse {
-    // A list of validator balances mapped 1-to-1 with the request's
-	// public keys.
-    repeated uint64 balances = 1;
-	// The total number of validators in the beacon chain.
-    uint64 total_validators = 2;
-	// The total number of active validators in the beacon chain.
-    uint64 total_active_validators = 3;
-	// The total number of validators from the request not found in
-	// in the beacon chain.
-    repeated bytes missing_validators = 4;
-	// The average active validator balance in the beacon chain.
-    float average_active_validator_balance = 5;
 }
 
 message ValidatorQueue {
