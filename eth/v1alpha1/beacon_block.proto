@@ -24,7 +24,7 @@ option java_outer_classname = "BeaconBlockProto";
 option java_package = "org.ethereum.eth.v1alpha1";
 option php_namespace = "Ethereum\\Eth\\v1alpha1";
 
-// The Ethereum 2.0 beacon block.
+// The Ethereum 2.0 beacon block. The message does not contain a validator signature.
 message BeaconBlock {
     // Beacon chain slot that this block represents.
     uint64 slot = 1; 
@@ -37,9 +37,15 @@ message BeaconBlock {
 
     // The block body itself.
     BeaconBlockBody body = 4;
+}
+
+// The signed version of beacon block.
+message SignedBeaconBlock {
+    // The unsigned beacon block itself.
+    BeaconBlock block = 1;
 
     // 96 byte BLS signature from the validator that produced this block.
-    bytes signature = 5;
+    bytes signature = 2;
 }
 
 // The block body of an Ethereum 2.0 beacon block.
@@ -70,7 +76,7 @@ message BeaconBlockBody {
     repeated Deposit deposits = 7;
 
     // At most MAX_VOLUNTARY_EXITS.
-    repeated VoluntaryExit voluntary_exits = 8;
+    repeated SignedVoluntaryExit voluntary_exits = 8;
 }
 
 // Proposer slashings are proofs that a slashable offense has been committed by
@@ -80,11 +86,11 @@ message ProposerSlashing {
     // headers.
     uint64 proposer_index = 1;
 
-    // First conflicting block header.
-    BeaconBlockHeader header_1 = 2;
+    // First conflicting signed block header.
+    SignedBeaconBlockHeader header_1 = 2;
 
-    // Second conflicting block header.
-    BeaconBlockHeader header_2 = 3;
+    // Second conflicting signed block header.
+    SignedBeaconBlockHeader header_2 = 3;
 }
 
 // Attestor slashings are proofs that a slashable offense has been committed by
@@ -120,16 +126,23 @@ message Deposit {
 }
 
 // A message that represents a validator signaling that they want to voluntarily
-// withdraw from the active validator set.
+// withdraw from the active validator set. The message does not contain a
+// validator signature.
 message VoluntaryExit {
     // The epoch on when exit request becomes valid.
     uint64 epoch = 1; 
 
     // Index of the exiting validator.
     uint64 validator_index = 2;
+}
+
+// The signed version of voluntary exit.
+message SignedVoluntaryExit {
+    // The unsigned voluntary exit itself.
+    VoluntaryExit exit = 1;
 
     // Validator's 96 byte signature
-    bytes signature = 3;
+    bytes signature = 2;
 }
 
 // Eth1Data represents references to the Ethereum 1.x deposit contract.
@@ -149,7 +162,8 @@ message Eth1Data {
 
 // A beacon block header is essentially a beacon block with only a reference to
 // the beacon body as a 32 byte merkle tree root. This type of message is more
-// lightweight than a full beacon block.
+// lightweight than a full beacon block. The message does not contain
+// a validator signature.
 message BeaconBlockHeader {
     // Beacon chain slot that this block represents.
     uint64 slot = 1; 
@@ -162,9 +176,14 @@ message BeaconBlockHeader {
 
     // 32 byte merkle tree root of the ssz encoded block body.
     bytes body_root = 4;
+}
 
-    // 96 byte BLS signature from the validator that produced this block.
-    bytes signature = 5;
+message SignedBeaconBlockHeader {
+    // The unsigned beacon block header itself.
+    BeaconBlockHeader header = 1;
+
+    // 96 byte BLS signature from the validator that produced this block header.
+    bytes signature = 2;
 }
 
 message IndexedAttestation {
