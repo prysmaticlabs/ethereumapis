@@ -291,7 +291,7 @@ message ListBlocksResponse {
 // and its corresponding root.
 message BeaconBlockContainer {
     // The contained Ethereum beacon block.
-    BeaconBlock block = 1;
+    SignedBeaconBlock block = 1;
 
     // 32 byte merkle tree root of contained beacon block.
     bytes block_root = 2;
