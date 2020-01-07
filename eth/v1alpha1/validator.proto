@@ -93,16 +93,6 @@ service BeaconNodeValidator {
         };
     }
 
-    // ValidatorPerformance reports a validator's latest balance along with other important 
-    // metrics on rewards and penalties throughout its lifecycle in the beacon chain.
-    // The request takes in a list of validator public keys and returns a performance report
-    // for all of them respectively.
-    rpc ValidatorPerformance(ValidatorPerformanceRequest) returns (ValidatorPerformanceResponse) {
-        option (google.api.http) = {
-            get: "/eth/v1alpha1/validator/performance"
-        };
-    }
-
 	// ValidatorStatus returns a validator's status based on the current epoch.
 	// The request can specify either a validator's public key or validator index.
 	// 
@@ -136,7 +126,7 @@ service BeaconNodeValidator {
     // The validator sends the newly signed beacon block to the beacon node so the beacon block can
     // be included in the beacon chain. The beacon node is expected to validate and process the
     // beacon block into its state.
-    rpc ProposeBlock(BeaconBlock) returns (ProposeResponse) {
+    rpc ProposeBlock(SignedBeaconBlock) returns (ProposeResponse) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/block"
         };
@@ -167,7 +157,7 @@ service BeaconNodeValidator {
     //
     // The beacon node is expected to validate the request and make it available for inclusion in
     // the next proposed block.
-    rpc ProposeExit(VoluntaryExit) returns (google.protobuf.Empty) {
+    rpc ProposeExit(SignedVoluntaryExit) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/exit"
         };
@@ -177,6 +167,7 @@ service BeaconNodeValidator {
 message DomainRequest {
     // The epoch for which the domain is being requested.
     uint64 epoch = 1;
+
     // The bytes domain specified by the validator.
     bytes domain = 2;
 }
@@ -196,6 +187,7 @@ message ValidatorActivationResponse {
     message Status {
         // A 48 byte validator public key.
         bytes public_key = 1;
+
         // A wrapper representing a validator's status object.
         ValidatorStatusResponse status = 2;
     }
@@ -207,6 +199,7 @@ message ValidatorActivationResponse {
 message ChainStartResponse {
     // A boolean specifying whether or not the chain has started.
     bool started = 1;
+
     // The genesis time of the beacon chain.
     uint64 genesis_time = 2;
 }
@@ -240,15 +233,19 @@ enum ValidatorStatus {
 message ValidatorStatusResponse {
     // The corresponding validator status.
     ValidatorStatus status = 1;
+
     // The block number of the Ethereum proof-of-work chain
 	// where the deposit for the validator was included.
     uint64 eth1_deposit_block_number = 2;
+
     // The slot in the beacon chain in which the validator's
     // deposit was included in a block.
     int64 deposit_inclusion_slot = 3;
+
     // The epoch in the beacon chain in which the validator
     // is determined as active.
     int64 activation_epoch = 4;
+
     // The position in the activation queue of pending validators.
     int64 position_in_activation_queue = 5;
 }
@@ -256,6 +253,7 @@ message ValidatorStatusResponse {
 message DutiesRequest {
     // Epoch at which validators should perform their duties.
     uint64 epoch = 1;
+
     // Array of byte encoded BLS public keys.
     repeated bytes public_keys = 2;
 }
@@ -263,25 +261,33 @@ message DutiesRequest {
 message DutiesResponse {
     repeated Duty duties = 1;
     message Duty {
-        // 48 byte BLS public key for the validator who's assigned to perform the following duty.
-        bytes public_key = 1;
+        // The committee a validator is assigned to.
+        repeated uint64 committee = 1;
+
+        // The index into the committee where the validator belongs in.
+        uint64 committee_index = 2;
+
         // Slot at which a validator must attest.
-        uint64 attestation_slot = 2;
-        // Shard at which a validator must attest.
-        uint64 attestation_shard = 3;
-        // Slot at which a validator must propose on beacon chain,
-        // when returns 0, the block production is not required, meaning
-        // the validator did not get assigned to be a proposer for the
-        // input epoch.
-        uint64 block_proposal_slot = 4;
+        uint64 attester_slot = 3;
+
+        // Slot at which a validator must propose a beacon chain block.
+        uint64 proposer_slot = 4;
+
+        // 48 byte BLS public key for the validator who's assigned to perform a duty.
+        bytes public_key = 5;
+
+        // The current status of the validator assigned to perform the duty.
+        ValidatorStatus status = 6;
     }
 }
 
 message BlockRequest {
     // Slot for which the block should be proposed.
     uint64 slot = 1;
+
     // Validator's 32 byte randao reveal secret of the current epoch.
     bytes randao_reveal = 2;
+
     // Validator's 32 byte graffiti message for the new block.
     bytes graffiti = 3;
 }
@@ -292,13 +298,11 @@ message ProposeResponse {
 }
 
 message AttestationDataRequest {
-    // The proof of custody bit is a byte with a single bit set as reported
-    // by the requesting validator. To be used for proof of custody game in phase 1.
-    bytes proof_of_custody_bit = 1;
-    // Slot for which the attestation should be proposed.
-    uint64 slot = 2;
-    // Shard for which the attestation is to be proposed.
-    uint64 shard = 3;
+    // Slot for which the attestation should be created.
+    uint64 slot = 1;
+
+    // Committee index the attestation should be created for.
+    uint64 committee_index = 2;
 }
 
 message AttestResponse {
@@ -341,29 +345,6 @@ message Validator {
     // FAR_FUTURE_EPOCH is a constant defined by the official Ethereum 2.0 specification:
     // https://github.com/ethereum/eth2.0-specs/blob/v0.9.2/specs/core/0_beacon-chain.md#constants
     uint64 withdrawable_epoch = 8;
-}
-
-message ValidatorPerformanceRequest {
-    // A list of 48 byte validator public keys.
-    repeated bytes public_keys = 1;
-
-    // The slot at which the performance is being requested.
-    uint64 slot = 2;
-}
-
-message ValidatorPerformanceResponse {
-    // A list of validator balances mapped 1-to-1 with the request's
-	// public keys.
-    repeated uint64 balances = 1;
-	// The total number of validators in the beacon chain.
-    uint64 total_validators = 2;
-	// The total number of active validators in the beacon chain.
-    uint64 total_active_validators = 3;
-	// The total number of validators from the request not found in
-	// in the beacon chain.
-    repeated bytes missing_validators = 4;
-	// The average active validator balance in the beacon chain.
-    float average_active_validator_balance = 5;
 }
 
 // ValidatorParticipation stores participation metrics during a given epoch.
