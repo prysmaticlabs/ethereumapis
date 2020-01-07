@@ -164,6 +164,16 @@ service BeaconChain {
         };
     }
 
+    // GetValidatorPerformance reports a validator's latest balance along with other important 
+    // metrics on rewards and penalties throughout its lifecycle in the beacon chain.
+    // The request takes in a list of validator public keys and returns a performance report
+    // for all of them respectively.
+    rpc GetValidatorPerformance(ValidatorPerformanceRequest) returns (ValidatorPerformanceResponse) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validators/performance"
+        };
+    }
+
     // Retrieve the validator assignments for a given epoch.
     //
     // This request may specify optional validator indices or public keys to
@@ -277,7 +287,7 @@ message ListBlocksResponse {
 // and its corresponding root.
 message BeaconBlockContainer {
     // The contained Ethereum beacon block.
-    BeaconBlock block = 1;
+    SignedBeaconBlock block = 1;
 
     // 32 byte merkle tree root of contained beacon block.
     bytes block_root = 2;
@@ -444,7 +454,12 @@ message Validators {
     // set is from the Ethereum 2.0 genesis set.
     uint64 epoch = 1;
 
-    repeated Validator validators = 2;
+    message ValidatorContainer {
+        uint64 index = 1;
+        Validator validator = 2; 
+    }
+
+    repeated ValidatorContainer validator_list = 2;
 
     // A pagination token returned from a previous call to `GetValidators`
     // that indicates from where listing should continue.
@@ -470,18 +485,53 @@ message ActiveSetChanges {
     // set. 
     uint64 epoch = 1;
 
-    // 48 byte validator public keys that have been activated in this epoch.
+    // 48 byte validator public keys that have been activated in the given epoch.
     repeated bytes activated_public_keys = 2;
+
+    // Indices of validators activated in the given epoch.
+    repeated uint64 activated_indices = 3;
 
     // 48 byte validator public keys that have been voluntarily exited in this
     // epoch.
-    repeated bytes exited_public_keys = 3;
+    repeated bytes exited_public_keys = 4;
+
+    // Indices of validators exited in the given epoch.
+    repeated uint64 exited_indices = 5;
 
     // 48 byte validator public keys that have been slashed in this epoch.
-    repeated bytes slashed_public_keys = 4;
+    repeated bytes slashed_public_keys = 6;
+
+    // Indices of validators slashed in the given epoch.
+    repeated uint64 slashed_indices = 7;
 
     // 48 byte validator public keys that have been involuntarily ejected in this epoch.
-    repeated bytes ejected_public_keys = 5;
+    repeated bytes ejected_public_keys = 8;
+
+    // Indices of validators ejected in the given epoch.
+    repeated uint64 ejected_indices = 9;
+}
+
+message ValidatorPerformanceRequest {
+    // A list of 48 byte validator public keys.
+    repeated bytes public_keys = 1;
+
+    // The slot at which the performance is being requested.
+    uint64 slot = 2;
+}
+
+message ValidatorPerformanceResponse {
+    // A list of validator balances mapped 1-to-1 with the request's
+	// public keys.
+    repeated uint64 balances = 1;
+	// The total number of validators in the beacon chain.
+    uint64 total_validators = 2;
+	// The total number of active validators in the beacon chain.
+    uint64 total_active_validators = 3;
+	// The total number of validators from the request not found in
+	// in the beacon chain.
+    repeated bytes missing_validators = 4;
+	// The average active validator balance in the beacon chain.
+    float average_active_validator_balance = 5;
 }
 
 message ValidatorQueue {
