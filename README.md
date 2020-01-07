@@ -97,4 +97,4 @@ For more details on JSON mapping for other types, view the relevent section in t
 We have put all of our contribution guidelines into [CONTRIBUTING.md](https://github.com/prysmaticlabs/prysm/blob/master/CONTRIBUTING.md)! Check it out to get started.
 
 ## License
-[GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html)
+[Apache 2.0](https://github.com/prysmaticlabs/ethereumapis/blob/master/LICENSE)
