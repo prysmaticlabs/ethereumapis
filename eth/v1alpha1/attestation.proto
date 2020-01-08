@@ -23,66 +23,73 @@ option java_package = "org.ethereum.eth.v1alpha1";
 option php_namespace = "Ethereum\\Eth\\v1alpha1";
 
 message Attestation {
-  // A bitfield representation of validator indices that have voted exactly
-  // the same vote and have been aggregated into this attestation.
-  bytes aggregation_bits = 1;
+    // A bitfield representation of validator indices that have voted exactly
+    // the same vote and have been aggregated into this attestation.
+    bytes aggregation_bits = 1;
 
-  AttestationData data = 2;
+    AttestationData data = 2;
 
-  // Custody bits is used for proof of custody game to ensure validator has
-  // legitimately downloaded and verified shard data.
-  // Not used in phase 0.
-  bytes custody_bits = 3;
+    // 96 byte BLS aggregate signature.
+    bytes signature = 3;
+}
 
-  // 96 byte BLS aggregate signature.
-  bytes signature = 4;
+message AggregateAttestationAndProof {
+    // The aggregator index that submitted this aggregated attestation and proof.
+    uint64 aggregator_index = 1;
+
+    // The aggregated attestation that was submitted.
+    Attestation aggregate = 3;
+
+    // 96 byte selection proof signed by the aggregator, which is the signature of the slot to aggregate.
+    bytes selection_proof = 2;
 }
 
 message AttestationData {
-  // Attestation data includes information on Casper the Friendly Finality Gadget's votes
-  // See: https://arxiv.org/pdf/1710.09437.pdf
+    // Attestation data includes information on Casper the Friendly Finality Gadget's votes
+    // See: https://arxiv.org/pdf/1710.09437.pdf
 
-  // Slot of the attestation attesting for.
-  uint64 slot = 1;
+    // Slot of the attestation attesting for.
+    uint64 slot = 1;
 
-  // The committee index that submitted this attestation.
-  uint64 committee_index = 2;
+    // The committee index that submitted this attestation.
+    uint64 committee_index = 2;
 
-  // 32 byte root of the LMD GHOST block vote.
-  bytes beacon_block_root = 3;
+    // 32 byte root of the LMD GHOST block vote.
+    bytes beacon_block_root = 3;
 
-  // the most recent justified checkpoint in the beacon state
-  Checkpoint source = 4;
+    // The most recent justified checkpoint in the beacon state
+    Checkpoint source = 4;
 
-  // the checkpoint attempting to be justified for the current epoch and its epoch boundary block
-  Checkpoint target = 5;
+    // The checkpoint attempting to be justified for the current epoch and its epoch boundary block
+    Checkpoint target = 5;
 }
 
 message Crosslink {
-  // The shard that crosslinks to the beacon chain.
-  uint64 shard = 1;
+    // The shard that crosslinks to the beacon chain.
+    uint64 shard = 1;
 
-  // 32 byte root of the parent crosslink.
-  bytes parent_root = 2;
+    // 32 byte root of the parent crosslink.
+    bytes parent_root = 2;
 
-  // Start epoch must match the parent crosslink's end epoch.
-  uint64 start_epoch = 3;
+    // Start epoch must match the parent crosslink's end epoch.
+    uint64 start_epoch = 3;
 
-  // Ending epoch for this crosslink period. This field matches the attestation
-  // target epoch or the start epoch + MAX_EPOCHS_PER_CROSSLINK, whichever is
-  // less. 
-  uint64 end_epoch = 4;
+    // Ending epoch for this crosslink period. This field matches the attestation
+    // target epoch or the start epoch + MAX_EPOCHS_PER_CROSSLINK, whichever is
+    // less. 
+    uint64 end_epoch = 4;
 
-  // 32 byte root of the crosslinked shard data since the previous crosslink.
-  bytes data_root = 5;
+    // 32 byte root of the crosslinked shard data since the previous crosslink.
+    bytes data_root = 5;
 }
 
 message Checkpoint {
-  // A checkpoint is every epoch's first slot. The goal of Casper FFG
-  // is to link the check points together for justification and finalization.
+    // A checkpoint is every epoch's first slot. The goal of Casper FFG
+    // is to link the check points together for justification and finalization.
 
-  // epoch of the check point reference to.
-  uint64 epoch = 1;
-  // block root of the check point reference to.
-  bytes root = 2;
+    // Epoch the checkpoint references.
+    uint64 epoch = 1;
+
+    // Block root of the checkpoint references.
+    bytes root = 2;
 }
