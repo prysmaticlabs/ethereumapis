@@ -1,5 +1,3 @@
-load("//tools:proto_descriptor_sets.bzl", "proto_descriptor_set")
-
 ##############################################################################
 # Common
 ##############################################################################
@@ -11,8 +9,8 @@ proto_library(
         "beacon_block.proto",
         "beacon_chain.proto",
         "node.proto",
-        "swagger.proto",
         "validator.proto",
+        ":generated_swagger_proto",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -21,11 +19,6 @@ proto_library(
         "@com_google_protobuf//:timestamp_proto",
         "@go_googleapis//google/api:annotations_proto",
     ],
-)
-
-proto_descriptor_set(
-    name = "proto_descriptor_set",
-    proto = ":proto",
 )
 
 ##############################################################################
@@ -74,4 +67,17 @@ protoc_gen_swagger(
     visibility = ["//visibility:public"],
     single_output = True,
     json_names_for_fields = True,
+)
+
+# Genrule for template subsitution.
+# See documentation in //tools/replacer.
+genrule(
+    name = "generated_swagger_proto",
+    srcs = [
+        "swagger.proto", # A go template compatibile file.
+        "swagger_description.md", # Replacement for description. 
+    ],
+    outs = ["swagger_generated.proto"],
+    cmd = "$(location //tools/replacer) $(location swagger.proto) description=$(location swagger_description.md) > $(@)",
+    tools = ["//tools/replacer"],
 )
