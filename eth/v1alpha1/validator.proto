@@ -278,6 +278,9 @@ message DutiesResponse {
 
         // The current status of the validator assigned to perform the duty.
         ValidatorStatus status = 6;
+
+        // The index of the validator in the beacon state.
+        uint64 validator_index = 7;
     }
 }
 
