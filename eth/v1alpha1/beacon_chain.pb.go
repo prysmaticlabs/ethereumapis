@@ -242,9 +242,8 @@ type ListBlocksRequest struct {
 	//	*ListBlocksRequest_Epoch
 	//	*ListBlocksRequest_Genesis
 	QueryFilter          isListBlocksRequest_QueryFilter `protobuf_oneof:"query_filter"`
-	IncludeNoncanonical  bool                            `protobuf:"varint,5,opt,name=include_noncanonical,json=includeNoncanonical,proto3" json:"include_noncanonical,omitempty"`
-	PageSize             int32                           `protobuf:"varint,6,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
-	PageToken            string                          `protobuf:"bytes,7,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	PageSize             int32                           `protobuf:"varint,5,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	PageToken            string                          `protobuf:"bytes,6,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}                        `json:"-"`
 	XXX_unrecognized     []byte                          `json:"-"`
 	XXX_sizecache        int32                           `json:"-"`
@@ -334,13 +333,6 @@ func (m *ListBlocksRequest) GetEpoch() uint64 {
 func (m *ListBlocksRequest) GetGenesis() bool {
 	if x, ok := m.GetQueryFilter().(*ListBlocksRequest_Genesis); ok {
 		return x.Genesis
-	}
-	return false
-}
-
-func (m *ListBlocksRequest) GetIncludeNoncanonical() bool {
-	if m != nil {
-		return m.IncludeNoncanonical
 	}
 	return false
 }
@@ -469,13 +461,6 @@ func (m *BeaconBlockContainer) GetBlockRoot() []byte {
 		return m.BlockRoot
 	}
 	return nil
-}
-
-func (m *BeaconBlockContainer) GetIsCanonical() bool {
-	if m != nil {
-		return m.IsCanonical
-	}
-	return false
 }
 
 type ChainHead struct {
