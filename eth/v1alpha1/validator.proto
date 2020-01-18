@@ -361,3 +361,46 @@ message ValidatorParticipation {
     // The total amount of ether, in gwei, that is eligible for voting.
     uint64 eligible_ether = 3;   
 }
+
+// ValidatorInfo gives information about the state of a validator at a certain epoch.
+message ValidatorInfo {
+    // The validator's 48 byte BLS public key.
+    bytes public_key = 1;
+
+    // The validator's index in the beacon state.
+    uint64 validator_index = 2;
+
+    // The epoch for which the information pertains.
+    uint64 epoch = 3;
+
+    // The validator's current state.
+    ValidatorStatus state = 4;
+
+    // The time of the next state.
+    // This could be in the past.  Some values depend on chain operation and so will vary from epoch to epoch.
+    // Specific times for each state are as follows:
+    // - state == DEPOSITED: time at which Ethereum 1 deposit will be store on-chain by Ethereum 2 (varying).
+    // - state == PENDING: time at which validator will be activated (varying).
+    // - state == ACTIVE: time at which validator is eligible for voluntary exit.
+    // - state == EXITING: time at which validator will exit.
+    // - state == EXITED: time at which validator funds will be withdrawable.
+    // - state == SLASHING: time at which validator will exit.
+    // - state == SLASHED: time at which validator funds will be withdrawable.
+    uint64 progression_time = 5;
+
+    // The validator's current balance in GWei.
+    // Only valid for states DEPOSIT_RECEIVED, PENDING_ACTIVE, ACTIVE, EXITING, SLASHING.
+    uint64 balance = 6;
+
+    // The validator's current effective balance in GWei.
+    // Only valid for states ACTIVE, EXITING, SLASHING.
+    uint64 effective_balance = 7;
+
+    // The slot of the validator's last block attestation.
+    // Only valid for states ACTIVE, EXITING, SLASHING.
+    uint64 last_attested = 8;
+
+    // The slot of the validator's last block proposal.
+    // Only valid for states ACTIVE, EXITING, SLASHING.
+    uint64 last_proposed = 9;
+}

@@ -197,12 +197,39 @@ service BeaconChain {
         };
     }
 
+
     // Retrieve the current configuration parameters of the beacon chain.
     rpc GetBeaconConfig(google.protobuf.Empty) returns (BeaconConfig) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/config"
         };
     }
+
+    // Server-side stream of validator information at each epoch.
+    rpc StreamValidatorsInfo(stream ValidatorChangeSet) returns (stream ValidatorInfo) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/validators/info/stream"
+        };
+    }
+}
+
+// SetAction defines the type of action that should be applied to the keys in a validator change set.
+enum SetAction {
+    // ADD_VALIDATOR_KEYS adds to the existing keys.
+    ADD_VALIDATOR_KEYS = 0;
+    // REMOVE_VALIDATOR_KEYS removes from the existing keys.
+    REMOVE_VALIDATOR_KEYS = 1;
+    // SET_VALIDATOR_KEYS overwrites the existing keys.
+    SET_VALIDATOR_KEYS = 2;
+}
+
+// ValidatorChangeSet updates the server's list of keys on which to operate.
+message ValidatorChangeSet {
+    // Action (add/remove/set).
+    SetAction action = 1;
+
+    // 48 byte BLS public keys of validators on which the operation occurs.
+    repeated bytes public_keys = 2;
 }
 
 // Request for attestations.

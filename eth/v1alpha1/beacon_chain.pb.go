@@ -6,12 +6,13 @@ package eth
 import (
 	context "context"
 	fmt "fmt"
+	math "math"
+
 	proto "github.com/golang/protobuf/proto"
 	_ "github.com/golang/protobuf/ptypes/any"
 	empty "github.com/golang/protobuf/ptypes/empty"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
-	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -24,6 +25,81 @@ var _ = math.Inf
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
+
+type SetAction int32
+
+const (
+	SetAction_ADD_VALIDATOR_KEYS    SetAction = 0
+	SetAction_REMOVE_VALIDATOR_KEYS SetAction = 1
+	SetAction_SET_VALIDATOR_KEYS    SetAction = 2
+)
+
+var SetAction_name = map[int32]string{
+	0: "ADD_VALIDATOR_KEYS",
+	1: "REMOVE_VALIDATOR_KEYS",
+	2: "SET_VALIDATOR_KEYS",
+}
+
+var SetAction_value = map[string]int32{
+	"ADD_VALIDATOR_KEYS":    0,
+	"REMOVE_VALIDATOR_KEYS": 1,
+	"SET_VALIDATOR_KEYS":    2,
+}
+
+func (x SetAction) String() string {
+	return proto.EnumName(SetAction_name, int32(x))
+}
+
+func (SetAction) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_e33ad64d6ced77c1, []int{0}
+}
+
+type ValidatorChangeSet struct {
+	Action               SetAction `protobuf:"varint,1,opt,name=action,proto3,enum=ethereum.eth.v1alpha1.SetAction" json:"action,omitempty"`
+	PublicKeys           [][]byte  `protobuf:"bytes,2,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *ValidatorChangeSet) Reset()         { *m = ValidatorChangeSet{} }
+func (m *ValidatorChangeSet) String() string { return proto.CompactTextString(m) }
+func (*ValidatorChangeSet) ProtoMessage()    {}
+func (*ValidatorChangeSet) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e33ad64d6ced77c1, []int{0}
+}
+
+func (m *ValidatorChangeSet) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ValidatorChangeSet.Unmarshal(m, b)
+}
+func (m *ValidatorChangeSet) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ValidatorChangeSet.Marshal(b, m, deterministic)
+}
+func (m *ValidatorChangeSet) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidatorChangeSet.Merge(m, src)
+}
+func (m *ValidatorChangeSet) XXX_Size() int {
+	return xxx_messageInfo_ValidatorChangeSet.Size(m)
+}
+func (m *ValidatorChangeSet) XXX_DiscardUnknown() {
+	xxx_messageInfo_ValidatorChangeSet.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ValidatorChangeSet proto.InternalMessageInfo
+
+func (m *ValidatorChangeSet) GetAction() SetAction {
+	if m != nil {
+		return m.Action
+	}
+	return SetAction_ADD_VALIDATOR_KEYS
+}
+
+func (m *ValidatorChangeSet) GetPublicKeys() [][]byte {
+	if m != nil {
+		return m.PublicKeys
+	}
+	return nil
+}
 
 type ListAttestationsRequest struct {
 	// Types that are valid to be assigned to QueryFilter:
@@ -45,7 +121,7 @@ func (m *ListAttestationsRequest) Reset()         { *m = ListAttestationsRequest
 func (m *ListAttestationsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListAttestationsRequest) ProtoMessage()    {}
 func (*ListAttestationsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{0}
+	return fileDescriptor_e33ad64d6ced77c1, []int{1}
 }
 
 func (m *ListAttestationsRequest) XXX_Unmarshal(b []byte) error {
@@ -194,7 +270,7 @@ func (m *ListAttestationsResponse) Reset()         { *m = ListAttestationsRespon
 func (m *ListAttestationsResponse) String() string { return proto.CompactTextString(m) }
 func (*ListAttestationsResponse) ProtoMessage()    {}
 func (*ListAttestationsResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{1}
+	return fileDescriptor_e33ad64d6ced77c1, []int{2}
 }
 
 func (m *ListAttestationsResponse) XXX_Unmarshal(b []byte) error {
@@ -254,7 +330,7 @@ func (m *ListBlocksRequest) Reset()         { *m = ListBlocksRequest{} }
 func (m *ListBlocksRequest) String() string { return proto.CompactTextString(m) }
 func (*ListBlocksRequest) ProtoMessage()    {}
 func (*ListBlocksRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{2}
+	return fileDescriptor_e33ad64d6ced77c1, []int{3}
 }
 
 func (m *ListBlocksRequest) XXX_Unmarshal(b []byte) error {
@@ -375,7 +451,7 @@ func (m *ListBlocksResponse) Reset()         { *m = ListBlocksResponse{} }
 func (m *ListBlocksResponse) String() string { return proto.CompactTextString(m) }
 func (*ListBlocksResponse) ProtoMessage()    {}
 func (*ListBlocksResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{3}
+	return fileDescriptor_e33ad64d6ced77c1, []int{4}
 }
 
 func (m *ListBlocksResponse) XXX_Unmarshal(b []byte) error {
@@ -429,7 +505,7 @@ func (m *BeaconBlockContainer) Reset()         { *m = BeaconBlockContainer{} }
 func (m *BeaconBlockContainer) String() string { return proto.CompactTextString(m) }
 func (*BeaconBlockContainer) ProtoMessage()    {}
 func (*BeaconBlockContainer) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{4}
+	return fileDescriptor_e33ad64d6ced77c1, []int{5}
 }
 
 func (m *BeaconBlockContainer) XXX_Unmarshal(b []byte) error {
@@ -486,7 +562,7 @@ func (m *ChainHead) Reset()         { *m = ChainHead{} }
 func (m *ChainHead) String() string { return proto.CompactTextString(m) }
 func (*ChainHead) ProtoMessage()    {}
 func (*ChainHead) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{5}
+	return fileDescriptor_e33ad64d6ced77c1, []int{6}
 }
 
 func (m *ChainHead) XXX_Unmarshal(b []byte) error {
@@ -605,7 +681,7 @@ func (m *ListCommitteesRequest) Reset()         { *m = ListCommitteesRequest{} }
 func (m *ListCommitteesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListCommitteesRequest) ProtoMessage()    {}
 func (*ListCommitteesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{6}
+	return fileDescriptor_e33ad64d6ced77c1, []int{7}
 }
 
 func (m *ListCommitteesRequest) XXX_Unmarshal(b []byte) error {
@@ -684,7 +760,7 @@ func (m *BeaconCommittees) Reset()         { *m = BeaconCommittees{} }
 func (m *BeaconCommittees) String() string { return proto.CompactTextString(m) }
 func (*BeaconCommittees) ProtoMessage()    {}
 func (*BeaconCommittees) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{7}
+	return fileDescriptor_e33ad64d6ced77c1, []int{8}
 }
 
 func (m *BeaconCommittees) XXX_Unmarshal(b []byte) error {
@@ -737,7 +813,7 @@ func (m *BeaconCommittees_CommitteeItem) Reset()         { *m = BeaconCommittees
 func (m *BeaconCommittees_CommitteeItem) String() string { return proto.CompactTextString(m) }
 func (*BeaconCommittees_CommitteeItem) ProtoMessage()    {}
 func (*BeaconCommittees_CommitteeItem) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{7, 0}
+	return fileDescriptor_e33ad64d6ced77c1, []int{8, 0}
 }
 
 func (m *BeaconCommittees_CommitteeItem) XXX_Unmarshal(b []byte) error {
@@ -776,7 +852,7 @@ func (m *BeaconCommittees_CommitteesList) Reset()         { *m = BeaconCommittee
 func (m *BeaconCommittees_CommitteesList) String() string { return proto.CompactTextString(m) }
 func (*BeaconCommittees_CommitteesList) ProtoMessage()    {}
 func (*BeaconCommittees_CommitteesList) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{7, 1}
+	return fileDescriptor_e33ad64d6ced77c1, []int{8, 1}
 }
 
 func (m *BeaconCommittees_CommitteesList) XXX_Unmarshal(b []byte) error {
@@ -822,7 +898,7 @@ func (m *ListValidatorBalancesRequest) Reset()         { *m = ListValidatorBalan
 func (m *ListValidatorBalancesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListValidatorBalancesRequest) ProtoMessage()    {}
 func (*ListValidatorBalancesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{8}
+	return fileDescriptor_e33ad64d6ced77c1, []int{9}
 }
 
 func (m *ListValidatorBalancesRequest) XXX_Unmarshal(b []byte) error {
@@ -930,7 +1006,7 @@ func (m *ValidatorBalances) Reset()         { *m = ValidatorBalances{} }
 func (m *ValidatorBalances) String() string { return proto.CompactTextString(m) }
 func (*ValidatorBalances) ProtoMessage()    {}
 func (*ValidatorBalances) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{9}
+	return fileDescriptor_e33ad64d6ced77c1, []int{10}
 }
 
 func (m *ValidatorBalances) XXX_Unmarshal(b []byte) error {
@@ -992,7 +1068,7 @@ func (m *ValidatorBalances_Balance) Reset()         { *m = ValidatorBalances_Bal
 func (m *ValidatorBalances_Balance) String() string { return proto.CompactTextString(m) }
 func (*ValidatorBalances_Balance) ProtoMessage()    {}
 func (*ValidatorBalances_Balance) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{9, 0}
+	return fileDescriptor_e33ad64d6ced77c1, []int{10, 0}
 }
 
 func (m *ValidatorBalances_Balance) XXX_Unmarshal(b []byte) error {
@@ -1051,7 +1127,7 @@ func (m *ListValidatorsRequest) Reset()         { *m = ListValidatorsRequest{} }
 func (m *ListValidatorsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListValidatorsRequest) ProtoMessage()    {}
 func (*ListValidatorsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{10}
+	return fileDescriptor_e33ad64d6ced77c1, []int{11}
 }
 
 func (m *ListValidatorsRequest) XXX_Unmarshal(b []byte) error {
@@ -1152,7 +1228,7 @@ func (m *GetValidatorRequest) Reset()         { *m = GetValidatorRequest{} }
 func (m *GetValidatorRequest) String() string { return proto.CompactTextString(m) }
 func (*GetValidatorRequest) ProtoMessage()    {}
 func (*GetValidatorRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{11}
+	return fileDescriptor_e33ad64d6ced77c1, []int{12}
 }
 
 func (m *GetValidatorRequest) XXX_Unmarshal(b []byte) error {
@@ -1232,7 +1308,7 @@ func (m *Validators) Reset()         { *m = Validators{} }
 func (m *Validators) String() string { return proto.CompactTextString(m) }
 func (*Validators) ProtoMessage()    {}
 func (*Validators) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{12}
+	return fileDescriptor_e33ad64d6ced77c1, []int{13}
 }
 
 func (m *Validators) XXX_Unmarshal(b []byte) error {
@@ -1293,7 +1369,7 @@ func (m *Validators_ValidatorContainer) Reset()         { *m = Validators_Valida
 func (m *Validators_ValidatorContainer) String() string { return proto.CompactTextString(m) }
 func (*Validators_ValidatorContainer) ProtoMessage()    {}
 func (*Validators_ValidatorContainer) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{12, 0}
+	return fileDescriptor_e33ad64d6ced77c1, []int{13, 0}
 }
 
 func (m *Validators_ValidatorContainer) XXX_Unmarshal(b []byte) error {
@@ -1342,7 +1418,7 @@ func (m *GetValidatorActiveSetChangesRequest) Reset()         { *m = GetValidato
 func (m *GetValidatorActiveSetChangesRequest) String() string { return proto.CompactTextString(m) }
 func (*GetValidatorActiveSetChangesRequest) ProtoMessage()    {}
 func (*GetValidatorActiveSetChangesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{13}
+	return fileDescriptor_e33ad64d6ced77c1, []int{14}
 }
 
 func (m *GetValidatorActiveSetChangesRequest) XXX_Unmarshal(b []byte) error {
@@ -1429,7 +1505,7 @@ func (m *ActiveSetChanges) Reset()         { *m = ActiveSetChanges{} }
 func (m *ActiveSetChanges) String() string { return proto.CompactTextString(m) }
 func (*ActiveSetChanges) ProtoMessage()    {}
 func (*ActiveSetChanges) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{14}
+	return fileDescriptor_e33ad64d6ced77c1, []int{15}
 }
 
 func (m *ActiveSetChanges) XXX_Unmarshal(b []byte) error {
@@ -1525,7 +1601,7 @@ func (m *ValidatorPerformanceRequest) Reset()         { *m = ValidatorPerformanc
 func (m *ValidatorPerformanceRequest) String() string { return proto.CompactTextString(m) }
 func (*ValidatorPerformanceRequest) ProtoMessage()    {}
 func (*ValidatorPerformanceRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{15}
+	return fileDescriptor_e33ad64d6ced77c1, []int{16}
 }
 
 func (m *ValidatorPerformanceRequest) XXX_Unmarshal(b []byte) error {
@@ -1575,7 +1651,7 @@ func (m *ValidatorPerformanceResponse) Reset()         { *m = ValidatorPerforman
 func (m *ValidatorPerformanceResponse) String() string { return proto.CompactTextString(m) }
 func (*ValidatorPerformanceResponse) ProtoMessage()    {}
 func (*ValidatorPerformanceResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{16}
+	return fileDescriptor_e33ad64d6ced77c1, []int{17}
 }
 
 func (m *ValidatorPerformanceResponse) XXX_Unmarshal(b []byte) error {
@@ -1644,7 +1720,7 @@ func (m *ValidatorQueue) Reset()         { *m = ValidatorQueue{} }
 func (m *ValidatorQueue) String() string { return proto.CompactTextString(m) }
 func (*ValidatorQueue) ProtoMessage()    {}
 func (*ValidatorQueue) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{17}
+	return fileDescriptor_e33ad64d6ced77c1, []int{18}
 }
 
 func (m *ValidatorQueue) XXX_Unmarshal(b []byte) error {
@@ -1704,7 +1780,7 @@ func (m *ListValidatorAssignmentsRequest) Reset()         { *m = ListValidatorAs
 func (m *ListValidatorAssignmentsRequest) String() string { return proto.CompactTextString(m) }
 func (*ListValidatorAssignmentsRequest) ProtoMessage()    {}
 func (*ListValidatorAssignmentsRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{18}
+	return fileDescriptor_e33ad64d6ced77c1, []int{19}
 }
 
 func (m *ListValidatorAssignmentsRequest) XXX_Unmarshal(b []byte) error {
@@ -1812,7 +1888,7 @@ func (m *ValidatorAssignments) Reset()         { *m = ValidatorAssignments{} }
 func (m *ValidatorAssignments) String() string { return proto.CompactTextString(m) }
 func (*ValidatorAssignments) ProtoMessage()    {}
 func (*ValidatorAssignments) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{19}
+	return fileDescriptor_e33ad64d6ced77c1, []int{20}
 }
 
 func (m *ValidatorAssignments) XXX_Unmarshal(b []byte) error {
@@ -1878,7 +1954,7 @@ func (m *ValidatorAssignments_CommitteeAssignment) Reset() {
 func (m *ValidatorAssignments_CommitteeAssignment) String() string { return proto.CompactTextString(m) }
 func (*ValidatorAssignments_CommitteeAssignment) ProtoMessage()    {}
 func (*ValidatorAssignments_CommitteeAssignment) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{19, 0}
+	return fileDescriptor_e33ad64d6ced77c1, []int{20, 0}
 }
 
 func (m *ValidatorAssignments_CommitteeAssignment) XXX_Unmarshal(b []byte) error {
@@ -1948,7 +2024,7 @@ func (m *GetValidatorParticipationRequest) Reset()         { *m = GetValidatorPa
 func (m *GetValidatorParticipationRequest) String() string { return proto.CompactTextString(m) }
 func (*GetValidatorParticipationRequest) ProtoMessage()    {}
 func (*GetValidatorParticipationRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{20}
+	return fileDescriptor_e33ad64d6ced77c1, []int{21}
 }
 
 func (m *GetValidatorParticipationRequest) XXX_Unmarshal(b []byte) error {
@@ -2027,7 +2103,7 @@ func (m *ValidatorParticipationResponse) Reset()         { *m = ValidatorPartici
 func (m *ValidatorParticipationResponse) String() string { return proto.CompactTextString(m) }
 func (*ValidatorParticipationResponse) ProtoMessage()    {}
 func (*ValidatorParticipationResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{21}
+	return fileDescriptor_e33ad64d6ced77c1, []int{22}
 }
 
 func (m *ValidatorParticipationResponse) XXX_Unmarshal(b []byte) error {
@@ -2080,7 +2156,7 @@ func (m *AttestationPoolResponse) Reset()         { *m = AttestationPoolResponse
 func (m *AttestationPoolResponse) String() string { return proto.CompactTextString(m) }
 func (*AttestationPoolResponse) ProtoMessage()    {}
 func (*AttestationPoolResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{22}
+	return fileDescriptor_e33ad64d6ced77c1, []int{23}
 }
 
 func (m *AttestationPoolResponse) XXX_Unmarshal(b []byte) error {
@@ -2148,6 +2224,8 @@ func (m *BeaconConfig) GetConfig() map[string]string {
 }
 
 func init() {
+	proto.RegisterEnum("ethereum.eth.v1alpha1.SetAction", SetAction_name, SetAction_value)
+	proto.RegisterType((*ValidatorChangeSet)(nil), "ethereum.eth.v1alpha1.ValidatorChangeSet")
 	proto.RegisterType((*ListAttestationsRequest)(nil), "ethereum.eth.v1alpha1.ListAttestationsRequest")
 	proto.RegisterType((*ListAttestationsResponse)(nil), "ethereum.eth.v1alpha1.ListAttestationsResponse")
 	proto.RegisterType((*ListBlocksRequest)(nil), "ethereum.eth.v1alpha1.ListBlocksRequest")
@@ -2184,6 +2262,7 @@ func init() {
 func init() { proto.RegisterFile("eth/v1alpha1/beacon_chain.proto", fileDescriptor_e33ad64d6ced77c1) }
 
 var fileDescriptor_e33ad64d6ced77c1 = []byte{
+<<<<<<< HEAD
 	// 2249 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xdc, 0x59, 0xcd, 0x6f, 0x23, 0x49,
 	0x15, 0x9f, 0xf6, 0x47, 0x12, 0x3f, 0x3b, 0x71, 0x52, 0xe3, 0x4c, 0x3c, 0x3d, 0xc9, 0xc4, 0xd3,
@@ -2356,6 +2435,7 @@ type BeaconChainClient interface {
 	ListValidatorAssignments(ctx context.Context, in *ListValidatorAssignmentsRequest, opts ...grpc.CallOption) (*ValidatorAssignments, error)
 	GetValidatorParticipation(ctx context.Context, in *GetValidatorParticipationRequest, opts ...grpc.CallOption) (*ValidatorParticipationResponse, error)
 	GetBeaconConfig(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*BeaconConfig, error)
+	StreamValidatorsInfo(ctx context.Context, opts ...grpc.CallOption) (BeaconChain_StreamValidatorsInfoClient, error)
 }
 
 type beaconChainClient struct {
@@ -2547,6 +2627,7 @@ func (c *beaconChainClient) GetValidatorParticipation(ctx context.Context, in *G
 	return out, nil
 }
 
+<<<<<<< HEAD
 func (c *beaconChainClient) GetBeaconConfig(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*BeaconConfig, error) {
 	out := new(BeaconConfig)
 	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/GetBeaconConfig", in, out, opts...)
@@ -2554,6 +2635,37 @@ func (c *beaconChainClient) GetBeaconConfig(ctx context.Context, in *empty.Empty
 		return nil, err
 	}
 	return out, nil
+=======
+func (c *beaconChainClient) StreamValidatorsInfo(ctx context.Context, opts ...grpc.CallOption) (BeaconChain_StreamValidatorsInfoClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_BeaconChain_serviceDesc.Streams[2], "/ethereum.eth.v1alpha1.BeaconChain/StreamValidatorsInfo", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &beaconChainStreamValidatorsInfoClient{stream}
+	return x, nil
+}
+
+type BeaconChain_StreamValidatorsInfoClient interface {
+	Send(*ValidatorChangeSet) error
+	Recv() (*ValidatorInfo, error)
+	grpc.ClientStream
+}
+
+type beaconChainStreamValidatorsInfoClient struct {
+	grpc.ClientStream
+}
+
+func (x *beaconChainStreamValidatorsInfoClient) Send(m *ValidatorChangeSet) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *beaconChainStreamValidatorsInfoClient) Recv() (*ValidatorInfo, error) {
+	m := new(ValidatorInfo)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+>>>>>>> Update info stream
 }
 
 // BeaconChainServer is the server API for BeaconChain service.
@@ -2573,7 +2685,11 @@ type BeaconChainServer interface {
 	GetValidatorPerformance(context.Context, *ValidatorPerformanceRequest) (*ValidatorPerformanceResponse, error)
 	ListValidatorAssignments(context.Context, *ListValidatorAssignmentsRequest) (*ValidatorAssignments, error)
 	GetValidatorParticipation(context.Context, *GetValidatorParticipationRequest) (*ValidatorParticipationResponse, error)
+<<<<<<< HEAD
 	GetBeaconConfig(context.Context, *empty.Empty) (*BeaconConfig, error)
+=======
+	StreamValidatorsInfo(BeaconChain_StreamValidatorsInfoServer) error
+>>>>>>> Update info stream
 }
 
 func RegisterBeaconChainServer(s *grpc.Server, srv BeaconChainServer) {
@@ -2856,6 +2972,7 @@ func _BeaconChain_GetValidatorParticipation_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
+<<<<<<< HEAD
 func _BeaconChain_GetBeaconConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(empty.Empty)
 	if err := dec(in); err != nil {
@@ -2872,6 +2989,32 @@ func _BeaconChain_GetBeaconConfig_Handler(srv interface{}, ctx context.Context, 
 		return srv.(BeaconChainServer).GetBeaconConfig(ctx, req.(*empty.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
+=======
+func _BeaconChain_StreamValidatorsInfo_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(BeaconChainServer).StreamValidatorsInfo(&beaconChainStreamValidatorsInfoServer{stream})
+}
+
+type BeaconChain_StreamValidatorsInfoServer interface {
+	Send(*ValidatorInfo) error
+	Recv() (*ValidatorChangeSet, error)
+	grpc.ServerStream
+}
+
+type beaconChainStreamValidatorsInfoServer struct {
+	grpc.ServerStream
+}
+
+func (x *beaconChainStreamValidatorsInfoServer) Send(m *ValidatorInfo) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *beaconChainStreamValidatorsInfoServer) Recv() (*ValidatorChangeSet, error) {
+	m := new(ValidatorChangeSet)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+>>>>>>> Update info stream
 }
 
 var _BeaconChain_serviceDesc = grpc.ServiceDesc{
@@ -2945,6 +3088,12 @@ var _BeaconChain_serviceDesc = grpc.ServiceDesc{
 			StreamName:    "StreamChainHead",
 			Handler:       _BeaconChain_StreamChainHead_Handler,
 			ServerStreams: true,
+		},
+		{
+			StreamName:    "StreamValidatorsInfo",
+			Handler:       _BeaconChain_StreamValidatorsInfo_Handler,
+			ServerStreams: true,
+			ClientStreams: true,
 		},
 	},
 	Metadata: "eth/v1alpha1/beacon_chain.proto",
