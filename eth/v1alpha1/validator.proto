@@ -224,10 +224,10 @@ enum ValidatorStatus {
   DEPOSIT_RECEIVED = 1;
   PENDING_ACTIVE = 2;
   ACTIVE = 3;
-  INITIATED_EXIT = 4;
-  WITHDRAWABLE = 5;
-  EXITED = 6;
-  EXITED_SLASHED = 7;
+  EXITING = 4;
+  EXITED = 5;
+  SLASHING = 6;
+  SLASHED = 7;
 }
 
 message ValidatorStatusResponse {
