@@ -18,6 +18,7 @@ package ethereum.eth.v1alpha1;
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/any.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1alpha1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1;eth";
@@ -69,6 +70,20 @@ service Node {
             get: "/eth/v1alpha1/node/peers"
         };
     }
+
+    // Retrieve the current chain configuration parameters of the beacon node.
+    rpc GetBeaconConfig(google.protobuf.Empty) returns (BeaconConfig) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/node/beaconconfig"
+        };
+    }
+}
+
+
+// Information about the configuration parameters of the beacon node, such
+// as the slots per epoch, slots per eth1 voting period, and more.
+message BeaconConfig {
+    map<string, google.protobuf.Any> config = 1;
 }
 
 // Information about the current network sync status of the node.
