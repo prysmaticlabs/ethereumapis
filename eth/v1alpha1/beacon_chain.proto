@@ -17,6 +17,7 @@ package ethereum.eth.v1alpha1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/any.proto";
 
 import "eth/v1alpha1/attestation.proto";
 import "eth/v1alpha1/beacon_block.proto";
@@ -193,6 +194,13 @@ service BeaconChain {
     rpc GetValidatorParticipation(GetValidatorParticipationRequest) returns (ValidatorParticipationResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validators/participation"
+        };
+    }
+
+    // Retrieve the current configuration parameters of the beacon chain.
+    rpc GetBeaconConfig(google.protobuf.Empty) returns (BeaconConfig) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/config"
         };
     }
 }
@@ -632,4 +640,11 @@ message ValidatorParticipationResponse {
 
 message AttestationPoolResponse {
     repeated Attestation attestations = 1;
+}
+
+
+// Information about the configuration parameters of the beacon node, such
+// as the slots per epoch, slots per eth1 voting period, and more.
+message BeaconConfig {
+    map<string, google.protobuf.Any> config = 1;
 }
