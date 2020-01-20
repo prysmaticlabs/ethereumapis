@@ -642,7 +642,6 @@ message AttestationPoolResponse {
     repeated Attestation attestations = 1;
 }
 
-
 // Information about the configuration parameters of the beacon node, such
 // as the slots per epoch, slots per eth1 voting period, and more.
 message BeaconConfig {
