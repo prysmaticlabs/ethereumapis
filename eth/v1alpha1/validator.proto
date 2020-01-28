@@ -97,13 +97,13 @@ service BeaconNodeValidator {
 	// The request can specify either a validator's public key or validator index.
 	// 
 	// The status response can be one of the following:
-	//	PENDING_ACTIVE - validator is waiting to get activated.
+	//	DEPOSITED - validator's deposit has been recognized by Ethereum 1, not yet recognized by Ethereum 2.
+	//	PENDING - validator is in Ethereum 2's activation queue.
 	//	ACTIVE - validator is active.
-	//	INITIATED_EXIT - validator has initiated an an exit request.
-	//	WITHDRAWABLE - validator's deposit can be withdrawn after lock up period.
-	//	EXITED - validator has exited, means the deposit has been withdrawn.
-	//	EXITED_SLASHED - validator was forcefully exited due to slashing. 
-	//	UNKNOWN - validator does not have a known status in the network.
+	//	EXITING - validator has initiated an an exit request, or has dropped below the ejection balance and is being kicked out.
+	//	EXITED - validator is no longer validating.
+	//	SLASHING - validator has been kicked out due to meeting a slashing condition.
+	//	UNKNOWN_STATUS - validator does not have a known status in the network.
     rpc ValidatorStatus(ValidatorStatusRequest) returns (ValidatorStatusResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validator/status"
@@ -221,13 +221,12 @@ message ValidatorStatusRequest {
 
 enum ValidatorStatus {
   UNKNOWN_STATUS = 0;
-  DEPOSIT_RECEIVED = 1;
-  PENDING_ACTIVE = 2;
+  DEPOSITED = 1;
+  PENDING = 2;
   ACTIVE = 3;
   EXITING = 4;
-  EXITED = 5;
-  SLASHING = 6;
-  SLASHED = 7;
+  SLASHING = 5;
+  EXITED = 6;
 }
 
 message ValidatorStatusResponse {
