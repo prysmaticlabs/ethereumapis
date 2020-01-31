@@ -197,7 +197,6 @@ service BeaconChain {
         };
     }
 
-
     // Retrieve the current configuration parameters of the beacon chain.
     rpc GetBeaconConfig(google.protobuf.Empty) returns (BeaconConfig) {
         option (google.api.http) = {

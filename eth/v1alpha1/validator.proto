@@ -368,7 +368,7 @@ message ValidatorInfo {
     bytes public_key = 1;
 
     // The validator's index in the beacon state.
-    uint64 validator_index = 2;
+    uint64 index = 2;
 
     // The epoch for which the information pertains.
     uint64 epoch = 3;
@@ -376,31 +376,41 @@ message ValidatorInfo {
     // The validator's current state.
     ValidatorStatus state = 4;
 
-    // The time of the next state.
+    // The unix timestamp when the validator entered the current state.
+    uint64 state_timestamp = 5;
+
+    // The unix timestamp when the validator enters the next state.
     // This could be in the past.  Some values depend on chain operation and so will vary from epoch to epoch.
     // Specific times for each state are as follows:
-    // - state == DEPOSITED: time at which Ethereum 1 deposit will be store on-chain by Ethereum 2 (varying).
-    // - state == PENDING: time at which validator will be activated (varying).
-    // - state == ACTIVE: time at which validator is eligible for voluntary exit.
+    // - state == DEPOSITED: time at which Ethereum 1 deposit will be stored on-chain by Ethereum 2 (variable, can be 0).
+    // - state == PENDING: time at which validator will be activated (variable).
+    // - state == ACTIVE: no value (next transition depends on user and network actions).
     // - state == EXITING: time at which validator will exit.
-    // - state == EXITED: time at which validator funds will be withdrawable.
     // - state == SLASHING: time at which validator will exit.
-    // - state == SLASHED: time at which validator funds will be withdrawable.
-    uint64 progression_time = 5;
+    // - state == EXITED: time at which validator funds will be withdrawable.
+    uint64 transition_timestamp = 6;
 
     // The validator's current balance in GWei.
-    // Only valid for states DEPOSIT_RECEIVED, PENDING_ACTIVE, ACTIVE, EXITING, SLASHING.
-    uint64 balance = 6;
+    uint64 balance = 7;
 
     // The validator's current effective balance in GWei.
     // Only valid for states ACTIVE, EXITING, SLASHING.
-    uint64 effective_balance = 7;
+    uint64 effective_balance = 8;
 
     // The slot of the validator's last block attestation.
     // Only valid for states ACTIVE, EXITING, SLASHING.
-    uint64 last_attested = 8;
+    uint64 last_attested_slot = 9;
+
+    // The slot of the validator's next block attestation.
+    // Only valid for states ACTIVE, EXITING, SLASHING.
+    uint64 next_attesting_slot = 10;
 
     // The slot of the validator's last block proposal.
     // Only valid for states ACTIVE, EXITING, SLASHING.
-    uint64 last_proposed = 9;
+    uint64 last_proposed_slot = 11;
+
+    // The slot of the validator's next block proposal.
+    // Only present if the proposal is in the next epoch.
+    // Only valid for states ACTIVE, EXITING, SLASHING.
+    uint64 next_proposing_slot = 12;
 }

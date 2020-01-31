@@ -6,13 +6,12 @@ package eth
 import (
 	context "context"
 	fmt "fmt"
-	math "math"
-
 	proto "github.com/golang/protobuf/proto"
 	_ "github.com/golang/protobuf/ptypes/any"
 	empty "github.com/golang/protobuf/ptypes/empty"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
+	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -2195,7 +2194,7 @@ func (m *BeaconConfig) Reset()         { *m = BeaconConfig{} }
 func (m *BeaconConfig) String() string { return proto.CompactTextString(m) }
 func (*BeaconConfig) ProtoMessage()    {}
 func (*BeaconConfig) Descriptor() ([]byte, []int) {
-	return fileDescriptor_e33ad64d6ced77c1, []int{23}
+	return fileDescriptor_e33ad64d6ced77c1, []int{24}
 }
 
 func (m *BeaconConfig) XXX_Unmarshal(b []byte) error {
@@ -2262,6 +2261,7 @@ func init() {
 func init() { proto.RegisterFile("eth/v1alpha1/beacon_chain.proto", fileDescriptor_e33ad64d6ced77c1) }
 
 var fileDescriptor_e33ad64d6ced77c1 = []byte{
+<<<<<<< HEAD
 <<<<<<< HEAD
 	// 2249 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xdc, 0x59, 0xcd, 0x6f, 0x23, 0x49,
@@ -2627,7 +2627,6 @@ func (c *beaconChainClient) GetValidatorParticipation(ctx context.Context, in *G
 	return out, nil
 }
 
-<<<<<<< HEAD
 func (c *beaconChainClient) GetBeaconConfig(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*BeaconConfig, error) {
 	out := new(BeaconConfig)
 	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/GetBeaconConfig", in, out, opts...)
@@ -2635,7 +2634,8 @@ func (c *beaconChainClient) GetBeaconConfig(ctx context.Context, in *empty.Empty
 		return nil, err
 	}
 	return out, nil
-=======
+}
+
 func (c *beaconChainClient) StreamValidatorsInfo(ctx context.Context, opts ...grpc.CallOption) (BeaconChain_StreamValidatorsInfoClient, error) {
 	stream, err := c.cc.NewStream(ctx, &_BeaconChain_serviceDesc.Streams[2], "/ethereum.eth.v1alpha1.BeaconChain/StreamValidatorsInfo", opts...)
 	if err != nil {
@@ -2665,7 +2665,6 @@ func (x *beaconChainStreamValidatorsInfoClient) Recv() (*ValidatorInfo, error) {
 		return nil, err
 	}
 	return m, nil
->>>>>>> Update info stream
 }
 
 // BeaconChainServer is the server API for BeaconChain service.
@@ -2685,11 +2684,8 @@ type BeaconChainServer interface {
 	GetValidatorPerformance(context.Context, *ValidatorPerformanceRequest) (*ValidatorPerformanceResponse, error)
 	ListValidatorAssignments(context.Context, *ListValidatorAssignmentsRequest) (*ValidatorAssignments, error)
 	GetValidatorParticipation(context.Context, *GetValidatorParticipationRequest) (*ValidatorParticipationResponse, error)
-<<<<<<< HEAD
 	GetBeaconConfig(context.Context, *empty.Empty) (*BeaconConfig, error)
-=======
 	StreamValidatorsInfo(BeaconChain_StreamValidatorsInfoServer) error
->>>>>>> Update info stream
 }
 
 func RegisterBeaconChainServer(s *grpc.Server, srv BeaconChainServer) {
@@ -2972,7 +2968,6 @@ func _BeaconChain_GetValidatorParticipation_Handler(srv interface{}, ctx context
 	return interceptor(ctx, in, info, handler)
 }
 
-<<<<<<< HEAD
 func _BeaconChain_GetBeaconConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(empty.Empty)
 	if err := dec(in); err != nil {
@@ -2989,7 +2984,8 @@ func _BeaconChain_GetBeaconConfig_Handler(srv interface{}, ctx context.Context, 
 		return srv.(BeaconChainServer).GetBeaconConfig(ctx, req.(*empty.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
-=======
+}
+
 func _BeaconChain_StreamValidatorsInfo_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(BeaconChainServer).StreamValidatorsInfo(&beaconChainStreamValidatorsInfoServer{stream})
 }
@@ -3014,7 +3010,6 @@ func (x *beaconChainStreamValidatorsInfoServer) Recv() (*ValidatorChangeSet, err
 		return nil, err
 	}
 	return m, nil
->>>>>>> Update info stream
 }
 
 var _BeaconChain_serviceDesc = grpc.ServiceDesc{
