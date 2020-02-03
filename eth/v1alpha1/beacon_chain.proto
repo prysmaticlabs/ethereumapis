@@ -645,5 +645,5 @@ message AttestationPoolResponse {
 // Information about the configuration parameters of the beacon node, such
 // as the slots per epoch, slots per eth1 voting period, and more.
 message BeaconConfig {
-    map<string, google.protobuf.Any> config = 1;
+    map<string, string> config = 1;
 }
