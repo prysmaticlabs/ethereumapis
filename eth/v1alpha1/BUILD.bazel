@@ -2,6 +2,21 @@
 # Common
 ##############################################################################
 
+load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@rules_java//java:defs.bzl", "java_proto_library")
+
+##############################################################################
+# Go
+##############################################################################
+# gazelle:ignore
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
+
+##############################################################################
+# OpenAPI (Swagger) V2
+##############################################################################
+load("@grpc_ecosystem_grpc_gateway//protoc-gen-swagger:defs.bzl", "protoc_gen_swagger")
+
 proto_library(
     name = "proto",
     srcs = [
@@ -14,11 +29,11 @@ proto_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_proto",
         "@com_google_protobuf//:empty_proto",
         "@com_google_protobuf//:any_proto",
         "@com_google_protobuf//:timestamp_proto",
         "@go_googleapis//google/api:annotations_proto",
+        "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_proto",
     ],
 )
 
@@ -31,13 +46,6 @@ java_proto_library(
     deps = [":proto"],
 )
 
-##############################################################################
-# Go
-##############################################################################
-# gazelle:ignore
-load("@io_bazel_rules_go//go:def.bzl", "go_library")
-load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
-
 go_proto_library(
     name = "go_proto",
     compilers = ["@io_bazel_rules_go//proto:go_grpc"],
@@ -45,8 +53,8 @@ go_proto_library(
     proto = ":proto",
     visibility = ["//visibility:public"],
     deps = [
-        "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_go_proto",
         "@go_googleapis//google/api:annotations_go_proto",
+        "@grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_go_proto",
     ],
 )
 
@@ -57,17 +65,12 @@ go_library(
     visibility = ["//visibility:public"],
 )
 
-##############################################################################
-# OpenAPI (Swagger) V2
-##############################################################################
-load("@grpc_ecosystem_grpc_gateway//protoc-gen-swagger:defs.bzl", "protoc_gen_swagger")
-
 protoc_gen_swagger(
     name = "swagger",
-    proto = ":proto",
-    visibility = ["//visibility:public"],
-    single_output = True,
     json_names_for_fields = True,
+    proto = ":proto",
+    single_output = True,
+    visibility = ["//visibility:public"],
 )
 
 # Genrule for template subsitution.
@@ -75,8 +78,8 @@ protoc_gen_swagger(
 genrule(
     name = "generated_swagger_proto",
     srcs = [
-        "swagger.proto", # A go template compatibile file.
-        "swagger_description.md", # Replacement for description. 
+        "swagger.proto",  # A go template compatibile file.
+        "swagger_description.md",  # Replacement for description.
     ],
     outs = ["swagger_generated.proto"],
     cmd = "$(location //tools/replacer) $(location swagger.proto) description=$(location swagger_description.md) > $(@)",
