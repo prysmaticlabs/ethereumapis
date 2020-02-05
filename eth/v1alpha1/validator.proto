@@ -373,11 +373,11 @@ message ValidatorInfo {
     // The epoch for which the information pertains.
     uint64 epoch = 3;
 
-    // The validator's current state.
-    ValidatorStatus state = 4;
+    // The validator's current status.
+    ValidatorStatus status = 4;
 
     // The unix timestamp when the validator entered the current state.
-    uint64 state_timestamp = 5;
+    uint64 status_timestamp = 5;
 
     // The unix timestamp when the validator enters the next state.
     // This could be in the past.  Some values depend on chain operation and so will vary from epoch to epoch.
