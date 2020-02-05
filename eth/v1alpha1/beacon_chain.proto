@@ -85,6 +85,14 @@ service BeaconChain {
         };
     }
 
+    // Server-side stream of all blocks as they are received by
+    // by the beacon chain node. 
+    rpc StreamBlocks(google.protobuf.Empty) returns (stream BeaconBlock) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/blocks/stream"
+        };
+    }
+
     // Server-side stream of information about the head of the beacon chain 
     // from the view of the beacon chain node. 
     // 
