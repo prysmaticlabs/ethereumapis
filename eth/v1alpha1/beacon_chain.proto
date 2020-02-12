@@ -562,19 +562,19 @@ message ValidatorPerformanceResponse {
     // A list of validator balances mapped 1-to-1 with the request's
 	// public keys.
     repeated uint64 balances = 1;
-    // The slot of when validator's attestation got included in the chain, the slot
+    // The slot of when validator's attestation got included in the chain at previous epoch, the slot
     // is mapped 1-to-1 with the request's public keys.
     repeated uint64 inclusionSlots = 2;
-    // The distance of when validator submits and gets included in the chain, the distance
+    // The distance of when validator submitted and got included in the chain, the distance
     // is mapped 1-to-1 with the request's public keys.
     repeated uint64 inclusionDistances = 3;
-    // Whether the list of validator recently correctly voted for source, the result
+    // Whether the list of validator recently correctly voted for source at previous epoch, the result
     // is mapped 1-to-1 with the request's public keys.
     repeated bool correctlyVotedSource = 4;
-    // Whether the list of validator recently correctly voted for target, the result
+    // Whether the list of validator recently correctly voted for target at previous epoch, the result
     // is mapped 1-to-1 with the request's public keys.
     repeated bool correctlyVotedTarget = 5;
-    // Whether the list of validator recently correctly voted for head, the result
+    // Whether the list of validator recently correctly voted for head at previous epoch, the result
     // is mapped 1-to-1 with the request's public keys.
     repeated bool correctlyVotedHead = 6;
 	// The total number of validators from the request not found in
