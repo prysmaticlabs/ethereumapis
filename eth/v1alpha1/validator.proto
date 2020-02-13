@@ -376,9 +376,6 @@ message ValidatorInfo {
     // The validator's current status.
     ValidatorStatus status = 4;
 
-    // The unix timestamp when the validator entered the current state.
-    uint64 status_timestamp = 5;
-
     // The unix timestamp when the validator enters the next state.
     // This could be in the past.  Some values depend on chain operation and so will vary from epoch to epoch.
     // Specific times for each state are as follows:
@@ -388,29 +385,12 @@ message ValidatorInfo {
     // - state == EXITING: time at which validator will exit.
     // - state == SLASHING: time at which validator will exit.
     // - state == EXITED: time at which validator funds will be withdrawable.
-    uint64 transition_timestamp = 6;
+    uint64 transition_timestamp = 5;
 
     // The validator's current balance in GWei.
-    uint64 balance = 7;
+    uint64 balance = 6;
 
     // The validator's current effective balance in GWei.
     // Only valid for states ACTIVE, EXITING, SLASHING.
-    uint64 effective_balance = 8;
-
-    // The slot of the validator's last block attestation.
-    // Only valid for states ACTIVE, EXITING, SLASHING.
-    uint64 last_attested_slot = 9;
-
-    // The slot of the validator's next block attestation.
-    // Only valid for states ACTIVE, EXITING, SLASHING.
-    uint64 next_attesting_slot = 10;
-
-    // The slot of the validator's last block proposal.
-    // Only valid for states ACTIVE, EXITING, SLASHING.
-    uint64 last_proposed_slot = 11;
-
-    // The slot of the validator's next block proposal.
-    // Only present if the proposal is in the next epoch.
-    // Only valid for states ACTIVE, EXITING, SLASHING.
-    uint64 next_proposing_slot = 12;
+    uint64 effective_balance = 7;
 }
