@@ -731,7 +731,7 @@ message BeaconConfig {
 }
 
 message SubmitSlashingResponse {
-    // 32 Bytes hash tree root of the successfully submitted 
-    // slashing object.
-    bytes slashing_root = 1;
+    // Indices of the validators to be slashed by the submitted 
+    // proposer/attester slashing object.
+    repeated uint64 slashed_indices = 1;
 }
