@@ -218,6 +218,20 @@ service BeaconChain {
             get: "/eth/v1alpha1/beacon/validators/info/stream"
         };
     }
+
+    // Submit an attester slashing object to the beacon node.
+    rpc SubmitAttesterSlashing(AttesterSlashing) returns (SubmitSlashingResponse) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/slashings/attester/submit"
+        };
+    } 
+
+    // Submit a proposer slashing object to the beacon node.
+    rpc SubmitProposerSlashing(ProposerSlashing) returns (SubmitSlashingResponse) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/slashings/proposer/submit"
+        };
+    } 
 }
 
 // SetAction defines the type of action that should be applied to the keys in a validator change set.
@@ -714,4 +728,10 @@ message AttestationPoolResponse {
 // as the slots per epoch, slots per eth1 voting period, and more.
 message BeaconConfig {
     map<string, string> config = 1;
+}
+
+message SubmitSlashingResponse {
+    // Indices of the validators to be slashed by the submitted 
+    // proposer/attester slashing object.
+    repeated uint64 slashed_indices = 1;
 }
