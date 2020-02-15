@@ -49,11 +49,31 @@ service BeaconChain {
         };
     }
 
+    // Retrieve indexed attestations by block root, slot, or epoch. 
+    // 
+    // The server may return an empty list when no indexed attestations match the given 
+    // filter criteria. This RPC should not return NOT_FOUND. Only one filter 
+    // criteria should be used. This endpoint allows for retrieval of genesis
+    // information via a boolean query filter.
+    rpc ListIndexedAttestations(ListAttestationsRequest) returns (ListIndexedAttestationsResponse) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/attestations/indexed"
+        };
+    }
+
     // Server-side stream of attestations as they are received by
     // the beacon chain node. 
     rpc StreamAttestations(google.protobuf.Empty) returns (stream Attestation) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/attestations/stream"
+        };
+    }
+
+    // Server-side stream of indexed attestations as they are received by
+    // the beacon chain node. 
+    rpc StreamIndexedAttestations(google.protobuf.Empty) returns (stream IndexedAttestation) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/attestations/indexed/stream"
         };
     }
 
@@ -291,6 +311,18 @@ message ListAttestationsResponse {
     repeated Attestation attestations = 1;
 
     // A pagination token returned from a previous call to `ListAttestations`
+    // that indicates from where listing should continue.
+    // This field is optional.
+    string next_page_token = 2;
+
+    // Total count of Attestations matching the request filter.
+    int32 total_size = 3;
+}
+
+message ListIndexedAttestationsResponse {
+    repeated IndexedAttestation indexed_attestations = 1;
+
+    // A pagination token returned from a previous call to `ListIndexedAttestations`
     // that indicates from where listing should continue.
     // This field is optional.
     string next_page_token = 2;
