@@ -55,7 +55,7 @@ service BeaconChain {
     // filter criteria. This RPC should not return NOT_FOUND. Only one filter 
     // criteria should be used. This endpoint allows for retrieval of genesis
     // information via a boolean query filter.
-    rpc ListIndexedAttestations(ListAttestationsRequest) returns (ListIndexedAttestationsResponse) {
+    rpc ListIndexedAttestations(ListIndexedAttestationsRequest) returns (ListIndexedAttestationsResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/attestations/indexed"
         };
@@ -271,6 +271,26 @@ message ValidatorChangeSet {
 
     // 48 byte BLS public keys of validators on which the operation occurs.
     repeated bytes public_keys = 2;
+}
+
+// Request for indexed attestations by target epoch.
+message ListIndexedAttestationsRequest {
+    oneof query_filter {
+        // Retrieve  attestations by target epoch.
+        uint64 target_epoch = 1;
+
+        // Optional criteria to retrieve genesis epoch attestations.
+        bool genesis_epoch = 2;
+    }
+
+    // The maximum number of IndexedAttestations to return in the response.
+    // This field is optional.
+    int32 page_size = 3;
+
+    // A pagination token returned from a previous call to `ListIndexedAttestations`
+    // that indicates where this listing should continue from.
+    // This field is optional.
+    string page_token = 4;
 }
 
 // Request for attestations.
