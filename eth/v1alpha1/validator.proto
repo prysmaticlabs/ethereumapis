@@ -173,9 +173,9 @@ message DomainRequest {
 }
 
 message DomainResponse {
-    // The signature domain is a number used by validators when
+    // The signature domain is a byte array used by validators when
     // signing data related to block proposals and attestations.
-    uint64 signature_domain = 1;
+    bytes signature_domain = 1;
 }
 
 message ValidatorActivationRequest {
