@@ -119,6 +119,17 @@ message Deposit {
         bytes signature = 4;
     }
 
+    message DataWithoutSignature {
+        // 48 byte BLS public key of the validator.
+        bytes public_key = 1;
+
+        // A 32 byte hash of the withdrawal address public key.
+        bytes withdrawal_credentials = 2;
+
+        // Deposit amount in gwei.
+        uint64 amount = 3;
+    }
+
     // 32 byte roots in the deposit tree branch.
     repeated bytes proof = 1;
 
