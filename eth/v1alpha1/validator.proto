@@ -154,7 +154,7 @@ service BeaconNodeValidator {
     }
 
 
-    // Request beacon node to aggregate all matching wire attestations
+    // Request beacon node to aggregate all matching wire attestations.
     //
     // In case validator is aggregator at given slot, he sends aggregation request to beacon node.
     // The beacon node is expected to validate and aggregate all collected committee subnet attestations.
