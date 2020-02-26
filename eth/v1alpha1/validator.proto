@@ -324,14 +324,20 @@ message AttestResponse {
 }
 
 message AggregationRequest {
+    // Slot for which the aggregation request applies.
     uint64 slot = 1;
+    // Committee index of the validator at the given slot.
     uint64 committee_index = 2;
+    // 48 byte public key of the validator.
     bytes public_key = 3;
+    // 96 byte signature of the validator on the slot. This is used as proof that the validator is
+    // an aggregator for the given slot.
     bytes slot_signature = 4;
 }
 
 message AggregationResponse {
-    bytes root = 1;
+    // The 32 byte hash tree root of the aggregated attestation data.
+    bytes attestation_data_root = 1;
 }
 
 // An Ethereum 2.0 validator.
