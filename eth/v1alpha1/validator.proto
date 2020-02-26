@@ -145,11 +145,22 @@ service BeaconNodeValidator {
     // Sends the newly signed attestation to beacon node.
     //
     // The validator sends the newly signed attestation to the beacon node for the attestation to
-    // be included in the beacon chain. The beacon node is expected to validate and aggregate the
-    // attestations into the state.
+    // be included in the beacon chain. The beacon node is expected to validate and publish attestation on
+    // appropriate committee subnet.
     rpc ProposeAttestation(Attestation) returns (AttestResponse) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/attestation"
+        };
+    }
+
+
+    // Request beacon node to aggregate all matching wire attestations
+    //
+    // In case validator is aggregator at given slot, he sends aggregation request to beacon node.
+    // The beacon node is expected to validate and aggregate all collected committee subnet attestations.
+    rpc SubmitAggregateAndProof(AggregationRequest) returns (AggregationResponse) {
+        option (google.api.http) = {
+            post: "/eth/v1alpha1/validator/aggregate"
         };
     }
 
@@ -310,6 +321,17 @@ message AttestationDataRequest {
 message AttestResponse {
     // The root of the attestation data successfully submitted to the beacon node.
     bytes attestation_data_root = 1;
+}
+
+message AggregationRequest {
+    uint64 slot = 1;
+    uint64 committee_index = 2;
+    bytes public_key = 3;
+    bytes slot_signature = 4;
+}
+
+message AggregationResponse {
+    bytes root = 1;
 }
 
 // An Ethereum 2.0 validator.
