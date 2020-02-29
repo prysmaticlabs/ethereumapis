@@ -145,11 +145,22 @@ service BeaconNodeValidator {
     // Sends the newly signed attestation to beacon node.
     //
     // The validator sends the newly signed attestation to the beacon node for the attestation to
-    // be included in the beacon chain. The beacon node is expected to validate and aggregate the
-    // attestations into the state.
+    // be included in the beacon chain. The beacon node is expected to validate and publish attestation on
+    // appropriate committee subnet.
     rpc ProposeAttestation(Attestation) returns (AttestResponse) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/attestation"
+        };
+    }
+
+
+    // Request beacon node to aggregate all matching wire attestations.
+    //
+    // In case validator is aggregator at given slot, he sends aggregation request to beacon node.
+    // The beacon node is expected to validate and aggregate all collected committee subnet attestations.
+    rpc SubmitAggregateAndProof(AggregationRequest) returns (AggregationResponse) {
+        option (google.api.http) = {
+            post: "/eth/v1alpha1/validator/aggregate"
         };
     }
 
@@ -309,6 +320,23 @@ message AttestationDataRequest {
 
 message AttestResponse {
     // The root of the attestation data successfully submitted to the beacon node.
+    bytes attestation_data_root = 1;
+}
+
+message AggregationRequest {
+    // Slot for which the aggregation request applies.
+    uint64 slot = 1;
+    // Committee index of the validator at the given slot.
+    uint64 committee_index = 2;
+    // 48 byte public key of the validator.
+    bytes public_key = 3;
+    // 96 byte signature of the validator on the slot. This is used as proof that the validator is
+    // an aggregator for the given slot.
+    bytes slot_signature = 4;
+}
+
+message AggregationResponse {
+    // The 32 byte hash tree root of the aggregated attestation data.
     bytes attestation_data_root = 1;
 }
 
