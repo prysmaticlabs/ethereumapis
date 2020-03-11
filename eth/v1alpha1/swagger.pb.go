@@ -5,7 +5,6 @@ package eth
 
 import (
 	fmt "fmt"
-
 	proto "github.com/golang/protobuf/proto"
 	_ "github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger/options"
 	math "math"
