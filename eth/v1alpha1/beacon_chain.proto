@@ -544,6 +544,14 @@ message ListValidatorsRequest {
     // that indicates where this listing should continue from.
     // This field is optional.
     string page_token = 5;
+
+    // Specify which validators you would like to retrieve by their public keys.
+    // This field is optional.
+    repeated bytes public_keys = 6;
+
+    // Specify which validators you would like to retrieve by their indices.
+    // This field is optional.
+    repeated uint64 indices = 7;
 }
 
 message GetValidatorRequest {
