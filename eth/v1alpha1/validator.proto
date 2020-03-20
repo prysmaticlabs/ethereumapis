@@ -155,20 +155,17 @@ service BeaconNodeValidator {
 
 
     // Submit selection proof to the beacon node to aggregate all matching wire attestations,
-    // then with a response of a signing root to sign over.
-    //
-    // In case validator is aggregator at given slot, he sends aggregation request to beacon node.
-    // The beacon node is expected to validate and aggregate all collected committee subnet attestations.
+    // the beacon node responses with an aggregate and proof object back to validator to sign over.
     rpc SubmitAggregateSelectionProof(AggregateSelectionRequest) returns (AggregateSelectionResponse) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/aggregate"
         };
     }
 
-    // Submit signature based on the signing root from the selection response, the beacon node wll use the
-    // signature and aggregate all matching wire attestations to broadcast.
-    rpc SubmitAggregateSignature(AggregateSignatureRequest) returns (AggregateSignatureResponse) {
-        option (google.api.http) = {
+    // Submit a signed aggregate and proof object, the beacon node will broadcast the
+    // signature and aggregated attestation.
+        rpc SubmitAggregateAttestation(AggregateSubmitRequest) returns (AggregateSubmitResponse) {
+             option (google.api.http) = {
             post: "/eth/v1alpha1/validator/aggregate"
         };
     }
@@ -345,17 +342,16 @@ message AggregateSelectionRequest {
 }
 
 message AggregateSelectionResponse {
-    // The 32 byte signing root response from the aggregate and proof object.
-    bytes signing_root = 1;
+  // The aggregate and proof message without the signature.
+  AggregateAttestationAndProof aggregate = 1;
 }
 
-message AggregateSignatureRequest {
-    // The 96 byte signature of the validator signed over aggregate signing root.
-    // This proofs the aggregator had control over the aggregation object.
-    bytes signature = 1;
+message AggregateSubmitRequest {
+    // The signed aggregate and proof message with the signature.
+    SignedAggregateAttestationAndProof aggregate = 1;
 }
 
-message AggregateSignatureResponse {
+message AggregateSubmitResponse {
     // The 32 byte hash tree root of the aggregated attestation data.
     bytes attestation_data_root = 1;
 }
