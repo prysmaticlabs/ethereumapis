@@ -154,7 +154,7 @@ service BeaconNodeValidator {
     }
 
 
-    // Submit selection proof to the beacon node to aggregate all matching wire attestations,
+    // Submit selection proof to the beacon node to aggregate all matching wire attestations with the same data root.
     // the beacon node responses with an aggregate and proof object back to validator to sign over.
     rpc SubmitAggregateSelectionProof(AggregateSelectionRequest) returns (AggregateSelectionResponse) {
         option (google.api.http) = {
@@ -163,8 +163,8 @@ service BeaconNodeValidator {
     }
 
     // Submit a signed aggregate and proof object, the beacon node will broadcast the
-    // signature and aggregated attestation.
-        rpc SubmitAggregateAttestation(AggregateSubmitRequest) returns (AggregateSubmitResponse) {
+    // signed aggregated attestation and proof object.
+        rpc SubmitSignedAggregateSelectionProof(SignedAggregateSubmitRequest) returns (SignedAggregateSubmitResponse) {
              option (google.api.http) = {
             post: "/eth/v1alpha1/validator/aggregate"
         };
@@ -343,15 +343,15 @@ message AggregateSelectionRequest {
 
 message AggregateSelectionResponse {
   // The aggregate and proof message without the signature.
-  AggregateAttestationAndProof aggregate = 1;
+  AggregateAttestationAndProof aggregate_and_proof = 1;
 }
 
-message AggregateSubmitRequest {
+message SignedAggregateSubmitRequest {
     // The signed aggregate and proof message with the signature.
-    SignedAggregateAttestationAndProof aggregate = 1;
+    SignedAggregateAttestationAndProof signed_aggregate_and_proof = 1;
 }
 
-message AggregateSubmitResponse {
+message SignedAggregateSubmitResponse {
     // The 32 byte hash tree root of the aggregated attestation data.
     bytes attestation_data_root = 1;
 }
