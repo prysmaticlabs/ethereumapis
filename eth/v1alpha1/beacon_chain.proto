@@ -17,7 +17,7 @@ package ethereum.eth.v1alpha1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
-import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
 
 import "eth/v1alpha1/attestation.proto";
 import "eth/v1alpha1/beacon_block.proto";
@@ -36,6 +36,13 @@ option php_namespace = "Ethereum\\Eth\\v1alpha1";
 // phase 0 beacon chain.
 service BeaconChain {
     // TODO(preston): Batch requests?
+
+    // Retrieve information about the chain.
+	rpc GetChainInfo(google.protobuf.Empty) returns (ChainInfo) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/info"
+        };
+    }
 
     // Retrieve attestations by block root, slot, or epoch. 
     // 
@@ -252,6 +259,48 @@ service BeaconChain {
             get: "/eth/v1alpha1/beacon/slashings/proposer/submit"
         };
     } 
+}
+
+message ChainInfo {
+    // The time at which this chain started.
+    google.protobuf.Timestamp genesis_time = 1;
+    // The address of the Ethereum 1 deposit contract.
+    bytes deposit_contract_address = 2;
+    // The number of seconds for each slot.
+    uint64 seconds_per_slot = 3;
+    // The number of slots that make up an epoch.
+    uint64 slots_per_epoch = 4;
+    // The genesis fork version.
+    bytes genesis_fork_version = 5;
+    // The genesis validators root.
+    bytes genesis_validators_root = 6;
+    // The minimum deposit amount, in GWei.
+    uint64 minimum_deposit_amount = 7;
+    // The maximum effective balance, in GWei.
+    uint64 maximum_effective_balance = 8;
+    // The increment in which effective balance can change, in GWei.
+    uint64 effective_balance_increment = 9;
+    // The balance below which a validator will be ejected, in GWei.
+    uint64 ejection_balance = 10;
+    // The prefix that identifies the encoding version for withdrawal credentials.
+    bytes bls_withdrawal_prefix = 11;
+    // The current fork version.
+    bytes current_fork_version = 12;
+    // The next fork version.
+    bytes next_fork_version = 13;
+    // The epoch where the next fork takes effect; 0 for no planned fork.
+    uint64 next_fork_epoch = 14;
+    // The chain's current epoch.
+    uint64 current_epoch = 15;
+    // The fork version schedule.
+    repeated Fork fork_version_schedule = 16;
+}
+
+message Fork {
+    // Epoch is the epoch from which the fork takes effect.
+    uint64 epoch = 1;
+    // Version are the bytes that define the fork veresion.
+    bytes version = 2;
 }
 
 // SetAction defines the type of action that should be applied to the keys in a validator change set.

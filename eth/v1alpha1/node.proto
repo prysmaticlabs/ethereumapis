@@ -17,7 +17,6 @@ package ethereum.eth.v1alpha1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
-import "google/protobuf/timestamp.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1alpha1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1;eth";
@@ -31,24 +30,10 @@ option php_namespace = "Ethereum\\Eth\\v1alpha1";
 // Node service provides general information about the node itself, the services
 // it supports, chain information and node version.
 service Node {
-    // Retrieve the current network sync status of the node.
-	rpc GetSyncStatus(google.protobuf.Empty) returns (SyncStatus) {
+    // Retrieve information about the node.
+	rpc GetNodeInfo(google.protobuf.Empty) returns (NodeInfo) {
         option (google.api.http) = {
-            get: "/eth/v1alpha1/node/syncing"
-        };
-    }
-
-    // Retrieve information about the genesis of Ethereum 2.0.
-    rpc GetGenesis(google.protobuf.Empty) returns (Genesis) {
-        option (google.api.http) = {
-            get: "/eth/v1alpha1/node/genesis"
-        };
-    }
-
-    // Retrieve information about the running Ethereum 2.0 node.
-    rpc GetVersion(google.protobuf.Empty) returns (Version) {
-        option (google.api.http) = {
-            get: "/eth/v1alpha1/node/version"
+            get: "/eth/v1alpha1/node/info"
         };
     }
 
@@ -62,47 +47,54 @@ service Node {
             get: "/eth/v1alpha1/node/services"
         };
     }
-
-    // Retrieve the list of peers currently connected to this node.
-    rpc ListPeers(google.protobuf.Empty) returns (Peers) {
-        option (google.api.http) = {
-            get: "/eth/v1alpha1/node/peers"
-        };
-    }
 }
 
-// Information about the current network sync status of the node.
-message SyncStatus {
-    // Whether or not the node is currently syncing.
-    bool syncing = 1;
+message NodeInfo {
+    // A unique identifier for the node.
+    string node_id = 1;
+    // The version of the currently-running node software.
+    string version = 2;
+    // State of the node's interaction with its peers.
+    SyncState sync = 3;
+    // The address(es) where the node is listening for incoming libp2p connections.
+    repeated string addresses = 4;
+    // Information about nodes to which this peer is connected.
+    repeated Peer peers = 5;
+    // The current epoch as far as the node is concerned; this is dependent on its current view of the chain.
+    uint64 current_epoch = 6;
+    // The current slot as far as the node is concerned; this is dependent on its current view of the chain.
+    uint64 current_slot = 7;
+    // The current block root as far as the node is concerned; this is dependent on its current view of the chain.
+    uint64 current_block_root = 8;
+    // The finalized epoch as far as the node is concerned; this is dependent on its current view of the chain.
+    uint64 finalized_epoch = 9;
+    // The finalized slot as far as the node is concerned; this is dependent on its current view of the chain.
+    uint64 finalized_slot = 10;
+    // The finalized block root as far as the node is concerned; this is dependent on its current view of the chain.
+    uint64 finalized_block_root = 11;
+    // The justified epoch as far as the node is concerned; this is dependent on its current view of the chain.
+    uint64 justified_epoch = 12;
+    // The justified slot as far as the node is concerned; this is dependent on its current view of the chain.
+    uint64 justified_slot = 13;
+    // The justified block root as far as the node is concerned; this is dependent on its current view of the chain.
+    uint64 justified_block_root = 14;
+    // The previous justified epoch as far as the node is concerned; this is dependent on its current view of the chain.
+    uint64 previous_justified_epoch = 15;
+    // The previous justified slot as far as the node is concerned; this is dependent on its current view of the chain.
+    uint64 previous_justified_slot = 16;
+    // The previous justified block root as far as the node is concerned; this is dependent on its current view of the chain.
+    uint64 previous_justified_block_root = 17;
 }
 
-// Information about the genesis of Ethereum 2.0.
-message Genesis {
-    // UTC time specified in the chain start event in the deposit contract.
-    google.protobuf.Timestamp genesis_time = 1;
-
-    // Address of the deposit contract in the Ethereum 1 chain.
-    bytes deposit_contract_address = 2;
-}
-
-// Information about the node version.
-message Version {
-    // A string that uniquely identifies the node and its version.
-    string version = 1;
-
-    // Additional metadata that the node would like to provide. This field may
-    // be used to list any meaningful data to the client.
-    string metadata = 2;
-}
-
-message ImplementedServices {
-    repeated string services = 1;
-}
-
-// Peers is a list of peer messages.
-message Peers {
-    repeated Peer peers = 1;
+enum SyncState {
+  // UNDEFINED means no status is available.
+  SYNC_UNKNOWN = 0;
+  // INACTIVE means the node is not currently syncing with its peers.
+  SYNC_INACTIVE = 1;
+  // CATCHUP means the node is in catchup mode; skipping full verification of information from peers in return for processing speed.
+  SYNC_CATCHUP = 2;
+  // ACTIVE means the node is actively syncing with its peers, carrying out full verification of information received.
+  SYNC_ACTIVE = 3;
 }
 
 // Peer provides details of a peer on the network.
@@ -119,4 +111,8 @@ enum PeerDirection {
   UNKNOWN = 0;
   INBOUND = 1;
   OUTBOUND = 2;
+}
+
+message ImplementedServices {
+    repeated string services = 1;
 }
