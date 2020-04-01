@@ -270,32 +270,34 @@ message ChainInfo {
     uint64 seconds_per_slot = 3;
     // The number of slots that make up an epoch.
     uint64 slots_per_epoch = 4;
+    // The far future epoch.
+    uint64 far_future_epoch = 5;
     // The genesis fork version.
-    bytes genesis_fork_version = 5;
+    bytes genesis_fork_version = 6;
     // The genesis validators root.
-    bytes genesis_validators_root = 6;
+    bytes genesis_validators_root = 7;
     // The minimum deposit amount, in GWei.
-    uint64 minimum_deposit_amount = 7;
+    uint64 minimum_deposit_amount = 8;
     // The maximum effective balance, in GWei.
-    uint64 maximum_effective_balance = 8;
+    uint64 maximum_effective_balance = 9;
     // The increment in which effective balance can change, in GWei.
-    uint64 effective_balance_increment = 9;
+    uint64 effective_balance_increment = 10;
     // The balance below which a validator will be ejected, in GWei.
-    uint64 ejection_balance = 10;
+    uint64 ejection_balance = 11;
     // The prefix that identifies the encoding version for withdrawal credentials.
-    bytes bls_withdrawal_prefix = 11;
+    bytes bls_withdrawal_prefix = 12;
     // The current fork version.
-    bytes current_fork_version = 12;
+    bytes current_fork_version = 13;
     // The epoch where the current fork took effect.
-    uint64 current_fork_epoch = 13;
+    uint64 current_fork_epoch = 14;
     // The next fork version.
-    bytes next_fork_version = 14;
-    // The epoch where the next fork takes effect; 0 for no planned fork.
-    uint64 next_fork_epoch = 15;
+    bytes next_fork_version = 15;
+    // The epoch where the next fork takes effect; far_future_epoch for no planned fork.
+    uint64 next_fork_epoch = 16;
     // The chain's current epoch.
-    uint64 current_epoch = 16;
+    uint64 current_epoch = 17;
     // The fork version schedule.
-    repeated Fork fork_version_schedule = 17;
+    repeated Fork fork_version_schedule = 18;
 }
 
 message Fork {
