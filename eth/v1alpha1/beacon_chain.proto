@@ -270,34 +270,46 @@ message ChainInfo {
     uint64 seconds_per_slot = 3;
     // The number of slots that make up an epoch.
     uint64 slots_per_epoch = 4;
+    // The maximum time in the future for a randao seed, in epochs.
+    uint64 max_seed_lookahead = 5;
+    // The minimum amount of time an exited validator must wait until its funds can be withdrawn, in epochs.
+    uint64 min_validator_withdrawability_delay = 6;
+    // The period of time for which a committee is formed, in epochs.
+    uint64 persistent_committee_period = 7;
+    // The minimum time before validators are punished for inactivity, in epochs.
+    uint64 min_epochs_to_inactivity_penalty = 8;
+    // The number of Ethereum 1 blocks before a deposit is considered finalized.
+    uint64 eth1_follow_distance = 9;
     // The far future epoch.
-    uint64 far_future_epoch = 5;
+    uint64 far_future_epoch = 10;
     // The genesis fork version.
-    bytes genesis_fork_version = 6;
+    bytes genesis_fork_version = 11;
     // The genesis validators root.
-    bytes genesis_validators_root = 7;
+    bytes genesis_validators_root = 12;
     // The minimum deposit amount, in GWei.
-    uint64 minimum_deposit_amount = 8;
+    uint64 minimum_deposit_amount = 13;
     // The maximum effective balance, in GWei.
-    uint64 maximum_effective_balance = 9;
+    uint64 maximum_effective_balance = 14;
     // The increment in which effective balance can change, in GWei.
-    uint64 effective_balance_increment = 10;
+    uint64 effective_balance_increment = 15;
     // The balance below which a validator will be ejected, in GWei.
-    uint64 ejection_balance = 11;
+    uint64 ejection_balance = 16;
     // The prefix that identifies the encoding version for withdrawal credentials.
-    bytes bls_withdrawal_prefix = 12;
+    bytes bls_withdrawal_prefix = 17;
+    // The previous fork version.
+    bytes previous_fork_version = 18;
     // The current fork version.
-    bytes current_fork_version = 13;
-    // The epoch where the current fork took effect.
-    uint64 current_fork_epoch = 14;
+    bytes current_fork_version = 19;
+    // The epoch at which the current fork took effect.
+    uint64 current_fork_epoch = 20;
     // The next fork version.
-    bytes next_fork_version = 15;
-    // The epoch where the next fork takes effect; far_future_epoch for no planned fork.
-    uint64 next_fork_epoch = 16;
+    bytes next_fork_version = 21;
+    // The epoch at which the next fork takes effect; far_future_epoch for no planned fork.
+    uint64 next_fork_epoch = 22;
     // The chain's current epoch.
-    uint64 current_epoch = 17;
+    uint64 current_epoch = 23;
     // The fork version schedule.
-    repeated Fork fork_version_schedule = 18;
+    repeated Fork fork_version_schedule = 24;
 }
 
 message Fork {
