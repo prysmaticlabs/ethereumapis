@@ -286,14 +286,16 @@ message ChainInfo {
     bytes bls_withdrawal_prefix = 11;
     // The current fork version.
     bytes current_fork_version = 12;
+    // The epoch where the current fork took effect.
+    uint64 current_fork_epoch = 13;
     // The next fork version.
-    bytes next_fork_version = 13;
+    bytes next_fork_version = 14;
     // The epoch where the next fork takes effect; 0 for no planned fork.
-    uint64 next_fork_epoch = 14;
+    uint64 next_fork_epoch = 15;
     // The chain's current epoch.
-    uint64 current_epoch = 15;
+    uint64 current_epoch = 16;
     // The fork version schedule.
-    repeated Fork fork_version_schedule = 16;
+    repeated Fork fork_version_schedule = 17;
 }
 
 message Fork {
