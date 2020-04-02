@@ -50,12 +50,12 @@ service Node {
 }
 
 message NodeInfo {
-    // A unique identifier for the node.
+    // A unique identifier for the node, derived from the node's network key.
     string node_id = 1;
     // The version of the currently-running node software.
     string version = 2;
     // State of the node's interaction with its peers.
-    SyncState sync = 3;
+    SyncState sync_state = 3;
     // The address(es) where the node is listening for incoming libp2p connections.
     repeated string addresses = 4;
     // Information about nodes to which this peer is connected.
