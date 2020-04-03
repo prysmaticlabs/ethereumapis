@@ -93,17 +93,19 @@ enum SyncState {
   SYNC_INACTIVE = 1;
   // CATCHUP means the node is in catchup mode; skipping full verification of information from peers in return for processing speed.
   SYNC_CATCHUP = 2;
-  // ACTIVE means the node is actively syncing with its peers, carrying out full verification of information received.
-  SYNC_ACTIVE = 3;
+  // FULL means the node is actively syncing with its peers, carrying out full verification of information received.
+  SYNC_FULL = 3;
 }
 
 // Peer provides details of a peer on the network.
 message Peer {
-    // The address of the peer, as a full multiaddr, for example:
+    // The Ethereum Name Record (ENR) of the peer.
+    string enr = 1;
+    // The libp2p listen address of the peer, as a full multiaddr, for example:
     // /ip4/37.221.192.134/tcp/13000/p2p/16Uiu2HAm8maLMjag1TAUM52zPfmLbVMGFdwUAWgoHu1HDQLR6e17
-    string address = 1;
+    string address = 2;
     // The direction of the connection (inbound/outbound).
-    PeerDirection direction = 2;
+    PeerDirection direction = 3;
 }
 
 // PeerDirection states the direction of the connection to a peer.
