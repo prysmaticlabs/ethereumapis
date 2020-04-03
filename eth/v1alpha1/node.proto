@@ -50,40 +50,45 @@ service Node {
 }
 
 message NodeInfo {
+    // Node identification [1001-2000]
     // A unique identifier for the node, derived from the node's network key.
-    string node_id = 1;
+    string node_id = 1001;
     // The version of the currently-running node software.
-    string version = 2;
-    // State of the node's interaction with its peers.
-    SyncState sync_state = 3;
+    string version = 1002;
+
+    // Network [2001-3000]
     // The address(es) where the node is listening for incoming libp2p connections.
-    repeated string addresses = 4;
+    repeated string addresses = 2001;
     // Information about nodes to which this peer is connected.
-    repeated Peer peers = 5;
+    repeated Peer peers = 2002;
+
+    // Node state [3001-4000]
+    // State of the node's interaction with its peers.
+    SyncState sync_state = 3001;
     // The current epoch as far as the node is concerned; this is dependent on its current view of the chain.
-    uint64 current_epoch = 6;
+    uint64 current_epoch = 3002;
     // The current slot as far as the node is concerned; this is dependent on its current view of the chain.
-    uint64 current_slot = 7;
+    uint64 current_slot = 3003;
     // The current block root as far as the node is concerned; this is dependent on its current view of the chain.
-    uint64 current_block_root = 8;
+    uint64 current_block_root = 3004;
     // The finalized epoch as far as the node is concerned; this is dependent on its current view of the chain.
-    uint64 finalized_epoch = 9;
+    uint64 finalized_epoch = 3005;
     // The finalized slot as far as the node is concerned; this is dependent on its current view of the chain.
-    uint64 finalized_slot = 10;
+    uint64 finalized_slot = 3006;
     // The finalized block root as far as the node is concerned; this is dependent on its current view of the chain.
-    uint64 finalized_block_root = 11;
+    uint64 finalized_block_root = 3007;
     // The justified epoch as far as the node is concerned; this is dependent on its current view of the chain.
-    uint64 justified_epoch = 12;
+    uint64 justified_epoch = 3008;
     // The justified slot as far as the node is concerned; this is dependent on its current view of the chain.
-    uint64 justified_slot = 13;
+    uint64 justified_slot = 3009;
     // The justified block root as far as the node is concerned; this is dependent on its current view of the chain.
-    uint64 justified_block_root = 14;
+    uint64 justified_block_root = 3010;
     // The previous justified epoch as far as the node is concerned; this is dependent on its current view of the chain.
-    uint64 previous_justified_epoch = 15;
+    uint64 previous_justified_epoch = 3011;
     // The previous justified slot as far as the node is concerned; this is dependent on its current view of the chain.
-    uint64 previous_justified_slot = 16;
+    uint64 previous_justified_slot = 3012;
     // The previous justified block root as far as the node is concerned; this is dependent on its current view of the chain.
-    uint64 previous_justified_block_root = 17;
+    uint64 previous_justified_block_root = 3013;
 }
 
 enum SyncState {
