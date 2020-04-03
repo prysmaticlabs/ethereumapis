@@ -315,7 +315,7 @@ message ChainInfo {
 message Fork {
     // Epoch is the epoch from which the fork takes effect.
     uint64 epoch = 1;
-    // Version are the bytes that define the fork veresion.
+    // Version are the bytes that define the fork version.
     bytes version = 2;
 }
 
