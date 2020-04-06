@@ -314,10 +314,10 @@ message ChainInfo {
     // The chain's current epoch.
     uint64 current_epoch = 3006;
     // The fork version schedule.
-    repeated Fork fork_version_schedule = 3007;
+    repeated ForkDefinition fork_version_schedule = 3007;
 }
 
-message Fork {
+message ForkDefinition {
     // Epoch is the epoch from which the fork takes effect.
     uint64 epoch = 1;
     // Version are the bytes that define the fork version.
