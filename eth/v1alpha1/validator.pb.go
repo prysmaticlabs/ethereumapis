@@ -1043,59 +1043,59 @@ func (m *SignedAggregateSubmitResponse) GetAttestationDataRoot() []byte {
 	return nil
 }
 
-type CommitteeSubnetSubscribeRequest struct {
-	Slot                 uint64   `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty"`
-	CommitteeId          uint64   `protobuf:"varint,2,opt,name=committee_id,json=committeeId,proto3" json:"committee_id,omitempty"`
-	IsAggregator         bool     `protobuf:"varint,3,opt,name=is_aggregator,json=isAggregator,proto3" json:"is_aggregator,omitempty"`
+type CommitteeSubnetsSubscribeRequest struct {
+	Slots                []uint64 `protobuf:"varint,1,rep,packed,name=slots,proto3" json:"slots,omitempty"`
+	CommitteeIds         []uint64 `protobuf:"varint,2,rep,packed,name=committee_ids,json=committeeIds,proto3" json:"committee_ids,omitempty"`
+	IsAggregator         []bool   `protobuf:"varint,3,rep,packed,name=is_aggregator,json=isAggregator,proto3" json:"is_aggregator,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *CommitteeSubnetSubscribeRequest) Reset()         { *m = CommitteeSubnetSubscribeRequest{} }
-func (m *CommitteeSubnetSubscribeRequest) String() string { return proto.CompactTextString(m) }
-func (*CommitteeSubnetSubscribeRequest) ProtoMessage()    {}
-func (*CommitteeSubnetSubscribeRequest) Descriptor() ([]byte, []int) {
+func (m *CommitteeSubnetsSubscribeRequest) Reset()         { *m = CommitteeSubnetsSubscribeRequest{} }
+func (m *CommitteeSubnetsSubscribeRequest) String() string { return proto.CompactTextString(m) }
+func (*CommitteeSubnetsSubscribeRequest) ProtoMessage()    {}
+func (*CommitteeSubnetsSubscribeRequest) Descriptor() ([]byte, []int) {
 	return fileDescriptor_f8ef4b6a7db76675, []int{19}
 }
 
-func (m *CommitteeSubnetSubscribeRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_CommitteeSubnetSubscribeRequest.Unmarshal(m, b)
+func (m *CommitteeSubnetsSubscribeRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_CommitteeSubnetsSubscribeRequest.Unmarshal(m, b)
 }
-func (m *CommitteeSubnetSubscribeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_CommitteeSubnetSubscribeRequest.Marshal(b, m, deterministic)
+func (m *CommitteeSubnetsSubscribeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_CommitteeSubnetsSubscribeRequest.Marshal(b, m, deterministic)
 }
-func (m *CommitteeSubnetSubscribeRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CommitteeSubnetSubscribeRequest.Merge(m, src)
+func (m *CommitteeSubnetsSubscribeRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CommitteeSubnetsSubscribeRequest.Merge(m, src)
 }
-func (m *CommitteeSubnetSubscribeRequest) XXX_Size() int {
-	return xxx_messageInfo_CommitteeSubnetSubscribeRequest.Size(m)
+func (m *CommitteeSubnetsSubscribeRequest) XXX_Size() int {
+	return xxx_messageInfo_CommitteeSubnetsSubscribeRequest.Size(m)
 }
-func (m *CommitteeSubnetSubscribeRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_CommitteeSubnetSubscribeRequest.DiscardUnknown(m)
+func (m *CommitteeSubnetsSubscribeRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_CommitteeSubnetsSubscribeRequest.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_CommitteeSubnetSubscribeRequest proto.InternalMessageInfo
+var xxx_messageInfo_CommitteeSubnetsSubscribeRequest proto.InternalMessageInfo
 
-func (m *CommitteeSubnetSubscribeRequest) GetSlot() uint64 {
+func (m *CommitteeSubnetsSubscribeRequest) GetSlots() []uint64 {
 	if m != nil {
-		return m.Slot
+		return m.Slots
 	}
-	return 0
+	return nil
 }
 
-func (m *CommitteeSubnetSubscribeRequest) GetCommitteeId() uint64 {
+func (m *CommitteeSubnetsSubscribeRequest) GetCommitteeIds() []uint64 {
 	if m != nil {
-		return m.CommitteeId
+		return m.CommitteeIds
 	}
-	return 0
+	return nil
 }
 
-func (m *CommitteeSubnetSubscribeRequest) GetIsAggregator() bool {
+func (m *CommitteeSubnetsSubscribeRequest) GetIsAggregator() []bool {
 	if m != nil {
 		return m.IsAggregator
 	}
-	return false
+	return nil
 }
 
 type Validator struct {
@@ -1358,7 +1358,7 @@ func init() {
 	proto.RegisterType((*AggregateSelectionResponse)(nil), "ethereum.eth.v1alpha1.AggregateSelectionResponse")
 	proto.RegisterType((*SignedAggregateSubmitRequest)(nil), "ethereum.eth.v1alpha1.SignedAggregateSubmitRequest")
 	proto.RegisterType((*SignedAggregateSubmitResponse)(nil), "ethereum.eth.v1alpha1.SignedAggregateSubmitResponse")
-	proto.RegisterType((*CommitteeSubnetSubscribeRequest)(nil), "ethereum.eth.v1alpha1.CommitteeSubnetSubscribeRequest")
+	proto.RegisterType((*CommitteeSubnetsSubscribeRequest)(nil), "ethereum.eth.v1alpha1.CommitteeSubnetsSubscribeRequest")
 	proto.RegisterType((*Validator)(nil), "ethereum.eth.v1alpha1.Validator")
 	proto.RegisterType((*ValidatorParticipation)(nil), "ethereum.eth.v1alpha1.ValidatorParticipation")
 	proto.RegisterType((*ValidatorInfo)(nil), "ethereum.eth.v1alpha1.ValidatorInfo")
@@ -1512,7 +1512,7 @@ type BeaconNodeValidatorClient interface {
 	SubmitAggregateSelectionProof(ctx context.Context, in *AggregateSelectionRequest, opts ...grpc.CallOption) (*AggregateSelectionResponse, error)
 	SubmitSignedAggregateSelectionProof(ctx context.Context, in *SignedAggregateSubmitRequest, opts ...grpc.CallOption) (*SignedAggregateSubmitResponse, error)
 	ProposeExit(ctx context.Context, in *SignedVoluntaryExit, opts ...grpc.CallOption) (*empty.Empty, error)
-	SubscribeCommitteeSubnet(ctx context.Context, in *CommitteeSubnetSubscribeRequest, opts ...grpc.CallOption) (*empty.Empty, error)
+	SubscribeCommitteeSubnets(ctx context.Context, in *CommitteeSubnetsSubscribeRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 }
 
 type beaconNodeValidatorClient struct {
@@ -1686,9 +1686,9 @@ func (c *beaconNodeValidatorClient) ProposeExit(ctx context.Context, in *SignedV
 	return out, nil
 }
 
-func (c *beaconNodeValidatorClient) SubscribeCommitteeSubnet(ctx context.Context, in *CommitteeSubnetSubscribeRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+func (c *beaconNodeValidatorClient) SubscribeCommitteeSubnets(ctx context.Context, in *CommitteeSubnetsSubscribeRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
 	out := new(empty.Empty)
-	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconNodeValidator/SubscribeCommitteeSubnet", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconNodeValidator/SubscribeCommitteeSubnets", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -1710,7 +1710,7 @@ type BeaconNodeValidatorServer interface {
 	SubmitAggregateSelectionProof(context.Context, *AggregateSelectionRequest) (*AggregateSelectionResponse, error)
 	SubmitSignedAggregateSelectionProof(context.Context, *SignedAggregateSubmitRequest) (*SignedAggregateSubmitResponse, error)
 	ProposeExit(context.Context, *SignedVoluntaryExit) (*empty.Empty, error)
-	SubscribeCommitteeSubnet(context.Context, *CommitteeSubnetSubscribeRequest) (*empty.Empty, error)
+	SubscribeCommitteeSubnets(context.Context, *CommitteeSubnetsSubscribeRequest) (*empty.Empty, error)
 }
 
 func RegisterBeaconNodeValidatorServer(s *grpc.Server, srv BeaconNodeValidatorServer) {
@@ -1957,20 +1957,20 @@ func _BeaconNodeValidator_ProposeExit_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _BeaconNodeValidator_SubscribeCommitteeSubnet_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CommitteeSubnetSubscribeRequest)
+func _BeaconNodeValidator_SubscribeCommitteeSubnets_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CommitteeSubnetsSubscribeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(BeaconNodeValidatorServer).SubscribeCommitteeSubnet(ctx, in)
+		return srv.(BeaconNodeValidatorServer).SubscribeCommitteeSubnets(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ethereum.eth.v1alpha1.BeaconNodeValidator/SubscribeCommitteeSubnet",
+		FullMethod: "/ethereum.eth.v1alpha1.BeaconNodeValidator/SubscribeCommitteeSubnets",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BeaconNodeValidatorServer).SubscribeCommitteeSubnet(ctx, req.(*CommitteeSubnetSubscribeRequest))
+		return srv.(BeaconNodeValidatorServer).SubscribeCommitteeSubnets(ctx, req.(*CommitteeSubnetsSubscribeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -2024,8 +2024,8 @@ var _BeaconNodeValidator_serviceDesc = grpc.ServiceDesc{
 			Handler:    _BeaconNodeValidator_ProposeExit_Handler,
 		},
 		{
-			MethodName: "SubscribeCommitteeSubnet",
-			Handler:    _BeaconNodeValidator_SubscribeCommitteeSubnet_Handler,
+			MethodName: "SubscribeCommitteeSubnets",
+			Handler:    _BeaconNodeValidator_SubscribeCommitteeSubnets_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{

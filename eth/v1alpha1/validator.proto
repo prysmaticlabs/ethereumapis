@@ -180,12 +180,12 @@ service BeaconNodeValidator {
         };
     }
 
-    // Subscribe to a particular committee ID subnet given validator's duty.
+    // Subscribe to particular committee ID subnets given validator's duty.
     //
     // The beacon node is expected to subscribe to the committee ID subnet given by the request. With this,
     // beacon node serving attesters can find persistent peers on the subnet to publish attestation,
     // and beacon node serving aggregator can join the subnet.
-    rpc SubscribeCommitteeSubnet(CommitteeSubnetSubscribeRequest) returns (google.protobuf.Empty) {
+    rpc SubscribeCommitteeSubnets(CommitteeSubnetsSubscribeRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/subnet/subscribe"
         };
@@ -367,15 +367,16 @@ message SignedAggregateSubmitResponse {
     bytes attestation_data_root = 1;
 }
 
-message CommitteeSubnetSubscribeRequest {
-    // The intended slot time to subscribe.
-    uint64 slot = 1;
-    // The intended committee id to subscribe at the slot time.
-    uint64 committee_id = 2;
+message CommitteeSubnetsSubscribeRequest {
+    // A list of intended slots to subscribe.
+    repeated uint64 slots = 1;
+    // A list of intended committee ids to subscribe. It is mapped 1-to-1 with the slots
+    repeated uint64 committee_ids = 2;
     // Whether to subscribe as an aggregator or by default attester.
+    // It is mapped 1-to-1 with the slots and committee ids.
     // Subscribe as an aggregator means to join the subnet.
     // Subscribe as an attester means finding persistent peers on the subnet to be able to publish attestations.
-    bool is_aggregator = 3;
+    repeated bool is_aggregator = 3;
 }
 
 // An Ethereum 2.0 validator.
