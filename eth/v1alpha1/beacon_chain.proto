@@ -17,7 +17,7 @@ package ethereum.eth.v1alpha1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
-import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
 
 import "eth/v1alpha1/attestation.proto";
 import "eth/v1alpha1/beacon_block.proto";
@@ -36,6 +36,13 @@ option php_namespace = "Ethereum\\Eth\\v1alpha1";
 // phase 0 beacon chain.
 service BeaconChain {
     // TODO(preston): Batch requests?
+
+    // Retrieve information about the chain.
+	rpc GetChainInfo(google.protobuf.Empty) returns (ChainInfo) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/info"
+        };
+    }
 
     // Retrieve attestations by block root, slot, or epoch. 
     // 
@@ -254,6 +261,69 @@ service BeaconChain {
     } 
 }
 
+message ChainInfo {
+    // Chain start [1001-2000]
+    // The time at which this chain started.
+    google.protobuf.Timestamp genesis_time = 1001;
+    // The address of the Ethereum 1 deposit contract.
+    bytes deposit_contract_address = 1002;
+
+    // Chain configuration [2001-3000]
+    // The number of seconds for each slot.
+    uint64 seconds_per_slot = 2001;
+    // The number of slots that make up an epoch.
+    uint64 slots_per_epoch = 2002;
+    // The maximum time in the future for a randao seed, in epochs.
+    uint64 max_seed_lookahead = 2003;
+    // The minimum amount of time an exited validator must wait until its funds can be withdrawn, in epochs.
+    uint64 min_validator_withdrawability_delay = 2004;
+    // The period of time for which a committee is formed, in epochs.
+    uint64 persistent_committee_period = 2005;
+    // The minimum time before validators are punished for inactivity, in epochs.
+    uint64 min_epochs_to_inactivity_penalty = 2006;
+    // The number of Ethereum 1 blocks before a deposit is considered finalized.
+    uint64 eth1_follow_distance = 2007;
+    // The far future epoch.
+    uint64 far_future_epoch = 2008;
+    // The genesis fork version.
+    bytes genesis_fork_version = 2009;
+    // The genesis validators root.
+    bytes genesis_validators_root = 2010;
+    // The minimum deposit amount, in GWei.
+    uint64 minimum_deposit_amount = 2011;
+    // The maximum effective balance, in GWei.
+    uint64 maximum_effective_balance = 2012;
+    // The increment in which effective balance can change, in GWei.
+    uint64 effective_balance_increment = 2013;
+    // The balance below which a validator will be ejected, in GWei.
+    uint64 ejection_balance = 2014;
+    // The prefix that identifies the encoding version for withdrawal credentials.
+    bytes bls_withdrawal_prefix = 2015;
+
+    // Fork data [3001-4000]
+    // The previous fork version.
+    bytes previous_fork_version = 3001;
+    // The current fork version.
+    bytes current_fork_version = 3002;
+    // The epoch at which the current fork took effect.
+    uint64 current_fork_epoch = 3003;
+    // The next fork version.
+    bytes next_fork_version = 3004;
+    // The epoch at which the next fork takes effect; far_future_epoch for no planned fork.
+    uint64 next_fork_epoch = 3005;
+    // The chain's current epoch.
+    uint64 current_epoch = 3006;
+    // The fork version schedule.
+    repeated Fork fork_version_schedule = 3007;
+}
+
+message Fork {
+    // Epoch is the epoch from which the fork takes effect.
+    uint64 epoch = 1;
+    // Version are the bytes that define the fork version.
+    bytes version = 2;
+}
+
 // SetAction defines the type of action that should be applied to the keys in a validator change set.
 enum SetAction {
     // ADD_VALIDATOR_KEYS adds to the existing keys.
@@ -276,8 +346,8 @@ message ValidatorChangeSet {
 // Request for indexed attestations by target epoch.
 message ListIndexedAttestationsRequest {
     oneof query_filter {
-        // Retrieve  attestations by target epoch.
-        uint64 target_epoch = 1;
+        // Retrieve attestations by epoch processed.
+        uint64 epoch = 1;
 
         // Optional criteria to retrieve genesis epoch attestations.
         bool genesis_epoch = 2;
@@ -298,33 +368,21 @@ message ListAttestationsRequest {
     // TODO(preston): Test oneof with gRPC gateway.
 
     oneof query_filter {
-        // Filter attestations by a specific block root.
-        bytes head_block_root = 1;
+        // Filter attestations by epoch processed.
+        uint64 epoch = 1;
 
-        // Filter attestations by source epoch.
-        uint64 source_epoch = 2;
-
-        // Filter attestations by target root.
-        bytes source_root = 3;
-
-        // Filter attestations by target epoch.
-        uint64 target_epoch = 4;
-
-        // Filter attestations by target root.
-        bytes target_root = 5;
-
-        // Optional criteria to retrieve genesis attestations.
-        bool genesis = 6;
+        // Optional criteria to retrieve attestations from 0 epoch.
+        bool genesis_epoch = 2;
     }
 
     // The maximum number of Attestations to return in the response.
     // This field is optional.
-    int32 page_size = 7;
+    int32 page_size = 3;
 
     // A pagination token returned from a previous call to `ListAttestations`
     // that indicates where this listing should continue from.
     // This field is optional.
-    string page_token = 8;
+    string page_token = 4;
 }
 
 message ListAttestationsResponse {
@@ -544,6 +602,14 @@ message ListValidatorsRequest {
     // that indicates where this listing should continue from.
     // This field is optional.
     string page_token = 5;
+
+    // Specify which validators you would like to retrieve by their public keys.
+    // This field is optional.
+    repeated bytes public_keys = 6;
+
+    // Specify which validators you would like to retrieve by their indices.
+    // This field is optional.
+    repeated uint64 indices = 7;
 }
 
 message GetValidatorRequest {
