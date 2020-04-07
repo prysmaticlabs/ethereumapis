@@ -297,8 +297,8 @@ message DutiesResponse {
         // Slot at which a validator must attest.
         uint64 attester_slot = 3;
 
-        // Slot at which a validator must propose a beacon chain block.
-        uint64 proposer_slot = 4;
+        // Slots at which a validator must propose a beacon chain block.
+        repeated uint64 proposer_slots = 4;
 
         // 48 byte BLS public key for the validator who's assigned to perform a duty.
         bytes public_key = 5;
