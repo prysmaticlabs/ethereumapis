@@ -252,6 +252,14 @@ service BeaconChain {
             get: "/eth/v1alpha1/beacon/slashings/proposer/submit"
         };
     } 
+
+    // Retrieve information about the genesis validators root for the chain.
+    rpc GetGenesisValidatorsRoot(google.protobuf.Empty) returns (GenesisValidatorsRoot) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/genesisvalidatorsroot"
+        };
+    }
+
 }
 
 // SetAction defines the type of action that should be applied to the keys in a validator change set.
@@ -782,4 +790,10 @@ message SubmitSlashingResponse {
     // Indices of the validators to be slashed by the submitted 
     // proposer/attester slashing object.
     repeated uint64 slashed_indices = 1;
+}
+
+message GenesisValidatorsRoot {
+    // Root of the genesis validators deposits; used for domain separation
+    // when signing data structures for this chain.
+    bytes root = 1;
 }
