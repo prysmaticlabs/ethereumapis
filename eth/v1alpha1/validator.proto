@@ -57,8 +57,18 @@ service BeaconNodeValidator {
         };
     }
 
-    // WaitForActivation checks if a validator public key exists in the active validator 
-    // registry of the current beacon state. If the validator is NOT yet active, it starts a 
+    // WaitForSynced checks if the beacon node is synced and ready to communicate with the validator.
+    //
+    // If the node is not synced yet, this endpoint starts a server-side stream which updates
+    // the validator client when the beacon chain is ready.
+    rpc WaitForSynced(google.protobuf.Empty) returns (stream SyncedResponse) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator/synced/stream"
+        };
+    }
+
+    // WaitForActivation checks if a validator public key exists in the active validator
+    // registry of the current beacon state. If the validator is NOT yet active, it starts a
     // server-side stream which updates the client whenever the validator becomes active in
     // the beacon node's state.
     //
@@ -68,18 +78,6 @@ service BeaconNodeValidator {
     rpc WaitForActivation(ValidatorActivationRequest) returns (stream ValidatorActivationResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validator/activation/stream"
-        };
-    }
-
-    // WaitForChainStart queries the logs of the Validator Deposit Contract on the Ethereum
-    // proof-of-work chain to verify the beacon chain has started its runtime and 
-    // validators are ready to begin their responsibilities. 
-    //
-    // If the chain has not yet started, this endpoint starts a server-side stream which updates
-    // the client when the beacon chain is ready.
-    rpc WaitForChainStart(google.protobuf.Empty) returns (stream ChainStartResponse) {
-        option (google.api.http) = {
-            get: "/eth/v1alpha1/validator/chainstart/stream"
         };
     }
 
@@ -95,7 +93,7 @@ service BeaconNodeValidator {
 
 	// ValidatorStatus returns a validator's status based on the current epoch.
 	// The request can specify either a validator's public key or validator index.
-	// 
+	//
 	// The status response can be one of the following:
 	//	DEPOSITED - validator's deposit has been recognized by Ethereum 1, not yet recognized by Ethereum 2.
 	//	PENDING - validator is in Ethereum 2's activation queue.
@@ -207,9 +205,9 @@ message ValidatorActivationResponse {
     repeated Status statuses = 1;
 }
 
-message ChainStartResponse {
-    // A boolean specifying whether or not the chain has started.
-    bool started = 1;
+message SyncedResponse {
+    // A boolean specifying whether or not the beacon node is synced and ready for the validator.
+    bool synced = 1;
 
     // The genesis time of the beacon chain.
     uint64 genesis_time = 2;
@@ -387,7 +385,7 @@ message ValidatorParticipation {
     uint64 voted_ether = 2;
 
     // The total amount of ether, in gwei, that is eligible for voting.
-    uint64 eligible_ether = 3;   
+    uint64 eligible_ether = 3;
 }
 
 // ValidatorInfo gives information about the state of a validator at a certain epoch.
