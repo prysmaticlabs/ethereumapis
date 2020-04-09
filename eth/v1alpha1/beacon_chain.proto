@@ -44,10 +44,10 @@ service BeaconChain {
         };
     }
 
-    // Retrieve attestations by block root, slot, or epoch. 
-    // 
-    // The server may return an empty list when no attestations match the given 
-    // filter criteria. This RPC should not return NOT_FOUND. Only one filter 
+    // Retrieve attestations by block root, slot, or epoch.
+    //
+    // The server may return an empty list when no attestations match the given
+    // filter criteria. This RPC should not return NOT_FOUND. Only one filter
     // criteria should be used. This endpoint allows for retrieval of genesis
     // information via a boolean query filter.
     rpc ListAttestations(ListAttestationsRequest) returns (ListAttestationsResponse) {
@@ -56,10 +56,10 @@ service BeaconChain {
         };
     }
 
-    // Retrieve indexed attestations by block root, slot, or epoch. 
-    // 
-    // The server may return an empty list when no indexed attestations match the given 
-    // filter criteria. This RPC should not return NOT_FOUND. Only one filter 
+    // Retrieve indexed attestations by block root, slot, or epoch.
+    //
+    // The server may return an empty list when no indexed attestations match the given
+    // filter criteria. This RPC should not return NOT_FOUND. Only one filter
     // criteria should be used. This endpoint allows for retrieval of genesis
     // information via a boolean query filter.
     rpc ListIndexedAttestations(ListIndexedAttestationsRequest) returns (ListIndexedAttestationsResponse) {
@@ -69,7 +69,7 @@ service BeaconChain {
     }
 
     // Server-side stream of attestations as they are received by
-    // the beacon chain node. 
+    // the beacon chain node.
     rpc StreamAttestations(google.protobuf.Empty) returns (stream Attestation) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/attestations/stream"
@@ -77,7 +77,7 @@ service BeaconChain {
     }
 
     // Server-side stream of indexed attestations as they are received by
-    // the beacon chain node. 
+    // the beacon chain node.
     rpc StreamIndexedAttestations(google.protobuf.Empty) returns (stream IndexedAttestation) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/attestations/indexed/stream"
@@ -99,11 +99,11 @@ service BeaconChain {
         };
     }
 
-    // Retrieve blocks by root, slot, or epoch. 
-    // 
+    // Retrieve blocks by root, slot, or epoch.
+    //
     // The server may return multiple blocks in the case that a slot or epoch is
     // provided as the filter criteria. The server may return an empty list when
-    // no blocks in their database match the filter criteria. This RPC should 
+    // no blocks in their database match the filter criteria. This RPC should
     // not return NOT_FOUND. Only one filter criteria should be used. This endpoint
     // allows for retrieval of genesis information via a boolean query filter.
     rpc ListBlocks(ListBlocksRequest) returns (ListBlocksResponse) {
@@ -120,9 +120,9 @@ service BeaconChain {
         };
     }
 
-    // Server-side stream of information about the head of the beacon chain 
-    // from the view of the beacon chain node. 
-    // 
+    // Server-side stream of information about the head of the beacon chain
+    // from the view of the beacon chain node.
+    //
     // This includes the head block slot and root as well as information about
     // the most recent finalized and justified slots.
     rpc StreamChainHead(google.protobuf.Empty) returns (stream ChainHead) {
@@ -132,8 +132,8 @@ service BeaconChain {
     }
 
     // Retrieve information about the head of the beacon chain from the view of
-    // the beacon chain node. 
-    // 
+    // the beacon chain node.
+    //
     // This includes the head block slot and root as well as information about
     // the most recent finalized and justified slots.
     rpc GetChainHead(google.protobuf.Empty) returns (ChainHead) {
@@ -153,7 +153,7 @@ service BeaconChain {
         };
     }
 
-    // Retrieve validator balances for a given set of public keys at a specific 
+    // Retrieve validator balances for a given set of public keys at a specific
     // epoch in time. This endpoint allows for retrieval of genesis information
     // via a boolean query filter.
     rpc ListValidatorBalances(ListValidatorBalancesRequest) returns (ValidatorBalances) {
@@ -164,7 +164,7 @@ service BeaconChain {
 
     // Retrieve the current validator registry.
     //
-    // The request may include an optional historical epoch to retrieve a 
+    // The request may include an optional historical epoch to retrieve a
     // specific validator set in time. This endpoint allows for retrieval of genesis
     // information via a boolean query filter.
     rpc ListValidators(ListValidatorsRequest) returns (Validators) {
@@ -182,8 +182,8 @@ service BeaconChain {
         };
     }
 
-    // Retrieve the active set changes for a given epoch. 
-    // 
+    // Retrieve the active set changes for a given epoch.
+    //
     // This data includes any activations, voluntary exits, and involuntary
     // ejections. This endpoint allows for retrieval of genesis
     // information via a boolean query filter.
@@ -200,7 +200,7 @@ service BeaconChain {
         };
     }
 
-    // GetValidatorPerformance reports a validator's latest balance along with other important 
+    // GetValidatorPerformance reports a validator's latest balance along with other important
     // metrics on rewards and penalties throughout its lifecycle in the beacon chain.
     // The request takes in a list of validator public keys and returns a performance report
     // for all of them respectively.
@@ -223,7 +223,7 @@ service BeaconChain {
 
     // Retrieve the validator participation information for a given epoch.
     //
-    // This method returns information about the global participation of 
+    // This method returns information about the global participation of
     // validator attestations. This endpoint allows for retrieval of genesis
     // information via a boolean query filter.
     rpc GetValidatorParticipation(GetValidatorParticipationRequest) returns (ValidatorParticipationResponse) {
@@ -251,14 +251,14 @@ service BeaconChain {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/slashings/attester/submit"
         };
-    } 
+    }
 
     // Submit a proposer slashing object to the beacon node.
     rpc SubmitProposerSlashing(ProposerSlashing) returns (SubmitSlashingResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/slashings/proposer/submit"
         };
-    } 
+    }
 }
 
 message ChainInfo {
@@ -314,10 +314,10 @@ message ChainInfo {
     // The chain's current epoch.
     uint64 current_epoch = 3006;
     // The fork version schedule.
-    repeated Fork fork_version_schedule = 3007;
+    repeated ForkDefinition fork_version_schedule = 3007;
 }
 
-message Fork {
+message ForkDefinition {
     // Epoch is the epoch from which the fork takes effect.
     uint64 epoch = 1;
     // Version are the bytes that define the fork version.
@@ -416,17 +416,17 @@ message ListBlocksRequest {
 
         // Slot to lookup a block. If the slot is not yet finalized, this
         // criteria may yield multiple valid blocks if the node has seen blocks
-        // from another fork. 
-        uint64 slot = 2; 
+        // from another fork.
+        uint64 slot = 2;
 
         // The epoch number for which to retrieve blocks. If specified, this
         // will return all blocks found within the span of the specified epoch.
-        uint64 epoch = 3; 
+        uint64 epoch = 3;
 
         // Optional criteria to retrieve genesis block.
         bool genesis = 4;
     }
-        
+
     // The maximum number of Blocks to return in the response.
     // This field is optional.
     int32 page_size = 5;
@@ -472,10 +472,10 @@ message ChainHead {
 
     // Most recent slot that contains the finalized block.
     uint64 finalized_slot = 4;
-    
+
     // Epoch of the finalized block.
     uint64 finalized_epoch = 5;
-    
+
     // Most recent 32 byte finalized block root.
     bytes finalized_block_root = 6;
 
@@ -484,13 +484,13 @@ message ChainHead {
 
     // Epoch of the justified block.
     uint64 justified_epoch = 8;
-    
+
     // Most recent 32 byte justified block root.
     bytes justified_block_root = 9;
 
     // Most recent slot that contains the previous justified block.
     uint64 previous_justified_slot = 10;
-    
+
     // Epoch of the previous justified block.
     uint64 previous_justified_epoch = 11;
 
@@ -541,7 +541,7 @@ message ListValidatorBalancesRequest {
     // Validator 48 byte BLS public keys to filter validators for the given
     // epoch.
     repeated bytes public_keys = 3;
-        
+
     // Validator indices to filter validators for the given epoch.
     repeated uint64 indices = 4;
 
@@ -582,7 +582,7 @@ message ValidatorBalances {
 
 message ListValidatorsRequest {
     oneof query_filter {
-        // Optional criteria to retrieve validators at a specific epoch. 
+        // Optional criteria to retrieve validators at a specific epoch.
         // Omitting this field or setting it to zero will retrieve a response
         // with the current active validator set.
         uint64 epoch = 1;
@@ -623,14 +623,14 @@ message GetValidatorRequest {
 }
 
 message Validators {
-    // Epoch which the state was considered to determine the active validator 
+    // Epoch which the state was considered to determine the active validator
     // set. This field is not optional. Zero value epoch indicates the validator
     // set is from the Ethereum 2.0 genesis set.
     uint64 epoch = 1;
 
     message ValidatorContainer {
         uint64 index = 1;
-        Validator validator = 2; 
+        Validator validator = 2;
     }
 
     repeated ValidatorContainer validator_list = 2;
@@ -655,8 +655,8 @@ message GetValidatorActiveSetChangesRequest {
 }
 
 message ActiveSetChanges {
-    // Epoch which the state was considered to determine the active validator 
-    // set. 
+    // Epoch which the state was considered to determine the active validator
+    // set.
     uint64 epoch = 1;
 
     // 48 byte validator public keys that have been activated in the given epoch.
@@ -723,7 +723,7 @@ message ValidatorPerformanceResponse {
 }
 
 message ValidatorQueue {
-    // The amount of ether in gwei allowed to enter or exit the active 
+    // The amount of ether in gwei allowed to enter or exit the active
     // validator set.
     uint64 churn_limit = 1;
 
@@ -746,7 +746,7 @@ message ListValidatorAssignmentsRequest {
     }
     // 48 byte validator public keys to filter assignments for the given epoch.
     repeated bytes public_keys = 3;
-        
+
     // Validator indicies to filter assignments for the given epoch.
     repeated uint64 indices = 4;
 
@@ -849,7 +849,7 @@ message BeaconConfig {
 }
 
 message SubmitSlashingResponse {
-    // Indices of the validators to be slashed by the submitted 
+    // Indices of the validators to be slashed by the submitted
     // proposer/attester slashing object.
     repeated uint64 slashed_indices = 1;
 }
