@@ -5,7 +5,6 @@ workspace(name = "prysmaticlabs_ethereumapis")
 ##############################################################################
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
 http_archive(
     name = "io_bazel_rules_go",
@@ -51,23 +50,4 @@ go_repository(
     name = "in_gopkg_yaml_v2",
     commit = "51d6538a90f86fe93ac480b35f37b2be17fef232",
     importpath = "gopkg.in/yaml.v2",
-)
-
-git_repository(
-    name = "com_github_gogo_protobuf",
-    commit = "5628607bb4c51c3157aacc3a50f0ab707582b805",
-    patch_args = ["-p1"],
-    patches = [
-        "@io_bazel_rules_go//third_party:com_github_gogo_protobuf-gazelle.patch",
-        "//third_party:com_github_gogo_protobuf-equal.patch",
-    ],
-    remote = "https://github.com/gogo/protobuf",
-    shallow_since = "1567336231 +0200",
-    # gazelle args: -go_prefix github.com/gogo/protobuf -proto legacy
-)
-
-go_repository(
-    name = "com_github_prysmaticlabs_go_bitfield",
-    commit = "dbb55b15e92f897ee230360c8d9695e2f224b117",
-    importpath = "github.com/prysmaticlabs/go-bitfield",
 )
