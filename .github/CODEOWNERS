@@ -1,2 +1,5 @@
 # Global code owners
-* @rauljordan @prestonvanloon
+* @prysmaticlabs/core-team
+
+# Proto files owners
+*.proto @rauljordan @prestonvanloon
