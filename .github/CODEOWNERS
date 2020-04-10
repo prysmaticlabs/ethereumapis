@@ -3,3 +3,6 @@
 
 # Proto files owners
 *.proto @rauljordan @prestonvanloon
+
+# Starlark changes
+*.bzl @prestonvanloon
