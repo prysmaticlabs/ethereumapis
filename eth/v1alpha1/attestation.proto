@@ -44,6 +44,14 @@ message AggregateAttestationAndProof {
     bytes selection_proof = 2;
 }
 
+message SignedAggregateAttestationAndProof {
+    // The aggregated attestation and selection proof itself.
+    AggregateAttestationAndProof message = 1;
+
+    // 96 byte BLS aggregate signature signed by the aggregator over the message.
+    bytes signature = 2;
+}
+
 message AttestationData {
     // Attestation data includes information on Casper the Friendly Finality Gadget's votes
     // See: https://arxiv.org/pdf/1710.09437.pdf

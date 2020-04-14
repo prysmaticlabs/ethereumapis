@@ -27,16 +27,19 @@ option php_namespace = "Ethereum\\Eth\\v1alpha1";
 // The Ethereum 2.0 beacon block. The message does not contain a validator signature.
 message BeaconBlock {
     // Beacon chain slot that this block represents.
-    uint64 slot = 1; 
+    uint64 slot = 1;
+
+    // Validator index of the validator that proposed the block header.
+    uint64 proposer_index = 2;
 
     // 32 byte root of the parent block.
-    bytes parent_root = 2;
+    bytes parent_root = 3;
 
     // 32 byte root of the resulting state after processing this block.
-    bytes state_root = 3;
+    bytes state_root = 4;
 
     // The block body itself.
-    BeaconBlockBody body = 4;
+    BeaconBlockBody body = 5;
 }
 
 // The signed version of beacon block.
@@ -58,7 +61,7 @@ message BeaconBlockBody {
 
     // 32 byte field of arbitrary data. This field may contain any data and
     // is not used for anything other than a fun message.
-    bytes graffiti = 3; 
+    bytes graffiti = 3;
 
     // Block operations
     // Refer to spec constants at https://github.com/ethereum/eth2.0-specs/blob/dev/specs/core/0_beacon-chain.md#max-operations-per-block
@@ -80,12 +83,8 @@ message BeaconBlockBody {
 }
 
 // Proposer slashings are proofs that a slashable offense has been committed by
-// proposing two conflicting blocks from the same validator. 
+// proposing two conflicting blocks from the same validator.
 message ProposerSlashing {
-    // Validator index of the validator that proposed the two conflicting block
-    // headers.
-    uint64 proposer_index = 1;
-
     // First conflicting signed block header.
     SignedBeaconBlockHeader header_1 = 2;
 
@@ -130,7 +129,7 @@ message Deposit {
 // validator signature.
 message VoluntaryExit {
     // The epoch on when exit request becomes valid.
-    uint64 epoch = 1; 
+    uint64 epoch = 1;
 
     // Index of the exiting validator.
     uint64 validator_index = 2;
@@ -166,16 +165,19 @@ message Eth1Data {
 // a validator signature.
 message BeaconBlockHeader {
     // Beacon chain slot that this block represents.
-    uint64 slot = 1; 
+    uint64 slot = 1;
+
+    // Validator index of the validator that proposed the block header.
+    uint64 proposer_index = 2;
 
     // 32 byte merkle tree root of the parent ssz encoded block.
-    bytes parent_root = 2;
+    bytes parent_root = 3;
 
     // 32 byte merkle tree root of the resulting ssz encoded state after processing this block.
-    bytes state_root = 3;
+    bytes state_root = 4;
 
     // 32 byte merkle tree root of the ssz encoded block body.
-    bytes body_root = 4;
+    bytes body_root = 5;
 }
 
 message SignedBeaconBlockHeader {

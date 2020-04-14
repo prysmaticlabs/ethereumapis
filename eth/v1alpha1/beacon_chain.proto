@@ -705,9 +705,9 @@ message ValidatorAssignments {
         // duty as an attester.
         uint64 attester_slot = 3;
 
-        // Beacon chain slot in which the validator must perform its assigned
-        // duty as an attester.
-        uint64 proposer_slot = 4;
+        // Beacon chain slots in which the validator must perform its assigned
+        // duty as a proposer.
+        repeated uint64 proposer_slots = 4;
 
         // 48 byte BLS public key.
         bytes public_key = 5;

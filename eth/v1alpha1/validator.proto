@@ -152,12 +152,18 @@ service BeaconNodeValidator {
     }
 
 
-    // Request beacon node to aggregate all matching wire attestations.
-    //
-    // In case validator is aggregator at given slot, he sends aggregation request to beacon node.
-    // The beacon node is expected to validate and aggregate all collected committee subnet attestations.
-    rpc SubmitAggregateAndProof(AggregationRequest) returns (AggregationResponse) {
+    // Submit selection proof to the beacon node to aggregate all matching wire attestations with the same data root.
+    // the beacon node responses with an aggregate and proof object back to validator to sign over.
+    rpc SubmitAggregateSelectionProof(AggregateSelectionRequest) returns (AggregateSelectionResponse) {
         option (google.api.http) = {
+            post: "/eth/v1alpha1/validator/aggregate"
+        };
+    }
+
+    // Submit a signed aggregate and proof object, the beacon node will broadcast the
+    // signed aggregated attestation and proof object.
+        rpc SubmitSignedAggregateSelectionProof(SignedAggregateSubmitRequest) returns (SignedAggregateSubmitResponse) {
+             option (google.api.http) = {
             post: "/eth/v1alpha1/validator/aggregate"
         };
     }
@@ -171,6 +177,17 @@ service BeaconNodeValidator {
             post: "/eth/v1alpha1/validator/exit"
         };
     }
+
+    // Subscribe to particular committee ID subnets given validator's duty.
+    //
+    // The beacon node is expected to subscribe to the committee ID subnet given by the request. With this,
+    // beacon node serving attesters can find persistent peers on the subnet to publish attestation,
+    // and beacon node serving aggregator can join the subnet.
+    rpc SubscribeCommitteeSubnets(CommitteeSubnetsSubscribeRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/eth/v1alpha1/validator/subnet/subscribe"
+        };
+    }
 }
 
 message DomainRequest {
@@ -182,9 +199,9 @@ message DomainRequest {
 }
 
 message DomainResponse {
-    // The signature domain is a number used by validators when
+    // The signature domain is a byte array used by validators when
     // signing data related to block proposals and attestations.
-    uint64 signature_domain = 1;
+    bytes signature_domain = 1;
 }
 
 message ValidatorActivationRequest {
@@ -278,8 +295,8 @@ message DutiesResponse {
         // Slot at which a validator must attest.
         uint64 attester_slot = 3;
 
-        // Slot at which a validator must propose a beacon chain block.
-        uint64 proposer_slot = 4;
+        // Slots at which a validator must propose a beacon chain block.
+        repeated uint64 proposer_slots = 4;
 
         // 48 byte BLS public key for the validator who's assigned to perform a duty.
         bytes public_key = 5;
@@ -321,7 +338,7 @@ message AttestResponse {
     bytes attestation_data_root = 1;
 }
 
-message AggregationRequest {
+message AggregateSelectionRequest {
     // Slot for which the aggregation request applies.
     uint64 slot = 1;
     // Committee index of the validator at the given slot.
@@ -333,9 +350,31 @@ message AggregationRequest {
     bytes slot_signature = 4;
 }
 
-message AggregationResponse {
+message AggregateSelectionResponse {
+  // The aggregate and proof message without the signature.
+  AggregateAttestationAndProof aggregate_and_proof = 1;
+}
+
+message SignedAggregateSubmitRequest {
+    // The signed aggregate and proof message with the signature.
+    SignedAggregateAttestationAndProof signed_aggregate_and_proof = 1;
+}
+
+message SignedAggregateSubmitResponse {
     // The 32 byte hash tree root of the aggregated attestation data.
     bytes attestation_data_root = 1;
+}
+
+message CommitteeSubnetsSubscribeRequest {
+    // A list of intended slots to subscribe.
+    repeated uint64 slots = 1;
+    // A list of intended committee ids to subscribe. It is mapped 1-to-1 with the slots
+    repeated uint64 committee_ids = 2;
+    // Whether to subscribe as an aggregator or by default attester.
+    // It is mapped 1-to-1 with the slots and committee ids.
+    // Subscribe as an aggregator means to join the subnet.
+    // Subscribe as an attester means finding persistent peers on the subnet to be able to publish attestations.
+    repeated bool is_aggregator = 3;
 }
 
 // An Ethereum 2.0 validator.
