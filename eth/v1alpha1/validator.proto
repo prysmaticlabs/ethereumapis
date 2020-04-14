@@ -57,6 +57,21 @@ service BeaconNodeValidator {
         };
     }
 
+    // WaitForChainStart queries the logs of the Validator Deposit Contract on the Ethereum
+    // proof-of-work chain to verify the beacon chain has started its runtime and 
+    // validators are ready to begin their responsibilities. 
+    //
+    // If the chain has not yet started, this endpoint starts a server-side stream which updates
+    // the client when the beacon chain is ready.
+    //
+    // This RPC is deprecated. Please use WaitForSynced.
+    rpc WaitForChainStart(google.protobuf.Empty) returns (stream ChainStartResponse) {
+        option deprecated = true;
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator/chainstart/stream"
+        };
+    }
+
     // WaitForSynced checks if the beacon node is synced and ready to communicate with the validator.
     //
     // If the node is not synced yet, this endpoint starts a server-side stream which updates
@@ -220,6 +235,16 @@ message ValidatorActivationResponse {
     // A list of validator statuses mapped 1-to-1 with the public keys
     // in the request.
     repeated Status statuses = 1;
+}
+
+message ChainStartResponse {
+    option deprecated = true; // Please use SyncedResponse and WaitForSynced.
+    
+    // A boolean specifying whether or not the chain has started.
+    bool started = 1;
+
+    // The genesis time of the beacon chain.
+    uint64 genesis_time = 2;
 }
 
 message SyncedResponse {
