@@ -15,6 +15,7 @@ syntax = "proto3";
 
 package ethereum.eth.v1alpha1;
 
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 import "eth/v1alpha1/attestation.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1alpha1";
@@ -33,10 +34,10 @@ message BeaconBlock {
     uint64 proposer_index = 2;
 
     // 32 byte root of the parent block.
-    bytes parent_root = 3;
+    bytes parent_root = 3 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
     // 32 byte root of the resulting state after processing this block.
-    bytes state_root = 4;
+    bytes state_root = 4 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
     // The block body itself.
     BeaconBlockBody body = 5;
@@ -48,38 +49,38 @@ message SignedBeaconBlock {
     BeaconBlock block = 1;
 
     // 96 byte BLS signature from the validator that produced this block.
-    bytes signature = 2;
+    bytes signature = 2 [(gogoproto.moretags) = "ssz-size:\"96\""];
 }
 
 // The block body of an Ethereum 2.0 beacon block.
 message BeaconBlockBody {
     // The validators RANDAO reveal 96 byte value.
-    bytes randao_reveal = 1;
+    bytes randao_reveal = 1 [(gogoproto.moretags) = "ssz-size:\"96\""];
 
     // A reference to the Ethereum 1.x chain.
     Eth1Data eth1_data = 2;
 
     // 32 byte field of arbitrary data. This field may contain any data and
     // is not used for anything other than a fun message.
-    bytes graffiti = 3;
+    bytes graffiti = 3 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
     // Block operations
     // Refer to spec constants at https://github.com/ethereum/eth2.0-specs/blob/dev/specs/core/0_beacon-chain.md#max-operations-per-block
 
     // At most MAX_PROPOSER_SLASHINGS.
-    repeated ProposerSlashing proposer_slashings = 4;
+    repeated ProposerSlashing proposer_slashings = 4 [(gogoproto.moretags) = "ssz-max:\"16\""];
 
     // At most MAX_ATTESTER_SLASHINGS.
-    repeated AttesterSlashing attester_slashings = 5;
+    repeated AttesterSlashing attester_slashings = 5 [(gogoproto.moretags) = "ssz-max:\"1\""];
 
     // At most MAX_ATTESTATIONS.
-    repeated Attestation attestations = 6;
+    repeated Attestation attestations = 6 [(gogoproto.moretags) = "ssz-max:\"128\""];
 
     // At most MAX_DEPOSITS.
-    repeated Deposit deposits = 7;
+    repeated Deposit deposits = 7 [(gogoproto.moretags) = "ssz-max:\"16\""];
 
     // At most MAX_VOLUNTARY_EXITS.
-    repeated SignedVoluntaryExit voluntary_exits = 8;
+    repeated SignedVoluntaryExit voluntary_exits = 8 [(gogoproto.moretags) = "ssz-max:\"16\""];
 }
 
 // Proposer slashings are proofs that a slashable offense has been committed by
@@ -106,20 +107,20 @@ message AttesterSlashing {
 message Deposit {
     message Data {
         // 48 byte BLS public key of the validator.
-        bytes public_key = 1;
+        bytes public_key = 1 [(gogoproto.moretags) = "ssz-size:\"48\" spec-name:\"pubkey\""];
 
         // A 32 byte hash of the withdrawal address public key.
-        bytes withdrawal_credentials = 2;
+        bytes withdrawal_credentials = 2 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
         // Deposit amount in gwei.
         uint64 amount = 3;
 
         // 96 byte signature from the validators public key.
-        bytes signature = 4;
+        bytes signature = 4 [(gogoproto.moretags) = "ssz-size:\"96\""];
     }
 
     // 32 byte roots in the deposit tree branch.
-    repeated bytes proof = 1;
+    repeated bytes proof = 1 [(gogoproto.moretags) = "ssz-size:\"33,32\""];
 
     Data data = 2;
 }
@@ -141,14 +142,14 @@ message SignedVoluntaryExit {
     VoluntaryExit exit = 1;
 
     // Validator's 96 byte signature
-    bytes signature = 2;
+    bytes signature = 2 [(gogoproto.moretags) = "ssz-size:\"96\""];
 }
 
 // Eth1Data represents references to the Ethereum 1.x deposit contract.
 message Eth1Data {
     // The 32 byte deposit tree root for the last deposit included in this
     // block.
-    bytes deposit_root = 1;
+    bytes deposit_root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
     // The total number of deposits included in the beacon chain since genesis
     // including the deposits in this block.
@@ -156,7 +157,7 @@ message Eth1Data {
 
     // The 32 byte block hash of the Ethereum 1.x block considered for deposit
     // inclusion.
-    bytes block_hash = 3;
+    bytes block_hash = 3 [(gogoproto.moretags) = "ssz-size:\"32\""];
 }
 
 // A beacon block header is essentially a beacon block with only a reference to
@@ -171,13 +172,13 @@ message BeaconBlockHeader {
     uint64 proposer_index = 2;
 
     // 32 byte merkle tree root of the parent ssz encoded block.
-    bytes parent_root = 3;
+    bytes parent_root = 3 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
     // 32 byte merkle tree root of the resulting ssz encoded state after processing this block.
-    bytes state_root = 4;
+    bytes state_root = 4 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
     // 32 byte merkle tree root of the ssz encoded block body.
-    bytes body_root = 5;
+    bytes body_root = 5 [(gogoproto.moretags) = "ssz-size:\"32\""];
 }
 
 message SignedBeaconBlockHeader {
@@ -185,14 +186,14 @@ message SignedBeaconBlockHeader {
     BeaconBlockHeader header = 1;
 
     // 96 byte BLS signature from the validator that produced this block header.
-    bytes signature = 2;
+    bytes signature = 2 [(gogoproto.moretags) = "ssz-size:\"96\""];
 }
 
 message IndexedAttestation {
-    repeated uint64 attesting_indices = 1;
+    repeated uint64 attesting_indices = 1 [(gogoproto.moretags) = "ssz-max:\"2048\""];
 
     AttestationData data = 2;
 
     // 96 bytes aggregate signature.
-    bytes signature = 3;
+    bytes signature = 3 [(gogoproto.moretags) = "ssz-size:\"96\""];
 }
