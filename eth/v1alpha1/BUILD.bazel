@@ -64,6 +64,25 @@ ssz_gen_marshal(
     ],
 )
 
+##############################################################################
+# Go
+##############################################################################
+ssz_gen_marshal(
+    name = "ssz_generated_files",
+    go_proto = ":go_proto",
+    objs = [
+        "Attestation",
+        "BeaconBlock",
+        "SignedBeaconBlock",
+        "Validator",
+        "BeaconBlockHeader",
+        "AttesterSlashing",
+        "VoluntaryExit",
+        "Deposit",
+        "ProposerSlashing",
+    ],
+)
+
 go_proto_library(
     name = "go_proto",
     compilers = ["@io_bazel_rules_go//proto:gogofast_grpc"],
