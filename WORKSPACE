@@ -51,3 +51,15 @@ go_repository(
     commit = "51d6538a90f86fe93ac480b35f37b2be17fef232",
     importpath = "gopkg.in/yaml.v2",
 )
+
+go_repository(
+    name = "com_github_ferranbt_fastssz",
+    commit = "06015a5d84f9e4eefe2c21377ca678fa8f1a1b09",
+    importpath = "github.com/ferranbt/fastssz",
+)
+
+go_repository(
+    name = "com_github_prysmaticlabs_go_bitfield",
+    commit = "62c2aee7166951c456888f92237aee4303ba1b9d",
+    importpath = "github.com/prysmaticlabs/go-bitfield",
+)
