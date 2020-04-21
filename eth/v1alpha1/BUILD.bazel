@@ -3,7 +3,7 @@
 ##############################################################################
 
 load("@rules_proto//proto:defs.bzl", "proto_library")
-# load("@rules_java//java:defs.bzl", "java_proto_library")
+load("@rules_java//java:defs.bzl", "java_proto_library")
 
 ##############################################################################
 # Go
@@ -43,11 +43,14 @@ proto_library(
 # Java
 ##############################################################################
 
-# java_proto_library(
-#     name = "java_proto",
-#     deps = [":proto"],
-# )
+java_proto_library(
+    name = "java_proto",
+    deps = [":proto"],
+)
 
+##############################################################################
+# Go
+##############################################################################
 ssz_gen_marshal(
     name = "ssz_generated_files",
     go_proto = ":go_proto",
