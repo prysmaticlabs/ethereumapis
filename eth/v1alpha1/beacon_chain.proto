@@ -658,11 +658,19 @@ message ValidatorQueue {
 
     // Ordered list of 48 byte public keys awaiting activation. 0th index is the
     // next key to be processed.
-    repeated bytes activation_public_keys = 2 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
+    repeated bytes activation_public_keys = 2 [(gogoproto.moretags) = "ssz-size:\"?,48\"", deprecated = true];
 
     // Ordered list of public keys awaiting exit. 0th index is the next key to
     // be processed.
-    repeated bytes exit_public_keys = 3 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
+    repeated bytes exit_public_keys = 3 [(gogoproto.moretags) = "ssz-size:\"?,48\"", deprecated = true];
+
+    // Ordered list of validator indices awaiting activation. 0th item in the list is the
+    // next validator index to be processed.
+    repeated uint64 activation_validator_indices = 4;
+
+    // Ordered list of validator indices awaiting exit. 0th item in the list is the
+    // next validator index to be processed.
+    repeated uint64 exit_validator_indices = 5;
 }
 
 message ListValidatorAssignmentsRequest {
@@ -708,7 +716,10 @@ message ValidatorAssignments {
         repeated uint64 proposer_slots = 4;
 
         // 48 byte BLS public key.
-        bytes public_key = 5 [(gogoproto.moretags) = "ssz-size:\"48\""];
+        bytes public_key = 5 [(gogoproto.moretags) = "ssz-size:\"48\"", deprecated = true];
+
+        // Validator index in the beacon state.
+        uint64 validator_index = 6;
     }
 
     // The epoch for which this set of validator assignments is valid.
