@@ -785,5 +785,5 @@ message SubmitSlashingResponse {
 message GenesisValidatorsRoot {
     // Root of the genesis validators deposits; used for domain separation
     // when signing data structures for this chain.
-    bytes root = 1;
+    bytes root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
 }

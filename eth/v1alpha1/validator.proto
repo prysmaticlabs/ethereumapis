@@ -411,18 +411,6 @@ message CommitteeSubnetsSubscribeRequest {
     repeated bool is_aggregator = 3;
 }
 
-message CommitteeSubnetsSubscribeRequest {
-    // A list of intended slots to subscribe.
-    repeated uint64 slots = 1;
-    // A list of intended committee ids to subscribe. It is mapped 1-to-1 with the slots
-    repeated uint64 committee_ids = 2;
-    // Whether to subscribe as an aggregator or by default attester.
-    // It is mapped 1-to-1 with the slots and committee ids.
-    // Subscribe as an aggregator means to join the subnet.
-    // Subscribe as an attester means finding persistent peers on the subnet to be able to publish attestations.
-    repeated bool is_aggregator = 3;
-}
-
 // An Ethereum 2.0 validator.
 message Validator {
     // 48 byte BLS public key used for the validator's activities.

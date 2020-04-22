@@ -1333,61 +1333,6 @@ func (m *CommitteeSubnetsSubscribeRequest) GetIsAggregator() []bool {
 	return nil
 }
 
-type CommitteeSubnetsSubscribeRequest struct {
-	Slots                []uint64 `protobuf:"varint,1,rep,packed,name=slots,proto3" json:"slots,omitempty"`
-	CommitteeIds         []uint64 `protobuf:"varint,2,rep,packed,name=committee_ids,json=committeeIds,proto3" json:"committee_ids,omitempty"`
-	IsAggregator         []bool   `protobuf:"varint,3,rep,packed,name=is_aggregator,json=isAggregator,proto3" json:"is_aggregator,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *CommitteeSubnetsSubscribeRequest) Reset()         { *m = CommitteeSubnetsSubscribeRequest{} }
-func (m *CommitteeSubnetsSubscribeRequest) String() string { return proto.CompactTextString(m) }
-func (*CommitteeSubnetsSubscribeRequest) ProtoMessage()    {}
-func (*CommitteeSubnetsSubscribeRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_f8ef4b6a7db76675, []int{19}
-}
-
-func (m *CommitteeSubnetsSubscribeRequest) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_CommitteeSubnetsSubscribeRequest.Unmarshal(m, b)
-}
-func (m *CommitteeSubnetsSubscribeRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_CommitteeSubnetsSubscribeRequest.Marshal(b, m, deterministic)
-}
-func (m *CommitteeSubnetsSubscribeRequest) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CommitteeSubnetsSubscribeRequest.Merge(m, src)
-}
-func (m *CommitteeSubnetsSubscribeRequest) XXX_Size() int {
-	return xxx_messageInfo_CommitteeSubnetsSubscribeRequest.Size(m)
-}
-func (m *CommitteeSubnetsSubscribeRequest) XXX_DiscardUnknown() {
-	xxx_messageInfo_CommitteeSubnetsSubscribeRequest.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_CommitteeSubnetsSubscribeRequest proto.InternalMessageInfo
-
-func (m *CommitteeSubnetsSubscribeRequest) GetSlots() []uint64 {
-	if m != nil {
-		return m.Slots
-	}
-	return nil
-}
-
-func (m *CommitteeSubnetsSubscribeRequest) GetCommitteeIds() []uint64 {
-	if m != nil {
-		return m.CommitteeIds
-	}
-	return nil
-}
-
-func (m *CommitteeSubnetsSubscribeRequest) GetIsAggregator() []bool {
-	if m != nil {
-		return m.IsAggregator
-	}
-	return nil
-}
-
 type Validator struct {
 	PublicKey                  []byte   `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48" spec-name:"pubkey"`
 	WithdrawalCredentials      []byte   `protobuf:"bytes,2,opt,name=withdrawal_credentials,json=withdrawalCredentials,proto3" json:"withdrawal_credentials,omitempty" ssz-size:"32"`
