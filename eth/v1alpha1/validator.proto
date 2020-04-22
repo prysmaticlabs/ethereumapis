@@ -66,8 +66,8 @@ service BeaconNodeValidator {
     }
 
     // WaitForChainStart queries the logs of the Validator Deposit Contract on the Ethereum
-    // proof-of-work chain to verify the beacon chain has started its runtime and 
-    // validators are ready to begin their responsibilities. 
+    // proof-of-work chain to verify the beacon chain has started its runtime and
+    // validators are ready to begin their responsibilities.
     //
     // If the chain has not yet started, this endpoint starts a server-side stream which updates
     // the client when the beacon chain is ready.
@@ -247,7 +247,7 @@ message ValidatorActivationResponse {
 
 message ChainStartResponse {
     option deprecated = true; // Please use SyncedResponse and WaitForSynced.
-    
+
     // A boolean specifying whether or not the chain has started.
     bool started = 1;
 
@@ -298,14 +298,14 @@ message ValidatorStatusResponse {
 
     // The slot in the beacon chain in which the validator's
     // deposit was included in a block.
-    int64 deposit_inclusion_slot = 3;
+    uint64 deposit_inclusion_slot = 3;
 
     // The epoch in the beacon chain in which the validator
     // is determined as active.
-    int64 activation_epoch = 4;
+    uint64 activation_epoch = 4;
 
     // The position in the activation queue of pending validators.
-    int64 position_in_activation_queue = 5;
+    uint64 position_in_activation_queue = 5;
 }
 
 message DutiesRequest {
