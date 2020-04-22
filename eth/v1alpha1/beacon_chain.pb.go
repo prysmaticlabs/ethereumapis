@@ -3357,6 +3357,45 @@ func (m *SubmitSlashingResponse) GetSlashedIndices() []uint64 {
 	return nil
 }
 
+type GenesisValidatorsRoot struct {
+	Root                 []byte   `protobuf:"bytes,1,opt,name=root,proto3" json:"root,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GenesisValidatorsRoot) Reset()         { *m = GenesisValidatorsRoot{} }
+func (m *GenesisValidatorsRoot) String() string { return proto.CompactTextString(m) }
+func (*GenesisValidatorsRoot) ProtoMessage()    {}
+func (*GenesisValidatorsRoot) Descriptor() ([]byte, []int) {
+	return fileDescriptor_e33ad64d6ced77c1, []int{29}
+}
+
+func (m *GenesisValidatorsRoot) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GenesisValidatorsRoot.Unmarshal(m, b)
+}
+func (m *GenesisValidatorsRoot) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GenesisValidatorsRoot.Marshal(b, m, deterministic)
+}
+func (m *GenesisValidatorsRoot) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GenesisValidatorsRoot.Merge(m, src)
+}
+func (m *GenesisValidatorsRoot) XXX_Size() int {
+	return xxx_messageInfo_GenesisValidatorsRoot.Size(m)
+}
+func (m *GenesisValidatorsRoot) XXX_DiscardUnknown() {
+	xxx_messageInfo_GenesisValidatorsRoot.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GenesisValidatorsRoot proto.InternalMessageInfo
+
+func (m *GenesisValidatorsRoot) GetRoot() []byte {
+	if m != nil {
+		return m.Root
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterEnum("ethereum.eth.v1alpha1.SetAction", SetAction_name, SetAction_value)
 	proto.RegisterType((*ValidatorChangeSet)(nil), "ethereum.eth.v1alpha1.ValidatorChangeSet")
@@ -3395,6 +3434,7 @@ func init() {
 	proto.RegisterType((*BeaconConfig)(nil), "ethereum.eth.v1alpha1.BeaconConfig")
 	proto.RegisterMapType((map[string]string)(nil), "ethereum.eth.v1alpha1.BeaconConfig.ConfigEntry")
 	proto.RegisterType((*SubmitSlashingResponse)(nil), "ethereum.eth.v1alpha1.SubmitSlashingResponse")
+	proto.RegisterType((*GenesisValidatorsRoot)(nil), "ethereum.eth.v1alpha1.GenesisValidatorsRoot")
 }
 
 func init() { proto.RegisterFile("eth/v1alpha1/beacon_chain.proto", fileDescriptor_e33ad64d6ced77c1) }
@@ -3613,6 +3653,7 @@ type BeaconChainClient interface {
 	StreamValidatorsInfo(ctx context.Context, opts ...grpc.CallOption) (BeaconChain_StreamValidatorsInfoClient, error)
 	SubmitAttesterSlashing(ctx context.Context, in *AttesterSlashing, opts ...grpc.CallOption) (*SubmitSlashingResponse, error)
 	SubmitProposerSlashing(ctx context.Context, in *ProposerSlashing, opts ...grpc.CallOption) (*SubmitSlashingResponse, error)
+	GetGenesisValidatorsRoot(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GenesisValidatorsRoot, error)
 }
 
 type beaconChainClient struct {
@@ -3935,6 +3976,15 @@ func (c *beaconChainClient) SubmitProposerSlashing(ctx context.Context, in *Prop
 	return out, nil
 }
 
+func (c *beaconChainClient) GetGenesisValidatorsRoot(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*GenesisValidatorsRoot, error) {
+	out := new(GenesisValidatorsRoot)
+	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/GetGenesisValidatorsRoot", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // BeaconChainServer is the server API for BeaconChain service.
 type BeaconChainServer interface {
 	ListAttestations(context.Context, *ListAttestationsRequest) (*ListAttestationsResponse, error)
@@ -3959,6 +4009,7 @@ type BeaconChainServer interface {
 	StreamValidatorsInfo(BeaconChain_StreamValidatorsInfoServer) error
 	SubmitAttesterSlashing(context.Context, *AttesterSlashing) (*SubmitSlashingResponse, error)
 	SubmitProposerSlashing(context.Context, *ProposerSlashing) (*SubmitSlashingResponse, error)
+	GetGenesisValidatorsRoot(context.Context, *empty.Empty) (*GenesisValidatorsRoot, error)
 }
 
 func RegisterBeaconChainServer(s *grpc.Server, srv BeaconChainServer) {
@@ -4381,6 +4432,24 @@ func _BeaconChain_SubmitProposerSlashing_Handler(srv interface{}, ctx context.Co
 	return interceptor(ctx, in, info, handler)
 }
 
+func _BeaconChain_GetGenesisValidatorsRoot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(empty.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BeaconChainServer).GetGenesisValidatorsRoot(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/GetGenesisValidatorsRoot",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BeaconChainServer).GetGenesisValidatorsRoot(ctx, req.(*empty.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _BeaconChain_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "ethereum.eth.v1alpha1.BeaconChain",
 	HandlerType: (*BeaconChainServer)(nil),
@@ -4452,6 +4521,10 @@ var _BeaconChain_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "SubmitProposerSlashing",
 			Handler:    _BeaconChain_SubmitProposerSlashing_Handler,
+		},
+		{
+			MethodName: "GetGenesisValidatorsRoot",
+			Handler:    _BeaconChain_GetGenesisValidatorsRoot_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
