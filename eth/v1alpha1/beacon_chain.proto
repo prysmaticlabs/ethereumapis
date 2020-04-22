@@ -253,6 +253,13 @@ service BeaconChain {
             get: "/eth/v1alpha1/beacon/slashings/proposer/submit"
         };
     }
+
+    // Retrieve information about the genesis validators root for the chain.
+    rpc GetGenesisValidatorsRoot(google.protobuf.Empty) returns (GenesisValidatorsRoot) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/genesisvalidatorsroot"
+        };
+    }
 }
 
 // SetAction defines the type of action that should be applied to the keys in a validator change set.
