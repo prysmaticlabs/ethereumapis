@@ -33,6 +33,8 @@ http_archive(
     urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/1.6.0/rules_nodejs-1.6.0.tar.gz"],
 )
 
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
 git_repository(
     name = "com_google_protobuf",
     commit = "4cf5bfee9546101d98754d23ff378ff718ba8438",
