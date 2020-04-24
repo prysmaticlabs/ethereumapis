@@ -364,3 +364,9 @@ def go_deps():
         commit = "06015a5d84f9e4eefe2c21377ca678fa8f1a1b09",
         importpath = "github.com/ferranbt/fastssz",
     )
+    _maybe(
+        go_repository,
+        name = "com_github_prysmaticlabs_go_bitfield",
+        commit = "62c2aee7166951c456888f92237aee4303ba1b9d",
+        importpath = "github.com/prysmaticlabs/go-bitfield",
+    )
