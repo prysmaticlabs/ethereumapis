@@ -9,6 +9,13 @@
     // Explicitly set types settings so typescript doesn't auto-discover types.
     // If all types are discovered then all types need to be included as deps
     // or typescript may error out with TS2688: Cannot find type definition file for 'foo'.
-    "types": []
+    "types": [],
+    "baseUrl": ".",
+    "paths": {
+      "examples_javascript/*": [
+        "*",
+        "bazel-bin/*" // Enables referencing generated protos with absolute paths
+      ]
+    }
  }
 }
