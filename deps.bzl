@@ -370,3 +370,15 @@ def go_deps():
         commit = "62c2aee7166951c456888f92237aee4303ba1b9d",
         importpath = "github.com/prysmaticlabs/go-bitfield",
     )
+    _maybe(
+        go_repository,
+        name = "com_github_ghodss_yaml",
+        commit = "25d852aebe32c875e9c044af3eef9c7dc6bc777f",
+        importpath = "github.com/ghodss/yaml",
+    )
+    _maybe(
+        go_repository,
+        name = "in_gopkg_yaml_v2",
+        commit = "51d6538a90f86fe93ac480b35f37b2be17fef232",
+        importpath = "gopkg.in/yaml.v2",
+    )
