@@ -18,6 +18,7 @@ package ethereum.eth.v1alpha1;
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1alpha1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1;eth";
@@ -27,7 +28,7 @@ option java_package = "org.ethereum.eth.v1alpha1";
 option php_namespace = "Ethereum\\Eth\\v1alpha1";
 
 // Node service API
-// 
+//
 // Node service provides general information about the node itself, the services
 // it supports, chain information and node version.
 service Node {
@@ -52,11 +53,11 @@ service Node {
         };
     }
 
-    // Retrieve the list of services implemented and enabled by this node. 
-    // 
-    // Any service not present in this list may return UNIMPLEMENTED or 
-    // PERMISSION_DENIED. The server may also support fetching services by grpc 
-    // reflection. 
+    // Retrieve the list of services implemented and enabled by this node.
+    //
+    // Any service not present in this list may return UNIMPLEMENTED or
+    // PERMISSION_DENIED. The server may also support fetching services by grpc
+    // reflection.
     rpc ListImplementedServices(google.protobuf.Empty) returns (ImplementedServices) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/node/services"
@@ -84,6 +85,10 @@ message Genesis {
 
     // Address of the deposit contract in the Ethereum 1 chain.
     bytes deposit_contract_address = 2;
+
+    // Root of the genesis validators deposits; used for domain separation
+    // when signing data structures for this chain.
+    bytes genesis_validators_root = 3 [(gogoproto.moretags) = "ssz-size:\"32\""];
 }
 
 // Information about the node version.
