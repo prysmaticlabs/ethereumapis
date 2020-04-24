@@ -358,3 +358,9 @@ def go_deps():
         sum = "h1:VsBPFP1AI068pPrMxtb/S8Zkgf9xEmTLJjfM+P5UIEo=",
         version = "v2.2.0+incompatible",
     )
+    _maybe(
+        go_repository,
+        name = "com_github_ferranbt_fastssz",
+        commit = "06015a5d84f9e4eefe2c21377ca678fa8f1a1b09",
+        importpath = "github.com/ferranbt/fastssz",
+    )
