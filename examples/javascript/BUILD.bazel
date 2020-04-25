@@ -1,0 +1,110 @@
+load("@npm//http-server:index.bzl", "http_server")
+load("@npm_bazel_karma//:index.bzl", "karma_web_test_suite")
+load("@npm_bazel_labs//:index.bzl", "ts_proto_library")
+load("@npm_bazel_protractor//:index.bzl", "protractor_web_test_suite")
+load("@npm_bazel_rollup//:index.bzl", "rollup_bundle")
+load("@npm_bazel_terser//:index.bzl", "terser_minified")
+load("@npm_bazel_typescript//:index.bzl", "ts_config", "ts_devserver", "ts_library")
+
+ts_config(
+    name = "tsconfig-test",
+    src = "tsconfig-test.json",
+    deps = [":tsconfig.json"],
+)
+
+ts_library(
+    name = "test_lib",
+    testonly = True,
+    srcs = ["eth.spec.ts"],
+    tsconfig = "//:tsconfig-test",
+    deps = [
+        "@ethereumapis//eth/v1alpha1:ts_library",
+        "@npm//@types/jasmine",
+        "@npm//@types/node",
+    ],
+)
+
+karma_web_test_suite(
+    name = "test",
+    srcs = [
+        "@npm_bazel_labs//grpc_web:bootstrap_scripts",
+    ],
+    browsers = [
+        "@io_bazel_rules_webtesting//browsers:chromium-local",
+        "@io_bazel_rules_webtesting//browsers:firefox-local",
+    ],
+    tags = ["native"],
+    deps = ["test_lib"],
+)
+
+ts_library(
+    name = "app",
+    srcs = ["app.ts"],
+    deps = ["@ethereumapis//eth/v1alpha1:ts_library"],
+)
+
+ts_devserver(
+    name = "devserver",
+    entry_module = "examples_protocol_buffers/app",
+    scripts = ["@npm_bazel_labs//grpc_web:bootstrap_scripts"],
+    deps = [":app"],
+)
+
+# Test for production mode
+rollup_bundle(
+    name = "bundle",
+    config_file = "rollup.config.js",
+    entry_point = ":app.ts",
+    format = "iife",
+    deps = [
+        ":app",
+        "@npm//:node_modules",
+        "@npm//rollup-plugin-commonjs",
+        "@npm//rollup-plugin-node-resolve",
+    ],
+)
+
+terser_minified(
+    name = "bundle.min",
+    src = ":bundle",
+)
+
+http_server(
+    name = "prodserver",
+    data = [
+        "index.html",
+        ":bundle.min",
+    ],
+)
+
+ts_library(
+    name = "e2e",
+    testonly = 1,
+    srcs = ["app.e2e-spec.ts"],
+    tsconfig = ":tsconfig-test",
+    deps = [
+        "@npm//@types/jasmine",
+        "@npm//jasmine",
+        "@npm//protractor",
+    ],
+)
+
+protractor_web_test_suite(
+    name = "prodserver_test",
+    on_prepare = ":protractor.on-prepare.js",
+    server = "//:prodserver",
+    deps = [":e2e"],
+)
+
+protractor_web_test_suite(
+    name = "devserver_test",
+    on_prepare = ":protractor.on-prepare.js",
+    server = "//:devserver",
+    deps = [":e2e"],
+)
+
+# Just a dummy test so that we have a test target for //... on certain bazelci platforms with bazel_integration_test
+sh_test(
+    name = "dummy_test",
+    srcs = ["dummy_test.sh"],
+)

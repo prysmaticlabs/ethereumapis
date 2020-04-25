@@ -1,0 +1,27 @@
+{
+  "name": "ethereumapis",
+  "version": "1.0.0",
+  "description": "[![Build status](https://badge.buildkite.com/62be08099e9e228b165c2dba69c637eb9ca7a1ca95efd54b9f.svg?branch=master)](https://buildkite.com/prysmatic-labs/ethereum-apis) [![Discord](https://user-images.githubusercontent.com/7288322/34471967-1df7808a-efbb-11e7-9088-ed0b04151291.png)](https://discord.gg/KSA7rPr) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/prysmaticlabs/geth-sharding?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) [![ETH2.0_Spec_Version 0.10.0](https://img.shields.io/badge/ETH2.0%20Spec%20Version-v0.10.0-blue.svg)](https://github.com/ethereum/eth2.0-specs/releases/tag/v0.10.0)",
+  "main": "",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prysmaticlabs/ethereumapis.git"
+  },
+  "author": "Prysmatic Labs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/prysmaticlabs/ethereumapis/issues"
+  },
+  "homepage": "https://github.com/prysmaticlabs/ethereumapis#readme",
+  "devDependencies": {
+    "@bazel/labs": "^1.6.0",
+    "@bazel/typescript": "^1.6.0",
+    "typescript": "^3.8.3"
+  }
+}

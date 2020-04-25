@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "baseUrl": ".",
+      "paths": {
+        "ethereumapis/*": [
+          "*",
+          "bazel-bin/*" // Enables referencing generated protos with absolute paths
+        ]
+      }
+    }
+  }

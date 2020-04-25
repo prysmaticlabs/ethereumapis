@@ -1,4 +1,7 @@
-workspace(name = "prysmaticlabs_ethereumapis")
+workspace(
+    name = "ethereumapis",
+    managed_directories = {"@npm": ["node_modules"]},
+)
 
 ##############################################################################
 # Go
@@ -8,15 +11,62 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
     name = "io_bazel_rules_go",
-    urls = ["https://github.com/bazelbuild/rules_go/releases/download/0.18.5/rules_go-0.18.5.tar.gz"],
-    sha256 = "a82a352bffae6bee4e95f68a8d80a70e87f42c4741e6a448bec11998fcc82329",
+    sha256 = "7b9bbe3ea1fccb46dcfa6c3f3e29ba7ec740d8733370e21cdc8937467b4a4349",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.22.4/rules_go-v0.22.4.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.22.4/rules_go-v0.22.4.tar.gz",
+    ],
 )
 
 http_archive(
     name = "bazel_gazelle",
-    urls = ["https://github.com/bazelbuild/bazel-gazelle/releases/download/0.17.0/bazel-gazelle-0.17.0.tar.gz"],
-    sha256 = "3c681998538231a2d24d0c07ed5a7658cb72bfb5fd4bf9911157c0e9ac6a2687",
+    sha256 = "d8c45ee70ec39a57e7a05e5027c32b1576cc7f16d9dd37135b0eddde45cf1b10",
+    urls = [
+        "https://storage.googleapis.com/bazel-mirror/github.com/bazelbuild/bazel-gazelle/releases/download/v0.20.0/bazel-gazelle-v0.20.0.tar.gz",
+        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.20.0/bazel-gazelle-v0.20.0.tar.gz",
+    ],
 )
+
+http_archive(
+    name = "build_bazel_rules_nodejs",
+    sha256 = "f9e7b9f42ae202cc2d2ce6d698ccb49a9f7f7ea572a78fd451696d03ef2ee116",
+    urls = ["https://github.com/bazelbuild/rules_nodejs/releases/download/1.6.0/rules_nodejs-1.6.0.tar.gz"],
+)
+
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
+
+git_repository(
+    name = "com_google_protobuf",
+    commit = "4cf5bfee9546101d98754d23ff378ff718ba8438",
+    remote = "https://github.com/protocolbuffers/protobuf",
+    shallow_since = "1558721209 -0700",
+)
+
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+
+protobuf_deps()
+
+load("@build_bazel_rules_nodejs//:index.bzl", "node_repositories", "yarn_install")
+
+node_repositories(package_json = ["//:package.json"])
+
+yarn_install(
+    name = "npm",
+    package_json = "//:package.json",
+    yarn_lock = "//:yarn.lock",
+)
+
+load("@npm//:install_bazel_dependencies.bzl", "install_bazel_dependencies")
+
+install_bazel_dependencies()
+
+load("@npm_bazel_labs//:package.bzl", "npm_bazel_labs_dependencies")
+
+npm_bazel_labs_dependencies()
+
+load("@npm_bazel_typescript//:index.bzl", "ts_setup_workspace")
+
+ts_setup_workspace()
 
 load("@io_bazel_rules_go//go:deps.bzl", "go_rules_dependencies", "go_register_toolchains")
 
@@ -28,38 +78,6 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 
 gazelle_dependencies()
 
-go_repository(
-    name = "grpc_ecosystem_grpc_gateway",
-    commit = "50c55a9810a974dc5a9e7dd1a5c0d295d525f283",
-    importpath = "github.com/grpc-ecosystem/grpc-gateway",
-)
+load("//:deps.bzl", "ethereumapis_deps")
 
-go_repository(
-    name = "com_github_bazelbuild_buildtools",
-    commit = "eb1a85ca787f0f5f94ba66f41ee66fdfd4c49b70",
-    importpath = "github.com/bazelbuild/buildtools",
-)
-
-go_repository(
-    name = "com_github_ghodss_yaml",
-    commit = "25d852aebe32c875e9c044af3eef9c7dc6bc777f",
-    importpath = "github.com/ghodss/yaml",
-)
-
-go_repository(
-    name = "in_gopkg_yaml_v2",
-    commit = "51d6538a90f86fe93ac480b35f37b2be17fef232",
-    importpath = "gopkg.in/yaml.v2",
-)
-
-go_repository(
-    name = "com_github_ferranbt_fastssz",
-    commit = "06015a5d84f9e4eefe2c21377ca678fa8f1a1b09",
-    importpath = "github.com/ferranbt/fastssz",
-)
-
-go_repository(
-    name = "com_github_prysmaticlabs_go_bitfield",
-    commit = "62c2aee7166951c456888f92237aee4303ba1b9d",
-    importpath = "github.com/prysmaticlabs/go-bitfield",
-)
+ethereumapis_deps()
