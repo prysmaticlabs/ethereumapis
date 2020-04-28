@@ -84,6 +84,9 @@ The majority of field primative types for Ethereum are either `bytes` or `uint64
 
 For more details on JSON mapping for other types, view the relevent section in the [proto3 language guide](https://developers.google.com/protocol-buffers/docs/proto3#json).
 
+### Examples
+* [Simple client integration](https://github.com/prysmaticlabs/ethereumapis/examples/integration) 
+
 ### Helpful gRPC tooling and resources
 
 - [Awesome gRPC](https://github.com/grpc-ecosystem/awesome-grpc)
