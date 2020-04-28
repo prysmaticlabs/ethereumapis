@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	// try and connect to remote wallet
+	// try and connect
 	url := getRPCProvider()
 	conn, err := grpc.Dial(url, grpc.WithInsecure(), grpc.WithBlock())
 	if err != nil {
