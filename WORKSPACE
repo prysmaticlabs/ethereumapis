@@ -1,4 +1,4 @@
-workspace(name = "prysmaticlabs_ethereumapis")
+workspace(name = "com_github_prysmaticlabs_ethereumapis")
 
 ##############################################################################
 # Go
