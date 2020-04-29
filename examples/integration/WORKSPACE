@@ -1,4 +1,4 @@
-workspace(name = "com_github_prysmaticlabs_ethereumapis")
+workspace(name = "prysmaticlabs_ethereumapis_examples_integration")
 
 ##############################################################################
 # Go
@@ -28,6 +28,19 @@ load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 
 gazelle_dependencies()
 
-load("//tools:ethereumapi_dependencies.bzl", "ethereumapi_deps")
+################################
+## load ethereumapi dependencies
+################################
+local_repository(
+    name = "com_github_prysmaticlabs_ethereumapis",
+    path = "../../",
+)
+## replace with the below for your own project
+#go_repository(
+#    name = "com_github_prysmaticlabs_ethereumapis",
+#    commit = "<commit hash>",
+#    importpath = "github.com/prysmaticlabs/ethereumapis",
+#)
 
+load("@com_github_prysmaticlabs_ethereumapis//tools:ethereumapi_dependencies.bzl", "ethereumapi_deps")
 ethereumapi_deps()
