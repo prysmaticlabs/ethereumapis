@@ -617,6 +617,8 @@ message ActiveSetChanges {
 message ValidatorPerformanceRequest {
     // A list of 48 byte validator public keys.
     repeated bytes public_keys = 1;
+    // A list of validator indices to retrieve performance by their indices.
+    repeated uint64 indices = 2;
 }
 
 message ValidatorPerformanceResponse {
