@@ -54,7 +54,7 @@ service BeaconNodeValidator {
     // The duties consist of:
     //   Proposer - the validator that creates a beacon chain block.
     //   Attester — a validator that is part of a committee that needs to sign off on a beacon chain
-    rpc StreamDuties(stream DutiesRequest) returns (stream DutiesResponse) {}
+    rpc StreamDuties(DutiesRequest) returns (stream DutiesResponse) {}
 
     // DomainData fetches the current BLS signature domain version information from the
     // running beacon node's state. This information is used when validators sign
