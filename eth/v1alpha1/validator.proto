@@ -135,6 +135,16 @@ service BeaconNodeValidator {
         };
     }
 
+    // MultipleValidatorStatus returns a list of validator statuses on the current epoch.
+    // The request can specify a list of validator public keys.
+    //
+    // Returns a list of ValidatorStatusResponses.
+    rpc MultipleValidatorStatus(MultipleValidatorStatusRequest) returns (MultipleValidatorStatusResponse) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator/statuses"
+        };
+    }
+
     // Retrieves the latest valid beacon block to be proposed on the beacon chain.
     //
     // The server returns a new beacon block, without proposer signature, that can be
@@ -310,6 +320,16 @@ message ValidatorStatusResponse {
 
     // The position in the activation queue of pending validators.
     uint64 position_in_activation_queue = 5;
+}
+
+message MultipleValidatorStatusRequest {
+    // A list of 48 byte validator public key.
+    repeated bytes public_keys = 1 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
+}
+
+message MultipleValidatorStatusResponse {
+    // A list of ValidatorStatusResponses
+    repeated ValidatorStatusResponse statuses = 1;
 }
 
 message DutiesRequest {
