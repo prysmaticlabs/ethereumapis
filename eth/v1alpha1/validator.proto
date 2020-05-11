@@ -334,8 +334,6 @@ message MultipleValidatorStatusResponse {
     repeated bytes public_keys = 1 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
     // A list of ValidatorStatusResponses mapped 1-to-1 with the public keys.
     repeated ValidatorStatusResponse statuses = 2;
-    // A list of indices in the request where the validator status could not be determined.
-    repeated int64 missing_indices = 3;
 }
 
 message DutiesRequest {
