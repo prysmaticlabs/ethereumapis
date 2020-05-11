@@ -323,13 +323,15 @@ message ValidatorStatusResponse {
 }
 
 message MultipleValidatorStatusRequest {
-    // A list of 48 byte validator public key.
+    // A list of 48 byte validator public keys.
     repeated bytes public_keys = 1 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
 }
 
 message MultipleValidatorStatusResponse {
-    // A list of ValidatorStatusResponses
-    repeated ValidatorStatusResponse statuses = 1;
+    // A list of 48 byte validator public keys.
+    repeated bytes public_keys = 1 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
+    // A list of ValidatorStatusResponses mapped 1-to-1 with the public keys.
+    repeated ValidatorStatusResponse statuses = 2;
 }
 
 message DutiesRequest {
