@@ -71,7 +71,7 @@ message BeaconBlockBody {
     repeated ProposerSlashing proposer_slashings = 4 [(gogoproto.moretags) = "ssz-max:\"16\""];
 
     // At most MAX_ATTESTER_SLASHINGS.
-    repeated AttesterSlashing attester_slashings = 5 [(gogoproto.moretags) = "ssz-max:\"1\""];
+    repeated AttesterSlashing attester_slashings = 5 [(gogoproto.moretags) = "ssz-max:\"2\""];
 
     // At most MAX_ATTESTATIONS.
     repeated Attestation attestations = 6 [(gogoproto.moretags) = "ssz-max:\"128\""];
