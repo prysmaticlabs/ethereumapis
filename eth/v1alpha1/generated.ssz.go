@@ -1308,6 +1308,88 @@ func (a *Attestation) SizeSSZ() (size int) {
 	return
 }
 
+// MarshalSSZ ssz marshals the AggregateAttestationAndProof object
+func (a *AggregateAttestationAndProof) MarshalSSZ() ([]byte, error) {
+	buf := make([]byte, a.SizeSSZ())
+	return a.MarshalSSZTo(buf[:0])
+}
+
+// MarshalSSZTo ssz marshals the AggregateAttestationAndProof object to a target array
+func (a *AggregateAttestationAndProof) MarshalSSZTo(dst []byte) ([]byte, error) {
+	var err error
+	offset := int(108)
+
+	// Field (0) 'AggregatorIndex'
+	dst = ssz.MarshalUint64(dst, a.AggregatorIndex)
+
+	// Offset (1) 'Aggregate'
+	dst = ssz.WriteOffset(dst, offset)
+	if a.Aggregate == nil {
+		a.Aggregate = new(Attestation)
+	}
+	offset += a.Aggregate.SizeSSZ()
+
+	// Field (2) 'SelectionProof'
+	if dst, err = ssz.MarshalFixedBytes(dst, a.SelectionProof, 96); err != nil {
+		return nil, errMarshalFixedBytes
+	}
+
+	// Field (1) 'Aggregate'
+	if dst, err = a.Aggregate.MarshalSSZTo(dst); err != nil {
+		return nil, err
+	}
+
+	return dst, err
+}
+
+// UnmarshalSSZ ssz unmarshals the AggregateAttestationAndProof object
+func (a *AggregateAttestationAndProof) UnmarshalSSZ(buf []byte) error {
+	var err error
+	size := uint64(len(buf))
+	if size < 108 {
+		return errSize
+	}
+
+	tail := buf
+	var o1 uint64
+
+	// Field (0) 'AggregatorIndex'
+	a.AggregatorIndex = ssz.UnmarshallUint64(buf[0:8])
+
+	// Offset (1) 'Aggregate'
+	if o1 = ssz.ReadOffset(buf[8:12]); o1 > size {
+		return errOffset
+	}
+
+	// Field (2) 'SelectionProof'
+	a.SelectionProof = append(a.SelectionProof, buf[12:108]...)
+
+	// Field (1) 'Aggregate'
+	{
+		buf = tail[o1:]
+		if a.Aggregate == nil {
+			a.Aggregate = new(Attestation)
+		}
+		if err = a.Aggregate.UnmarshalSSZ(buf); err != nil {
+			return err
+		}
+	}
+	return err
+}
+
+// SizeSSZ returns the ssz encoded size in bytes for the AggregateAttestationAndProof object
+func (a *AggregateAttestationAndProof) SizeSSZ() (size int) {
+	size = 108
+
+	// Field (1) 'Aggregate'
+	if a.Aggregate == nil {
+		a.Aggregate = new(Attestation)
+	}
+	size += a.Aggregate.SizeSSZ()
+
+	return
+}
+
 // MarshalSSZ ssz marshals the AttestationData object
 func (a *AttestationData) MarshalSSZ() ([]byte, error) {
 	buf := make([]byte, a.SizeSSZ())

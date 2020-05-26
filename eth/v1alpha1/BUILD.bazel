@@ -55,7 +55,10 @@ ssz_gen_marshal(
     go_proto = ":go_proto",
     objs = [
         "Attestation",
+        "AttestationData",
+        "AggregateAttestationAndProof",
         "BeaconBlock",
+        "Checkpoint",
         "SignedBeaconBlock",
         "Validator",
         "BeaconBlockHeader",
