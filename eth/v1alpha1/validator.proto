@@ -255,7 +255,7 @@ message ValidatorActivationResponse {
         ValidatorStatusResponse status = 2;
 
         // The validators index in the beacon state.
-        bytes index = 3;
+        uint64 index = 3;
     }
     // A list of validator statuses mapped 1-to-1 with the public keys
     // in the request.
