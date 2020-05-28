@@ -10,6 +10,7 @@ import (
 	github_com_prysmaticlabs_go_bitfield "github.com/prysmaticlabs/go-bitfield"
 	io "io"
 	math "math"
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -21,7 +22,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type Attestation struct {
 	AggregationBits      github_com_prysmaticlabs_go_bitfield.Bitlist `protobuf:"bytes,1,opt,name=aggregation_bits,json=aggregationBits,proto3,casttype=github.com/prysmaticlabs/go-bitfield.Bitlist" json:"aggregation_bits,omitempty" ssz-max:"2048"`
@@ -46,7 +47,7 @@ func (m *Attestation) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return xxx_messageInfo_Attestation.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -109,7 +110,7 @@ func (m *AggregateAttestationAndProof) XXX_Marshal(b []byte, deterministic bool)
 		return xxx_messageInfo_AggregateAttestationAndProof.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -171,7 +172,7 @@ func (m *SignedAggregateAttestationAndProof) XXX_Marshal(b []byte, deterministic
 		return xxx_messageInfo_SignedAggregateAttestationAndProof.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -229,7 +230,7 @@ func (m *AttestationData) XXX_Marshal(b []byte, deterministic bool) ([]byte, err
 		return xxx_messageInfo_AttestationData.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -308,7 +309,7 @@ func (m *Crosslink) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Crosslink.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -384,7 +385,7 @@ func (m *Checkpoint) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Checkpoint.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -477,7 +478,7 @@ var fileDescriptor_7894c78397fc93a1 = []byte{
 func (m *Attestation) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -485,42 +486,52 @@ func (m *Attestation) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Attestation) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Attestation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.AggregationBits) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintAttestation(dAtA, i, uint64(len(m.AggregationBits)))
-		i += copy(dAtA[i:], m.AggregationBits)
-	}
-	if m.Data != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintAttestation(dAtA, i, uint64(m.Data.Size()))
-		n1, err := m.Data.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n1
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Signature) > 0 {
-		dAtA[i] = 0x1a
-		i++
+		i -= len(m.Signature)
+		copy(dAtA[i:], m.Signature)
 		i = encodeVarintAttestation(dAtA, i, uint64(len(m.Signature)))
-		i += copy(dAtA[i:], m.Signature)
+		i--
+		dAtA[i] = 0x1a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Data != nil {
+		{
+			size, err := m.Data.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintAttestation(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if len(m.AggregationBits) > 0 {
+		i -= len(m.AggregationBits)
+		copy(dAtA[i:], m.AggregationBits)
+		i = encodeVarintAttestation(dAtA, i, uint64(len(m.AggregationBits)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *AggregateAttestationAndProof) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -528,41 +539,50 @@ func (m *AggregateAttestationAndProof) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AggregateAttestationAndProof) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AggregateAttestationAndProof) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.AggregatorIndex != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintAttestation(dAtA, i, uint64(m.AggregatorIndex))
-	}
-	if len(m.SelectionProof) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintAttestation(dAtA, i, uint64(len(m.SelectionProof)))
-		i += copy(dAtA[i:], m.SelectionProof)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Aggregate != nil {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintAttestation(dAtA, i, uint64(m.Aggregate.Size()))
-		n2, err := m.Aggregate.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Aggregate.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintAttestation(dAtA, i, uint64(size))
 		}
-		i += n2
+		i--
+		dAtA[i] = 0x1a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.SelectionProof) > 0 {
+		i -= len(m.SelectionProof)
+		copy(dAtA[i:], m.SelectionProof)
+		i = encodeVarintAttestation(dAtA, i, uint64(len(m.SelectionProof)))
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if m.AggregatorIndex != 0 {
+		i = encodeVarintAttestation(dAtA, i, uint64(m.AggregatorIndex))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *SignedAggregateAttestationAndProof) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -570,36 +590,45 @@ func (m *SignedAggregateAttestationAndProof) Marshal() (dAtA []byte, err error) 
 }
 
 func (m *SignedAggregateAttestationAndProof) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SignedAggregateAttestationAndProof) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Message != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintAttestation(dAtA, i, uint64(m.Message.Size()))
-		n3, err := m.Message.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n3
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Signature) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.Signature)
+		copy(dAtA[i:], m.Signature)
 		i = encodeVarintAttestation(dAtA, i, uint64(len(m.Signature)))
-		i += copy(dAtA[i:], m.Signature)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Message != nil {
+		{
+			size, err := m.Message.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintAttestation(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *AttestationData) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -607,56 +636,67 @@ func (m *AttestationData) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AttestationData) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AttestationData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Slot != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintAttestation(dAtA, i, uint64(m.Slot))
-	}
-	if m.CommitteeIndex != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintAttestation(dAtA, i, uint64(m.CommitteeIndex))
-	}
-	if len(m.BeaconBlockRoot) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintAttestation(dAtA, i, uint64(len(m.BeaconBlockRoot)))
-		i += copy(dAtA[i:], m.BeaconBlockRoot)
-	}
-	if m.Source != nil {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintAttestation(dAtA, i, uint64(m.Source.Size()))
-		n4, err := m.Source.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n4
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Target != nil {
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintAttestation(dAtA, i, uint64(m.Target.Size()))
-		n5, err := m.Target.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Target.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintAttestation(dAtA, i, uint64(size))
 		}
-		i += n5
+		i--
+		dAtA[i] = 0x2a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Source != nil {
+		{
+			size, err := m.Source.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintAttestation(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
 	}
-	return i, nil
+	if len(m.BeaconBlockRoot) > 0 {
+		i -= len(m.BeaconBlockRoot)
+		copy(dAtA[i:], m.BeaconBlockRoot)
+		i = encodeVarintAttestation(dAtA, i, uint64(len(m.BeaconBlockRoot)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.CommitteeIndex != 0 {
+		i = encodeVarintAttestation(dAtA, i, uint64(m.CommitteeIndex))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Slot != 0 {
+		i = encodeVarintAttestation(dAtA, i, uint64(m.Slot))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *Crosslink) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -664,47 +704,55 @@ func (m *Crosslink) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Crosslink) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Crosslink) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Shard != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintAttestation(dAtA, i, uint64(m.Shard))
-	}
-	if len(m.ParentRoot) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintAttestation(dAtA, i, uint64(len(m.ParentRoot)))
-		i += copy(dAtA[i:], m.ParentRoot)
-	}
-	if m.StartEpoch != 0 {
-		dAtA[i] = 0x18
-		i++
-		i = encodeVarintAttestation(dAtA, i, uint64(m.StartEpoch))
-	}
-	if m.EndEpoch != 0 {
-		dAtA[i] = 0x20
-		i++
-		i = encodeVarintAttestation(dAtA, i, uint64(m.EndEpoch))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.DataRoot) > 0 {
-		dAtA[i] = 0x2a
-		i++
+		i -= len(m.DataRoot)
+		copy(dAtA[i:], m.DataRoot)
 		i = encodeVarintAttestation(dAtA, i, uint64(len(m.DataRoot)))
-		i += copy(dAtA[i:], m.DataRoot)
+		i--
+		dAtA[i] = 0x2a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.EndEpoch != 0 {
+		i = encodeVarintAttestation(dAtA, i, uint64(m.EndEpoch))
+		i--
+		dAtA[i] = 0x20
 	}
-	return i, nil
+	if m.StartEpoch != 0 {
+		i = encodeVarintAttestation(dAtA, i, uint64(m.StartEpoch))
+		i--
+		dAtA[i] = 0x18
+	}
+	if len(m.ParentRoot) > 0 {
+		i -= len(m.ParentRoot)
+		copy(dAtA[i:], m.ParentRoot)
+		i = encodeVarintAttestation(dAtA, i, uint64(len(m.ParentRoot)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Shard != 0 {
+		i = encodeVarintAttestation(dAtA, i, uint64(m.Shard))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *Checkpoint) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -712,35 +760,44 @@ func (m *Checkpoint) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Checkpoint) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Checkpoint) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Epoch != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintAttestation(dAtA, i, uint64(m.Epoch))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Root) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.Root)
+		copy(dAtA[i:], m.Root)
 		i = encodeVarintAttestation(dAtA, i, uint64(len(m.Root)))
-		i += copy(dAtA[i:], m.Root)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Epoch != 0 {
+		i = encodeVarintAttestation(dAtA, i, uint64(m.Epoch))
+		i--
+		dAtA[i] = 0x8
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintAttestation(dAtA []byte, offset int, v uint64) int {
+	offset -= sovAttestation(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
 func (m *Attestation) Size() (n int) {
 	if m == nil {
@@ -888,14 +945,7 @@ func (m *Checkpoint) Size() (n int) {
 }
 
 func sovAttestation(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozAttestation(x uint64) (n int) {
 	return sovAttestation(uint64((x << 1) ^ uint64((int64(x) >> 63))))
@@ -1812,6 +1862,7 @@ func (m *Checkpoint) Unmarshal(dAtA []byte) error {
 func skipAttestation(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -1843,10 +1894,8 @@ func skipAttestation(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -1867,55 +1916,30 @@ func skipAttestation(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthAttestation
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthAttestation
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowAttestation
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipAttestation(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthAttestation
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupAttestation
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthAttestation
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthAttestation = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowAttestation   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthAttestation        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowAttestation          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupAttestation = fmt.Errorf("proto: unexpected end of group")
 )
