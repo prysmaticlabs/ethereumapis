@@ -10,7 +10,7 @@ bazel query 'kind(go_library, //...) union kind(go_proto_library, //...)' | xarg
 file_list=()
 while IFS= read -d $'\0' -r file ; do
     file_list=("${file_list[@]}" "$file")
-done < <(find -L $(bazel info bazel-bin)/eth -type f -name "*pb.go" -print0)
+done < <(find -L $(bazel info bazel-bin)/eth -type f -regextype sed -regex ".*pb\.\(gw\.\)\?go$" -print0)
 
 arraylength=${#file_list[@]}
 searchstring="/ethereumapis/"
