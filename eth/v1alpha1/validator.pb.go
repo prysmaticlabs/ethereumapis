@@ -12,11 +12,8 @@ import (
 	types "github.com/gogo/protobuf/types"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
 	io "io"
 	math "math"
-	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -28,7 +25,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
 type ValidatorStatus int32
 
@@ -92,7 +89,7 @@ func (m *DomainRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return xxx_messageInfo_DomainRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -146,7 +143,7 @@ func (m *DomainResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return xxx_messageInfo_DomainResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -193,7 +190,7 @@ func (m *ValidatorActivationRequest) XXX_Marshal(b []byte, deterministic bool) (
 		return xxx_messageInfo_ValidatorActivationRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -240,7 +237,7 @@ func (m *ValidatorActivationResponse) XXX_Marshal(b []byte, deterministic bool) 
 		return xxx_messageInfo_ValidatorActivationResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -289,7 +286,7 @@ func (m *ValidatorActivationResponse_Status) XXX_Marshal(b []byte, deterministic
 		return xxx_messageInfo_ValidatorActivationResponse_Status.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -352,7 +349,7 @@ func (m *ChainStartResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, 
 		return xxx_messageInfo_ChainStartResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -407,7 +404,7 @@ func (m *SyncedResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return xxx_messageInfo_SyncedResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -461,7 +458,7 @@ func (m *ValidatorIndexRequest) XXX_Marshal(b []byte, deterministic bool) ([]byt
 		return xxx_messageInfo_ValidatorIndexRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -508,7 +505,7 @@ func (m *ValidatorIndexResponse) XXX_Marshal(b []byte, deterministic bool) ([]by
 		return xxx_messageInfo_ValidatorIndexResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -555,7 +552,7 @@ func (m *ValidatorStatusRequest) XXX_Marshal(b []byte, deterministic bool) ([]by
 		return xxx_messageInfo_ValidatorStatusRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -606,7 +603,7 @@ func (m *ValidatorStatusResponse) XXX_Marshal(b []byte, deterministic bool) ([]b
 		return xxx_messageInfo_ValidatorStatusResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -682,7 +679,7 @@ func (m *MultipleValidatorStatusRequest) XXX_Marshal(b []byte, deterministic boo
 		return xxx_messageInfo_MultipleValidatorStatusRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -738,7 +735,7 @@ func (m *MultipleValidatorStatusResponse) XXX_Marshal(b []byte, deterministic bo
 		return xxx_messageInfo_MultipleValidatorStatusResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -800,7 +797,7 @@ func (m *DutiesRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return xxx_messageInfo_DutiesRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -856,7 +853,7 @@ func (m *DutiesResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return xxx_messageInfo_DutiesResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -924,7 +921,7 @@ func (m *DutiesResponse_Duty) XXX_Marshal(b []byte, deterministic bool) ([]byte,
 		return xxx_messageInfo_DutiesResponse_Duty.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1015,7 +1012,7 @@ func (m *BlockRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)
 		return xxx_messageInfo_BlockRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1076,7 +1073,7 @@ func (m *ProposeResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, err
 		return xxx_messageInfo_ProposeResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1124,7 +1121,7 @@ func (m *AttestationDataRequest) XXX_Marshal(b []byte, deterministic bool) ([]by
 		return xxx_messageInfo_AttestationDataRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1178,7 +1175,7 @@ func (m *AttestResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, erro
 		return xxx_messageInfo_AttestResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1228,7 +1225,7 @@ func (m *AggregateSelectionRequest) XXX_Marshal(b []byte, deterministic bool) ([
 		return xxx_messageInfo_AggregateSelectionRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1296,7 +1293,7 @@ func (m *AggregateSelectionResponse) XXX_Marshal(b []byte, deterministic bool) (
 		return xxx_messageInfo_AggregateSelectionResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1343,7 +1340,7 @@ func (m *SignedAggregateSubmitRequest) XXX_Marshal(b []byte, deterministic bool)
 		return xxx_messageInfo_SignedAggregateSubmitRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1390,7 +1387,7 @@ func (m *SignedAggregateSubmitResponse) XXX_Marshal(b []byte, deterministic bool
 		return xxx_messageInfo_SignedAggregateSubmitResponse.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1439,7 +1436,7 @@ func (m *CommitteeSubnetsSubscribeRequest) XXX_Marshal(b []byte, deterministic b
 		return xxx_messageInfo_CommitteeSubnetsSubscribeRequest.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1507,7 +1504,7 @@ func (m *Validator) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Validator.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1605,7 +1602,7 @@ func (m *ValidatorParticipation) XXX_Marshal(b []byte, deterministic bool) ([]by
 		return xxx_messageInfo_ValidatorParticipation.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -1672,7 +1669,7 @@ func (m *ValidatorInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return xxx_messageInfo_ValidatorInfo.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
+		n, err := m.MarshalTo(b)
 		if err != nil {
 			return nil, err
 		}
@@ -2223,62 +2220,6 @@ type BeaconNodeValidatorServer interface {
 	SubscribeCommitteeSubnets(context.Context, *CommitteeSubnetsSubscribeRequest) (*types.Empty, error)
 }
 
-// UnimplementedBeaconNodeValidatorServer can be embedded to have forward compatible implementations.
-type UnimplementedBeaconNodeValidatorServer struct {
-}
-
-func (*UnimplementedBeaconNodeValidatorServer) GetDuties(ctx context.Context, req *DutiesRequest) (*DutiesResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetDuties not implemented")
-}
-func (*UnimplementedBeaconNodeValidatorServer) StreamDuties(req *DutiesRequest, srv BeaconNodeValidator_StreamDutiesServer) error {
-	return status.Errorf(codes.Unimplemented, "method StreamDuties not implemented")
-}
-func (*UnimplementedBeaconNodeValidatorServer) DomainData(ctx context.Context, req *DomainRequest) (*DomainResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DomainData not implemented")
-}
-func (*UnimplementedBeaconNodeValidatorServer) WaitForChainStart(req *types.Empty, srv BeaconNodeValidator_WaitForChainStartServer) error {
-	return status.Errorf(codes.Unimplemented, "method WaitForChainStart not implemented")
-}
-func (*UnimplementedBeaconNodeValidatorServer) WaitForSynced(req *types.Empty, srv BeaconNodeValidator_WaitForSyncedServer) error {
-	return status.Errorf(codes.Unimplemented, "method WaitForSynced not implemented")
-}
-func (*UnimplementedBeaconNodeValidatorServer) WaitForActivation(req *ValidatorActivationRequest, srv BeaconNodeValidator_WaitForActivationServer) error {
-	return status.Errorf(codes.Unimplemented, "method WaitForActivation not implemented")
-}
-func (*UnimplementedBeaconNodeValidatorServer) ValidatorIndex(ctx context.Context, req *ValidatorIndexRequest) (*ValidatorIndexResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ValidatorIndex not implemented")
-}
-func (*UnimplementedBeaconNodeValidatorServer) ValidatorStatus(ctx context.Context, req *ValidatorStatusRequest) (*ValidatorStatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ValidatorStatus not implemented")
-}
-func (*UnimplementedBeaconNodeValidatorServer) MultipleValidatorStatus(ctx context.Context, req *MultipleValidatorStatusRequest) (*MultipleValidatorStatusResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method MultipleValidatorStatus not implemented")
-}
-func (*UnimplementedBeaconNodeValidatorServer) GetBlock(ctx context.Context, req *BlockRequest) (*BeaconBlock, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetBlock not implemented")
-}
-func (*UnimplementedBeaconNodeValidatorServer) ProposeBlock(ctx context.Context, req *SignedBeaconBlock) (*ProposeResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ProposeBlock not implemented")
-}
-func (*UnimplementedBeaconNodeValidatorServer) GetAttestationData(ctx context.Context, req *AttestationDataRequest) (*AttestationData, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetAttestationData not implemented")
-}
-func (*UnimplementedBeaconNodeValidatorServer) ProposeAttestation(ctx context.Context, req *Attestation) (*AttestResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ProposeAttestation not implemented")
-}
-func (*UnimplementedBeaconNodeValidatorServer) SubmitAggregateSelectionProof(ctx context.Context, req *AggregateSelectionRequest) (*AggregateSelectionResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SubmitAggregateSelectionProof not implemented")
-}
-func (*UnimplementedBeaconNodeValidatorServer) SubmitSignedAggregateSelectionProof(ctx context.Context, req *SignedAggregateSubmitRequest) (*SignedAggregateSubmitResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SubmitSignedAggregateSelectionProof not implemented")
-}
-func (*UnimplementedBeaconNodeValidatorServer) ProposeExit(ctx context.Context, req *SignedVoluntaryExit) (*types.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ProposeExit not implemented")
-}
-func (*UnimplementedBeaconNodeValidatorServer) SubscribeCommitteeSubnets(ctx context.Context, req *CommitteeSubnetsSubscribeRequest) (*types.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SubscribeCommitteeSubnets not implemented")
-}
-
 func RegisterBeaconNodeValidatorServer(s *grpc.Server, srv BeaconNodeValidatorServer) {
 	s.RegisterService(&_BeaconNodeValidator_serviceDesc, srv)
 }
@@ -2686,7 +2627,7 @@ var _BeaconNodeValidator_serviceDesc = grpc.ServiceDesc{
 func (m *DomainRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -2694,38 +2635,31 @@ func (m *DomainRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *DomainRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *DomainRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Epoch != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.Epoch))
 	}
 	if len(m.Domain) > 0 {
-		i -= len(m.Domain)
-		copy(dAtA[i:], m.Domain)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.Domain)))
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.Domain)))
+		i += copy(dAtA[i:], m.Domain)
 	}
-	if m.Epoch != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Epoch))
-		i--
-		dAtA[i] = 0x8
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *DomainResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -2733,33 +2667,26 @@ func (m *DomainResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *DomainResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *DomainResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.SignatureDomain) > 0 {
-		i -= len(m.SignatureDomain)
-		copy(dAtA[i:], m.SignatureDomain)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.SignatureDomain)))
-		i--
 		dAtA[i] = 0xa
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.SignatureDomain)))
+		i += copy(dAtA[i:], m.SignatureDomain)
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *ValidatorActivationRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -2767,35 +2694,28 @@ func (m *ValidatorActivationRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ValidatorActivationRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ValidatorActivationRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.PublicKeys) > 0 {
-		for iNdEx := len(m.PublicKeys) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.PublicKeys[iNdEx])
-			copy(dAtA[i:], m.PublicKeys[iNdEx])
-			i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKeys[iNdEx])))
-			i--
+		for _, b := range m.PublicKeys {
 			dAtA[i] = 0xa
+			i++
+			i = encodeVarintValidator(dAtA, i, uint64(len(b)))
+			i += copy(dAtA[i:], b)
 		}
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *ValidatorActivationResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -2803,40 +2723,32 @@ func (m *ValidatorActivationResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ValidatorActivationResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ValidatorActivationResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.Statuses) > 0 {
-		for iNdEx := len(m.Statuses) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Statuses[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintValidator(dAtA, i, uint64(size))
-			}
-			i--
+		for _, msg := range m.Statuses {
 			dAtA[i] = 0xa
+			i++
+			i = encodeVarintValidator(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
 		}
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *ValidatorActivationResponse_Status) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -2844,50 +2756,41 @@ func (m *ValidatorActivationResponse_Status) Marshal() (dAtA []byte, err error) 
 }
 
 func (m *ValidatorActivationResponse_Status) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ValidatorActivationResponse_Status) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Index != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Index))
-		i--
-		dAtA[i] = 0x18
+	if len(m.PublicKey) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKey)))
+		i += copy(dAtA[i:], m.PublicKey)
 	}
 	if m.Status != nil {
-		{
-			size, err := m.Status.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintValidator(dAtA, i, uint64(size))
-		}
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.Status.Size()))
+		n1, err := m.Status.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n1
 	}
-	if len(m.PublicKey) > 0 {
-		i -= len(m.PublicKey)
-		copy(dAtA[i:], m.PublicKey)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKey)))
-		i--
-		dAtA[i] = 0xa
+	if m.Index != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.Index))
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *ChainStartResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -2895,41 +2798,35 @@ func (m *ChainStartResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ChainStartResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ChainStartResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.GenesisTime != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.GenesisTime))
-		i--
-		dAtA[i] = 0x10
-	}
 	if m.Started {
-		i--
+		dAtA[i] = 0x8
+		i++
 		if m.Started {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i--
-		dAtA[i] = 0x8
+		i++
 	}
-	return len(dAtA) - i, nil
+	if m.GenesisTime != 0 {
+		dAtA[i] = 0x10
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.GenesisTime))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *SyncedResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -2937,41 +2834,35 @@ func (m *SyncedResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SyncedResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *SyncedResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.GenesisTime != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.GenesisTime))
-		i--
-		dAtA[i] = 0x10
-	}
 	if m.Synced {
-		i--
+		dAtA[i] = 0x8
+		i++
 		if m.Synced {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i--
-		dAtA[i] = 0x8
+		i++
 	}
-	return len(dAtA) - i, nil
+	if m.GenesisTime != 0 {
+		dAtA[i] = 0x10
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.GenesisTime))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *ValidatorIndexRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -2979,33 +2870,26 @@ func (m *ValidatorIndexRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ValidatorIndexRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ValidatorIndexRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.PublicKey) > 0 {
-		i -= len(m.PublicKey)
-		copy(dAtA[i:], m.PublicKey)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKey)))
-		i--
 		dAtA[i] = 0xa
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKey)))
+		i += copy(dAtA[i:], m.PublicKey)
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *ValidatorIndexResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3013,31 +2897,25 @@ func (m *ValidatorIndexResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ValidatorIndexResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ValidatorIndexResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.Index != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Index))
-		i--
 		dAtA[i] = 0x8
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.Index))
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *ValidatorStatusRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3045,33 +2923,26 @@ func (m *ValidatorStatusRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ValidatorStatusRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ValidatorStatusRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.PublicKey) > 0 {
-		i -= len(m.PublicKey)
-		copy(dAtA[i:], m.PublicKey)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKey)))
-		i--
 		dAtA[i] = 0xa
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKey)))
+		i += copy(dAtA[i:], m.PublicKey)
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *ValidatorStatusResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3079,51 +2950,45 @@ func (m *ValidatorStatusResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ValidatorStatusResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ValidatorStatusResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.PositionInActivationQueue != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.PositionInActivationQueue))
-		i--
-		dAtA[i] = 0x28
-	}
-	if m.ActivationEpoch != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.ActivationEpoch))
-		i--
-		dAtA[i] = 0x20
-	}
-	if m.DepositInclusionSlot != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.DepositInclusionSlot))
-		i--
-		dAtA[i] = 0x18
+	if m.Status != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.Status))
 	}
 	if m.Eth1DepositBlockNumber != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Eth1DepositBlockNumber))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.Eth1DepositBlockNumber))
 	}
-	if m.Status != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Status))
-		i--
-		dAtA[i] = 0x8
+	if m.DepositInclusionSlot != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.DepositInclusionSlot))
 	}
-	return len(dAtA) - i, nil
+	if m.ActivationEpoch != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.ActivationEpoch))
+	}
+	if m.PositionInActivationQueue != 0 {
+		dAtA[i] = 0x28
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.PositionInActivationQueue))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *MultipleValidatorStatusRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3131,18 +2996,17 @@ func (m *MultipleValidatorStatusRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *MultipleValidatorStatusRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *MultipleValidatorStatusRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.PublicKeys) > 0 {
+		for _, b := range m.PublicKeys {
+			dAtA[i] = 0xa
+			i++
+			i = encodeVarintValidator(dAtA, i, uint64(len(b)))
+			i += copy(dAtA[i:], b)
+		}
 	}
 	if len(m.Indices) > 0 {
 		dAtA3 := make([]byte, len(m.Indices)*10)
@@ -3157,28 +3021,21 @@ func (m *MultipleValidatorStatusRequest) MarshalToSizedBuffer(dAtA []byte) (int,
 			dAtA3[j2] = uint8(num)
 			j2++
 		}
-		i -= j2
-		copy(dAtA[i:], dAtA3[:j2])
-		i = encodeVarintValidator(dAtA, i, uint64(j2))
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(j2))
+		i += copy(dAtA[i:], dAtA3[:j2])
 	}
-	if len(m.PublicKeys) > 0 {
-		for iNdEx := len(m.PublicKeys) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.PublicKeys[iNdEx])
-			copy(dAtA[i:], m.PublicKeys[iNdEx])
-			i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKeys[iNdEx])))
-			i--
-			dAtA[i] = 0xa
-		}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *MultipleValidatorStatusResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3186,18 +3043,29 @@ func (m *MultipleValidatorStatusResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *MultipleValidatorStatusResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *MultipleValidatorStatusResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.PublicKeys) > 0 {
+		for _, b := range m.PublicKeys {
+			dAtA[i] = 0xa
+			i++
+			i = encodeVarintValidator(dAtA, i, uint64(len(b)))
+			i += copy(dAtA[i:], b)
+		}
+	}
+	if len(m.Statuses) > 0 {
+		for _, msg := range m.Statuses {
+			dAtA[i] = 0x12
+			i++
+			i = encodeVarintValidator(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
 	}
 	if len(m.Indices) > 0 {
 		dAtA5 := make([]byte, len(m.Indices)*10)
@@ -3211,42 +3079,21 @@ func (m *MultipleValidatorStatusResponse) MarshalToSizedBuffer(dAtA []byte) (int
 			dAtA5[j4] = uint8(num)
 			j4++
 		}
-		i -= j4
-		copy(dAtA[i:], dAtA5[:j4])
-		i = encodeVarintValidator(dAtA, i, uint64(j4))
-		i--
 		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(j4))
+		i += copy(dAtA[i:], dAtA5[:j4])
 	}
-	if len(m.Statuses) > 0 {
-		for iNdEx := len(m.Statuses) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Statuses[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintValidator(dAtA, i, uint64(size))
-			}
-			i--
-			dAtA[i] = 0x12
-		}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if len(m.PublicKeys) > 0 {
-		for iNdEx := len(m.PublicKeys) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.PublicKeys[iNdEx])
-			copy(dAtA[i:], m.PublicKeys[iNdEx])
-			i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKeys[iNdEx])))
-			i--
-			dAtA[i] = 0xa
-		}
-	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *DutiesRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3254,40 +3101,33 @@ func (m *DutiesRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *DutiesRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *DutiesRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Epoch != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.Epoch))
 	}
 	if len(m.PublicKeys) > 0 {
-		for iNdEx := len(m.PublicKeys) - 1; iNdEx >= 0; iNdEx-- {
-			i -= len(m.PublicKeys[iNdEx])
-			copy(dAtA[i:], m.PublicKeys[iNdEx])
-			i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKeys[iNdEx])))
-			i--
+		for _, b := range m.PublicKeys {
 			dAtA[i] = 0x12
+			i++
+			i = encodeVarintValidator(dAtA, i, uint64(len(b)))
+			i += copy(dAtA[i:], b)
 		}
 	}
-	if m.Epoch != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Epoch))
-		i--
-		dAtA[i] = 0x8
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *DutiesResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3295,68 +3135,56 @@ func (m *DutiesResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *DutiesResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *DutiesResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.NextEpochDuties) > 0 {
-		for iNdEx := len(m.NextEpochDuties) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.NextEpochDuties[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintValidator(dAtA, i, uint64(size))
+	if len(m.Duties) > 0 {
+		for _, msg := range m.Duties {
+			dAtA[i] = 0xa
+			i++
+			i = encodeVarintValidator(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
 			}
-			i--
-			dAtA[i] = 0x1a
+			i += n
 		}
 	}
 	if len(m.CurrentEpochDuties) > 0 {
-		for iNdEx := len(m.CurrentEpochDuties) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.CurrentEpochDuties[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintValidator(dAtA, i, uint64(size))
-			}
-			i--
+		for _, msg := range m.CurrentEpochDuties {
 			dAtA[i] = 0x12
-		}
-	}
-	if len(m.Duties) > 0 {
-		for iNdEx := len(m.Duties) - 1; iNdEx >= 0; iNdEx-- {
-			{
-				size, err := m.Duties[iNdEx].MarshalToSizedBuffer(dAtA[:i])
-				if err != nil {
-					return 0, err
-				}
-				i -= size
-				i = encodeVarintValidator(dAtA, i, uint64(size))
+			i++
+			i = encodeVarintValidator(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
 			}
-			i--
-			dAtA[i] = 0xa
+			i += n
 		}
 	}
-	return len(dAtA) - i, nil
+	if len(m.NextEpochDuties) > 0 {
+		for _, msg := range m.NextEpochDuties {
+			dAtA[i] = 0x1a
+			i++
+			i = encodeVarintValidator(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *DutiesResponse_Duty) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3364,40 +3192,14 @@ func (m *DutiesResponse_Duty) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *DutiesResponse_Duty) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *DutiesResponse_Duty) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.ValidatorIndex != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.ValidatorIndex))
-		i--
-		dAtA[i] = 0x38
-	}
-	if m.Status != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Status))
-		i--
-		dAtA[i] = 0x30
-	}
-	if len(m.PublicKey) > 0 {
-		i -= len(m.PublicKey)
-		copy(dAtA[i:], m.PublicKey)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKey)))
-		i--
-		dAtA[i] = 0x2a
-	}
-	if len(m.ProposerSlots) > 0 {
-		dAtA7 := make([]byte, len(m.ProposerSlots)*10)
+	if len(m.Committee) > 0 {
+		dAtA7 := make([]byte, len(m.Committee)*10)
 		var j6 int
-		for _, num := range m.ProposerSlots {
+		for _, num := range m.Committee {
 			for num >= 1<<7 {
 				dAtA7[j6] = uint8(uint64(num)&0x7f | 0x80)
 				num >>= 7
@@ -3406,26 +3208,25 @@ func (m *DutiesResponse_Duty) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA7[j6] = uint8(num)
 			j6++
 		}
-		i -= j6
-		copy(dAtA[i:], dAtA7[:j6])
+		dAtA[i] = 0xa
+		i++
 		i = encodeVarintValidator(dAtA, i, uint64(j6))
-		i--
-		dAtA[i] = 0x22
-	}
-	if m.AttesterSlot != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.AttesterSlot))
-		i--
-		dAtA[i] = 0x18
+		i += copy(dAtA[i:], dAtA7[:j6])
 	}
 	if m.CommitteeIndex != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.CommitteeIndex))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.CommitteeIndex))
 	}
-	if len(m.Committee) > 0 {
-		dAtA9 := make([]byte, len(m.Committee)*10)
+	if m.AttesterSlot != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.AttesterSlot))
+	}
+	if len(m.ProposerSlots) > 0 {
+		dAtA9 := make([]byte, len(m.ProposerSlots)*10)
 		var j8 int
-		for _, num := range m.Committee {
+		for _, num := range m.ProposerSlots {
 			for num >= 1<<7 {
 				dAtA9[j8] = uint8(uint64(num)&0x7f | 0x80)
 				num >>= 7
@@ -3434,19 +3235,37 @@ func (m *DutiesResponse_Duty) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 			dAtA9[j8] = uint8(num)
 			j8++
 		}
-		i -= j8
-		copy(dAtA[i:], dAtA9[:j8])
+		dAtA[i] = 0x22
+		i++
 		i = encodeVarintValidator(dAtA, i, uint64(j8))
-		i--
-		dAtA[i] = 0xa
+		i += copy(dAtA[i:], dAtA9[:j8])
 	}
-	return len(dAtA) - i, nil
+	if len(m.PublicKey) > 0 {
+		dAtA[i] = 0x2a
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKey)))
+		i += copy(dAtA[i:], m.PublicKey)
+	}
+	if m.Status != 0 {
+		dAtA[i] = 0x30
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.Status))
+	}
+	if m.ValidatorIndex != 0 {
+		dAtA[i] = 0x38
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.ValidatorIndex))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *BlockRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3454,45 +3273,37 @@ func (m *BlockRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *BlockRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *BlockRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.Graffiti) > 0 {
-		i -= len(m.Graffiti)
-		copy(dAtA[i:], m.Graffiti)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.Graffiti)))
-		i--
-		dAtA[i] = 0x1a
+	if m.Slot != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.Slot))
 	}
 	if len(m.RandaoReveal) > 0 {
-		i -= len(m.RandaoReveal)
-		copy(dAtA[i:], m.RandaoReveal)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.RandaoReveal)))
-		i--
 		dAtA[i] = 0x12
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.RandaoReveal)))
+		i += copy(dAtA[i:], m.RandaoReveal)
 	}
-	if m.Slot != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Slot))
-		i--
-		dAtA[i] = 0x8
+	if len(m.Graffiti) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.Graffiti)))
+		i += copy(dAtA[i:], m.Graffiti)
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *ProposeResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3500,33 +3311,26 @@ func (m *ProposeResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ProposeResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ProposeResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.BlockRoot) > 0 {
-		i -= len(m.BlockRoot)
-		copy(dAtA[i:], m.BlockRoot)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.BlockRoot)))
-		i--
 		dAtA[i] = 0xa
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.BlockRoot)))
+		i += copy(dAtA[i:], m.BlockRoot)
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *AttestationDataRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3534,36 +3338,30 @@ func (m *AttestationDataRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AttestationDataRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *AttestationDataRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Slot != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.Slot))
 	}
 	if m.CommitteeIndex != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.CommitteeIndex))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.CommitteeIndex))
 	}
-	if m.Slot != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Slot))
-		i--
-		dAtA[i] = 0x8
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	return len(dAtA) - i, nil
+	return i, nil
 }
 
 func (m *AttestResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3571,33 +3369,26 @@ func (m *AttestResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AttestResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *AttestResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.AttestationDataRoot) > 0 {
-		i -= len(m.AttestationDataRoot)
-		copy(dAtA[i:], m.AttestationDataRoot)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.AttestationDataRoot)))
-		i--
 		dAtA[i] = 0xa
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.AttestationDataRoot)))
+		i += copy(dAtA[i:], m.AttestationDataRoot)
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *AggregateSelectionRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3605,50 +3396,42 @@ func (m *AggregateSelectionRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AggregateSelectionRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *AggregateSelectionRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.SlotSignature) > 0 {
-		i -= len(m.SlotSignature)
-		copy(dAtA[i:], m.SlotSignature)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.SlotSignature)))
-		i--
-		dAtA[i] = 0x22
-	}
-	if len(m.PublicKey) > 0 {
-		i -= len(m.PublicKey)
-		copy(dAtA[i:], m.PublicKey)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKey)))
-		i--
-		dAtA[i] = 0x1a
+	if m.Slot != 0 {
+		dAtA[i] = 0x8
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.Slot))
 	}
 	if m.CommitteeIndex != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.CommitteeIndex))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.CommitteeIndex))
 	}
-	if m.Slot != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Slot))
-		i--
-		dAtA[i] = 0x8
+	if len(m.PublicKey) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKey)))
+		i += copy(dAtA[i:], m.PublicKey)
 	}
-	return len(dAtA) - i, nil
+	if len(m.SlotSignature) > 0 {
+		dAtA[i] = 0x22
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.SlotSignature)))
+		i += copy(dAtA[i:], m.SlotSignature)
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *AggregateSelectionResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3656,38 +3439,30 @@ func (m *AggregateSelectionResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AggregateSelectionResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *AggregateSelectionResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.AggregateAndProof != nil {
-		{
-			size, err := m.AggregateAndProof.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintValidator(dAtA, i, uint64(size))
-		}
-		i--
 		dAtA[i] = 0xa
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.AggregateAndProof.Size()))
+		n10, err := m.AggregateAndProof.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n10
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *SignedAggregateSubmitRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3695,38 +3470,30 @@ func (m *SignedAggregateSubmitRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SignedAggregateSubmitRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *SignedAggregateSubmitRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if m.SignedAggregateAndProof != nil {
-		{
-			size, err := m.SignedAggregateAndProof.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintValidator(dAtA, i, uint64(size))
-		}
-		i--
 		dAtA[i] = 0xa
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.SignedAggregateAndProof.Size()))
+		n11, err := m.SignedAggregateAndProof.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n11
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *SignedAggregateSubmitResponse) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3734,33 +3501,26 @@ func (m *SignedAggregateSubmitResponse) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SignedAggregateSubmitResponse) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *SignedAggregateSubmitResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
 	if len(m.AttestationDataRoot) > 0 {
-		i -= len(m.AttestationDataRoot)
-		copy(dAtA[i:], m.AttestationDataRoot)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.AttestationDataRoot)))
-		i--
 		dAtA[i] = 0xa
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.AttestationDataRoot)))
+		i += copy(dAtA[i:], m.AttestationDataRoot)
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *CommitteeSubnetsSubscribeRequest) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3768,36 +3528,14 @@ func (m *CommitteeSubnetsSubscribeRequest) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *CommitteeSubnetsSubscribeRequest) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *CommitteeSubnetsSubscribeRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if len(m.IsAggregator) > 0 {
-		for iNdEx := len(m.IsAggregator) - 1; iNdEx >= 0; iNdEx-- {
-			i--
-			if m.IsAggregator[iNdEx] {
-				dAtA[i] = 1
-			} else {
-				dAtA[i] = 0
-			}
-		}
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.IsAggregator)))
-		i--
-		dAtA[i] = 0x1a
-	}
-	if len(m.CommitteeIds) > 0 {
-		dAtA13 := make([]byte, len(m.CommitteeIds)*10)
+	if len(m.Slots) > 0 {
+		dAtA13 := make([]byte, len(m.Slots)*10)
 		var j12 int
-		for _, num := range m.CommitteeIds {
+		for _, num := range m.Slots {
 			for num >= 1<<7 {
 				dAtA13[j12] = uint8(uint64(num)&0x7f | 0x80)
 				num >>= 7
@@ -3806,16 +3544,15 @@ func (m *CommitteeSubnetsSubscribeRequest) MarshalToSizedBuffer(dAtA []byte) (in
 			dAtA13[j12] = uint8(num)
 			j12++
 		}
-		i -= j12
-		copy(dAtA[i:], dAtA13[:j12])
+		dAtA[i] = 0xa
+		i++
 		i = encodeVarintValidator(dAtA, i, uint64(j12))
-		i--
-		dAtA[i] = 0x12
+		i += copy(dAtA[i:], dAtA13[:j12])
 	}
-	if len(m.Slots) > 0 {
-		dAtA15 := make([]byte, len(m.Slots)*10)
+	if len(m.CommitteeIds) > 0 {
+		dAtA15 := make([]byte, len(m.CommitteeIds)*10)
 		var j14 int
-		for _, num := range m.Slots {
+		for _, num := range m.CommitteeIds {
 			for num >= 1<<7 {
 				dAtA15[j14] = uint8(uint64(num)&0x7f | 0x80)
 				num >>= 7
@@ -3824,19 +3561,34 @@ func (m *CommitteeSubnetsSubscribeRequest) MarshalToSizedBuffer(dAtA []byte) (in
 			dAtA15[j14] = uint8(num)
 			j14++
 		}
-		i -= j14
-		copy(dAtA[i:], dAtA15[:j14])
+		dAtA[i] = 0x12
+		i++
 		i = encodeVarintValidator(dAtA, i, uint64(j14))
-		i--
-		dAtA[i] = 0xa
+		i += copy(dAtA[i:], dAtA15[:j14])
 	}
-	return len(dAtA) - i, nil
+	if len(m.IsAggregator) > 0 {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.IsAggregator)))
+		for _, b := range m.IsAggregator {
+			if b {
+				dAtA[i] = 1
+			} else {
+				dAtA[i] = 0
+			}
+			i++
+		}
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *Validator) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3844,75 +3596,67 @@ func (m *Validator) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Validator) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *Validator) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.PublicKey) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKey)))
+		i += copy(dAtA[i:], m.PublicKey)
 	}
-	if m.WithdrawableEpoch != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.WithdrawableEpoch))
-		i--
-		dAtA[i] = 0x40
+	if len(m.WithdrawalCredentials) > 0 {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.WithdrawalCredentials)))
+		i += copy(dAtA[i:], m.WithdrawalCredentials)
 	}
-	if m.ExitEpoch != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.ExitEpoch))
-		i--
-		dAtA[i] = 0x38
-	}
-	if m.ActivationEpoch != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.ActivationEpoch))
-		i--
-		dAtA[i] = 0x30
-	}
-	if m.ActivationEligibilityEpoch != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.ActivationEligibilityEpoch))
-		i--
-		dAtA[i] = 0x28
+	if m.EffectiveBalance != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.EffectiveBalance))
 	}
 	if m.Slashed {
-		i--
+		dAtA[i] = 0x20
+		i++
 		if m.Slashed {
 			dAtA[i] = 1
 		} else {
 			dAtA[i] = 0
 		}
-		i--
-		dAtA[i] = 0x20
+		i++
 	}
-	if m.EffectiveBalance != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.EffectiveBalance))
-		i--
-		dAtA[i] = 0x18
+	if m.ActivationEligibilityEpoch != 0 {
+		dAtA[i] = 0x28
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.ActivationEligibilityEpoch))
 	}
-	if len(m.WithdrawalCredentials) > 0 {
-		i -= len(m.WithdrawalCredentials)
-		copy(dAtA[i:], m.WithdrawalCredentials)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.WithdrawalCredentials)))
-		i--
-		dAtA[i] = 0x12
+	if m.ActivationEpoch != 0 {
+		dAtA[i] = 0x30
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.ActivationEpoch))
 	}
-	if len(m.PublicKey) > 0 {
-		i -= len(m.PublicKey)
-		copy(dAtA[i:], m.PublicKey)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKey)))
-		i--
-		dAtA[i] = 0xa
+	if m.ExitEpoch != 0 {
+		dAtA[i] = 0x38
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.ExitEpoch))
 	}
-	return len(dAtA) - i, nil
+	if m.WithdrawableEpoch != 0 {
+		dAtA[i] = 0x40
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.WithdrawableEpoch))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *ValidatorParticipation) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3920,42 +3664,36 @@ func (m *ValidatorParticipation) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ValidatorParticipation) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ValidatorParticipation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.EligibleEther != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.EligibleEther))
-		i--
-		dAtA[i] = 0x18
+	if m.GlobalParticipationRate != 0 {
+		dAtA[i] = 0xd
+		i++
+		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.GlobalParticipationRate))))
+		i += 4
 	}
 	if m.VotedEther != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.VotedEther))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.VotedEther))
 	}
-	if m.GlobalParticipationRate != 0 {
-		i -= 4
-		encoding_binary.LittleEndian.PutUint32(dAtA[i:], uint32(math.Float32bits(float32(m.GlobalParticipationRate))))
-		i--
-		dAtA[i] = 0xd
+	if m.EligibleEther != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.EligibleEther))
 	}
-	return len(dAtA) - i, nil
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func (m *ValidatorInfo) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	n, err := m.MarshalTo(dAtA)
 	if err != nil {
 		return nil, err
 	}
@@ -3963,69 +3701,60 @@ func (m *ValidatorInfo) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ValidatorInfo) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ValidatorInfo) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
+	var i int
 	_ = i
 	var l int
 	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.EffectiveBalance != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.EffectiveBalance))
-		i--
-		dAtA[i] = 0x38
-	}
-	if m.Balance != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Balance))
-		i--
-		dAtA[i] = 0x30
-	}
-	if m.TransitionTimestamp != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.TransitionTimestamp))
-		i--
-		dAtA[i] = 0x28
-	}
-	if m.Status != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Status))
-		i--
-		dAtA[i] = 0x20
-	}
-	if m.Epoch != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Epoch))
-		i--
-		dAtA[i] = 0x18
+	if len(m.PublicKey) > 0 {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKey)))
+		i += copy(dAtA[i:], m.PublicKey)
 	}
 	if m.Index != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Index))
-		i--
 		dAtA[i] = 0x10
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.Index))
 	}
-	if len(m.PublicKey) > 0 {
-		i -= len(m.PublicKey)
-		copy(dAtA[i:], m.PublicKey)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.PublicKey)))
-		i--
-		dAtA[i] = 0xa
+	if m.Epoch != 0 {
+		dAtA[i] = 0x18
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.Epoch))
 	}
-	return len(dAtA) - i, nil
+	if m.Status != 0 {
+		dAtA[i] = 0x20
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.Status))
+	}
+	if m.TransitionTimestamp != 0 {
+		dAtA[i] = 0x28
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.TransitionTimestamp))
+	}
+	if m.Balance != 0 {
+		dAtA[i] = 0x30
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.Balance))
+	}
+	if m.EffectiveBalance != 0 {
+		dAtA[i] = 0x38
+		i++
+		i = encodeVarintValidator(dAtA, i, uint64(m.EffectiveBalance))
+	}
+	if m.XXX_unrecognized != nil {
+		i += copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	return i, nil
 }
 
 func encodeVarintValidator(dAtA []byte, offset int, v uint64) int {
-	offset -= sovValidator(v)
-	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return base
+	return offset + 1
 }
 func (m *DomainRequest) Size() (n int) {
 	if m == nil {
@@ -4650,7 +4379,14 @@ func (m *ValidatorInfo) Size() (n int) {
 }
 
 func sovValidator(x uint64) (n int) {
-	return (math_bits.Len64(x|1) + 6) / 7
+	for {
+		n++
+		x >>= 7
+		if x == 0 {
+			break
+		}
+	}
+	return n
 }
 func sozValidator(x uint64) (n int) {
 	return sovValidator(uint64((x << 1) ^ uint64((int64(x) >> 63))))
@@ -8344,7 +8080,6 @@ func (m *ValidatorInfo) Unmarshal(dAtA []byte) error {
 func skipValidator(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
-	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -8376,8 +8111,10 @@ func skipValidator(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
+			return iNdEx, nil
 		case 1:
 			iNdEx += 8
+			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -8398,30 +8135,55 @@ func skipValidator(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthValidator
 			}
 			iNdEx += length
-		case 3:
-			depth++
-		case 4:
-			if depth == 0 {
-				return 0, ErrUnexpectedEndOfGroupValidator
+			if iNdEx < 0 {
+				return 0, ErrInvalidLengthValidator
 			}
-			depth--
+			return iNdEx, nil
+		case 3:
+			for {
+				var innerWire uint64
+				var start int = iNdEx
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return 0, ErrIntOverflowValidator
+					}
+					if iNdEx >= l {
+						return 0, io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					innerWire |= (uint64(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				innerWireType := int(innerWire & 0x7)
+				if innerWireType == 4 {
+					break
+				}
+				next, err := skipValidator(dAtA[start:])
+				if err != nil {
+					return 0, err
+				}
+				iNdEx = start + next
+				if iNdEx < 0 {
+					return 0, ErrInvalidLengthValidator
+				}
+			}
+			return iNdEx, nil
+		case 4:
+			return iNdEx, nil
 		case 5:
 			iNdEx += 4
+			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
-		if iNdEx < 0 {
-			return 0, ErrInvalidLengthValidator
-		}
-		if depth == 0 {
-			return iNdEx, nil
-		}
 	}
-	return 0, io.ErrUnexpectedEOF
+	panic("unreachable")
 }
 
 var (
-	ErrInvalidLengthValidator        = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowValidator          = fmt.Errorf("proto: integer overflow")
-	ErrUnexpectedEndOfGroupValidator = fmt.Errorf("proto: unexpected end of group")
+	ErrInvalidLengthValidator = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowValidator   = fmt.Errorf("proto: integer overflow")
 )
