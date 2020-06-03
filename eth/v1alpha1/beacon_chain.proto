@@ -651,6 +651,8 @@ message ValidatorPerformanceResponse {
     repeated bytes missing_validators = 9;
 	// The average active validator balance in the beacon chain.
     float average_active_validator_balance = 10;
+    // The public keys in the order they are in of the response.
+    repeated bytes public_keys = 11 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
 }
 
 message ValidatorQueue {
@@ -700,7 +702,7 @@ message ListValidatorAssignmentsRequest {
 
 message ValidatorAssignments {
     message CommitteeAssignment {
-        // Beacon committees is responsible for crosslinking committee data back to the beacon chain,
+        // Beacon committees are responsible for crosslinking committee data back to the beacon chain,
         // they also attest and produce beacon chain blocks. This is a list of validator indices that
         // are in the same committee as requested validator, everyone in the committee is assigned to the
         // same slot and same committee.
