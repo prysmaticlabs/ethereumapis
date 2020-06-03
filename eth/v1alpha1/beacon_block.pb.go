@@ -9,6 +9,7 @@ import (
 	proto "github.com/gogo/protobuf/proto"
 	io "io"
 	math "math"
+	math_bits "math/bits"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -20,7 +21,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
 type BeaconBlock struct {
 	Slot                 uint64           `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty"`
@@ -47,7 +48,7 @@ func (m *BeaconBlock) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) 
 		return xxx_messageInfo_BeaconBlock.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -123,7 +124,7 @@ func (m *SignedBeaconBlock) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return xxx_messageInfo_SignedBeaconBlock.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -184,7 +185,7 @@ func (m *BeaconBlockBody) XXX_Marshal(b []byte, deterministic bool) ([]byte, err
 		return xxx_messageInfo_BeaconBlockBody.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -281,7 +282,7 @@ func (m *ProposerSlashing) XXX_Marshal(b []byte, deterministic bool) ([]byte, er
 		return xxx_messageInfo_ProposerSlashing.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -336,7 +337,7 @@ func (m *AttesterSlashing) XXX_Marshal(b []byte, deterministic bool) ([]byte, er
 		return xxx_messageInfo_AttesterSlashing.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -391,7 +392,7 @@ func (m *Deposit) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Deposit.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -448,7 +449,7 @@ func (m *Deposit_Data) XXX_Marshal(b []byte, deterministic bool) ([]byte, error)
 		return xxx_messageInfo_Deposit_Data.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -517,7 +518,7 @@ func (m *VoluntaryExit) XXX_Marshal(b []byte, deterministic bool) ([]byte, error
 		return xxx_messageInfo_VoluntaryExit.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -572,7 +573,7 @@ func (m *SignedVoluntaryExit) XXX_Marshal(b []byte, deterministic bool) ([]byte,
 		return xxx_messageInfo_SignedVoluntaryExit.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -628,7 +629,7 @@ func (m *Eth1Data) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 		return xxx_messageInfo_Eth1Data.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -693,7 +694,7 @@ func (m *BeaconBlockHeader) XXX_Marshal(b []byte, deterministic bool) ([]byte, e
 		return xxx_messageInfo_BeaconBlockHeader.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -769,7 +770,7 @@ func (m *SignedBeaconBlockHeader) XXX_Marshal(b []byte, deterministic bool) ([]b
 		return xxx_messageInfo_SignedBeaconBlockHeader.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -825,7 +826,7 @@ func (m *IndexedAttestation) XXX_Marshal(b []byte, deterministic bool) ([]byte, 
 		return xxx_messageInfo_IndexedAttestation.Marshal(b, m, deterministic)
 	} else {
 		b = b[:cap(b)]
-		n, err := m.MarshalTo(b)
+		n, err := m.MarshalToSizedBuffer(b)
 		if err != nil {
 			return nil, err
 		}
@@ -958,7 +959,7 @@ var fileDescriptor_6abbd9d98bd3d11a = []byte{
 func (m *BeaconBlock) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -966,52 +967,62 @@ func (m *BeaconBlock) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *BeaconBlock) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *BeaconBlock) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Slot != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Slot))
-	}
-	if m.ProposerIndex != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.ProposerIndex))
-	}
-	if len(m.ParentRoot) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.ParentRoot)))
-		i += copy(dAtA[i:], m.ParentRoot)
-	}
-	if len(m.StateRoot) > 0 {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.StateRoot)))
-		i += copy(dAtA[i:], m.StateRoot)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Body != nil {
-		dAtA[i] = 0x2a
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Body.Size()))
-		n1, err := m.Body.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Body.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
 		}
-		i += n1
+		i--
+		dAtA[i] = 0x2a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.StateRoot) > 0 {
+		i -= len(m.StateRoot)
+		copy(dAtA[i:], m.StateRoot)
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.StateRoot)))
+		i--
+		dAtA[i] = 0x22
 	}
-	return i, nil
+	if len(m.ParentRoot) > 0 {
+		i -= len(m.ParentRoot)
+		copy(dAtA[i:], m.ParentRoot)
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.ParentRoot)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.ProposerIndex != 0 {
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.ProposerIndex))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Slot != 0 {
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Slot))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *SignedBeaconBlock) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1019,36 +1030,45 @@ func (m *SignedBeaconBlock) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SignedBeaconBlock) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SignedBeaconBlock) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Block != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Block.Size()))
-		n2, err := m.Block.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n2
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Signature) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.Signature)
+		copy(dAtA[i:], m.Signature)
 		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.Signature)))
-		i += copy(dAtA[i:], m.Signature)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Block != nil {
+		{
+			size, err := m.Block.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *BeaconBlockBody) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1056,102 +1076,122 @@ func (m *BeaconBlockBody) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *BeaconBlockBody) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *BeaconBlockBody) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.RandaoReveal) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.RandaoReveal)))
-		i += copy(dAtA[i:], m.RandaoReveal)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
-	if m.Eth1Data != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Eth1Data.Size()))
-		n3, err := m.Eth1Data.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n3
-	}
-	if len(m.Graffiti) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.Graffiti)))
-		i += copy(dAtA[i:], m.Graffiti)
-	}
-	if len(m.ProposerSlashings) > 0 {
-		for _, msg := range m.ProposerSlashings {
-			dAtA[i] = 0x22
-			i++
-			i = encodeVarintBeaconBlock(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
+	if len(m.VoluntaryExits) > 0 {
+		for iNdEx := len(m.VoluntaryExits) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.VoluntaryExits[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
 			}
-			i += n
-		}
-	}
-	if len(m.AttesterSlashings) > 0 {
-		for _, msg := range m.AttesterSlashings {
-			dAtA[i] = 0x2a
-			i++
-			i = encodeVarintBeaconBlock(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
-			}
-			i += n
-		}
-	}
-	if len(m.Attestations) > 0 {
-		for _, msg := range m.Attestations {
-			dAtA[i] = 0x32
-			i++
-			i = encodeVarintBeaconBlock(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
-			}
-			i += n
+			i--
+			dAtA[i] = 0x42
 		}
 	}
 	if len(m.Deposits) > 0 {
-		for _, msg := range m.Deposits {
+		for iNdEx := len(m.Deposits) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Deposits[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+			}
+			i--
 			dAtA[i] = 0x3a
-			i++
-			i = encodeVarintBeaconBlock(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
+		}
+	}
+	if len(m.Attestations) > 0 {
+		for iNdEx := len(m.Attestations) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Attestations[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x32
+		}
+	}
+	if len(m.AttesterSlashings) > 0 {
+		for iNdEx := len(m.AttesterSlashings) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.AttesterSlashings[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x2a
+		}
+	}
+	if len(m.ProposerSlashings) > 0 {
+		for iNdEx := len(m.ProposerSlashings) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.ProposerSlashings[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x22
+		}
+	}
+	if len(m.Graffiti) > 0 {
+		i -= len(m.Graffiti)
+		copy(dAtA[i:], m.Graffiti)
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.Graffiti)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Eth1Data != nil {
+		{
+			size, err := m.Eth1Data.MarshalToSizedBuffer(dAtA[:i])
 			if err != nil {
 				return 0, err
 			}
-			i += n
+			i -= size
+			i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
 		}
+		i--
+		dAtA[i] = 0x12
 	}
-	if len(m.VoluntaryExits) > 0 {
-		for _, msg := range m.VoluntaryExits {
-			dAtA[i] = 0x42
-			i++
-			i = encodeVarintBeaconBlock(dAtA, i, uint64(msg.Size()))
-			n, err := msg.MarshalTo(dAtA[i:])
-			if err != nil {
-				return 0, err
-			}
-			i += n
-		}
+	if len(m.RandaoReveal) > 0 {
+		i -= len(m.RandaoReveal)
+		copy(dAtA[i:], m.RandaoReveal)
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.RandaoReveal)))
+		i--
+		dAtA[i] = 0xa
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *ProposerSlashing) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1159,40 +1199,50 @@ func (m *ProposerSlashing) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *ProposerSlashing) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ProposerSlashing) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Header_1 != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Header_1.Size()))
-		n4, err := m.Header_1.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n4
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Header_2 != nil {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Header_2.Size()))
-		n5, err := m.Header_2.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Header_2.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
 		}
-		i += n5
+		i--
+		dAtA[i] = 0x1a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Header_1 != nil {
+		{
+			size, err := m.Header_1.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *AttesterSlashing) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1200,40 +1250,50 @@ func (m *AttesterSlashing) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *AttesterSlashing) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *AttesterSlashing) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Attestation_1 != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Attestation_1.Size()))
-		n6, err := m.Attestation_1.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n6
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Attestation_2 != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Attestation_2.Size()))
-		n7, err := m.Attestation_2.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Attestation_2.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
 		}
-		i += n7
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Attestation_1 != nil {
+		{
+			size, err := m.Attestation_1.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *Deposit) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1241,38 +1301,47 @@ func (m *Deposit) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Deposit) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Deposit) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.Proof) > 0 {
-		for _, b := range m.Proof {
-			dAtA[i] = 0xa
-			i++
-			i = encodeVarintBeaconBlock(dAtA, i, uint64(len(b)))
-			i += copy(dAtA[i:], b)
-		}
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.Data != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Data.Size()))
-		n8, err := m.Data.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
+		{
+			size, err := m.Data.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
 		}
-		i += n8
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.Proof) > 0 {
+		for iNdEx := len(m.Proof) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Proof[iNdEx])
+			copy(dAtA[i:], m.Proof[iNdEx])
+			i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.Proof[iNdEx])))
+			i--
+			dAtA[i] = 0xa
+		}
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *Deposit_Data) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1280,43 +1349,52 @@ func (m *Deposit_Data) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Deposit_Data) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Deposit_Data) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.PublicKey) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.PublicKey)))
-		i += copy(dAtA[i:], m.PublicKey)
-	}
-	if len(m.WithdrawalCredentials) > 0 {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.WithdrawalCredentials)))
-		i += copy(dAtA[i:], m.WithdrawalCredentials)
-	}
-	if m.Amount != 0 {
-		dAtA[i] = 0x18
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Amount))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Signature) > 0 {
-		dAtA[i] = 0x22
-		i++
+		i -= len(m.Signature)
+		copy(dAtA[i:], m.Signature)
 		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.Signature)))
-		i += copy(dAtA[i:], m.Signature)
+		i--
+		dAtA[i] = 0x22
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Amount != 0 {
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Amount))
+		i--
+		dAtA[i] = 0x18
 	}
-	return i, nil
+	if len(m.WithdrawalCredentials) > 0 {
+		i -= len(m.WithdrawalCredentials)
+		copy(dAtA[i:], m.WithdrawalCredentials)
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.WithdrawalCredentials)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.PublicKey) > 0 {
+		i -= len(m.PublicKey)
+		copy(dAtA[i:], m.PublicKey)
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.PublicKey)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *VoluntaryExit) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1324,30 +1402,36 @@ func (m *VoluntaryExit) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *VoluntaryExit) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *VoluntaryExit) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Epoch != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Epoch))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if m.ValidatorIndex != 0 {
-		dAtA[i] = 0x10
-		i++
 		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.ValidatorIndex))
+		i--
+		dAtA[i] = 0x10
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Epoch != 0 {
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Epoch))
+		i--
+		dAtA[i] = 0x8
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *SignedVoluntaryExit) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1355,36 +1439,45 @@ func (m *SignedVoluntaryExit) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SignedVoluntaryExit) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SignedVoluntaryExit) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Exit != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Exit.Size()))
-		n9, err := m.Exit.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n9
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Signature) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.Signature)
+		copy(dAtA[i:], m.Signature)
 		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.Signature)))
-		i += copy(dAtA[i:], m.Signature)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Exit != nil {
+		{
+			size, err := m.Exit.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *Eth1Data) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1392,37 +1485,45 @@ func (m *Eth1Data) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *Eth1Data) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *Eth1Data) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.DepositRoot) > 0 {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.DepositRoot)))
-		i += copy(dAtA[i:], m.DepositRoot)
-	}
-	if m.DepositCount != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.DepositCount))
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.BlockHash) > 0 {
-		dAtA[i] = 0x1a
-		i++
+		i -= len(m.BlockHash)
+		copy(dAtA[i:], m.BlockHash)
 		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.BlockHash)))
-		i += copy(dAtA[i:], m.BlockHash)
+		i--
+		dAtA[i] = 0x1a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.DepositCount != 0 {
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.DepositCount))
+		i--
+		dAtA[i] = 0x10
 	}
-	return i, nil
+	if len(m.DepositRoot) > 0 {
+		i -= len(m.DepositRoot)
+		copy(dAtA[i:], m.DepositRoot)
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.DepositRoot)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *BeaconBlockHeader) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1430,48 +1531,57 @@ func (m *BeaconBlockHeader) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *BeaconBlockHeader) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *BeaconBlockHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Slot != 0 {
-		dAtA[i] = 0x8
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Slot))
-	}
-	if m.ProposerIndex != 0 {
-		dAtA[i] = 0x10
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.ProposerIndex))
-	}
-	if len(m.ParentRoot) > 0 {
-		dAtA[i] = 0x1a
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.ParentRoot)))
-		i += copy(dAtA[i:], m.ParentRoot)
-	}
-	if len(m.StateRoot) > 0 {
-		dAtA[i] = 0x22
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.StateRoot)))
-		i += copy(dAtA[i:], m.StateRoot)
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.BodyRoot) > 0 {
-		dAtA[i] = 0x2a
-		i++
+		i -= len(m.BodyRoot)
+		copy(dAtA[i:], m.BodyRoot)
 		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.BodyRoot)))
-		i += copy(dAtA[i:], m.BodyRoot)
+		i--
+		dAtA[i] = 0x2a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if len(m.StateRoot) > 0 {
+		i -= len(m.StateRoot)
+		copy(dAtA[i:], m.StateRoot)
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.StateRoot)))
+		i--
+		dAtA[i] = 0x22
 	}
-	return i, nil
+	if len(m.ParentRoot) > 0 {
+		i -= len(m.ParentRoot)
+		copy(dAtA[i:], m.ParentRoot)
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.ParentRoot)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.ProposerIndex != 0 {
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.ProposerIndex))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Slot != 0 {
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Slot))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *SignedBeaconBlockHeader) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1479,36 +1589,45 @@ func (m *SignedBeaconBlockHeader) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *SignedBeaconBlockHeader) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SignedBeaconBlockHeader) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if m.Header != nil {
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Header.Size()))
-		n10, err := m.Header.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n10
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Signature) > 0 {
-		dAtA[i] = 0x12
-		i++
+		i -= len(m.Signature)
+		copy(dAtA[i:], m.Signature)
 		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.Signature)))
-		i += copy(dAtA[i:], m.Signature)
+		i--
+		dAtA[i] = 0x12
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Header != nil {
+		{
+			size, err := m.Header.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
 	}
-	return i, nil
+	return len(dAtA) - i, nil
 }
 
 func (m *IndexedAttestation) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
-	n, err := m.MarshalTo(dAtA)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
 	if err != nil {
 		return nil, err
 	}
@@ -1516,57 +1635,69 @@ func (m *IndexedAttestation) Marshal() (dAtA []byte, err error) {
 }
 
 func (m *IndexedAttestation) MarshalTo(dAtA []byte) (int, error) {
-	var i int
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *IndexedAttestation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
 	_ = i
 	var l int
 	_ = l
-	if len(m.AttestingIndices) > 0 {
-		dAtA12 := make([]byte, len(m.AttestingIndices)*10)
-		var j11 int
-		for _, num := range m.AttestingIndices {
-			for num >= 1<<7 {
-				dAtA12[j11] = uint8(uint64(num)&0x7f | 0x80)
-				num >>= 7
-				j11++
-			}
-			dAtA12[j11] = uint8(num)
-			j11++
-		}
-		dAtA[i] = 0xa
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(j11))
-		i += copy(dAtA[i:], dAtA12[:j11])
-	}
-	if m.Data != nil {
-		dAtA[i] = 0x12
-		i++
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Data.Size()))
-		n13, err := m.Data.MarshalTo(dAtA[i:])
-		if err != nil {
-			return 0, err
-		}
-		i += n13
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
 	}
 	if len(m.Signature) > 0 {
-		dAtA[i] = 0x1a
-		i++
+		i -= len(m.Signature)
+		copy(dAtA[i:], m.Signature)
 		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.Signature)))
-		i += copy(dAtA[i:], m.Signature)
+		i--
+		dAtA[i] = 0x1a
 	}
-	if m.XXX_unrecognized != nil {
-		i += copy(dAtA[i:], m.XXX_unrecognized)
+	if m.Data != nil {
+		{
+			size, err := m.Data.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
 	}
-	return i, nil
+	if len(m.AttestingIndices) > 0 {
+		dAtA13 := make([]byte, len(m.AttestingIndices)*10)
+		var j12 int
+		for _, num := range m.AttestingIndices {
+			for num >= 1<<7 {
+				dAtA13[j12] = uint8(uint64(num)&0x7f | 0x80)
+				num >>= 7
+				j12++
+			}
+			dAtA13[j12] = uint8(num)
+			j12++
+		}
+		i -= j12
+		copy(dAtA[i:], dAtA13[:j12])
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(j12))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
 }
 
 func encodeVarintBeaconBlock(dAtA []byte, offset int, v uint64) int {
+	offset -= sovBeaconBlock(v)
+	base := offset
 	for v >= 1<<7 {
 		dAtA[offset] = uint8(v&0x7f | 0x80)
 		v >>= 7
 		offset++
 	}
 	dAtA[offset] = uint8(v)
-	return offset + 1
+	return base
 }
 func (m *BeaconBlock) Size() (n int) {
 	if m == nil {
@@ -1900,14 +2031,7 @@ func (m *IndexedAttestation) Size() (n int) {
 }
 
 func sovBeaconBlock(x uint64) (n int) {
-	for {
-		n++
-		x >>= 7
-		if x == 0 {
-			break
-		}
-	}
-	return n
+	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozBeaconBlock(x uint64) (n int) {
 	return sovBeaconBlock(uint64((x << 1) ^ uint64((int64(x) >> 63))))
@@ -3987,6 +4111,7 @@ func (m *IndexedAttestation) Unmarshal(dAtA []byte) error {
 func skipBeaconBlock(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
+	depth := 0
 	for iNdEx < l {
 		var wire uint64
 		for shift := uint(0); ; shift += 7 {
@@ -4018,10 +4143,8 @@ func skipBeaconBlock(dAtA []byte) (n int, err error) {
 					break
 				}
 			}
-			return iNdEx, nil
 		case 1:
 			iNdEx += 8
-			return iNdEx, nil
 		case 2:
 			var length int
 			for shift := uint(0); ; shift += 7 {
@@ -4042,55 +4165,30 @@ func skipBeaconBlock(dAtA []byte) (n int, err error) {
 				return 0, ErrInvalidLengthBeaconBlock
 			}
 			iNdEx += length
-			if iNdEx < 0 {
-				return 0, ErrInvalidLengthBeaconBlock
-			}
-			return iNdEx, nil
 		case 3:
-			for {
-				var innerWire uint64
-				var start int = iNdEx
-				for shift := uint(0); ; shift += 7 {
-					if shift >= 64 {
-						return 0, ErrIntOverflowBeaconBlock
-					}
-					if iNdEx >= l {
-						return 0, io.ErrUnexpectedEOF
-					}
-					b := dAtA[iNdEx]
-					iNdEx++
-					innerWire |= (uint64(b) & 0x7F) << shift
-					if b < 0x80 {
-						break
-					}
-				}
-				innerWireType := int(innerWire & 0x7)
-				if innerWireType == 4 {
-					break
-				}
-				next, err := skipBeaconBlock(dAtA[start:])
-				if err != nil {
-					return 0, err
-				}
-				iNdEx = start + next
-				if iNdEx < 0 {
-					return 0, ErrInvalidLengthBeaconBlock
-				}
-			}
-			return iNdEx, nil
+			depth++
 		case 4:
-			return iNdEx, nil
+			if depth == 0 {
+				return 0, ErrUnexpectedEndOfGroupBeaconBlock
+			}
+			depth--
 		case 5:
 			iNdEx += 4
-			return iNdEx, nil
 		default:
 			return 0, fmt.Errorf("proto: illegal wireType %d", wireType)
 		}
+		if iNdEx < 0 {
+			return 0, ErrInvalidLengthBeaconBlock
+		}
+		if depth == 0 {
+			return iNdEx, nil
+		}
 	}
-	panic("unreachable")
+	return 0, io.ErrUnexpectedEOF
 }
 
 var (
-	ErrInvalidLengthBeaconBlock = fmt.Errorf("proto: negative length found during unmarshaling")
-	ErrIntOverflowBeaconBlock   = fmt.Errorf("proto: integer overflow")
+	ErrInvalidLengthBeaconBlock        = fmt.Errorf("proto: negative length found during unmarshaling")
+	ErrIntOverflowBeaconBlock          = fmt.Errorf("proto: integer overflow")
+	ErrUnexpectedEndOfGroupBeaconBlock = fmt.Errorf("proto: unexpected end of group")
 )

@@ -3,14 +3,14 @@
 # Script to copy pb.go files from bazel build folder to appropriate location.
 # Bazel builds to bazel-bin/... folder, script copies them back to original folder where .proto is.
 
-bazel query 'kind(go_library, //...)' | xargs bazel build
+bazel query 'kind(go_library, //...) union kind(go_proto_library, //...)' | xargs bazel build
 
 # Get locations of pb.go files.
 
 file_list=()
 while IFS= read -d $'\0' -r file ; do
     file_list=("${file_list[@]}" "$file")
-done < <(find -L $(bazel info bazel-bin)/eth -type f -name "*pb.go" -print0)
+done < <(find -L $(bazel info bazel-bin)/eth -type f -regextype sed -regex ".*pb\.\(gw\.\)\?go$" -print0)
 
 arraylength=${#file_list[@]}
 searchstring="/ethereumapis/"
