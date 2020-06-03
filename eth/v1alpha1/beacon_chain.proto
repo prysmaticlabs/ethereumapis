@@ -652,7 +652,7 @@ message ValidatorPerformanceResponse {
 	// The average active validator balance in the beacon chain.
     float average_active_validator_balance = 10;
     // The public keys in the order they are in of the response.
-    repeated bytes public_keys = 11;
+    repeated bytes public_keys = 11 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
 }
 
 message ValidatorQueue {
