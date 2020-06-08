@@ -1,4 +1,4 @@
-// Copyright 2019 Prysmatic Labs.
+// Copyright 2020 Prysmatic Labs.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -135,6 +135,16 @@ service BeaconNodeValidator {
         };
     }
 
+    // MultipleValidatorStatus returns a list of validator statuses on the current epoch.
+    // The request can specify a list of validator public keys.
+    //
+    // Returns a list of ValidatorStatusResponses.
+    rpc MultipleValidatorStatus(MultipleValidatorStatusRequest) returns (MultipleValidatorStatusResponse) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator/statuses"
+        };
+    }
+
     // Retrieves the latest valid beacon block to be proposed on the beacon chain.
     //
     // The server returns a new beacon block, without proposer signature, that can be
@@ -243,6 +253,9 @@ message ValidatorActivationResponse {
 
         // A wrapper representing a validator's status object.
         ValidatorStatusResponse status = 2;
+
+        // The validators index in the beacon state.
+        uint64 index = 3;
     }
     // A list of validator statuses mapped 1-to-1 with the public keys
     // in the request.
@@ -312,6 +325,22 @@ message ValidatorStatusResponse {
     uint64 position_in_activation_queue = 5;
 }
 
+message MultipleValidatorStatusRequest {
+    // A list of 48 byte validator public keys.
+    repeated bytes public_keys = 1 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
+    // A list of validator indices.
+    repeated int64 indices = 2;
+}
+
+message MultipleValidatorStatusResponse {
+    // A list of 48 byte validator public keys.
+    repeated bytes public_keys = 1 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
+    // A list of ValidatorStatusResponses mapped 1-to-1 with the public keys.
+    repeated ValidatorStatusResponse statuses = 2;
+    // A list of validator indices.
+    repeated uint64 indices = 3;
+}
+
 message DutiesRequest {
     // Epoch at which validators should perform their duties.
     uint64 epoch = 1;
@@ -321,7 +350,12 @@ message DutiesRequest {
 }
 
 message DutiesResponse {
-    repeated Duty duties = 1;
+    repeated Duty duties = 1 [deprecated = true];
+
+    repeated Duty current_epoch_duties = 2;
+
+    repeated Duty next_epoch_duties = 3;
+
     message Duty {
         // The committee a validator is assigned to.
         repeated uint64 committee = 1;
