@@ -1650,7 +1650,7 @@ var (
 
 	pattern_BeaconChain_SubmitProposerSlashing_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4, 2, 5}, []string{"eth", "v1alpha1", "beacon", "slashings", "proposer", "submit"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BeaconChain_GetIndividualVotes_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"eth", "v1alpha1", "debug", "individual_votes"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_BeaconChain_GetIndividualVotes_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"eth", "v1alpha1", "beacon", "individual_votes"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (
