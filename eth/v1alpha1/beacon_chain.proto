@@ -257,7 +257,7 @@ service BeaconChain {
     // Returns a list of validators individual vote status of a given epoch.
     rpc GetIndividualVotes(IndividualVotesRequest) returns (IndividualVotesRespond) {
         option (google.api.http) = {
-            get: "/eth/v1alpha1/debug/individual_votes"
+            get: "/eth/v1alpha1/beacon/individual_votes"
         };
     }
 }
