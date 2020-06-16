@@ -64,6 +64,14 @@ service Node {
         };
     }
 
+
+    // Retrieve the peer corresponding to the provided peer id.
+    rpc GetPeer(PeerRequest) returns (Peer) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/node/peer"
+        };
+    }
+
     // Retrieve the list of peers currently connected to this node.
     rpc ListPeers(google.protobuf.Empty) returns (Peers) {
         option (google.api.http) = {
@@ -105,6 +113,11 @@ message ImplementedServices {
     repeated string services = 1;
 }
 
+message PeerRequest {
+    // Peer id of the peer that we want.
+    string peer_id = 1;
+}
+
 // Peers is a list of peer messages.
 message Peers {
     repeated Peer peers = 1;
@@ -117,6 +130,12 @@ message Peer {
     string address = 1;
     // The direction of the connection (inbound/outbound).
     PeerDirection direction = 2;
+    // The connection state of the peer at the moment. Ex: Connecting
+    ConnectionState connection_state = 3;
+    // The peer id of the peer.
+    string peer_id = 4;
+    // The latest ENR of the peer that we have a record of.
+    string enr = 5;
 }
 
 // PeerDirection states the direction of the connection to a peer.
@@ -124,4 +143,12 @@ enum PeerDirection {
   UNKNOWN = 0;
   INBOUND = 1;
   OUTBOUND = 2;
+}
+
+// ConnectionState states the current status of the peer.
+enum ConnectionState {
+    CONNECTED = 0;
+    CONNECTING = 1;
+    DISCONNECTED = 2;
+    DISCONNECTING = 3;
 }
