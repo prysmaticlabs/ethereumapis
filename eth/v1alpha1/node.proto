@@ -130,7 +130,7 @@ message Peer {
     string address = 1;
     // The direction of the connection (inbound/outbound).
     PeerDirection direction = 2;
-    // The connection state of the peer at the moment. Ex: Connecting
+    // The connection state of the peer at the moment of the request. (e.g. Connecting)
     ConnectionState connection_state = 3;
     // The peer id of the peer.
     string peer_id = 4;
