@@ -64,6 +64,20 @@ service Node {
         };
     }
 
+    // Retrieves the peer data of the local peer.
+    rpc GetHost(google.protobuf.Empty) returns (HostData) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/node/p2p"
+        };
+    }
+
+    // Retrieve the peer corresponding to the provided peer id.
+    rpc GetPeer(PeerRequest) returns (Peer) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/node/peer"
+        };
+    }
+
     // Retrieve the list of peers currently connected to this node.
     rpc ListPeers(google.protobuf.Empty) returns (Peers) {
         option (google.api.http) = {
@@ -105,6 +119,11 @@ message ImplementedServices {
     repeated string services = 1;
 }
 
+message PeerRequest {
+    // Peer id of the peer requested.
+    string peer_id = 1;
+}
+
 // Peers is a list of peer messages.
 message Peers {
     repeated Peer peers = 1;
@@ -117,6 +136,23 @@ message Peer {
     string address = 1;
     // The direction of the connection (inbound/outbound).
     PeerDirection direction = 2;
+    // The connection state of the peer at the moment of the request. (e.g. Connecting)
+    ConnectionState connection_state = 3;
+    // The peer id of the peer.
+    string peer_id = 4;
+    // The latest ENR of the peer that's in the record.
+    string enr = 5;
+}
+
+// P2P Data on the local host.
+message HostData{
+    // All the  multiaddress of the peer, specified as a full multiaddr, for example:
+    // /ip4/37.221.192.134/tcp/13000/p2p/16Uiu2HAm8maLMjag1TAUM52zPfmLbVMGFdwUAWgoHu1HDQLR6e17
+    repeated string addresses = 1;
+    // The peer id of the peer.
+    string peer_id = 2;
+    // The latest ENR of the local peer.
+    string enr = 3;
 }
 
 // PeerDirection states the direction of the connection to a peer.
@@ -124,4 +160,12 @@ enum PeerDirection {
   UNKNOWN = 0;
   INBOUND = 1;
   OUTBOUND = 2;
+}
+
+// ConnectionState states the current status of the peer.
+enum ConnectionState {
+    DISCONNECTED = 0;
+    DISCONNECTING = 1;
+    CONNECTED = 2;
+    CONNECTING = 3;
 }

@@ -57,6 +57,37 @@ func (PeerDirection) EnumDescriptor() ([]byte, []int) {
 	return fileDescriptor_4d5c81e0a630f5ab, []int{0}
 }
 
+type ConnectionState int32
+
+const (
+	ConnectionState_DISCONNECTED  ConnectionState = 0
+	ConnectionState_DISCONNECTING ConnectionState = 1
+	ConnectionState_CONNECTED     ConnectionState = 2
+	ConnectionState_CONNECTING    ConnectionState = 3
+)
+
+var ConnectionState_name = map[int32]string{
+	0: "DISCONNECTED",
+	1: "DISCONNECTING",
+	2: "CONNECTED",
+	3: "CONNECTING",
+}
+
+var ConnectionState_value = map[string]int32{
+	"DISCONNECTED":  0,
+	"DISCONNECTING": 1,
+	"CONNECTED":     2,
+	"CONNECTING":    3,
+}
+
+func (x ConnectionState) String() string {
+	return proto.EnumName(ConnectionState_name, int32(x))
+}
+
+func (ConnectionState) EnumDescriptor() ([]byte, []int) {
+	return fileDescriptor_4d5c81e0a630f5ab, []int{1}
+}
+
 type SyncStatus struct {
 	Syncing              bool     `protobuf:"varint,1,opt,name=syncing,proto3" json:"syncing,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -269,6 +300,53 @@ func (m *ImplementedServices) GetServices() []string {
 	return nil
 }
 
+type PeerRequest struct {
+	PeerId               string   `protobuf:"bytes,1,opt,name=peer_id,json=peerId,proto3" json:"peer_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *PeerRequest) Reset()         { *m = PeerRequest{} }
+func (m *PeerRequest) String() string { return proto.CompactTextString(m) }
+func (*PeerRequest) ProtoMessage()    {}
+func (*PeerRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_4d5c81e0a630f5ab, []int{4}
+}
+func (m *PeerRequest) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *PeerRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_PeerRequest.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *PeerRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_PeerRequest.Merge(m, src)
+}
+func (m *PeerRequest) XXX_Size() int {
+	return m.Size()
+}
+func (m *PeerRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_PeerRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_PeerRequest proto.InternalMessageInfo
+
+func (m *PeerRequest) GetPeerId() string {
+	if m != nil {
+		return m.PeerId
+	}
+	return ""
+}
+
 type Peers struct {
 	Peers                []*Peer  `protobuf:"bytes,1,rep,name=peers,proto3" json:"peers,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -280,7 +358,7 @@ func (m *Peers) Reset()         { *m = Peers{} }
 func (m *Peers) String() string { return proto.CompactTextString(m) }
 func (*Peers) ProtoMessage()    {}
 func (*Peers) Descriptor() ([]byte, []int) {
-	return fileDescriptor_4d5c81e0a630f5ab, []int{4}
+	return fileDescriptor_4d5c81e0a630f5ab, []int{5}
 }
 func (m *Peers) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -317,18 +395,21 @@ func (m *Peers) GetPeers() []*Peer {
 }
 
 type Peer struct {
-	Address              string        `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
-	Direction            PeerDirection `protobuf:"varint,2,opt,name=direction,proto3,enum=ethereum.eth.v1alpha1.PeerDirection" json:"direction,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}      `json:"-"`
-	XXX_unrecognized     []byte        `json:"-"`
-	XXX_sizecache        int32         `json:"-"`
+	Address              string          `protobuf:"bytes,1,opt,name=address,proto3" json:"address,omitempty"`
+	Direction            PeerDirection   `protobuf:"varint,2,opt,name=direction,proto3,enum=ethereum.eth.v1alpha1.PeerDirection" json:"direction,omitempty"`
+	ConnectionState      ConnectionState `protobuf:"varint,3,opt,name=connection_state,json=connectionState,proto3,enum=ethereum.eth.v1alpha1.ConnectionState" json:"connection_state,omitempty"`
+	PeerId               string          `protobuf:"bytes,4,opt,name=peer_id,json=peerId,proto3" json:"peer_id,omitempty"`
+	Enr                  string          `protobuf:"bytes,5,opt,name=enr,proto3" json:"enr,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
 }
 
 func (m *Peer) Reset()         { *m = Peer{} }
 func (m *Peer) String() string { return proto.CompactTextString(m) }
 func (*Peer) ProtoMessage()    {}
 func (*Peer) Descriptor() ([]byte, []int) {
-	return fileDescriptor_4d5c81e0a630f5ab, []int{5}
+	return fileDescriptor_4d5c81e0a630f5ab, []int{6}
 }
 func (m *Peer) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -371,63 +452,163 @@ func (m *Peer) GetDirection() PeerDirection {
 	return PeerDirection_UNKNOWN
 }
 
+func (m *Peer) GetConnectionState() ConnectionState {
+	if m != nil {
+		return m.ConnectionState
+	}
+	return ConnectionState_DISCONNECTED
+}
+
+func (m *Peer) GetPeerId() string {
+	if m != nil {
+		return m.PeerId
+	}
+	return ""
+}
+
+func (m *Peer) GetEnr() string {
+	if m != nil {
+		return m.Enr
+	}
+	return ""
+}
+
+type HostData struct {
+	Addresses            []string `protobuf:"bytes,1,rep,name=addresses,proto3" json:"addresses,omitempty"`
+	PeerId               string   `protobuf:"bytes,2,opt,name=peer_id,json=peerId,proto3" json:"peer_id,omitempty"`
+	Enr                  string   `protobuf:"bytes,3,opt,name=enr,proto3" json:"enr,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *HostData) Reset()         { *m = HostData{} }
+func (m *HostData) String() string { return proto.CompactTextString(m) }
+func (*HostData) ProtoMessage()    {}
+func (*HostData) Descriptor() ([]byte, []int) {
+	return fileDescriptor_4d5c81e0a630f5ab, []int{7}
+}
+func (m *HostData) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *HostData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_HostData.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *HostData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_HostData.Merge(m, src)
+}
+func (m *HostData) XXX_Size() int {
+	return m.Size()
+}
+func (m *HostData) XXX_DiscardUnknown() {
+	xxx_messageInfo_HostData.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_HostData proto.InternalMessageInfo
+
+func (m *HostData) GetAddresses() []string {
+	if m != nil {
+		return m.Addresses
+	}
+	return nil
+}
+
+func (m *HostData) GetPeerId() string {
+	if m != nil {
+		return m.PeerId
+	}
+	return ""
+}
+
+func (m *HostData) GetEnr() string {
+	if m != nil {
+		return m.Enr
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterEnum("ethereum.eth.v1alpha1.PeerDirection", PeerDirection_name, PeerDirection_value)
+	proto.RegisterEnum("ethereum.eth.v1alpha1.ConnectionState", ConnectionState_name, ConnectionState_value)
 	proto.RegisterType((*SyncStatus)(nil), "ethereum.eth.v1alpha1.SyncStatus")
 	proto.RegisterType((*Genesis)(nil), "ethereum.eth.v1alpha1.Genesis")
 	proto.RegisterType((*Version)(nil), "ethereum.eth.v1alpha1.Version")
 	proto.RegisterType((*ImplementedServices)(nil), "ethereum.eth.v1alpha1.ImplementedServices")
+	proto.RegisterType((*PeerRequest)(nil), "ethereum.eth.v1alpha1.PeerRequest")
 	proto.RegisterType((*Peers)(nil), "ethereum.eth.v1alpha1.Peers")
 	proto.RegisterType((*Peer)(nil), "ethereum.eth.v1alpha1.Peer")
+	proto.RegisterType((*HostData)(nil), "ethereum.eth.v1alpha1.HostData")
 }
 
 func init() { proto.RegisterFile("eth/v1alpha1/node.proto", fileDescriptor_4d5c81e0a630f5ab) }
 
 var fileDescriptor_4d5c81e0a630f5ab = []byte{
-	// 688 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x54, 0xdf, 0x6a, 0x13, 0x4d,
-	0x1c, 0xfd, 0x36, 0x6d, 0xbf, 0x34, 0x93, 0xf6, 0xa3, 0xdf, 0x48, 0xdb, 0x98, 0xd6, 0x34, 0xae,
-	0x22, 0xa5, 0xd0, 0x5d, 0x92, 0x82, 0x4a, 0x45, 0xc4, 0xd8, 0x50, 0x8a, 0x92, 0x96, 0xed, 0x1f,
-	0x41, 0x0a, 0x61, 0xb2, 0xfb, 0x73, 0x77, 0x20, 0xbb, 0xb3, 0xec, 0x4c, 0x02, 0xe9, 0x65, 0x5f,
-	0xc1, 0x5b, 0x9f, 0xc0, 0x6b, 0x1f, 0x42, 0x04, 0x41, 0xf0, 0x5e, 0xa4, 0xf8, 0x04, 0x3e, 0x81,
-	0xcc, 0xee, 0x4c, 0xd3, 0xda, 0x24, 0xe0, 0xdd, 0x9c, 0xf9, 0x9d, 0xf3, 0x3b, 0x67, 0x96, 0x93,
-	0xa0, 0x65, 0x10, 0x81, 0xdd, 0xaf, 0x91, 0x6e, 0x1c, 0x90, 0x9a, 0x1d, 0x31, 0x0f, 0xac, 0x38,
-	0x61, 0x82, 0xe1, 0x45, 0x10, 0x01, 0x24, 0xd0, 0x0b, 0x2d, 0x10, 0x81, 0xa5, 0x19, 0xe5, 0x55,
-	0x9f, 0x31, 0xbf, 0x0b, 0x36, 0x89, 0xa9, 0x4d, 0xa2, 0x88, 0x09, 0x22, 0x28, 0x8b, 0x78, 0x26,
-	0x2a, 0xaf, 0xa8, 0x69, 0x8a, 0x3a, 0xbd, 0xb7, 0x36, 0x84, 0xb1, 0x18, 0xa8, 0xe1, 0xda, 0x9f,
-	0x43, 0x41, 0x43, 0xe0, 0x82, 0x84, 0xb1, 0x22, 0x6c, 0xfa, 0x54, 0x04, 0xbd, 0x8e, 0xe5, 0xb2,
-	0xd0, 0xf6, 0x99, 0xcf, 0x86, 0x4c, 0x89, 0x52, 0x90, 0x9e, 0x32, 0xba, 0xf9, 0x00, 0xa1, 0xc3,
-	0x41, 0xe4, 0x1e, 0x0a, 0x22, 0x7a, 0x1c, 0x97, 0x50, 0x9e, 0x0f, 0x22, 0x97, 0x46, 0x7e, 0xc9,
-	0xa8, 0x1a, 0xeb, 0xb3, 0x8e, 0x86, 0xe6, 0x17, 0x03, 0xe5, 0x77, 0x21, 0x02, 0x4e, 0x39, 0x7e,
-	0x8a, 0xe6, 0xfc, 0xec, 0xd8, 0x96, 0xee, 0x29, 0xb5, 0x58, 0x2f, 0x5b, 0x59, 0x34, 0x4b, 0x1b,
-	0x5a, 0x47, 0x3a, 0x9a, 0x53, 0x54, 0x7c, 0x79, 0x83, 0x1f, 0xa3, 0x92, 0x07, 0x31, 0xe3, 0x54,
-	0xb4, 0x5d, 0x16, 0x89, 0x84, 0xb8, 0xa2, 0x4d, 0x3c, 0x2f, 0x01, 0xce, 0x4b, 0xb9, 0xaa, 0xb1,
-	0x3e, 0xe7, 0x2c, 0xa9, 0xf9, 0x0b, 0x35, 0x7e, 0x9e, 0x4d, 0xf1, 0x1e, 0x5a, 0xd6, 0xc6, 0x7d,
-	0xd2, 0xa5, 0x1e, 0x11, 0x2c, 0xe1, 0xed, 0x84, 0x31, 0x51, 0x9a, 0x92, 0xc2, 0xc6, 0xff, 0xbf,
-	0xbe, 0xaf, 0xcd, 0x73, 0x7e, 0xb6, 0xc9, 0xe9, 0x19, 0x6c, 0x9b, 0x5b, 0x75, 0xd3, 0x59, 0x54,
-	0x8a, 0x93, 0x4b, 0x81, 0xc3, 0x98, 0x30, 0x9f, 0xa1, 0xfc, 0x09, 0x24, 0x9c, 0xb2, 0x48, 0x3e,
-	0xba, 0x9f, 0x1d, 0xd3, 0x97, 0x14, 0x1c, 0x0d, 0x71, 0x19, 0xcd, 0x86, 0x20, 0x88, 0x47, 0x04,
-	0x49, 0x93, 0x15, 0x9c, 0x4b, 0x6c, 0xd6, 0xd0, 0xad, 0xbd, 0x30, 0xee, 0x42, 0x08, 0x91, 0x00,
-	0xef, 0x10, 0x92, 0x3e, 0x75, 0x81, 0x4b, 0x09, 0x57, 0xe7, 0x92, 0x51, 0x9d, 0x92, 0x12, 0x8d,
-	0xcd, 0x6d, 0x34, 0x73, 0x00, 0x90, 0x70, 0x5c, 0x43, 0x33, 0xb1, 0x3c, 0xa4, 0x8c, 0x62, 0x7d,
-	0xc5, 0x1a, 0x59, 0x13, 0x4b, 0x92, 0x9d, 0x8c, 0x69, 0x7a, 0x68, 0x5a, 0x42, 0x19, 0x56, 0x7f,
-	0x2b, 0x15, 0x56, 0x41, 0xdc, 0x40, 0x05, 0x8f, 0x26, 0xe0, 0xca, 0x2a, 0xa5, 0x69, 0xff, 0xab,
-	0xdf, 0x9f, 0xb0, 0x78, 0x47, 0x73, 0x9d, 0xa1, 0x6c, 0xe3, 0x11, 0x9a, 0xbf, 0x36, 0xc3, 0x45,
-	0x94, 0x3f, 0x6e, 0xbd, 0x6c, 0xed, 0xbf, 0x6e, 0x2d, 0xfc, 0x23, 0xc1, 0x5e, 0xab, 0xb1, 0x7f,
-	0xdc, 0xda, 0x59, 0x30, 0xf0, 0x1c, 0x9a, 0xdd, 0x3f, 0x3e, 0xca, 0x50, 0xae, 0xfe, 0x71, 0x1a,
-	0x4d, 0xb7, 0x98, 0x07, 0x38, 0x42, 0xf3, 0xbb, 0x20, 0xae, 0x54, 0x6a, 0xe9, 0x46, 0x2d, 0x9a,
-	0xb2, 0xce, 0xe5, 0xbb, 0x63, 0xb2, 0x0d, 0xa5, 0xa6, 0x79, 0xfe, 0xed, 0xe7, 0xbb, 0xdc, 0x2a,
-	0x2e, 0xdb, 0x37, 0x7e, 0x5f, 0xb6, 0xea, 0x25, 0x0e, 0x10, 0xda, 0x05, 0xa1, 0x9b, 0x39, 0xce,
-	0xac, 0x32, 0xc6, 0x4c, 0xe9, 0x26, 0x3a, 0xa9, 0xfe, 0x28, 0x27, 0x5d, 0x9a, 0xbf, 0x75, 0x52,
-	0xba, 0x89, 0x4e, 0xba, 0x76, 0xe7, 0x06, 0x5a, 0x7e, 0x45, 0xb9, 0x18, 0xd5, 0xaf, 0x71, 0xbe,
-	0x1b, 0x63, 0x7c, 0x47, 0xec, 0x30, 0xef, 0xa5, 0x19, 0xee, 0xe0, 0x95, 0x51, 0xdf, 0x55, 0x1b,
-	0xb9, 0xa8, 0x20, 0x33, 0x64, 0x85, 0x1d, 0xe7, 0xba, 0x3a, 0xa1, 0x60, 0xdc, 0xac, 0xa6, 0x3e,
-	0x65, 0x5c, 0x1a, 0xe1, 0x93, 0xb6, 0xba, 0xf1, 0xde, 0xf8, 0x74, 0x51, 0x31, 0xbe, 0x5e, 0x54,
-	0x8c, 0x1f, 0x17, 0x15, 0x03, 0xdd, 0x66, 0x89, 0x3f, 0x7a, 0x63, 0xa3, 0x20, 0xdb, 0x75, 0x20,
-	0xdd, 0x0f, 0x8c, 0x37, 0x0f, 0xaf, 0xfc, 0xc7, 0xc5, 0xc9, 0x80, 0x87, 0x44, 0x50, 0xb7, 0x4b,
-	0x3a, 0xdc, 0xd6, 0x62, 0x12, 0x53, 0x7e, 0xcd, 0xf5, 0x09, 0x88, 0xe0, 0x43, 0x6e, 0xb1, 0xa9,
-	0x97, 0x37, 0xaf, 0x2c, 0xff, 0x3c, 0xbc, 0x3f, 0x6d, 0x8a, 0xe0, 0x54, 0xdf, 0x77, 0xfe, 0x4d,
-	0x9f, 0xbb, 0xf5, 0x3b, 0x00, 0x00, 0xff, 0xff, 0x9a, 0xe7, 0x89, 0xb2, 0xe0, 0x05, 0x00, 0x00,
+	// 883 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x95, 0xe1, 0x6a, 0xe3, 0x46,
+	0x10, 0xc7, 0x4f, 0x76, 0x12, 0xc7, 0xe3, 0x38, 0xe7, 0xdb, 0x92, 0x58, 0xe7, 0xa4, 0x4e, 0xaa,
+	0x96, 0x70, 0x04, 0x4e, 0x22, 0x3e, 0x68, 0xcb, 0x95, 0x52, 0xea, 0xd8, 0xa4, 0xa6, 0x45, 0x49,
+	0xe5, 0xe4, 0x0a, 0xe5, 0xc0, 0xac, 0xa5, 0xa9, 0x2d, 0x6a, 0x69, 0x55, 0xed, 0x3a, 0x90, 0xfb,
+	0x78, 0xd0, 0x27, 0xe8, 0xd7, 0x3e, 0x41, 0x9f, 0xa4, 0x14, 0x0a, 0x85, 0x7e, 0x2f, 0xc5, 0xf4,
+	0x09, 0xfa, 0x04, 0x65, 0x25, 0xad, 0xed, 0xdc, 0x59, 0x86, 0x7e, 0xdb, 0xff, 0xec, 0xcc, 0xfc,
+	0x34, 0xe3, 0x9d, 0x31, 0xd4, 0x51, 0x8c, 0xad, 0xdb, 0x33, 0x3a, 0x89, 0xc6, 0xf4, 0xcc, 0x0a,
+	0x99, 0x87, 0x66, 0x14, 0x33, 0xc1, 0xc8, 0x1e, 0x8a, 0x31, 0xc6, 0x38, 0x0d, 0x4c, 0x14, 0x63,
+	0x53, 0x79, 0x34, 0x0e, 0x47, 0x8c, 0x8d, 0x26, 0x68, 0xd1, 0xc8, 0xb7, 0x68, 0x18, 0x32, 0x41,
+	0x85, 0xcf, 0x42, 0x9e, 0x06, 0x35, 0x0e, 0xb2, 0xdb, 0x44, 0x0d, 0xa7, 0xdf, 0x59, 0x18, 0x44,
+	0xe2, 0x2e, 0xbb, 0x3c, 0x7a, 0xf3, 0x52, 0xf8, 0x01, 0x72, 0x41, 0x83, 0x28, 0x73, 0x78, 0x3a,
+	0xf2, 0xc5, 0x78, 0x3a, 0x34, 0x5d, 0x16, 0x58, 0x23, 0x36, 0x62, 0x0b, 0x4f, 0xa9, 0x12, 0x91,
+	0x9c, 0x52, 0x77, 0xe3, 0x04, 0xa0, 0x7f, 0x17, 0xba, 0x7d, 0x41, 0xc5, 0x94, 0x13, 0x1d, 0x4a,
+	0xfc, 0x2e, 0x74, 0xfd, 0x70, 0xa4, 0x6b, 0xc7, 0xda, 0x93, 0x6d, 0x47, 0x49, 0xe3, 0x77, 0x0d,
+	0x4a, 0x17, 0x18, 0x22, 0xf7, 0x39, 0xf9, 0x14, 0x76, 0x46, 0xe9, 0x71, 0x20, 0xe9, 0x89, 0x6b,
+	0xa5, 0xd5, 0x30, 0xd3, 0x4f, 0x33, 0x15, 0xd0, 0xbc, 0x56, 0x9f, 0xe6, 0x54, 0x32, 0x7f, 0x69,
+	0x21, 0x1f, 0x83, 0xee, 0x61, 0xc4, 0xb8, 0x2f, 0x06, 0x2e, 0x0b, 0x45, 0x4c, 0x5d, 0x31, 0xa0,
+	0x9e, 0x17, 0x23, 0xe7, 0x7a, 0xe1, 0x58, 0x7b, 0xb2, 0xe3, 0xec, 0x67, 0xf7, 0xe7, 0xd9, 0xf5,
+	0xe7, 0xe9, 0x2d, 0xe9, 0x41, 0x5d, 0x81, 0x6f, 0xe9, 0xc4, 0xf7, 0xa8, 0x60, 0x31, 0x1f, 0xc4,
+	0x8c, 0x09, 0xbd, 0x28, 0x03, 0xdb, 0x8f, 0xfe, 0xfd, 0xeb, 0xa8, 0xca, 0xf9, 0xab, 0xa7, 0xdc,
+	0x7f, 0x85, 0xcf, 0x8d, 0x67, 0x2d, 0xc3, 0xd9, 0xcb, 0x22, 0x5e, 0xcc, 0x03, 0x1c, 0xc6, 0x84,
+	0xf1, 0x19, 0x94, 0x5e, 0x60, 0xcc, 0x7d, 0x16, 0xca, 0xa2, 0x6f, 0xd3, 0x63, 0x52, 0x49, 0xd9,
+	0x51, 0x92, 0x34, 0x60, 0x3b, 0x40, 0x41, 0x3d, 0x2a, 0x68, 0xf2, 0x65, 0x65, 0x67, 0xae, 0x8d,
+	0x33, 0x78, 0xa7, 0x17, 0x44, 0x13, 0x0c, 0x30, 0x14, 0xe8, 0xf5, 0x31, 0xbe, 0xf5, 0x5d, 0xe4,
+	0x32, 0x84, 0x67, 0x67, 0x5d, 0x3b, 0x2e, 0xca, 0x10, 0xa5, 0x8d, 0x13, 0xa8, 0x5c, 0x21, 0xc6,
+	0x0e, 0xfe, 0x30, 0x45, 0x2e, 0x48, 0x1d, 0x4a, 0x11, 0x62, 0x3c, 0xf0, 0xbd, 0x8c, 0xbb, 0x25,
+	0x65, 0xcf, 0x33, 0x9e, 0xc3, 0xa6, 0xf4, 0xe3, 0xe4, 0x0c, 0x36, 0xa5, 0x29, 0xcd, 0x54, 0x69,
+	0x1d, 0x98, 0x2b, 0x9f, 0x93, 0x99, 0x24, 0x4d, 0x3d, 0x8d, 0x99, 0x06, 0x1b, 0x52, 0xcb, 0xaa,
+	0x54, 0x53, 0xb3, 0xaa, 0x32, 0x49, 0xda, 0x50, 0xf6, 0xfc, 0x18, 0x5d, 0xf9, 0xe6, 0x92, 0xb2,
+	0x76, 0x5b, 0x1f, 0xac, 0xc9, 0xdc, 0x51, 0xbe, 0xce, 0x22, 0x8c, 0x7c, 0x0d, 0x35, 0x97, 0x85,
+	0x61, 0xaa, 0x06, 0x5c, 0x50, 0x81, 0xc9, 0x4f, 0xb0, 0xdb, 0x3a, 0xc9, 0x49, 0x75, 0x3e, 0x77,
+	0x97, 0x6f, 0x0d, 0x9d, 0x87, 0xee, 0x7d, 0xc3, 0x72, 0x3b, 0x36, 0x96, 0xdb, 0x41, 0x6a, 0x50,
+	0xc4, 0x30, 0xd6, 0x37, 0x13, 0xa3, 0x3c, 0x1a, 0x7d, 0xd8, 0xfe, 0x82, 0x71, 0xd1, 0xa1, 0x82,
+	0x92, 0x43, 0x28, 0x67, 0x85, 0xcd, 0x3b, 0xbe, 0x30, 0x2c, 0x27, 0x2d, 0xac, 0x4a, 0x5a, 0x9c,
+	0x27, 0x3d, 0xfd, 0x08, 0xaa, 0xf7, 0xca, 0x25, 0x15, 0x28, 0xdd, 0xd8, 0x5f, 0xda, 0x97, 0xdf,
+	0xd8, 0xb5, 0x07, 0x52, 0xf4, 0xec, 0xf6, 0xe5, 0x8d, 0xdd, 0xa9, 0x69, 0x64, 0x07, 0xb6, 0x2f,
+	0x6f, 0xae, 0x53, 0x55, 0x38, 0xbd, 0x81, 0x87, 0x6f, 0x14, 0x47, 0x6a, 0xb0, 0xd3, 0xe9, 0xf5,
+	0xcf, 0x2f, 0x6d, 0xbb, 0x7b, 0x7e, 0xdd, 0xed, 0xd4, 0x1e, 0x90, 0x47, 0x50, 0x5d, 0x58, 0x7a,
+	0xf6, 0x45, 0x4d, 0x23, 0x55, 0x28, 0x2f, 0x3c, 0x0a, 0x64, 0x17, 0x60, 0xe9, 0xba, 0xd8, 0xfa,
+	0x71, 0x0b, 0x36, 0x6c, 0xe6, 0x21, 0x09, 0xa1, 0x7a, 0x81, 0x62, 0x69, 0x4a, 0xf7, 0xdf, 0x9a,
+	0xb4, 0xae, 0xdc, 0x10, 0x8d, 0xf7, 0x72, 0x5a, 0xbf, 0x08, 0x35, 0x8c, 0xd7, 0x7f, 0xfe, 0xf3,
+	0x53, 0xe1, 0x90, 0x34, 0xac, 0xb7, 0x56, 0x96, 0x95, 0x8d, 0x3a, 0x19, 0x03, 0x5c, 0xa0, 0x50,
+	0xc3, 0x9e, 0x07, 0x6b, 0xe6, 0xc0, 0xb2, 0xb8, 0xb5, 0xa4, 0x6c, 0x24, 0x33, 0x92, 0x9a, 0xc3,
+	0xff, 0x4b, 0xca, 0xe2, 0xd6, 0x92, 0xd4, 0x24, 0xbf, 0xd6, 0xa0, 0xfe, 0x95, 0xcf, 0xc5, 0xaa,
+	0x91, 0xcd, 0xe3, 0x9e, 0xe6, 0x70, 0x57, 0xe4, 0x30, 0xde, 0x4f, 0xbe, 0xe1, 0x5d, 0x72, 0xb0,
+	0xaa, 0xaf, 0x0a, 0x34, 0x94, 0x2b, 0x54, 0xc8, 0x97, 0x9b, 0xcb, 0x3c, 0xca, 0x61, 0xaa, 0xe7,
+	0x6e, 0x34, 0x13, 0x90, 0x4e, 0xf6, 0x57, 0x80, 0xa2, 0x56, 0x44, 0xbe, 0x4f, 0x18, 0xc9, 0x06,
+	0x30, 0xd6, 0xad, 0x8b, 0x74, 0x07, 0x35, 0xd6, 0xad, 0x14, 0xe3, 0x28, 0x61, 0x3d, 0x26, 0xf5,
+	0x55, 0x2c, 0x49, 0x70, 0xa1, 0x2c, 0x9b, 0x9a, 0x2e, 0xab, 0xbc, 0x92, 0x0e, 0xd7, 0x20, 0xb8,
+	0x71, 0x9c, 0x30, 0x1a, 0x44, 0xcf, 0x61, 0xf0, 0xf6, 0xcf, 0xda, 0xaf, 0xb3, 0xa6, 0xf6, 0xc7,
+	0xac, 0xa9, 0xfd, 0x3d, 0x6b, 0x6a, 0xf0, 0x98, 0xc5, 0xa3, 0xd5, 0x19, 0xdb, 0x65, 0x39, 0x2e,
+	0x57, 0x92, 0x7e, 0xa5, 0x7d, 0xfb, 0xe1, 0xd2, 0xff, 0x60, 0x14, 0xdf, 0xf1, 0x80, 0x0a, 0xdf,
+	0x9d, 0xd0, 0x21, 0xb7, 0x54, 0x30, 0x8d, 0x7c, 0x7e, 0x8f, 0xfa, 0x09, 0x8a, 0xf1, 0x2f, 0x85,
+	0xbd, 0xae, 0x4a, 0xde, 0x5d, 0x4a, 0xfe, 0xdb, 0xc2, 0xfe, 0xb2, 0x2b, 0xc6, 0x2f, 0x95, 0x7d,
+	0xb8, 0x95, 0x94, 0xfb, 0xec, 0xbf, 0x00, 0x00, 0x00, 0xff, 0xff, 0x27, 0xda, 0x91, 0x9e, 0x04,
+	0x08, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -446,6 +627,8 @@ type NodeClient interface {
 	GetGenesis(ctx context.Context, in *types.Empty, opts ...grpc.CallOption) (*Genesis, error)
 	GetVersion(ctx context.Context, in *types.Empty, opts ...grpc.CallOption) (*Version, error)
 	ListImplementedServices(ctx context.Context, in *types.Empty, opts ...grpc.CallOption) (*ImplementedServices, error)
+	GetHost(ctx context.Context, in *types.Empty, opts ...grpc.CallOption) (*HostData, error)
+	GetPeer(ctx context.Context, in *PeerRequest, opts ...grpc.CallOption) (*Peer, error)
 	ListPeers(ctx context.Context, in *types.Empty, opts ...grpc.CallOption) (*Peers, error)
 }
 
@@ -493,6 +676,24 @@ func (c *nodeClient) ListImplementedServices(ctx context.Context, in *types.Empt
 	return out, nil
 }
 
+func (c *nodeClient) GetHost(ctx context.Context, in *types.Empty, opts ...grpc.CallOption) (*HostData, error) {
+	out := new(HostData)
+	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/GetHost", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *nodeClient) GetPeer(ctx context.Context, in *PeerRequest, opts ...grpc.CallOption) (*Peer, error) {
+	out := new(Peer)
+	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/GetPeer", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *nodeClient) ListPeers(ctx context.Context, in *types.Empty, opts ...grpc.CallOption) (*Peers, error) {
 	out := new(Peers)
 	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/ListPeers", in, out, opts...)
@@ -508,6 +709,8 @@ type NodeServer interface {
 	GetGenesis(context.Context, *types.Empty) (*Genesis, error)
 	GetVersion(context.Context, *types.Empty) (*Version, error)
 	ListImplementedServices(context.Context, *types.Empty) (*ImplementedServices, error)
+	GetHost(context.Context, *types.Empty) (*HostData, error)
+	GetPeer(context.Context, *PeerRequest) (*Peer, error)
 	ListPeers(context.Context, *types.Empty) (*Peers, error)
 }
 
@@ -526,6 +729,12 @@ func (*UnimplementedNodeServer) GetVersion(ctx context.Context, req *types.Empty
 }
 func (*UnimplementedNodeServer) ListImplementedServices(ctx context.Context, req *types.Empty) (*ImplementedServices, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListImplementedServices not implemented")
+}
+func (*UnimplementedNodeServer) GetHost(ctx context.Context, req *types.Empty) (*HostData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetHost not implemented")
+}
+func (*UnimplementedNodeServer) GetPeer(ctx context.Context, req *PeerRequest) (*Peer, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetPeer not implemented")
 }
 func (*UnimplementedNodeServer) ListPeers(ctx context.Context, req *types.Empty) (*Peers, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPeers not implemented")
@@ -607,6 +816,42 @@ func _Node_ListImplementedServices_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Node_GetHost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(types.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NodeServer).GetHost(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ethereum.eth.v1alpha1.Node/GetHost",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NodeServer).GetHost(ctx, req.(*types.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Node_GetPeer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PeerRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NodeServer).GetPeer(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ethereum.eth.v1alpha1.Node/GetPeer",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NodeServer).GetPeer(ctx, req.(*PeerRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Node_ListPeers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(types.Empty)
 	if err := dec(in); err != nil {
@@ -644,6 +889,14 @@ var _Node_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListImplementedServices",
 			Handler:    _Node_ListImplementedServices_Handler,
+		},
+		{
+			MethodName: "GetHost",
+			Handler:    _Node_GetHost_Handler,
+		},
+		{
+			MethodName: "GetPeer",
+			Handler:    _Node_GetPeer_Handler,
 		},
 		{
 			MethodName: "ListPeers",
@@ -821,6 +1074,40 @@ func (m *ImplementedServices) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *PeerRequest) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *PeerRequest) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *PeerRequest) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.PeerId) > 0 {
+		i -= len(m.PeerId)
+		copy(dAtA[i:], m.PeerId)
+		i = encodeVarintNode(dAtA, i, uint64(len(m.PeerId)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *Peers) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -886,6 +1173,25 @@ func (m *Peer) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
 	}
+	if len(m.Enr) > 0 {
+		i -= len(m.Enr)
+		copy(dAtA[i:], m.Enr)
+		i = encodeVarintNode(dAtA, i, uint64(len(m.Enr)))
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.PeerId) > 0 {
+		i -= len(m.PeerId)
+		copy(dAtA[i:], m.PeerId)
+		i = encodeVarintNode(dAtA, i, uint64(len(m.PeerId)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if m.ConnectionState != 0 {
+		i = encodeVarintNode(dAtA, i, uint64(m.ConnectionState))
+		i--
+		dAtA[i] = 0x18
+	}
 	if m.Direction != 0 {
 		i = encodeVarintNode(dAtA, i, uint64(m.Direction))
 		i--
@@ -897,6 +1203,56 @@ func (m *Peer) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		i = encodeVarintNode(dAtA, i, uint64(len(m.Address)))
 		i--
 		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *HostData) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *HostData) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *HostData) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Enr) > 0 {
+		i -= len(m.Enr)
+		copy(dAtA[i:], m.Enr)
+		i = encodeVarintNode(dAtA, i, uint64(len(m.Enr)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if len(m.PeerId) > 0 {
+		i -= len(m.PeerId)
+		copy(dAtA[i:], m.PeerId)
+		i = encodeVarintNode(dAtA, i, uint64(len(m.PeerId)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.Addresses) > 0 {
+		for iNdEx := len(m.Addresses) - 1; iNdEx >= 0; iNdEx-- {
+			i -= len(m.Addresses[iNdEx])
+			copy(dAtA[i:], m.Addresses[iNdEx])
+			i = encodeVarintNode(dAtA, i, uint64(len(m.Addresses[iNdEx])))
+			i--
+			dAtA[i] = 0xa
+		}
 	}
 	return len(dAtA) - i, nil
 }
@@ -989,6 +1345,22 @@ func (m *ImplementedServices) Size() (n int) {
 	return n
 }
 
+func (m *PeerRequest) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.PeerId)
+	if l > 0 {
+		n += 1 + l + sovNode(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *Peers) Size() (n int) {
 	if m == nil {
 		return 0
@@ -1019,6 +1391,43 @@ func (m *Peer) Size() (n int) {
 	}
 	if m.Direction != 0 {
 		n += 1 + sovNode(uint64(m.Direction))
+	}
+	if m.ConnectionState != 0 {
+		n += 1 + sovNode(uint64(m.ConnectionState))
+	}
+	l = len(m.PeerId)
+	if l > 0 {
+		n += 1 + l + sovNode(uint64(l))
+	}
+	l = len(m.Enr)
+	if l > 0 {
+		n += 1 + l + sovNode(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *HostData) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if len(m.Addresses) > 0 {
+		for _, s := range m.Addresses {
+			l = len(s)
+			n += 1 + l + sovNode(uint64(l))
+		}
+	}
+	l = len(m.PeerId)
+	if l > 0 {
+		n += 1 + l + sovNode(uint64(l))
+	}
+	l = len(m.Enr)
+	if l > 0 {
+		n += 1 + l + sovNode(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -1468,6 +1877,92 @@ func (m *ImplementedServices) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *PeerRequest) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowNode
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: PeerRequest: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: PeerRequest: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PeerId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNode
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNode
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNode
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PeerId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipNode(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthNode
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthNode
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *Peers) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1636,6 +2131,239 @@ func (m *Peer) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
+		case 3:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ConnectionState", wireType)
+			}
+			m.ConnectionState = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNode
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ConnectionState |= ConnectionState(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PeerId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNode
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNode
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNode
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PeerId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Enr", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNode
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNode
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNode
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Enr = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipNode(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthNode
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthNode
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *HostData) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowNode
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: HostData: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: HostData: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Addresses", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNode
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNode
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNode
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Addresses = append(m.Addresses, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PeerId", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNode
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNode
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNode
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.PeerId = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Enr", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowNode
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthNode
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthNode
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Enr = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipNode(dAtA[iNdEx:])
