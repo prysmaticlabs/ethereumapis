@@ -164,8 +164,8 @@ enum PeerDirection {
 
 // ConnectionState states the current status of the peer.
 enum ConnectionState {
-    CONNECTED = 0;
-    CONNECTING = 1;
-    DISCONNECTED = 2;
-    DISCONNECTING = 3;
+    DISCONNECTED = 0;
+    DISCONNECTING = 1;
+    CONNECTED = 2;
+    CONNECTING = 3;
 }
