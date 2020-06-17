@@ -114,7 +114,7 @@ message ImplementedServices {
 }
 
 message PeerRequest {
-    // Peer id of the peer that we want.
+    // Peer id of the peer requested.
     string peer_id = 1;
 }
 
