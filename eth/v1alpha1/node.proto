@@ -64,6 +64,12 @@ service Node {
         };
     }
 
+    // Retrieves the peer data of the local peer.
+    rpc GetHost(google.protobuf.Empty) returns (HostData) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/node/p2p"
+        };
+    }
 
     // Retrieve the peer corresponding to the provided peer id.
     rpc GetPeer(PeerRequest) returns (Peer) {
@@ -136,6 +142,17 @@ message Peer {
     string peer_id = 4;
     // The latest ENR of the peer that's in the record.
     string enr = 5;
+}
+
+// P2P Data on the local host.
+message HostData{
+    // All the  multiaddress of the peer, specified as a full multiaddr, for example:
+    // /ip4/37.221.192.134/tcp/13000/p2p/16Uiu2HAm8maLMjag1TAUM52zPfmLbVMGFdwUAWgoHu1HDQLR6e17
+    repeated string addresses = 1;
+    // The peer id of the peer.
+    string peer_id = 2;
+    // The latest ENR of the local peer.
+    string enr = 3;
 }
 
 // PeerDirection states the direction of the connection to a peer.
