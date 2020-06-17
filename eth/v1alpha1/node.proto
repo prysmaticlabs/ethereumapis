@@ -134,7 +134,7 @@ message Peer {
     ConnectionState connection_state = 3;
     // The peer id of the peer.
     string peer_id = 4;
-    // The latest ENR of the peer that we have a record of.
+    // The latest ENR of the peer that's in the record.
     string enr = 5;
 }
 
