@@ -303,6 +303,7 @@ enum ValidatorStatus {
   EXITING = 4;
   SLASHING = 5;
   EXITED = 6;
+  INVALID = 7;
 }
 
 message ValidatorStatusResponse {
