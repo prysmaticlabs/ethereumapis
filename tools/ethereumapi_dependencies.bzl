@@ -311,8 +311,8 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_ferranbt_fastssz",
         importpath = "github.com/ferranbt/fastssz",
-        sum = "h1:maoKvILdMk6CSWHanFcUdxXIZGKD9YpWIaVbUQ/4kfg=",
-        version = "v0.0.0-20200514094935-99fccaf93472",
+        sum = "h1:qLZC3oQLJ5eb18EZS3yDcnX7zmlEt8WTWlQR7x5wS5I=",
+        version = "v0.0.0-20200728110133-0b6e349af87a",
     )
     go_repository(
         name = "com_github_ghodss_yaml",
@@ -329,12 +329,18 @@ def ethereumapi_deps():
     go_repository(
         name = "in_gopkg_yaml_v2",
         importpath = "gopkg.in/yaml.v2",
-        sum = "h1:fvjTMHxHEw/mxHbtzPi3JCcKXQRAnQTBRo6YCJSVHKI=",
-        version = "v2.2.3",
+        sum = "h1:clyUAQHOM3G0M3f5vQj7LuJrETvjVot3Z5el9nffUtU=",
+        version = "v2.3.0",
     )
     go_repository(
         name = "com_github_grpc_ecosystem_grpc_gateway",
         importpath = "github.com/grpc-ecosystem/grpc-gateway",
-        sum = "h1:D0EVSTwQoQOyfY35QNSuPJA4jpZRtkoGYWQMB7XNg5o=",
-        version = "v1.12.2",
+        sum = "h1:sBDQoHXrOlfPobnKw69FIKa1wg9qsLLvvQ/Y19WtFgI=",
+        version = "v1.13.0",
+    )
+    go_repository(
+        name = "com_github_mitchellh_mapstructure",
+        importpath = "github.com/mitchellh/mapstructure",
+        sum = "h1:mRS76wmkOn3KkKAyXDu42V+6ebnXWIztFSYGN7GeoRg=",
+        version = "v1.3.2",
     )
