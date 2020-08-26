@@ -209,7 +209,7 @@ service BeaconNodeValidator {
     //
     // The beacon node is expected to validate the request and make it available for inclusion in
     // the next proposed block.
-    rpc ProposeExit(SignedVoluntaryExit) returns (google.protobuf.Empty) {
+    rpc ProposeExit(SignedVoluntaryExit) returns (ProposeExitResponse) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/exit"
         };
