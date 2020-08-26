@@ -209,7 +209,7 @@ service BeaconNodeValidator {
     //
     // The beacon node is expected to validate the request and make it available for inclusion in
     // the next proposed block.
-    rpc ProposeExit(SignedVoluntaryExit) returns (google.protobuf.Empty) {
+    rpc ProposeExit(SignedVoluntaryExit) returns (ProposeExitResponse) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/exit"
         };
@@ -397,6 +397,11 @@ message BlockRequest {
 message ProposeResponse {
     // The block root of the successfully proposed beacon block.
     bytes block_root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
+}
+
+message ProposeExitResponse {
+    // The root of the successfully proposed voluntary exit.
+    bytes exit_root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
 }
 
 message AttestationDataRequest {
