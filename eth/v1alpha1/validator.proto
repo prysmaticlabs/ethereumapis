@@ -399,6 +399,11 @@ message ProposeResponse {
     bytes block_root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
 }
 
+message ProposeExitResponse {
+    // The root of the successfully proposed voluntary exit.
+    bytes exit_root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
+}
+
 message AttestationDataRequest {
     // Slot for which the attestation should be created.
     uint64 slot = 1;
