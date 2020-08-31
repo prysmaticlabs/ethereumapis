@@ -41,12 +41,12 @@ service Beacon {
     option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/finality_checkpoints" };
   }
 
-  rpc Validator(StateValidatorRequest) returns (StateValidatorResponse) {
-    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validators/{validator_id}" };
-  }
-
   rpc Validators(StateRequest) returns (StateValidatorsResponse) {
     option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validators" };
+  }
+
+  rpc Validator(StateValidatorRequest) returns (StateValidatorResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validators/{validator_id}" };
   }
 
   rpc Committees(StateCommitteesRequest) returns (StateCommitteesResponse) {
