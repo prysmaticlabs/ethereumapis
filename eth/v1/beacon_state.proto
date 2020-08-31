@@ -25,32 +25,50 @@ import "google/protobuf/any.proto";
 // The beacon chain API can be used to access data relevant to the Ethereum 2.0
 // phase 0 beacon chain.
 service Beacon {
-  // TODO(preston): Batch requests?
+  rpc Genesis(google.protobuf.Empty) returns (GenesisResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/genesis" };
+  }
 
-  // Return the SSZ state root for the requested beacon state. Accepted beacon states are:
-  // "head" (canonical head in node's view), "genesis", "finalized", "justified",
-  // <slot>, <hex encoded stateRoot with 0x prefix>.
-  rpc Root(StateRootRequest) returns (StateRootResponse) {
+  rpc Root(StateRequest) returns (StateRootResponse) {
     option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/root" };
   }
 
-  rpc Fork(StateForkRequest) returns (StateForkResponse) {
+  rpc Fork(StateRequest) returns (StateForkResponse) {
     option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/fork" };
+  }
+
+  rpc FinalityCheckpoint(StateRequest) returns (StateFinalityCheckpointResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/finality_checkpoints" };
+  }
+
+  rpc Validator(StateValidatorRequest) returns (StateValidatorResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validators/{validator_id}" };
+  }
+
+  rpc Validators(StateRequest) returns (StateValidatorsResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validators" };
+  }
+
+  rpc Committees(StateCommitteesRequest) returns (StateCommitteesResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/committees/{epoch}" };
   }
 }
 
-message StateRootRequest {
-  // The string ID of which state to use for the request.
+message GenesisResponse {
+  uint64 genesis_time = 1;
+  string genesis_validators_root = 2;
+  string genesis_fork_version = 3;
+}
+
+message StateRequest {
+  // The state id which can be any of: "head" (canonical head in node's view),
+  // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
+  // Uses the provided state_id for the request.
   string state_id = 1;
 }
 
 message StateRootResponse {
-  repeated bytes state_root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
-}
-
-message StateForkRequest {
-  // The string ID of which state to use for the request.
-  string state_id = 1;
+  string state_root = 1;
 }
 
 message StateForkResponse {
@@ -58,7 +76,72 @@ message StateForkResponse {
 }
 
 message Fork {
-  bytes previous_version = 1 [(gogoproto.moretags) = "ssz-size:\"4\""];
-  bytes current_version = 2 [(gogoproto.moretags) = "ssz-size:\"4\""];
+  string previous_version = 1;
+  string current_version = 2;
   uint64 epoch = 3;
+}
+
+message StateFinalityCheckpointResponse {
+  Checkpoint previous_justified = 1;
+  Checkpoint current_justified = 2;
+  Checkpoint finalized = 3;
+}
+
+message Checkpoint {
+  uint64 epoch = 1;
+  string root = 2;
+}
+
+message StateValidatorsResponse {
+  repeated ValidatorContainer validators = 1;
+}
+
+message StateValidatorRequest {
+  // The state id which can be any of: "head" (canonical head in node's view),
+  // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
+  // Uses the provided state_id for the request.
+  string state_id = 1;
+  // The public key or index for the validator to retrieve information for.
+  string validator_id = 2;
+}
+
+message StateValidatorResponse {
+  ValidatorContainer validator = 1;
+}
+
+message ValidatorContainer {
+  uint64 index = 1;
+  uint64 balance = 2;
+  string status = 3;
+  Validator validator = 4;
+}
+
+message Validator {
+  string pubkey = 1;
+  string withdrawal_credentials = 2;
+  uint64 effective_balance = 3;
+  bool slashed = 4;
+  uint64 activation_eligibility_epoch = 5;
+  uint64 activation_epoch = 6;
+  uint64 exit_epoch = 7;
+  uint64 withdrawable_epoch = 8;
+}
+
+message StateCommitteesRequest {
+  // The state id which can be any of: "head" (canonical head in node's view),
+  // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
+  // Uses the provided state_id for the request.
+  string state_id = 1;
+  // The epoch to retrieve the committees of.
+  uint64 epoch = 2;
+}
+
+message StateCommitteesResponse {
+  repeated Committee committee = 1;
+}
+
+message Committee {
+  uint64 index = 1;
+  uint64 slot = 2;
+  repeated uint64 validators = 3;
 }
