@@ -55,7 +55,7 @@ service Beacon {
 }
 
 message GenesisResponse {
-  string genesis_time = 1;
+  uint64 genesis_time = 1;
   string genesis_validators_root = 2;
   string genesis_fork_version = 3;
 }
@@ -78,7 +78,7 @@ message StateForkResponse {
 message Fork {
   string previous_version = 1;
   string current_version = 2;
-  string epoch = 3;
+  uint64 epoch = 3;
 }
 
 message StateFinalityCheckpointResponse {
@@ -88,7 +88,7 @@ message StateFinalityCheckpointResponse {
 }
 
 message Checkpoint {
-  string epoch = 1;
+  uint64 epoch = 1;
   string root = 2;
 }
 
@@ -110,8 +110,8 @@ message StateValidatorResponse {
 }
 
 message ValidatorContainer {
-  string index = 1;
-  string balance = 2;
+  uint64 index = 1;
+  uint64 balance = 2;
   string status = 3;
   Validator validator = 4;
 }
@@ -119,12 +119,12 @@ message ValidatorContainer {
 message Validator {
   string pubkey = 1;
   string withdrawal_credentials = 2;
-  string effective_balance = 3;
+  uint64 effective_balance = 3;
   bool slashed = 4;
-  string activation_eligibility_epoch = 5;
-  string activation_epoch = 6;
-  string exit_epoch = 7;
-  string withdrawable_epoch = 8;
+  uint64 activation_eligibility_epoch = 5;
+  uint64 activation_epoch = 6;
+  uint64 exit_epoch = 7;
+  uint64 withdrawable_epoch = 8;
 }
 
 message StateCommitteesRequest {
@@ -133,7 +133,7 @@ message StateCommitteesRequest {
   // Uses the provided state_id for the request.
   string state_id = 1;
   // The epoch to retrieve the committees of.
-  string epoch = 2;
+  uint64 epoch = 2;
 }
 
 message StateCommitteesResponse {
@@ -141,7 +141,7 @@ message StateCommitteesResponse {
 }
 
 message Committee {
-  string index = 1;
-  string slot = 2;
-  repeated string validators = 3;
+  uint64 index = 1;
+  uint64 slot = 2;
+  repeated uint64 validators = 3;
 }
