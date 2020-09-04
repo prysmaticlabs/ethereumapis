@@ -25,30 +25,38 @@ import "google/protobuf/any.proto";
 // The beacon chain API can be used to access data relevant to the Ethereum 2.0
 // phase 0 beacon chain.
 service Beacon {
+  // Genesis retrieves details of the chain's genesis which can be used to identify chain.
   rpc Genesis(google.protobuf.Empty) returns (GenesisResponse) {
     option (google.api.http) = { get: "/eth/v1/beacon/genesis" };
   }
 
+  // Root calculates HashTreeRoot for state with given 'stateId'. If stateId is root, same value will be returned.
   rpc Root(StateRequest) returns (StateRootResponse) {
     option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/root" };
   }
 
+  // Fork returns Fork object for state with given 'stateId'.
   rpc Fork(StateRequest) returns (StateForkResponse) {
     option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/fork" };
   }
 
-  rpc FinalityCheckpoint(StateRequest) returns (StateFinalityCheckpointResponse) {
+  // FinalityCheckpoints returns finality checkpoints for state with given 'stateId'. In case finality is
+  // not yet achieved, checkpoint should return epoch 0 and ZERO_HASH as root.
+  rpc FinalityCheckpoints(StateRequest) returns (StateFinalityCheckpointResponse) {
     option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/finality_checkpoints" };
   }
 
-  rpc Validators(StateRequest) returns (StateValidatorsResponse) {
+  // Validators returns filterable list of validators with their balance, status and index.
+  rpc Validators(StateValidatorsRequest) returns (StateValidatorsResponse) {
     option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validators" };
   }
 
+  // Validator returns a validator specified by state and id or public key along with status and balance.
   rpc Validator(StateValidatorRequest) returns (StateValidatorResponse) {
     option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validators/{validator_id}" };
   }
 
+  // Committees retrieves the committees for the given state at the given epoch.
   rpc Committees(StateCommitteesRequest) returns (StateCommitteesResponse) {
     option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/committees/{epoch}" };
   }
@@ -92,8 +100,21 @@ message Checkpoint {
   string root = 2;
 }
 
+message StateValidatorsRequest {
+  // The state id which can be any of: "head" (canonical head in node's view),
+  // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
+  // Uses the provided state_id for the request.
+  string state_id = 1;
+  // An array of either hex encoded public keys (with 0x prefix) or validator indexes.
+  repeated string id = 2;
+  // The status to query validators for, can be one of: pending_initialized, pending_queued, active_ongoing,
+  // active_exiting, active_slashed, exited_unslashed, exited_slashed, withdrawal_possible,
+  // withdrawal_done, active, pending, exited, withdrawal
+  string status = 3;
+}
+
 message StateValidatorsResponse {
-  repeated ValidatorContainer validators = 1;
+  repeated ValidatorContainer data = 1;
 }
 
 message StateValidatorRequest {
@@ -106,7 +127,7 @@ message StateValidatorRequest {
 }
 
 message StateValidatorResponse {
-  ValidatorContainer validator = 1;
+  ValidatorContainer data = 1;
 }
 
 message ValidatorContainer {
@@ -134,10 +155,14 @@ message StateCommitteesRequest {
   string state_id = 1;
   // The epoch to retrieve the committees of.
   uint64 epoch = 2;
+  // Committee index requested.
+  uint64 index = 3;
+  // Committee slot requested.
+  uint64 slot = 4;
 }
 
 message StateCommitteesResponse {
-  repeated Committee committee = 1;
+  repeated Committee data = 1;
 }
 
 message Committee {
