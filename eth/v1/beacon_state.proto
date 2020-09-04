@@ -20,11 +20,11 @@ import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/any.proto";
 
-// Beacon chain API
+// BeaconState API
 //
-// The beacon chain API can be used to access data relevant to the Ethereum 2.0
-// phase 0 beacon chain.
-service Beacon {
+// The beacon state API can be used to access data that is part of the Ethereum 2.0
+// phase 0 beacon chain state.
+service BeaconState {
   // Genesis retrieves details of the chain's genesis which can be used to identify chain.
   rpc Genesis(google.protobuf.Empty) returns (GenesisResponse) {
     option (google.api.http) = { get: "/eth/v1/beacon/genesis" };
