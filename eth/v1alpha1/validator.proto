@@ -229,8 +229,7 @@ service BeaconNodeValidator {
     rpc SubscribeCommitteeSubnets(CommitteeSubnetsSubscribeRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/subnet/subscribe"
-            body: "*"
-            
+            body: "*"  
         };
     }
 }
