@@ -175,7 +175,6 @@ service BeaconNodeValidator {
     rpc GetAttestationData(AttestationDataRequest) returns (AttestationData) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validator/attestation"
-            body: "*"
         };
     }
 
