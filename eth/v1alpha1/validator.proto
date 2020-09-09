@@ -164,6 +164,7 @@ service BeaconNodeValidator {
     rpc ProposeBlock(SignedBeaconBlock) returns (ProposeResponse) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/block"
+            body: "*"
         };
     }
 
@@ -174,6 +175,7 @@ service BeaconNodeValidator {
     rpc GetAttestationData(AttestationDataRequest) returns (AttestationData) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validator/attestation"
+            body: "*"
         };
     }
 
@@ -185,6 +187,7 @@ service BeaconNodeValidator {
     rpc ProposeAttestation(Attestation) returns (AttestResponse) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/attestation"
+            body: "*"
         };
     }
 
@@ -194,14 +197,16 @@ service BeaconNodeValidator {
     rpc SubmitAggregateSelectionProof(AggregateSelectionRequest) returns (AggregateSelectionResponse) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/aggregate"
+            body: "*"
         };
     }
 
     // Submit a signed aggregate and proof object, the beacon node will broadcast the
     // signed aggregated attestation and proof object.
-        rpc SubmitSignedAggregateSelectionProof(SignedAggregateSubmitRequest) returns (SignedAggregateSubmitResponse) {
-             option (google.api.http) = {
+    rpc SubmitSignedAggregateSelectionProof(SignedAggregateSubmitRequest) returns (SignedAggregateSubmitResponse) {
+        option (google.api.http) = {
             post: "/eth/v1alpha1/validator/aggregate"
+            body: "*"
         };
     }
 
@@ -212,6 +217,7 @@ service BeaconNodeValidator {
     rpc ProposeExit(SignedVoluntaryExit) returns (ProposeExitResponse) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/exit"
+            body: "*"
         };
     }
 
@@ -223,6 +229,8 @@ service BeaconNodeValidator {
     rpc SubscribeCommitteeSubnets(CommitteeSubnetsSubscribeRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/eth/v1alpha1/validator/subnet/subscribe"
+            body: "*"
+            
         };
     }
 }
