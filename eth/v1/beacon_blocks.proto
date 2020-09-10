@@ -121,7 +121,7 @@ message BlockBody {
   repeated AttesterSlashing attester_slashings = 5;
   repeated Attestation attestations = 6;
   repeated Deposit deposits = 7;
-  repeated VoluntaryExit voluntary_exits = 8;
+  repeated SignedVoluntaryExit voluntary_exits = 8;
 }
 
 message Eth1Data {
@@ -192,9 +192,14 @@ message DepositData {
   string signature = 4;
 }
 
+message SignedVoluntaryExit {
+  VoluntaryExit message = 1;
+  string signature = 2;
+}
+
 message VoluntaryExit {
   uint64 epoch = 1;
-  uint64 voluntary_exits = 2;
+  uint64 validator_index = 2;
 }
 
 message BlockRootResponse {
