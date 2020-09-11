@@ -18,6 +18,8 @@ package ethereum.eth.v1;
 import "google/protobuf/empty.proto";
 import "google/protobuf/any.proto";
 
+import "eth/v1/beacon_state.proto";
+
 // Beacon chain API
 //
 // The beacon chain API can be used to access data relevant to the Ethereum 2.0
@@ -173,11 +175,6 @@ message AttestationData {
   string beacon_block_root = 3;
   Checkpoint source = 4;
   Checkpoint target = 5;
-}
-
-message Checkpoint {
-  uint64 epoch = 1;
-  string root = 2;
 }
 
 message Deposit {
