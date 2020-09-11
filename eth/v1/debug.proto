@@ -42,7 +42,7 @@ message ForkChoiceHeadsResponse {
 
 message ForkChoiceHead {
   string root = 1;
-  string slot = 2;
+  uint64 slot = 2;
 }
 
 message BeaconStateResponse {
@@ -82,7 +82,6 @@ message BeaconStateContainer {
   repeated PendingAttestation current_epoch_attestations = 7002;
 
   // Finality [8001-9000]
-  // Spec type [4]Bitvector which means this would be a fixed size of 4 bits.
   bytes justification_bits = 8001;
   Checkpoint previous_justified_checkpoint = 8002;
   Checkpoint current_justified_checkpoint = 8003;
@@ -90,12 +89,8 @@ message BeaconStateContainer {
 }
 
 message PendingAttestation {
-  // Bitfield representation of validator indices that have voted exactly
-  // the same vote and have been aggregated into this attestation.
-  bytes aggregation_bits = 1;
+  string aggregation_bits = 1;
   AttestationData data = 2;
-  // The difference of when attestation gets created and get included on chain.
   uint64 inclusion_delay = 3;
-  // The proposer who included the attestation in the block.
   uint64 proposer_index = 4;
 }
