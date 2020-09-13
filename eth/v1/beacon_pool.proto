@@ -16,13 +16,23 @@ syntax = "proto3";
 package ethereum.eth.v1;
 
 import "google/protobuf/empty.proto";
-import "google/protobuf/any.proto";
+import "google/api/annotations.proto";
+import "eth/v1/attestation.proto";
+import "eth/v1/beacon_block.proto";
 
-import "eth/v1/beacon_blocks.proto";
+option csharp_namespace = "Ethereum.Eth.v1";
+option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
+option java_multiple_files = true;
+option java_outer_classname = "BeaconPoolsProto";
+option java_package = "org.ethereum.eth.v1";
+option php_namespace = "Ethereum\\Eth\\v1";
+
 
 // Beacon chain pools API
 //
 // The beacon chain pools API can be used to access pool data for objects kept in mempools by the requested node.
+//
+// This service is defined in the upstream eth2.0-apis repository (eth2.0-APIs/apis/beacon/pool/).
 service BeaconPools {
   // AttestationsPool retrieves attestations known by the node but
   // not necessarily incorporated into any block

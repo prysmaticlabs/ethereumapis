@@ -15,13 +15,25 @@ syntax = "proto3";
 
 package ethereum.eth.v1;
 
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 import "google/protobuf/empty.proto";
-import "google/protobuf/any.proto";
+import "google/api/annotations.proto";
+import "eth/v1/attestation.proto";
+import "eth/v1/validator.proto";
+
+option csharp_namespace = "Ethereum.Eth.v1";
+option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
+option java_multiple_files = true;
+option java_outer_classname = "BeaconStateProto";
+option java_package = "org.ethereum.eth.v1";
+option php_namespace = "Ethereum\\Eth\\v1";
 
 // BeaconState API
 //
 // The beacon state API can be used to access data that is part of the Ethereum 2.0
 // phase 0 beacon chain state.
+//
+// This service is defined in the upstream eth2.0-apis repository (eth2.0-APIs/apis/beacon/states/).
 service BeaconState {
   // Genesis retrieves details of the chain's genesis which can be used to identify chain.
   rpc Genesis(google.protobuf.Empty) returns (GenesisResponse) {
@@ -61,20 +73,23 @@ service BeaconState {
 }
 
 message GenesisResponse {
+  // Unix timestamp representing the start of the beacon chain.
   uint64 genesis_time = 1;
-  string genesis_validators_root = 2;
-  string genesis_fork_version = 3;
+  // 32 byte hash tree root of the genesis validator set.
+  bytes genesis_validators_root = 2 [(gogoproto.moretags) = "ssz-size:\"32\""];
+  // 4 byte genesis fork version.
+  bytes genesis_fork_version = 3 [(gogoproto.moretags) = "ssz-size:\"4\""];;
 }
 
 message StateRequest {
   // The state id which can be any of: "head" (canonical head in node's view),
   // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
   // Uses the provided state_id for the request.
-  string state_id = 1;
+  string state_id = 1; // TODO: Duck type handling.
 }
 
 message StateRootResponse {
-  string state_root = 1;
+  bytes state_root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
 }
 
 message StateForkResponse {
@@ -82,8 +97,8 @@ message StateForkResponse {
 }
 
 message Fork {
-  string previous_version = 1;
-  string current_version = 2;
+  bytes previous_version = 1 [(gogoproto.moretags) = "ssz-size:\"4\""];
+  bytes current_version = 2 [(gogoproto.moretags) = "ssz-size:\"4\""];
   uint64 epoch = 3;
 }
 
@@ -93,22 +108,17 @@ message StateFinalityCheckpointResponse {
   Checkpoint finalized = 3;
 }
 
-message Checkpoint {
-  uint64 epoch = 1;
-  string root = 2;
-}
-
 message StateValidatorsRequest {
   // The state id which can be any of: "head" (canonical head in node's view),
   // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
   // Uses the provided state_id for the request.
-  string state_id = 1;
+  string state_id = 1; // TODO: Duck type handling.
   // An array of either hex encoded public keys (with 0x prefix) or validator indexes.
-  repeated string id = 2;
+  repeated string id = 2; // TODO: Duck type handling.
   // The status to query validators for, can be one of: pending_initialized, pending_queued, active_ongoing,
   // active_exiting, active_slashed, exited_unslashed, exited_slashed, withdrawal_possible,
   // withdrawal_done, active, pending, exited, withdrawal
-  string status = 3;
+  string status = 3; // TODO: Enum.
 }
 
 message StateValidatorsResponse {
@@ -119,7 +129,7 @@ message StateValidatorRequest {
   // The state id which can be any of: "head" (canonical head in node's view),
   // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
   // Uses the provided state_id for the request.
-  string state_id = 1;
+  string state_id = 1; // TODO: Duck type handling.
   // The public key or index for the validator to retrieve information for.
   string validator_id = 2;
 }
@@ -135,22 +145,11 @@ message ValidatorContainer {
   Validator validator = 4;
 }
 
-message Validator {
-  string pubkey = 1;
-  string withdrawal_credentials = 2;
-  uint64 effective_balance = 3;
-  bool slashed = 4;
-  uint64 activation_eligibility_epoch = 5;
-  uint64 activation_epoch = 6;
-  uint64 exit_epoch = 7;
-  uint64 withdrawable_epoch = 8;
-}
-
 message StateCommitteesRequest {
   // The state id which can be any of: "head" (canonical head in node's view),
   // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
   // Uses the provided state_id for the request.
-  string state_id = 1;
+  string state_id = 1; // TODO: Duck type handling.
   // The epoch to retrieve the committees of.
   uint64 epoch = 2;
   // Committee index requested.
