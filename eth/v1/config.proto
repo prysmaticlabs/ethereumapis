@@ -16,13 +16,21 @@ syntax = "proto3";
 package ethereum.eth.v1;
 
 import "google/protobuf/empty.proto";
-import "google/protobuf/any.proto";
+import "google/api/annotations.proto";
+import "eth/v1/beacon_states.proto";
 
-import "eth/v1/beacon_state.proto";
+option csharp_namespace = "Ethereum.Eth.v1";
+option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
+option java_multiple_files = true;
+option java_outer_classname = "ConfigProto";
+option java_package = "org.ethereum.eth.v1";
+option php_namespace = "Ethereum\\Eth\\v1";
 
 // Config API
 //
 // The config API endpoints can be used to query chain configuration, specification, and fork schedules.
+// 
+// This service is defined in the upstream eth2.0-apis repository (eth2.0-APIs/apis/config/).
 service Config {
   // ForkSchedule retrieve all scheduled upcoming forks this node is aware of.
   rpc ForkSchedule(google.protobuf.Empty) returns (ForkScheduleResponse) {
@@ -47,6 +55,10 @@ message ForkScheduleResponse {
   Fork data = 1;
 }
 
+// Spec response is a generic flat map of key values.
+// Values are returned with following format:
+// - any value starting with 0x in the spec is returned as a hex string
+// - all other values are returned as string-number
 message SpecResponse {
   map<string, string> data = 1;
 }
