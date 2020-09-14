@@ -408,6 +408,12 @@ message ProposeResponse {
 message ProposeExitResponse {
     // The root of the successfully proposed voluntary exit.
     bytes exit_root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
+
+    // Lowest possible place in the exit queue of the validator submitting the voluntary exit.
+    uint64 lowest_place_in_queue = 2;
+
+    // Earliest possible epoch at which the validator will be exited, based on the current validator state.
+    uint64 earliest_exit_epoch = 3;
 }
 
 message AttestationDataRequest {
