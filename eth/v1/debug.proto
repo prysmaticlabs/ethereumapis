@@ -15,6 +15,13 @@ syntax = "proto3";
 
 package ethereum.eth.v1;
 
+option csharp_namespace = "Ethereum.Eth.v1";
+option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
+option java_multiple_files = true;
+option java_outer_classname = "DebugProto";
+option java_package = "org.ethereum.eth.v1";
+option php_namespace = "Ethereum\\Eth\\v1";
+
 import "google/protobuf/empty.proto";
 import "google/protobuf/any.proto";
 
@@ -54,42 +61,42 @@ message BeaconStateResponse {
 
 message BeaconStateContainer {
   // Versioning
-  uint64 genesis_time = 1001;
-  bytes genesis_validators_root = 1002 [(gogoproto.moretags) = "ssz-size:\"32\""];
-  uint64 slot = 1003;
-  Fork fork = 1004;
+  uint64 genesis_time = 1;
+  bytes genesis_validators_root = 2 [(gogoproto.moretags) = "ssz-size:\"32\""];
+  uint64 slot = 3;
+  Fork fork = 4;
 
   // History
-  BeaconBlockHeader latest_block_header = 1005;
-  repeated bytes block_roots = 1006 [(gogoproto.moretags) = "ssz-size:\"block_roots.size\""];
-  repeated bytes state_roots = 1007 [(gogoproto.moretags) = "ssz-size:\"state_roots.size\""];
-  repeated bytes historical_roots = 1008 [(gogoproto.moretags) = "ssz-size:\"?,32\" ssz-max:\"16777216\""];
+  BeaconBlockHeader latest_block_header = 5;
+  repeated bytes block_roots = 6 [(gogoproto.moretags) = "ssz-size:\"8192\""];
+  repeated bytes state_roots = 7 [(gogoproto.moretags) = "ssz-size:\"8192\""];
+  repeated bytes historical_roots = 8 [(gogoproto.moretags) = "ssz-size:\"?,32\" ssz-max:\"16777216\""];
 
   // Eth1
-  Eth1Data eth1_data = 1009;
-  repeated Eth1Data eth1_data_votes = 1010 [(gogoproto.moretags) = "ssz-max:\"eth1_data_votes.size\""];
-  uint64 eth1_deposit_index = 1011;
+  Eth1Data eth1_data = 9;
+  repeated Eth1Data eth1_data_votes = 10 [(gogoproto.moretags) = "ssz-max:\"1024\""];
+  uint64 eth1_deposit_index = 11;
 
   // Registry
-  repeated Validator validators = 1012 [(gogoproto.moretags) = "ssz-max:\"1099511627776\""];
-  repeated uint64 balances = 1013 [(gogoproto.moretags) = "ssz-max:\"1099511627776\""];
+  repeated Validator validators = 12 [(gogoproto.moretags) = "ssz-max:\"1099511627776\""];
+  repeated uint64 balances = 13 [(gogoproto.moretags) = "ssz-max:\"1099511627776\""];
 
   // Randomness
-  repeated bytes randao_mixes = 1014 [(gogoproto.moretags) = "ssz-size:\"randao_mixes.size\""];
+  repeated bytes randao_mixes = 14 [(gogoproto.moretags) = "ssz-size:\"65536\""];
 
   // Slashings
-  repeated uint64 slashings = 1015 [(gogoproto.moretags) = "ssz-size:\"slashings.size\""];
+  repeated uint64 slashings = 15 [(gogoproto.moretags) = "ssz-size:\"65536\""];
 
   // Attestations
-  repeated PendingAttestation previous_epoch_attestations = 1016 [(gogoproto.moretags) = "ssz-max:\"previous_epoch_attestations.max\""];
-  repeated PendingAttestation current_epoch_attestations = 1017 [(gogoproto.moretags) = "ssz-max:\"current_epoch_attestations.max\""];
+  repeated PendingAttestation previous_epoch_attestations = 16 [(gogoproto.moretags) = "ssz-max:\"4096\""];
+  repeated PendingAttestation current_epoch_attestations = 17 [(gogoproto.moretags) = "ssz-max:\"4096\""];
 
   // Finality
   // Spec type [4]Bitvector which means this would be a fixed size of 4 bits.
-  bytes justification_bits = 1018 [(gogoproto.moretags) = "ssz-size:\"1\"", (gogoproto.casttype) = "github.com/prysmaticlabs/go-bitfield.Bitvector4"];
-  Checkpoint previous_justified_checkpoint = 1019;
-  Checkpoint current_justified_checkpoint = 1020;
-  Checkpoint finalized_checkpoint = 1021;
+  bytes justification_bits = 18 [(gogoproto.moretags) = "ssz-size:\"1\"", (gogoproto.casttype) = "github.com/prysmaticlabs/go-bitfield.Bitvector4"];
+  Checkpoint previous_justified_checkpoint = 19;
+  Checkpoint current_justified_checkpoint = 20;
+  Checkpoint finalized_checkpoint = 21;
 }
 
 message PendingAttestation {

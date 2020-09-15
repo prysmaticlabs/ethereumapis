@@ -117,7 +117,7 @@ message BlockHeaderContainer {
 }
 
 message BeaconBlockHeaderContainer {
-  // The unsigned beacon block header itself.
+  // The unsigned beacon block header.
   BeaconBlockHeader message = 1;
 
   // 96 byte BLS signature from the validator that produced this block header.
@@ -129,7 +129,7 @@ message BlockResponse {
 }
 
 message BeaconBlockContainer {
-  // The unsigned beacon block itself.
+  // The unsigned beacon block.
   BeaconBlock message = 1;
 
   // 96 byte BLS signature from the validator that produced this block.
