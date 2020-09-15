@@ -35,13 +35,13 @@ import "eth/v1/validator.proto";
 //
 // The beacon chain debug API is a set of endpoints to debug chain and shouldn't be exposed publicly.
 service Debug {
-  // BeaconState returns full BeaconState object for given stateId.
-  rpc BeaconState(StateRequest) returns (BeaconStateResponse) {
+  // GetBeaconState returns full BeaconState object for given stateId.
+  rpc GetBeaconState(StateRequest) returns (BeaconStateResponse) {
     option (google.api.http) = {get: "/eth/v1/debug/beacon/states/{state_id}"};
   }
 
-  // ForkChoiceHeads retrieves all possible chain heads (leaves of fork choice tree).
-  rpc ForkChoiceHeads(google.protobuf.Empty) returns (ForkChoiceHeadsResponse) {
+  // ListForkChoiceHeads retrieves all possible chain heads (leaves of fork choice tree).
+  rpc ListForkChoiceHeads(google.protobuf.Empty) returns (ForkChoiceHeadsResponse) {
     option (google.api.http) = {get: "/eth/v1/debug/beacon/heads"};
   }
 }
