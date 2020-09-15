@@ -52,7 +52,6 @@ message BeaconStateResponse {
   BeaconStateContainer data = 1;
 }
 
-// TODO: Remove gaps in field numbers.
 message BeaconStateContainer {
   // Versioning
   uint64 genesis_time = 1001;
