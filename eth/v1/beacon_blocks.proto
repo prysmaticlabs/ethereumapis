@@ -28,8 +28,6 @@ option java_outer_classname = "BeaconBlocksProto";
 option java_package = "org.ethereum.eth.v1";
 option php_namespace = "Ethereum\\Eth\\v1";
 
-import "eth/v1/beacon_state.proto";
-
 // Beacon chain API
 //
 // The beacon chain API can be used to access data relevant to the Ethereum 2.0
