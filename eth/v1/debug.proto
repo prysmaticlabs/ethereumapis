@@ -1,0 +1,111 @@
+// Copyright 2020 Prysmatic Labs.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+syntax = "proto3";
+
+package ethereum.eth.v1;
+
+option csharp_namespace = "Ethereum.Eth.v1";
+option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
+option java_multiple_files = true;
+option java_outer_classname = "DebugProto";
+option java_package = "org.ethereum.eth.v1";
+option php_namespace = "Ethereum\\Eth\\v1";
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/any.proto";
+
+import "eth/v1/attestation.proto";
+import "eth/v1/beacon_states.proto";
+import "eth/v1/beacon_blocks.proto";
+import "eth/v1/beacon_block.proto";
+import "eth/v1/validator.proto";
+
+// Beacon chain debug API
+//
+// The beacon chain debug API is a set of endpoints to debug chain and shouldn't be exposed publicly.
+service Debug {
+  // GetBeaconState returns full BeaconState object for given stateId.
+  rpc GetBeaconState(StateRequest) returns (BeaconStateResponse) {
+    option (google.api.http) = {get: "/eth/v1/debug/beacon/states/{state_id}"};
+  }
+
+  // ListForkChoiceHeads retrieves all possible chain heads (leaves of fork choice tree).
+  rpc ListForkChoiceHeads(google.protobuf.Empty) returns (ForkChoiceHeadsResponse) {
+    option (google.api.http) = {get: "/eth/v1/debug/beacon/heads"};
+  }
+}
+
+message ForkChoiceHeadsResponse {
+  repeated ForkChoiceHead data = 1;
+}
+
+message ForkChoiceHead {
+  bytes root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
+  uint64 slot = 2;
+}
+
+message BeaconStateResponse {
+  BeaconStateContainer data = 1;
+}
+
+message BeaconStateContainer {
+  // Versioning
+  uint64 genesis_time = 1;
+  bytes genesis_validators_root = 2 [(gogoproto.moretags) = "ssz-size:\"32\""];
+  uint64 slot = 3;
+  Fork fork = 4;
+
+  // History
+  BeaconBlockHeader latest_block_header = 5;
+  repeated bytes block_roots = 6 [(gogoproto.moretags) = "ssz-size:\"8192\""];
+  repeated bytes state_roots = 7 [(gogoproto.moretags) = "ssz-size:\"8192\""];
+  repeated bytes historical_roots = 8 [(gogoproto.moretags) = "ssz-size:\"?,32\" ssz-max:\"16777216\""];
+
+  // Eth1
+  Eth1Data eth1_data = 9;
+  repeated Eth1Data eth1_data_votes = 10 [(gogoproto.moretags) = "ssz-max:\"1024\""];
+  uint64 eth1_deposit_index = 11;
+
+  // Registry
+  repeated Validator validators = 12 [(gogoproto.moretags) = "ssz-max:\"1099511627776\""];
+  repeated uint64 balances = 13 [(gogoproto.moretags) = "ssz-max:\"1099511627776\""];
+
+  // Randomness
+  repeated bytes randao_mixes = 14 [(gogoproto.moretags) = "ssz-size:\"65536\""];
+
+  // Slashings
+  repeated uint64 slashings = 15 [(gogoproto.moretags) = "ssz-size:\"65536\""];
+
+  // Attestations
+  repeated PendingAttestation previous_epoch_attestations = 16 [(gogoproto.moretags) = "ssz-max:\"4096\""];
+  repeated PendingAttestation current_epoch_attestations = 17 [(gogoproto.moretags) = "ssz-max:\"4096\""];
+
+  // Finality
+  // Spec type [4]Bitvector which means this would be a fixed size of 4 bits.
+  bytes justification_bits = 18 [(gogoproto.moretags) = "ssz-size:\"1\"", (gogoproto.casttype) = "github.com/prysmaticlabs/go-bitfield.Bitvector4"];
+  Checkpoint previous_justified_checkpoint = 19;
+  Checkpoint current_justified_checkpoint = 20;
+  Checkpoint finalized_checkpoint = 21;
+}
+
+message PendingAttestation {
+  // Bitfield representation of validator indices that have voted exactly
+  // the same vote and have been aggregated into this attestation.
+  bytes aggregation_bits = 1 [(gogoproto.moretags) = "ssz-max:\"2048\"", (gogoproto.casttype) = "github.com/prysmaticlabs/go-bitfield.Bitlist"];
+  AttestationData data = 2;
+  // The difference of when attestation gets created and get included on chain.
+  uint64 inclusion_delay = 3;
+  // The proposer who included the attestation in the block.
+  uint64 proposer_index = 4;
+}
