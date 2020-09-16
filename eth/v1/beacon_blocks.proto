@@ -84,7 +84,7 @@ message BlockRootResponse {
 }
 
 message BlockHeadersRequest {
-  // Beacon chain slot of the requested block..
+  // Beacon chain slot of the requested block.
   uint64 slot = 1;
 
   // 32 byte merkle tree root of the ssz encoded parent block.
@@ -109,7 +109,7 @@ message BlockHeaderContainer {
   // 32 byte merkle tree root of the ssz encoded block.
   bytes root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
-  // Bool indicating whether the block is canonical.
+  // Boolean indicating whether the block is canonical.
   bool canonical = 2;
 
   // Container for a signed beacon block header.
