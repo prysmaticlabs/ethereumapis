@@ -54,7 +54,6 @@ go_proto_library(
     proto = ":v1_proto",
     visibility = ["//visibility:public"],
     deps = [
-        "//eth/v1:go_default_library",
         "//github.com/gogo/protobuf/gogoproto:go_default_library",
         "@com_github_gogo_protobuf//gogoproto:go_default_library",  # keep
         "@com_github_prysmaticlabs_go_bitfield//:go_default_library",  # keep
