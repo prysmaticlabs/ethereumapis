@@ -20,7 +20,6 @@ import "google/api/annotations.proto";
 
 import "eth/v1/attestation.proto";
 import "eth/v1/beacon_block.proto";
-import "eth/v1/beacon_states.proto";
 import "eth/v1/validator.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1";
