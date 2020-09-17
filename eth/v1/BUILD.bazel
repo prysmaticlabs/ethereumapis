@@ -39,7 +39,6 @@ proto_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "//github.com/gogo/protobuf/gogoproto:gogoproto_proto",
         "@com_google_protobuf//:any_proto",
         "@com_google_protobuf//:empty_proto",
         "@go_googleapis//google/api:annotations_proto",
@@ -54,7 +53,6 @@ go_proto_library(
     proto = ":v1_proto",
     visibility = ["//visibility:public"],
     deps = [
-        "//github.com/gogo/protobuf/gogoproto:go_default_library",
         "@com_github_gogo_protobuf//gogoproto:go_default_library",  # keep
         "@com_github_prysmaticlabs_go_bitfield//:go_default_library",  # keep
         "@go_googleapis//google/api:annotations_go_proto",
@@ -64,9 +62,6 @@ go_proto_library(
 go_library(
     name = "go_default_library",
     srcs = [
-        "beacon_pool.pb.go",
-        "config.pb.go",
-        "generated.ssz.go",
         ":ssz_generated_files",  # keep
     ],
     embed = [":v1_go_proto"],
