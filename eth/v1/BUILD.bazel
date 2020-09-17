@@ -32,14 +32,16 @@ proto_library(
     srcs = [
         "attestation.proto",
         "beacon_block.proto",
-        "beacon_blocks.proto",
-        "beacon_pool_service.proto",
-        "beacon_states.proto",
-        "config.proto",
+        "beacon_state.proto",
+        "beacon_state_service.proto",
+        "debug.proto",
         "validator.proto",
     ],
     visibility = ["//visibility:public"],
     deps = [
+        "//eth/v1:v1_proto",
+        "//github.com/gogo/protobuf/gogoproto:gogoproto_proto",
+        "@com_google_protobuf//:any_proto",
         "@com_google_protobuf//:empty_proto",
         "@go_googleapis//google/api:annotations_proto",
         "@gogo_special_proto//github.com/gogo/protobuf/gogoproto",  # keep
@@ -48,11 +50,13 @@ proto_library(
 
 go_proto_library(
     name = "v1_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:gogofast_grpc"],
+    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
     importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1",
     proto = ":v1_proto",
     visibility = ["//visibility:public"],
     deps = [
+        "//eth/v1:go_default_library",
+        "//github.com/gogo/protobuf/gogoproto:go_default_library",
         "@com_github_gogo_protobuf//gogoproto:go_default_library",  # keep
         "@com_github_prysmaticlabs_go_bitfield//:go_default_library",  # keep
         "@go_googleapis//google/api:annotations_go_proto",
@@ -62,6 +66,9 @@ go_proto_library(
 go_library(
     name = "go_default_library",
     srcs = [
+        "beacon_pool.pb.go",
+        "config.pb.go",
+        "generated.ssz.go",
         ":ssz_generated_files",  # keep
     ],
     embed = [":v1_go_proto"],
