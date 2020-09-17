@@ -16,8 +16,6 @@ syntax = "proto3";
 package ethereum.eth.v1;
 
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
-import "google/protobuf/empty.proto";
-import "google/api/annotations.proto";
 
 import "eth/v1/attestation.proto";
 import "eth/v1/beacon_block.proto";
