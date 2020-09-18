@@ -34,7 +34,7 @@ proto_library(
         "beacon_block.proto",
         "beacon_state.proto",
         "beacon_chain_service.proto",
-        "debug.proto",
+        "beacon_debug_service.proto",
         "validator.proto",
     ],
     visibility = ["//visibility:public"],
