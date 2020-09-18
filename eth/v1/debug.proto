@@ -23,13 +23,13 @@ option java_package = "org.ethereum.eth.v1";
 option php_namespace = "Ethereum\\Eth\\v1";
 
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
-import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
 
 import "eth/v1/attestation.proto";
 import "eth/v1/beacon_block.proto";
 import "eth/v1/beacon_state.proto";
-import "eth/v1/beacon_state_service.proto";
+import "eth/v1/beacon_chain_service.proto";
 import "eth/v1/validator.proto";
 
 // Beacon chain debug API

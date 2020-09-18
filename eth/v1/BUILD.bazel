@@ -33,7 +33,7 @@ proto_library(
         "attestation.proto",
         "beacon_block.proto",
         "beacon_state.proto",
-        "beacon_state_service.proto",
+        "beacon_chain_service.proto",
         "debug.proto",
         "validator.proto",
     ],
