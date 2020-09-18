@@ -15,51 +15,20 @@ syntax = "proto3";
 
 package ethereum.eth.v1;
 
-option csharp_namespace = "Ethereum.Eth.v1";
-option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
-option java_multiple_files = true;
-option java_outer_classname = "DebugProto";
-option java_package = "org.ethereum.eth.v1";
-option php_namespace = "Ethereum\\Eth\\v1";
-
-import "google/protobuf/empty.proto";
-import "google/protobuf/any.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 
 import "eth/v1/attestation.proto";
-import "eth/v1/beacon_states.proto";
-import "eth/v1/beacon_blocks.proto";
 import "eth/v1/beacon_block.proto";
 import "eth/v1/validator.proto";
 
-// Beacon chain debug API
-//
-// The beacon chain debug API is a set of endpoints to debug chain and shouldn't be exposed publicly.
-service Debug {
-  // GetBeaconState returns full BeaconState object for given stateId.
-  rpc GetBeaconState(StateRequest) returns (BeaconStateResponse) {
-    option (google.api.http) = {get: "/eth/v1/debug/beacon/states/{state_id}"};
-  }
+option csharp_namespace = "Ethereum.Eth.v1";
+option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
+option java_multiple_files = true;
+option java_outer_classname = "BeaconStateProto";
+option java_package = "org.ethereum.eth.v1";
+option php_namespace = "Ethereum\\Eth\\v1";
 
-  // ListForkChoiceHeads retrieves all possible chain heads (leaves of fork choice tree).
-  rpc ListForkChoiceHeads(google.protobuf.Empty) returns (ForkChoiceHeadsResponse) {
-    option (google.api.http) = {get: "/eth/v1/debug/beacon/heads"};
-  }
-}
-
-message ForkChoiceHeadsResponse {
-  repeated ForkChoiceHead data = 1;
-}
-
-message ForkChoiceHead {
-  bytes root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
-  uint64 slot = 2;
-}
-
-message BeaconStateResponse {
-  BeaconStateContainer data = 1;
-}
-
-message BeaconStateContainer {
+message BeaconState {
   // Versioning
   uint64 genesis_time = 1;
   bytes genesis_validators_root = 2 [(gogoproto.moretags) = "ssz-size:\"32\""];
@@ -108,4 +77,17 @@ message PendingAttestation {
   uint64 inclusion_delay = 3;
   // The proposer who included the attestation in the block.
   uint64 proposer_index = 4;
+}
+
+message Committee {
+  uint64 index = 1;
+  uint64 slot = 2;
+  repeated uint64 validators = 3;
+}
+
+// Fork structure used for indicating beacon chain versioning and forks.
+message Fork {
+  bytes previous_version = 1 [(gogoproto.moretags) = "ssz-size:\"4\""];
+  bytes current_version = 2 [(gogoproto.moretags) = "ssz-size:\"4\""];
+  uint64 epoch = 3;
 }

@@ -1,0 +1,391 @@
+// Copyright 2020 Prysmatic Labs.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+syntax = "proto3";
+
+package ethereum.eth.v1;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+import "eth/v1/attestation.proto";
+import "eth/v1/beacon_block.proto";
+import "eth/v1/beacon_state.proto";
+import "eth/v1/validator.proto";
+
+option csharp_namespace = "Ethereum.Eth.v1";
+option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
+option java_multiple_files = true;
+option java_outer_classname = "BeaconChainProto";
+option java_package = "org.ethereum.eth.v1";
+option php_namespace = "Ethereum\\Eth\\v1";
+
+// Beacon Chain API
+//
+// The config API endpoints can be used to query the beacon chain state and information. Such as spec, current fork,
+// blocks, and the validator spec.
+//
+// This service is defined in the upstream eth2.0-apis repository (eth2.0-APIs/apis/).
+service BeaconChain {
+  // Beacon state API related endpoints.
+
+  // GetGenesis retrieves details of the chain's genesis which can be used to identify chain.
+  rpc GetGenesis(google.protobuf.Empty) returns (GenesisResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/genesis" };
+  }
+
+  // GetStateRoot calculates HashTreeRoot for state with given 'stateId'. If stateId is root, same value will be returned.
+  rpc GetStateRoot(StateRequest) returns (StateRootResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/root" };
+  }
+
+  // GetStateFork returns Fork object for state with given 'stateId'.
+  rpc GetStateFork(StateRequest) returns (StateForkResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/fork" };
+  }
+
+  // GetFinalityCheckpoints returns finality checkpoints for state with given 'stateId'. In case finality is
+  // not yet achieved, checkpoint should return epoch 0 and ZERO_HASH as root.
+  rpc GetFinalityCheckpoints(StateRequest) returns (StateFinalityCheckpointResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/finality_checkpoints" };
+  }
+
+  // ListValidators returns filterable list of validators with their balance, status and index.
+  rpc ListValidators(StateValidatorsRequest) returns (StateValidatorsResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validators" };
+  }
+
+  // GetValidator returns a validator specified by state and id or public key along with status and balance.
+  rpc GetValidator(StateValidatorRequest) returns (StateValidatorResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validators/{validator_id}" };
+  }
+
+  // ListCommittees retrieves the committees for the given state at the given epoch.
+  rpc ListCommittees(StateCommitteesRequest) returns (StateCommitteesResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/committees/{epoch}" };
+  }
+
+  // Beacon blocks API related endpoints.
+
+  // GetBlockHeader retrieves block header for given block id.
+  rpc GetBlockHeader(BlockRequest) returns (BlockHeaderResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/headers/{block_id}" };
+  }
+
+  // ListBlockHeaders retrieves block headers matching given query. By default it will fetch current head slot blocks.
+  rpc ListBlockHeaders(BlockHeadersRequest) returns (BlockHeadersResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/headers" };
+  }
+
+  // PostBlock instructs the beacon node to broadcast a newly signed beacon block to the beacon network, to be
+  // included in the beacon chain. The beacon node is not required to validate the signed BeaconBlock, and a successful
+  // response (20X) only indicates that the broadcast has been successful. The beacon node is expected to integrate the
+  // new block into its state, and therefore validate the block internally, however blocks which fail the validation are
+  // still broadcast but a different status code is returned (202).
+  rpc PostBlock(BeaconBlockContainer) returns (google.protobuf.Empty) {
+    option (google.api.http) = { post: "/eth/v1/beacon/blocks" };
+  }
+
+  // GetBlock retrieves block details for given block id.
+  rpc GetBlock(BlockRequest) returns (BlockResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/blocks/{block_id}" };
+  }
+
+  // GetBlockRoot retrieves hashTreeRoot of BeaconBlock/BeaconBlockHeader.
+  rpc GetBlockRoot(BlockRequest) returns (BlockRootResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/blocks/{block_id}/root" };
+  }
+
+  // ListBlockAttestations retrieves attestation included in requested block.
+  rpc ListBlockAttestations(BlockRequest) returns (BlockAttestationsResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/blocks/{block_id}/attestations" };
+  }
+
+  // Beacon pools API related endpoints.
+
+  // ListPoolAttestations retrieves attestations known by the node but
+  // not necessarily incorporated into any block
+  rpc ListPoolAttestations(AttestationsPoolRequest) returns (AttestationsPoolResponse) {
+    option (google.api.http) = {get: "/eth/v1/beacon/pool/attestations"};
+  }
+
+  // SubmitAttestation submits Attestation object to node. If attestation passes all validation
+  // constraints, node MUST publish attestation on appropriate subnet.
+  rpc SubmitAttestation(Attestation) returns (google.protobuf.Empty) {
+    option (google.api.http) = {post: "/eth/v1/beacon/pool/attestations"};
+  }
+
+  // ListPoolAttesterSlashings retrieves attester slashings known by the node but
+  // not necessarily incorporated into any block
+  rpc ListPoolAttesterSlashings(google.protobuf.Empty) returns (AttesterSlashingsPoolResponse) {
+    option (google.api.http) = {get: "/eth/v1/beacon/pool/attester_slashings"};
+  }
+
+  // PostAttesterSlashing submits AttesterSlashing object to node's pool and
+  // if passes validation node MUST broadcast it to network.
+  rpc PostAttesterSlashing(AttesterSlashing) returns (google.protobuf.Empty) {
+    option (google.api.http) = {post: "/eth/v1/beacon/pool/attester_slashings"};
+  }
+
+  // ListPoolProposerSlashings retrieves proposer slashings known by the node
+  // but not necessarily incorporated into any block
+  rpc ListPoolProposerSlashings(google.protobuf.Empty) returns (ProposerSlashingPoolResponse) {
+    option (google.api.http) = {get: "/eth/v1/beacon/pool/proposer_slashings"};
+  }
+
+  // SubmitProposerSlashing submits AttesterSlashing object to node's pool and if
+  // passes validation node MUST broadcast it to network.
+  rpc SubmitProposerSlashing(ProposerSlashing) returns (google.protobuf.Empty) {
+    option (google.api.http) = {post: "/eth/v1/beacon/pool/proposer_slashings"};
+  }
+
+  // ListPoolVoluntaryExits retrieves voluntary exits known by the node but
+  // not necessarily incorporated into any block
+  rpc ListPoolVoluntaryExits(google.protobuf.Empty) returns (VoluntaryExitsPoolResponse) {
+    option (google.api.http) = {get: "/eth/v1/beacon/pool/voluntary_exits"};
+  }
+
+  // SubmitVoluntaryExit submits SignedVoluntaryExit object to node's pool
+  // and if passes validation node MUST broadcast it to network.
+  rpc SubmitVoluntaryExit(SignedVoluntaryExit) returns (google.protobuf.Empty) {
+    option (google.api.http) = {post: "/eth/v1/beacon/pool/voluntary_exits"};
+  }
+
+  // Beacon config API related endpoints.
+
+  // GetForkSchedule retrieve all scheduled upcoming forks this node is aware of.
+  rpc GetForkSchedule(google.protobuf.Empty) returns (ForkScheduleResponse) {
+    option (google.api.http) = {get: "/eth/v1/config/fork_schedule"};
+  }
+
+  // Spec retrieves specification configuration (without Phase 1 params) used on this node. Specification params list
+  // Values are returned with following format:
+  // - any value starting with 0x in the spec is returned as a hex string
+  // - all other values are returned as number
+  rpc GetSpec(google.protobuf.Empty) returns (SpecResponse) {
+    option (google.api.http) = {get: "/eth/v1/config/spec"};
+  }
+
+  // GetDepositContract retrieves deposit contract address and genesis fork version.
+  rpc GetDepositContract(google.protobuf.Empty) returns (DepositContractResponse) {
+    option (google.api.http) = {get: "/eth/v1/config/deposit_contract"};
+  }
+}
+
+// Beacon State API related messages.
+
+message GenesisResponse {
+  // Unix timestamp representing the start of the beacon chain.
+  uint64 genesis_time = 1;
+
+  // 32 byte hash tree root of the genesis validator set.
+  bytes genesis_validators_root = 2 [(gogoproto.moretags) = "ssz-size:\"32\""];
+
+  // 4 byte genesis fork version.
+  bytes genesis_fork_version = 3 [(gogoproto.moretags) = "ssz-size:\"4\""];;
+}
+
+message StateRequest {
+  // The state id which can be any of: "head" (canonical head in node's view),
+  // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
+  // Uses the provided state_id for the request.
+  string state_id = 1; // TODO: Duck type handling.
+}
+
+message StateRootResponse {
+  // SSZ encoded state root for the requested state.
+  bytes state_root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
+}
+
+message StateForkResponse {
+  Fork fork = 1;
+}
+
+message StateFinalityCheckpointResponse {
+  Checkpoint previous_justified = 1;
+  Checkpoint current_justified = 2;
+  Checkpoint finalized = 3;
+}
+
+message StateValidatorsRequest {
+  // The state id which can be any of: "head" (canonical head in node's view),
+  // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
+  // Uses the provided state_id for the request.
+  string state_id = 1; // TODO: Duck type handling.
+
+  // An array of either hex encoded public keys (with 0x prefix) or validator indexes.
+  repeated string id = 2; // TODO: Duck type handling.
+
+  // The status to query validators for, can be one of: pending_initialized, pending_queued, active_ongoing,
+  // active_exiting, active_slashed, exited_unslashed, exited_slashed, withdrawal_possible,
+  // withdrawal_done, active, pending, exited, withdrawal
+  string status = 3; // TODO: Enum.
+}
+
+message StateValidatorsResponse {
+  repeated ValidatorContainer data = 1;
+}
+
+message StateValidatorRequest {
+  // The state id which can be any of: "head" (canonical head in node's view),
+  // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
+  // Uses the provided state_id for the request.
+  string state_id = 1; // TODO: Duck type handling.
+
+  // The public key or index for the validator to retrieve information for.
+  string validator_id = 2;
+}
+
+message StateValidatorResponse {
+  ValidatorContainer data = 1;
+}
+
+message StateCommitteesRequest {
+  // The state id which can be any of: "head" (canonical head in node's view),
+  // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
+  // Uses the provided state_id for the request.
+  string state_id = 1; // TODO: Duck type handling.
+
+  // The epoch to retrieve the committees of.
+  uint64 epoch = 2;
+
+  // Committee index requested.
+  uint64 index = 3;
+
+  // Committee slot requested.
+  uint64 slot = 4;
+}
+
+message StateCommitteesResponse {
+  repeated Committee data = 1;
+}
+
+// Beacon Block API related messages.
+
+message BlockAttestationsResponse {
+  repeated Attestation data = 1;
+}
+
+message BlockRootContainer {
+  // 32 byte merkle tree root of the ssz encoded block.
+  bytes root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
+}
+
+message BlockRootResponse {
+  BlockRootContainer data = 1;
+}
+
+message BlockHeadersRequest {
+  // Beacon chain slot of the requested block.
+  uint64 slot = 1;
+
+  // 32 byte merkle tree root of the ssz encoded parent block.
+  bytes parent_root = 2 [(gogoproto.moretags) = "ssz-size:\"32\""];
+}
+
+message BlockHeadersResponse {
+  repeated BlockHeaderContainer data = 1;
+}
+
+message BlockRequest {
+  // The block identifier. Can be one of: "head" (canonical head in node's view), "genesis",
+  // "finalized", <slot>, <hex encoded blockRoot with 0x prefix>.
+  bytes block_id = 1;
+}
+
+message BlockHeaderResponse {
+  BlockHeaderContainer data = 1;
+}
+
+message BlockHeaderContainer {
+  // 32 byte merkle tree root of the ssz encoded block.
+  bytes root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
+
+  // Boolean indicating whether the block is canonical.
+  bool canonical = 2;
+
+  // Container for a signed beacon block header.
+  BeaconBlockHeaderContainer header = 3;
+}
+
+
+message BeaconBlockHeaderContainer {
+  // The unsigned beacon block header.
+  BeaconBlockHeader message = 1;
+
+  // 96 byte BLS signature from the validator that produced this block header.
+  bytes signature = 2 [(gogoproto.moretags) = "ssz-size:\"96\""];
+}
+
+message BlockResponse {
+  BeaconBlockContainer data = 1;
+}
+
+message BeaconBlockContainer {
+  // The unsigned beacon block.
+  BeaconBlock message = 1;
+
+  // 96 byte BLS signature from the validator that produced this block.
+  bytes signature = 2 [(gogoproto.moretags) = "ssz-size:\"96\""];
+}
+
+// Beacon Pool related API service.
+
+message AttestationsPoolRequest {
+  uint64 slot = 1;
+  uint64 committee_index = 2;
+}
+
+message AttestationsPoolResponse {
+  repeated Attestation data = 1;
+}
+
+message AttesterSlashingsPoolResponse {
+  repeated AttesterSlashing data = 1;
+}
+
+message ProposerSlashingPoolResponse {
+  repeated ProposerSlashing data = 1;
+}
+
+message VoluntaryExitsPoolResponse {
+  repeated SignedVoluntaryExit data = 1;
+}
+
+// Beacon Config API related messages.
+
+message ForkScheduleResponse {
+  // The fork data used for beacon chain versioning.
+  Fork data = 1;
+}
+
+// Spec response is a generic flat map of key values.
+// Values are returned with following format:
+// - any value starting with 0x in the spec is returned as a hex string
+// - all other values are returned as string-number
+message SpecResponse {
+  map<string, string> data = 1;
+}
+
+message DepositContractResponse {
+  DepositContract data = 1;
+}
+
+message DepositContract {
+  // The chain_id of the network.
+  uint64 chain_id = 1;
+
+  // The address of the deployed deposit contract in use.
+  string address = 2;
+}
