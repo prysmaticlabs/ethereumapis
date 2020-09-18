@@ -24,7 +24,7 @@ import "eth/v1/validator.proto";
 option csharp_namespace = "Ethereum.Eth.v1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
 option java_multiple_files = true;
-option java_outer_classname = "ConfigProto";
+option java_outer_classname = "BeaconStateProto";
 option java_package = "org.ethereum.eth.v1";
 option php_namespace = "Ethereum\\Eth\\v1";
 
