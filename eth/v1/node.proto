@@ -35,20 +35,20 @@ service BeaconNode {
     option (google.api.http) = {get: "/eth/v1/node/identity"};
   }
 
-  // ListPeers retrieves data about the node's network peers.
-  rpc ListPeers(google.protobuf.Empty) returns (PeersResponse) {
-    option (google.api.http) = {get: "/eth/v1/node/peers"};
-  }
-
   // GetPeer retrieves data about the given peer.
   rpc GetPeer(PeerRequest) returns (PeerResponse) {
     option (google.api.http) = {get: "/eth/v1/node/peers/{peer_id}"};
   }
 
+  // ListPeers retrieves data about the node's network peers.
+  rpc ListPeers(google.protobuf.Empty) returns (PeersResponse) {
+    option (google.api.http) = {get: "/eth/v1/node/peers"};
+  }
+
   // GetVersion requests that the beacon node identify information about its implementation in a
   // format similar to a HTTP User-Agent field.
   rpc GetVersion(google.protobuf.Empty) returns (VersionResponse) {
-    option (google.api.http) = {get: "/eth/v1/node/identity"};
+    option (google.api.http) = {get: "/eth/v1/node/version"};
   }
 
   // GetSyncStatus requests the beacon node to describe if it's currently syncing or not, and
@@ -58,6 +58,13 @@ service BeaconNode {
   }
 
   // GetHealth returns node health status in http status codes. Useful for load balancers.
+  // Response Usage:
+  //    "200":
+  //      description: Node is ready
+  //    "206":
+  //      description: Node is syncing but can serve incomplete data
+  //    "503":
+  //      description: Node not initialized or having issues
   rpc GetHealth(google.protobuf.Empty) returns (google.protobuf.Empty) {
     option (google.api.http) = {get: "/eth/v1/node/health"};
   }
@@ -74,7 +81,7 @@ message Identity {
   string enr = 2;
   // All the p2p multiaddresses of the peer, specified as a full multiaddr.
   repeated string p2p_addresses = 3;
-  // All the discovery multiaddresses of the peer, specified as a full multiaddr.
+  // All the discv5 multiaddresses of the peer, specified as a full multiaddr.
   repeated string discovery_addresses = 4;
   // Additional metadata that the node would like to provide. Includes extra networking information.
   Metadata metadata = 5;
@@ -111,9 +118,24 @@ message Peer {
   // /ip4/37.221.192.134/tcp/13000/p2p/16Uiu2HAm8maLMjag1TAUM52zPfmLbVMGFdwUAWgoHu1HDQLR6e17
   string address = 3;
   // The connection state of the peer at the moment of the request. (e.g. Connecting)
-  string state = 4;
+  ConnectionState state = 4;
   // The direction of the connection (inbound/outbound).
-  string direction = 5;
+  PeerDirection direction = 5;
+}
+
+// PeerDirection states the direction of the connection to a peer.
+enum PeerDirection {
+  UNKNOWN = 0;
+  INBOUND = 1;
+  OUTBOUND = 2;
+}
+
+// ConnectionState states the current status of the peer.
+enum ConnectionState {
+  DISCONNECTED = 0;
+  DISCONNECTING = 1;
+  CONNECTED = 2;
+  CONNECTING = 3;
 }
 
 message VersionResponse {
