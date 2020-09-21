@@ -32,9 +32,10 @@ proto_library(
     srcs = [
         "attestation.proto",
         "beacon_block.proto",
-        "beacon_state.proto",
         "beacon_chain_service.proto",
         "beacon_debug_service.proto",
+        "beacon_state.proto",
+        "node.proto",
         "validator.proto",
     ],
     visibility = ["//visibility:public"],
