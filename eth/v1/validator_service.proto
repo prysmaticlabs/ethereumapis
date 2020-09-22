@@ -160,7 +160,7 @@ message ProposerBlockRequest {
   uint64 slot = 1;
 
   // The validators RANDAO reveal 96 byte value.
-  bytes randao_reveal = 1 [(gogoproto.moretags) = "ssz-size:\"96\""];
+  bytes randao_reveal = 2 [(gogoproto.moretags) = "ssz-size:\"96\""];
 
   // 32 byte field of arbitrary data. This field may contain any data and
   // is not used for anything other than a fun message.
