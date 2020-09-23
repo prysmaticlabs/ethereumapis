@@ -35,6 +35,7 @@ proto_library(
         "beacon_chain_service.proto",
         "beacon_debug_service.proto",
         "beacon_state.proto",
+        "node.proto",
         "validator.proto",
         "validator_service.proto",
     ],
