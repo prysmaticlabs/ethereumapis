@@ -515,6 +515,9 @@ message ValidatorBalances {
 
         // Validator's balance in gwei.
         uint64 balance = 3;
+
+        // Validator's status, UNKNOWN if not found.
+        string status = 4;
     }
 
     repeated Balance balances = 2;
