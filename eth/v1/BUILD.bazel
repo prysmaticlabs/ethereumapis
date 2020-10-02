@@ -41,8 +41,8 @@ proto_library(
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "@com_google_protobuf//:any_proto",
         "@com_google_protobuf//:empty_proto",
+        "@com_google_protobuf//:timestamp_proto",
         "@go_googleapis//google/api:annotations_proto",
         "@gogo_special_proto//github.com/gogo/protobuf/gogoproto",  # keep
     ],

@@ -18,6 +18,7 @@ package ethereum.eth.v1;
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
 import "eth/v1/attestation.proto";
 import "eth/v1/beacon_block.proto";
@@ -120,7 +121,7 @@ service BeaconChain {
   // Beacon pools API related endpoints.
 
   // ListPoolAttestations retrieves attestations known by the node but
-  // not necessarily incorporated into any block
+  // not necessarily incorporated into any block.
   rpc ListPoolAttestations(AttestationsPoolRequest) returns (AttestationsPoolResponse) {
     option (google.api.http) = {get: "/eth/v1/beacon/pool/attestations"};
   }
@@ -132,7 +133,7 @@ service BeaconChain {
   }
 
   // ListPoolAttesterSlashings retrieves attester slashings known by the node but
-  // not necessarily incorporated into any block
+  // not necessarily incorporated into any block.
   rpc ListPoolAttesterSlashings(google.protobuf.Empty) returns (AttesterSlashingsPoolResponse) {
     option (google.api.http) = {get: "/eth/v1/beacon/pool/attester_slashings"};
   }
@@ -144,7 +145,7 @@ service BeaconChain {
   }
 
   // ListPoolProposerSlashings retrieves proposer slashings known by the node
-  // but not necessarily incorporated into any block
+  // but not necessarily incorporated into any block.
   rpc ListPoolProposerSlashings(google.protobuf.Empty) returns (ProposerSlashingPoolResponse) {
     option (google.api.http) = {get: "/eth/v1/beacon/pool/proposer_slashings"};
   }
@@ -156,7 +157,7 @@ service BeaconChain {
   }
 
   // ListPoolVoluntaryExits retrieves voluntary exits known by the node but
-  // not necessarily incorporated into any block
+  // not necessarily incorporated into any block.
   rpc ListPoolVoluntaryExits(google.protobuf.Empty) returns (VoluntaryExitsPoolResponse) {
     option (google.api.http) = {get: "/eth/v1/beacon/pool/voluntary_exits"};
   }
