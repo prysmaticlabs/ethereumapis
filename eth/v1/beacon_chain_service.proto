@@ -73,7 +73,7 @@ service BeaconChain {
   }
 
   // ListValidators returns a filterable list of validator balances.
-  rpc ListValidatorBalances(StateValidatorsRequest) returns (StateValidatorsResponse) {
+  rpc ListValidatorBalances(StateValidatorsRequest) returns (ValidatorBalancesResponse) {
     option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validator_balances" };
   }
 
@@ -241,6 +241,18 @@ message StateValidatorsRequest {
 
 message StateValidatorsResponse {
   repeated ValidatorContainer data = 1;
+}
+
+message ValidatorBalancesResponse {
+  repeated ValidatorBalance data = 1;
+}
+
+message ValidatorBalance {
+  // The index of the validator the retrieved balance is for.
+  uint64 index = 1;
+
+  // The balance of the requested validator.
+  uint64 balance = 2;
 }
 
 message StateValidatorRequest {
