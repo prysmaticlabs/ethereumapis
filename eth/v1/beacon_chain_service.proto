@@ -18,6 +18,7 @@ package ethereum.eth.v1;
 import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
 import "eth/v1/attestation.proto";
 import "eth/v1/beacon_block.proto";
@@ -61,14 +62,19 @@ service BeaconChain {
     option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/finality_checkpoints" };
   }
 
-  // ListValidators returns filterable list of validators with their balance, status and index.
+  // GetValidator returns a validator specified by state and id or public key along with status and balance.
+  rpc GetValidator(StateValidatorRequest) returns (StateValidatorResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validators/{validator_id}" };
+  }
+
+  // ListValidators returns a filterable list of validators with their balance, status and index.
   rpc ListValidators(StateValidatorsRequest) returns (StateValidatorsResponse) {
     option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validators" };
   }
 
-  // GetValidator returns a validator specified by state and id or public key along with status and balance.
-  rpc GetValidator(StateValidatorRequest) returns (StateValidatorResponse) {
-    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validators/{validator_id}" };
+  // ListValidators returns a filterable list of validator balances.
+  rpc ListValidatorBalances(StateValidatorsRequest) returns (ValidatorBalancesResponse) {
+    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validator_balances" };
   }
 
   // ListCommittees retrieves the committees for the given state at the given epoch.
@@ -115,7 +121,7 @@ service BeaconChain {
   // Beacon pools API related endpoints.
 
   // ListPoolAttestations retrieves attestations known by the node but
-  // not necessarily incorporated into any block
+  // not necessarily incorporated into any block.
   rpc ListPoolAttestations(AttestationsPoolRequest) returns (AttestationsPoolResponse) {
     option (google.api.http) = {get: "/eth/v1/beacon/pool/attestations"};
   }
@@ -127,19 +133,19 @@ service BeaconChain {
   }
 
   // ListPoolAttesterSlashings retrieves attester slashings known by the node but
-  // not necessarily incorporated into any block
+  // not necessarily incorporated into any block.
   rpc ListPoolAttesterSlashings(google.protobuf.Empty) returns (AttesterSlashingsPoolResponse) {
     option (google.api.http) = {get: "/eth/v1/beacon/pool/attester_slashings"};
   }
 
-  // PostAttesterSlashing submits AttesterSlashing object to node's pool and
+  // SubmitAttesterSlashing submits AttesterSlashing object to node's pool and
   // if passes validation node MUST broadcast it to network.
-  rpc PostAttesterSlashing(AttesterSlashing) returns (google.protobuf.Empty) {
+  rpc SubmitAttesterSlashing(AttesterSlashing) returns (google.protobuf.Empty) {
     option (google.api.http) = {post: "/eth/v1/beacon/pool/attester_slashings"};
   }
 
   // ListPoolProposerSlashings retrieves proposer slashings known by the node
-  // but not necessarily incorporated into any block
+  // but not necessarily incorporated into any block.
   rpc ListPoolProposerSlashings(google.protobuf.Empty) returns (ProposerSlashingPoolResponse) {
     option (google.api.http) = {get: "/eth/v1/beacon/pool/proposer_slashings"};
   }
@@ -151,7 +157,7 @@ service BeaconChain {
   }
 
   // ListPoolVoluntaryExits retrieves voluntary exits known by the node but
-  // not necessarily incorporated into any block
+  // not necessarily incorporated into any block.
   rpc ListPoolVoluntaryExits(google.protobuf.Empty) returns (VoluntaryExitsPoolResponse) {
     option (google.api.http) = {get: "/eth/v1/beacon/pool/voluntary_exits"};
   }
@@ -186,8 +192,8 @@ service BeaconChain {
 // Beacon State API related messages.
 
 message GenesisResponse {
-  // Unix timestamp representing the start of the beacon chain.
-  uint64 genesis_time = 1;
+  // UTC time specified in the chain start event in the deposit contract.
+  google.protobuf.Timestamp genesis_time = 1;
 
   // 32 byte hash tree root of the genesis validator set.
   bytes genesis_validators_root = 2 [(gogoproto.moretags) = "ssz-size:\"32\""];
@@ -235,6 +241,18 @@ message StateValidatorsRequest {
 
 message StateValidatorsResponse {
   repeated ValidatorContainer data = 1;
+}
+
+message ValidatorBalancesResponse {
+  repeated ValidatorBalance data = 1;
+}
+
+message ValidatorBalance {
+  // The index of the validator the retrieved balance is for.
+  uint64 index = 1;
+
+  // The balance of the requested validator.
+  uint64 balance = 2;
 }
 
 message StateValidatorRequest {
