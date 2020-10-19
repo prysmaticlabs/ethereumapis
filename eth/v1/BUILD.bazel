@@ -6,6 +6,9 @@ load("//tools:ssz.bzl", "SSZ_DEPS", "ssz_gen_marshal")
 ssz_gen_marshal(
     name = "ssz_generated_files",
     go_proto = ":v1_go_proto",
+    includes = [
+        "@com_github_farazdagi_prysm_shared_types//:go_default_library",
+    ],
     objs = [
         "AggregateAttestationAndProof",
         "Attestation",
@@ -58,6 +61,7 @@ go_proto_library(
         "@com_github_gogo_protobuf//gogoproto:go_default_library",  # keep
         "@com_github_prysmaticlabs_go_bitfield//:go_default_library",  # keep
         "@go_googleapis//google/api:annotations_go_proto",
+        "@com_github_farazdagi_prysm_shared_types//:go_default_library",
     ],
 )
 
