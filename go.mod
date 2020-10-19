@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/farazdagi/prysm-shared-types v0.0.0-20201019221602-a80cc791f553 // indirect
-	github.com/ferranbt/fastssz v0.0.0-20200728110133-0b6e349af87a
+	github.com/ferranbt/fastssz v0.0.0-20201019195157-d731d50f87dd
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/protobuf v1.4.2
 	github.com/grpc-ecosystem/grpc-gateway v1.13.0
