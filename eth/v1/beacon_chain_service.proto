@@ -199,14 +199,14 @@ message GenesisResponse {
   bytes genesis_validators_root = 2 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
   // 4 byte genesis fork version.
-  bytes genesis_fork_version = 3 [(gogoproto.moretags) = "ssz-size:\"4\""];;
+  bytes genesis_fork_version = 3 [(gogoproto.moretags) = "ssz-size:\"4\""];
 }
 
 message StateRequest {
   // The state id which can be any of: "head" (canonical head in node's view),
   // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
   // Uses the provided state_id for the request.
-  string state_id = 1; // TODO: Duck type handling.
+  bytes state_id = 1; // TODO: Duck type handling.
 }
 
 message StateRootResponse {
@@ -228,7 +228,7 @@ message StateValidatorsRequest {
   // The state id which can be any of: "head" (canonical head in node's view),
   // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
   // Uses the provided state_id for the request.
-  string state_id = 1; // TODO: Duck type handling.
+  bytes state_id = 1; // TODO: Duck type handling.
 
   // An array of either hex encoded public keys (with 0x prefix) or validator indexes.
   repeated string id = 2; // TODO: Duck type handling.
@@ -237,6 +237,17 @@ message StateValidatorsRequest {
   // active_exiting, active_slashed, exited_unslashed, exited_slashed, withdrawal_possible,
   // withdrawal_done, active, pending, exited, withdrawal
   string status = 3; // TODO: Enum.
+}
+
+
+message ValidatorBalancesRequest {
+  // The state id which can be any of: "head" (canonical head in node's view),
+  // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
+  // Uses the provided state_id for the request.
+  string state_id = 1; // TODO: Duck type handling.
+
+  // An array of either hex encoded public keys (with 0x prefix) or validator indexes.
+  repeated string id = 2; // TODO: Duck type handling.
 }
 
 message StateValidatorsResponse {
@@ -273,7 +284,7 @@ message StateCommitteesRequest {
   // The state id which can be any of: "head" (canonical head in node's view),
   // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
   // Uses the provided state_id for the request.
-  string state_id = 1; // TODO: Duck type handling.
+  bytes state_id = 1; // TODO: Duck type handling.
 
   // The epoch to retrieve the committees of.
   uint64 epoch = 2;
@@ -361,8 +372,8 @@ message BeaconBlockContainer {
 // Beacon Pool related API service.
 
 message AttestationsPoolRequest {
-  uint64 slot = 1;
-  uint64 committee_index = 2;
+  optional uint64 slot = 1;
+  optional uint64 committee_index = 2;
 }
 
 message AttestationsPoolResponse {
