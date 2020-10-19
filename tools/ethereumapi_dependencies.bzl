@@ -3,6 +3,7 @@
 load(
     "@bazel_gazelle//:deps.bzl",
     "gazelle_dependencies",
+    "go_repository",
     _go_repository = "go_repository",
 )
 
@@ -343,4 +344,10 @@ def ethereumapi_deps():
         importpath = "github.com/mitchellh/mapstructure",
         sum = "h1:mRS76wmkOn3KkKAyXDu42V+6ebnXWIztFSYGN7GeoRg=",
         version = "v1.3.2",
+    )
+    go_repository(
+        name = "com_github_farazdagi_prysm_shared_types",
+        importpath = "github.com/farazdagi/prysm-shared-types",
+        sum = "h1:e2zkyhuTX0jnreU2xB7JJlZonpekt1wWREJ/x1C79r8=",
+        version = "v0.0.0-20201019221602-a80cc791f553",
     )
