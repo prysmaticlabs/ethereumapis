@@ -3,7 +3,6 @@
 load(
     "@bazel_gazelle//:deps.bzl",
     "gazelle_dependencies",
-    "go_repository",
     _go_repository = "go_repository",
 )
 
