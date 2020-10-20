@@ -295,7 +295,7 @@ message ValidatorChangeSet {
 message ListIndexedAttestationsRequest {
     oneof query_filter {
         // Retrieve attestations by epoch processed.
-        uint64 epoch = 1;
+        uint64 epoch = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
         // Optional criteria to retrieve genesis epoch attestations.
         bool genesis_epoch = 2;
@@ -317,7 +317,7 @@ message ListAttestationsRequest {
 
     oneof query_filter {
         // Filter attestations by epoch processed.
-        uint64 epoch = 1;
+        uint64 epoch = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
         // Optional criteria to retrieve attestations from 0 epoch.
         bool genesis_epoch = 2;
@@ -365,11 +365,11 @@ message ListBlocksRequest {
         // Slot to lookup a block. If the slot is not yet finalized, this
         // criteria may yield multiple valid blocks if the node has seen blocks
         // from another fork.
-        uint64 slot = 2;
+        uint64 slot = 2 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
 
         // The epoch number for which to retrieve blocks. If specified, this
         // will return all blocks found within the span of the specified epoch.
-        uint64 epoch = 3;
+        uint64 epoch = 3 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
         // Optional criteria to retrieve genesis block.
         bool genesis = 4;
@@ -410,37 +410,37 @@ message BeaconBlockContainer {
 // Information about the head of the beacon chain.
 message ChainHead {
     // Slot of the head block.
-    uint64 head_slot = 1;
+    uint64 head_slot = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
 
     // Epoch of the head block.
-    uint64 head_epoch = 2;
+    uint64 head_epoch = 2 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
     // 32 byte merkle tree root of the canonical head block in the beacon node.
     bytes head_block_root = 3 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
     // Most recent slot that contains the finalized block.
-    uint64 finalized_slot = 4;
+    uint64 finalized_slot = 4 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
 
     // Epoch of the finalized block.
-    uint64 finalized_epoch = 5;
+    uint64 finalized_epoch = 5 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
     // Most recent 32 byte finalized block root.
     bytes finalized_block_root = 6 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
     // Most recent slot that contains the justified block.
-    uint64 justified_slot = 7;
+    uint64 justified_slot = 7 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
 
     // Epoch of the justified block.
-    uint64 justified_epoch = 8;
+    uint64 justified_epoch = 8 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
     // Most recent 32 byte justified block root.
     bytes justified_block_root = 9 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
     // Most recent slot that contains the previous justified block.
-    uint64 previous_justified_slot = 10;
+    uint64 previous_justified_slot = 10 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
 
     // Epoch of the previous justified block.
-    uint64 previous_justified_epoch = 11;
+    uint64 previous_justified_epoch = 11 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
     // Previous 32 byte justified block root.
     bytes previous_justified_block_root = 12 [(gogoproto.moretags) = "ssz-size:\"32\""];
@@ -449,7 +449,7 @@ message ChainHead {
 message ListCommitteesRequest {
     oneof query_filter {
         // Optional criteria to retrieve data at a specific epoch.
-        uint64 epoch = 1;
+        uint64 epoch = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
         // Optional criteria to retrieve genesis data.
         bool genesis = 2;
@@ -468,7 +468,7 @@ message BeaconCommittees {
     }
 
     // The epoch for which the committees in the response belong to.
-    uint64 epoch = 1;
+    uint64 epoch = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
     // A map of validator committees by slot.
     map<uint64, CommitteesList> committees = 2;
@@ -480,7 +480,7 @@ message BeaconCommittees {
 message ListValidatorBalancesRequest {
     oneof query_filter {
         // Optional criteria to retrieve balances at a specific epoch.
-        uint64 epoch = 1;
+        uint64 epoch = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
         // Optional criteria to retrieve the genesis list of balances.
         bool genesis = 2;
@@ -504,7 +504,7 @@ message ListValidatorBalancesRequest {
 
 message ValidatorBalances {
     // Epoch which the state was considered to determine the validator balances.
-    uint64 epoch = 1;
+    uint64 epoch = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
     message Balance {
         // Validator's 48 byte BLS public key.
@@ -535,7 +535,7 @@ message ListValidatorsRequest {
         // Optional criteria to retrieve validators at a specific epoch.
         // Omitting this field or setting it to zero will retrieve a response
         // with the current active validator set.
-        uint64 epoch = 1;
+        uint64 epoch = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
         // Optional criteria to retrieve the genesis set of validators.
         bool genesis = 2;
@@ -576,7 +576,7 @@ message Validators {
     // Epoch which the state was considered to determine the active validator
     // set. This field is not optional. Zero value epoch indicates the validator
     // set is from the Ethereum 2.0 genesis set.
-    uint64 epoch = 1;
+    uint64 epoch = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
     message ValidatorContainer {
         uint64 index = 1;
@@ -597,7 +597,7 @@ message Validators {
 message GetValidatorActiveSetChangesRequest {
     oneof query_filter {
         // Optional criteria to retrieve balances at a specific epoch.
-        uint64 epoch = 1;
+        uint64 epoch = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
         // Optional criteria to retrieve the genesis list of balances.
         bool genesis = 2;
@@ -607,7 +607,7 @@ message GetValidatorActiveSetChangesRequest {
 message ActiveSetChanges {
     // Epoch which the state was considered to determine the active validator
     // set.
-    uint64 epoch = 1;
+    uint64 epoch = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
     // 48 byte validator public keys that have been activated in the given epoch.
     repeated bytes activated_public_keys = 2 [(gogoproto.moretags) = "ssz-size:\"?,48\""];
@@ -700,7 +700,7 @@ message ValidatorQueue {
 message ListValidatorAssignmentsRequest {
     oneof query_filter {
         // Epoch to validator assignments for.
-        uint64 epoch = 1;
+        uint64 epoch = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
         // Whether or not to query for the genesis information.
         bool genesis = 2;
@@ -733,7 +733,7 @@ message ValidatorAssignments {
 
         // Beacon chain slot in which the validator must perform its assigned
         // duty as an attester.
-        uint64 attester_slot = 3;
+        uint64 attester_slot = 3 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
 
         // Beacon chain slots in which the validator must perform its assigned
         // duty as a proposer.
@@ -747,7 +747,7 @@ message ValidatorAssignments {
     }
 
     // The epoch for which this set of validator assignments is valid.
-    uint64 epoch = 1;
+    uint64 epoch = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
     repeated CommitteeAssignment assignments = 2;
 
@@ -763,7 +763,7 @@ message ValidatorAssignments {
 message GetValidatorParticipationRequest {
     oneof query_filter {
         // Epoch to request participation information.
-        uint64 epoch = 1;
+        uint64 epoch = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
         // Whether or not to query for the genesis information.
         bool genesis = 2;
@@ -772,7 +772,7 @@ message GetValidatorParticipationRequest {
 
 message ValidatorParticipationResponse {
     // Epoch which this message is applicable.
-    uint64 epoch = 1;
+    uint64 epoch = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 
     // Whether or not epoch has been finalized.
     bool finalized = 2;
@@ -819,7 +819,7 @@ message SubmitSlashingResponse {
 
 message IndividualVotesRequest {
     // Epoch of the request.
-    uint64 epoch = 1;
+    uint64 epoch = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
     // Validator 48 byte BLS public keys to filter validators for the given epoch.
     repeated bytes public_keys = 2;
     // Validator indices to filter validators for the given epoch.
@@ -829,7 +829,7 @@ message IndividualVotesRequest {
 message IndividualVotesRespond {
     message IndividualVote {
         // The epoch of the vote status request.
-        uint64 epoch = 1;
+        uint64 epoch = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
         // The public key of the vote status request.
         bytes public_key = 2;
         // The validator index of the request.
@@ -855,9 +855,9 @@ message IndividualVotesRespond {
         // The current effective balance of the validator.
         uint64 current_epoch_effective_balance_gwei = 13;
         // The slots of when the validator's attestation got included in the block.
-        uint64 inclusion_slot = 14;
+        uint64 inclusion_slot = 14 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
         // How many slots have passed until the validator's attestation got included in the block.
-        uint64 inclusion_distance = 15;
+        uint64 inclusion_distance = 15 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
     }
 
     repeated IndividualVote individual_votes = 1;
@@ -869,5 +869,5 @@ message WeakSubjectivityCheckpoint {
     // The state root of weak subjectivity checkpoint.
     bytes state_root = 2;
     // The epoch of weak subjectivity checkpoint.
-    uint64 epoch = 3;
+    uint64 epoch = 3 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 }

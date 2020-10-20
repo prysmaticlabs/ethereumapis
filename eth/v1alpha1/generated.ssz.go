@@ -2,6 +2,7 @@
 package eth
 
 import (
+	github_com_farazdagi_prysm_shared_types "github.com/farazdagi/prysm-shared-types"
 	ssz "github.com/ferranbt/fastssz"
 )
 
@@ -16,7 +17,7 @@ func (b *BeaconBlock) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	offset := int(84)
 
 	// Field (0) 'Slot'
-	dst = ssz.MarshalUint64(dst, b.Slot)
+	dst = ssz.MarshalUint64(dst, uint64(b.Slot))
 
 	// Field (1) 'ProposerIndex'
 	dst = ssz.MarshalUint64(dst, b.ProposerIndex)
@@ -62,15 +63,21 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 	var o4 uint64
 
 	// Field (0) 'Slot'
-	b.Slot = ssz.UnmarshallUint64(buf[0:8])
+	b.Slot = github_com_farazdagi_prysm_shared_types.Slot(ssz.UnmarshallUint64(buf[0:8]))
 
 	// Field (1) 'ProposerIndex'
 	b.ProposerIndex = ssz.UnmarshallUint64(buf[8:16])
 
 	// Field (2) 'ParentRoot'
+	if cap(b.ParentRoot) == 0 {
+		b.ParentRoot = make([]byte, 0, len(buf[16:48]))
+	}
 	b.ParentRoot = append(b.ParentRoot, buf[16:48]...)
 
 	// Field (3) 'StateRoot'
+	if cap(b.StateRoot) == 0 {
+		b.StateRoot = make([]byte, 0, len(buf[48:80]))
+	}
 	b.StateRoot = append(b.StateRoot, buf[48:80]...)
 
 	// Offset (4) 'Body'
@@ -114,7 +121,7 @@ func (b *BeaconBlock) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Slot'
-	hh.PutUint64(b.Slot)
+	hh.PutUint64(uint64(b.Slot))
 
 	// Field (1) 'ProposerIndex'
 	hh.PutUint64(b.ProposerIndex)
@@ -191,6 +198,9 @@ func (s *SignedBeaconBlock) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (1) 'Signature'
+	if cap(s.Signature) == 0 {
+		s.Signature = make([]byte, 0, len(buf[4:100]))
+	}
 	s.Signature = append(s.Signature, buf[4:100]...)
 
 	// Field (0) 'Block'
@@ -386,6 +396,9 @@ func (b *BeaconBlockBody) UnmarshalSSZ(buf []byte) error {
 	var o3, o4, o5, o6, o7 uint64
 
 	// Field (0) 'RandaoReveal'
+	if cap(b.RandaoReveal) == 0 {
+		b.RandaoReveal = make([]byte, 0, len(buf[0:96]))
+	}
 	b.RandaoReveal = append(b.RandaoReveal, buf[0:96]...)
 
 	// Field (1) 'Eth1Data'
@@ -397,6 +410,9 @@ func (b *BeaconBlockBody) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (2) 'Graffiti'
+	if cap(b.Graffiti) == 0 {
+		b.Graffiti = make([]byte, 0, len(buf[168:200]))
+	}
 	b.Graffiti = append(b.Graffiti, buf[168:200]...)
 
 	// Offset (3) 'ProposerSlashings'
@@ -916,6 +932,9 @@ func (d *Deposit) UnmarshalSSZ(buf []byte) error {
 	// Field (0) 'Proof'
 	d.Proof = make([][]byte, 33)
 	for ii := 0; ii < 33; ii++ {
+		if cap(d.Proof[ii]) == 0 {
+			d.Proof[ii] = make([]byte, 0, len(buf[0:1056][ii*32:(ii+1)*32]))
+		}
 		d.Proof[ii] = append(d.Proof[ii], buf[0:1056][ii*32:(ii+1)*32]...)
 	}
 
@@ -1016,15 +1035,24 @@ func (d *Deposit_Data) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (0) 'PublicKey'
+	if cap(d.PublicKey) == 0 {
+		d.PublicKey = make([]byte, 0, len(buf[0:48]))
+	}
 	d.PublicKey = append(d.PublicKey, buf[0:48]...)
 
 	// Field (1) 'WithdrawalCredentials'
+	if cap(d.WithdrawalCredentials) == 0 {
+		d.WithdrawalCredentials = make([]byte, 0, len(buf[48:80]))
+	}
 	d.WithdrawalCredentials = append(d.WithdrawalCredentials, buf[48:80]...)
 
 	// Field (2) 'Amount'
 	d.Amount = ssz.UnmarshallUint64(buf[80:88])
 
 	// Field (3) 'Signature'
+	if cap(d.Signature) == 0 {
+		d.Signature = make([]byte, 0, len(buf[88:184]))
+	}
 	d.Signature = append(d.Signature, buf[88:184]...)
 
 	return err
@@ -1083,7 +1111,7 @@ func (v *VoluntaryExit) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 
 	// Field (0) 'Epoch'
-	dst = ssz.MarshalUint64(dst, v.Epoch)
+	dst = ssz.MarshalUint64(dst, uint64(v.Epoch))
 
 	// Field (1) 'ValidatorIndex'
 	dst = ssz.MarshalUint64(dst, v.ValidatorIndex)
@@ -1100,7 +1128,7 @@ func (v *VoluntaryExit) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (0) 'Epoch'
-	v.Epoch = ssz.UnmarshallUint64(buf[0:8])
+	v.Epoch = github_com_farazdagi_prysm_shared_types.Epoch(ssz.UnmarshallUint64(buf[0:8]))
 
 	// Field (1) 'ValidatorIndex'
 	v.ValidatorIndex = ssz.UnmarshallUint64(buf[8:16])
@@ -1124,7 +1152,7 @@ func (v *VoluntaryExit) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Epoch'
-	hh.PutUint64(v.Epoch)
+	hh.PutUint64(uint64(v.Epoch))
 
 	// Field (1) 'ValidatorIndex'
 	hh.PutUint64(v.ValidatorIndex)
@@ -1177,6 +1205,9 @@ func (s *SignedVoluntaryExit) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (1) 'Signature'
+	if cap(s.Signature) == 0 {
+		s.Signature = make([]byte, 0, len(buf[16:112]))
+	}
 	s.Signature = append(s.Signature, buf[16:112]...)
 
 	return err
@@ -1251,12 +1282,18 @@ func (e *Eth1Data) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (0) 'DepositRoot'
+	if cap(e.DepositRoot) == 0 {
+		e.DepositRoot = make([]byte, 0, len(buf[0:32]))
+	}
 	e.DepositRoot = append(e.DepositRoot, buf[0:32]...)
 
 	// Field (1) 'DepositCount'
 	e.DepositCount = ssz.UnmarshallUint64(buf[32:40])
 
 	// Field (2) 'BlockHash'
+	if cap(e.BlockHash) == 0 {
+		e.BlockHash = make([]byte, 0, len(buf[40:72]))
+	}
 	e.BlockHash = append(e.BlockHash, buf[40:72]...)
 
 	return err
@@ -1308,7 +1345,7 @@ func (b *BeaconBlockHeader) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 
 	// Field (0) 'Slot'
-	dst = ssz.MarshalUint64(dst, b.Slot)
+	dst = ssz.MarshalUint64(dst, uint64(b.Slot))
 
 	// Field (1) 'ProposerIndex'
 	dst = ssz.MarshalUint64(dst, b.ProposerIndex)
@@ -1346,18 +1383,27 @@ func (b *BeaconBlockHeader) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (0) 'Slot'
-	b.Slot = ssz.UnmarshallUint64(buf[0:8])
+	b.Slot = github_com_farazdagi_prysm_shared_types.Slot(ssz.UnmarshallUint64(buf[0:8]))
 
 	// Field (1) 'ProposerIndex'
 	b.ProposerIndex = ssz.UnmarshallUint64(buf[8:16])
 
 	// Field (2) 'ParentRoot'
+	if cap(b.ParentRoot) == 0 {
+		b.ParentRoot = make([]byte, 0, len(buf[16:48]))
+	}
 	b.ParentRoot = append(b.ParentRoot, buf[16:48]...)
 
 	// Field (3) 'StateRoot'
+	if cap(b.StateRoot) == 0 {
+		b.StateRoot = make([]byte, 0, len(buf[48:80]))
+	}
 	b.StateRoot = append(b.StateRoot, buf[48:80]...)
 
 	// Field (4) 'BodyRoot'
+	if cap(b.BodyRoot) == 0 {
+		b.BodyRoot = make([]byte, 0, len(buf[80:112]))
+	}
 	b.BodyRoot = append(b.BodyRoot, buf[80:112]...)
 
 	return err
@@ -1379,7 +1425,7 @@ func (b *BeaconBlockHeader) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Slot'
-	hh.PutUint64(b.Slot)
+	hh.PutUint64(uint64(b.Slot))
 
 	// Field (1) 'ProposerIndex'
 	hh.PutUint64(b.ProposerIndex)
@@ -1453,6 +1499,9 @@ func (s *SignedBeaconBlockHeader) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (1) 'Signature'
+	if cap(s.Signature) == 0 {
+		s.Signature = make([]byte, 0, len(buf[112:208]))
+	}
 	s.Signature = append(s.Signature, buf[112:208]...)
 
 	return err
@@ -1555,6 +1604,9 @@ func (i *IndexedAttestation) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (2) 'Signature'
+	if cap(i.Signature) == 0 {
+		i.Signature = make([]byte, 0, len(buf[132:228]))
+	}
 	i.Signature = append(i.Signature, buf[132:228]...)
 
 	// Field (0) 'AttestingIndices'
@@ -1617,6 +1669,142 @@ func (i *IndexedAttestation) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 		return
 	}
 	hh.PutBytes(i.Signature)
+
+	hh.Merkleize(indx)
+	return
+}
+
+// MarshalSSZ ssz marshals the Validator object
+func (v *Validator) MarshalSSZ() ([]byte, error) {
+	return ssz.MarshalSSZ(v)
+}
+
+// MarshalSSZTo ssz marshals the Validator object to a target array
+func (v *Validator) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+	dst = buf
+
+	// Field (0) 'PublicKey'
+	if len(v.PublicKey) != 48 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, v.PublicKey...)
+
+	// Field (1) 'WithdrawalCredentials'
+	if len(v.WithdrawalCredentials) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, v.WithdrawalCredentials...)
+
+	// Field (2) 'EffectiveBalance'
+	dst = ssz.MarshalUint64(dst, v.EffectiveBalance)
+
+	// Field (3) 'Slashed'
+	dst = ssz.MarshalBool(dst, v.Slashed)
+
+	// Field (4) 'ActivationEligibilityEpoch'
+	dst = ssz.MarshalUint64(dst, uint64(v.ActivationEligibilityEpoch))
+
+	// Field (5) 'ActivationEpoch'
+	dst = ssz.MarshalUint64(dst, uint64(v.ActivationEpoch))
+
+	// Field (6) 'ExitEpoch'
+	dst = ssz.MarshalUint64(dst, uint64(v.ExitEpoch))
+
+	// Field (7) 'WithdrawableEpoch'
+	dst = ssz.MarshalUint64(dst, uint64(v.WithdrawableEpoch))
+
+	return
+}
+
+// UnmarshalSSZ ssz unmarshals the Validator object
+func (v *Validator) UnmarshalSSZ(buf []byte) error {
+	var err error
+	size := uint64(len(buf))
+	if size != 121 {
+		return ssz.ErrSize
+	}
+
+	// Field (0) 'PublicKey'
+	if cap(v.PublicKey) == 0 {
+		v.PublicKey = make([]byte, 0, len(buf[0:48]))
+	}
+	v.PublicKey = append(v.PublicKey, buf[0:48]...)
+
+	// Field (1) 'WithdrawalCredentials'
+	if cap(v.WithdrawalCredentials) == 0 {
+		v.WithdrawalCredentials = make([]byte, 0, len(buf[48:80]))
+	}
+	v.WithdrawalCredentials = append(v.WithdrawalCredentials, buf[48:80]...)
+
+	// Field (2) 'EffectiveBalance'
+	v.EffectiveBalance = ssz.UnmarshallUint64(buf[80:88])
+
+	// Field (3) 'Slashed'
+	v.Slashed = ssz.UnmarshalBool(buf[88:89])
+
+	// Field (4) 'ActivationEligibilityEpoch'
+	v.ActivationEligibilityEpoch = github_com_farazdagi_prysm_shared_types.Epoch(ssz.UnmarshallUint64(buf[89:97]))
+
+	// Field (5) 'ActivationEpoch'
+	v.ActivationEpoch = github_com_farazdagi_prysm_shared_types.Epoch(ssz.UnmarshallUint64(buf[97:105]))
+
+	// Field (6) 'ExitEpoch'
+	v.ExitEpoch = github_com_farazdagi_prysm_shared_types.Epoch(ssz.UnmarshallUint64(buf[105:113]))
+
+	// Field (7) 'WithdrawableEpoch'
+	v.WithdrawableEpoch = github_com_farazdagi_prysm_shared_types.Epoch(ssz.UnmarshallUint64(buf[113:121]))
+
+	return err
+}
+
+// SizeSSZ returns the ssz encoded size in bytes for the Validator object
+func (v *Validator) SizeSSZ() (size int) {
+	size = 121
+	return
+}
+
+// HashTreeRoot ssz hashes the Validator object
+func (v *Validator) HashTreeRoot() ([32]byte, error) {
+	return ssz.HashWithDefaultHasher(v)
+}
+
+// HashTreeRootWith ssz hashes the Validator object with a hasher
+func (v *Validator) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+	indx := hh.Index()
+
+	// Field (0) 'PublicKey'
+	if len(v.PublicKey) != 48 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(v.PublicKey)
+
+	// Field (1) 'WithdrawalCredentials'
+	if len(v.WithdrawalCredentials) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(v.WithdrawalCredentials)
+
+	// Field (2) 'EffectiveBalance'
+	hh.PutUint64(v.EffectiveBalance)
+
+	// Field (3) 'Slashed'
+	hh.PutBool(v.Slashed)
+
+	// Field (4) 'ActivationEligibilityEpoch'
+	hh.PutUint64(uint64(v.ActivationEligibilityEpoch))
+
+	// Field (5) 'ActivationEpoch'
+	hh.PutUint64(uint64(v.ActivationEpoch))
+
+	// Field (6) 'ExitEpoch'
+	hh.PutUint64(uint64(v.ExitEpoch))
+
+	// Field (7) 'WithdrawableEpoch'
+	hh.PutUint64(uint64(v.WithdrawableEpoch))
 
 	hh.Merkleize(indx)
 	return
@@ -1686,6 +1874,9 @@ func (a *Attestation) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (2) 'Signature'
+	if cap(a.Signature) == 0 {
+		a.Signature = make([]byte, 0, len(buf[132:228]))
+	}
 	a.Signature = append(a.Signature, buf[132:228]...)
 
 	// Field (0) 'AggregationBits'
@@ -1693,6 +1884,9 @@ func (a *Attestation) UnmarshalSSZ(buf []byte) error {
 		buf = tail[o0:]
 		if err = ssz.ValidateBitlist(buf, 2048); err != nil {
 			return err
+		}
+		if cap(a.AggregationBits) == 0 {
+			a.AggregationBits = make([]byte, 0, len(buf))
 		}
 		a.AggregationBits = append(a.AggregationBits, buf...)
 	}
@@ -1719,6 +1913,10 @@ func (a *Attestation) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'AggregationBits'
+	if len(a.AggregationBits) == 0 {
+		err = ssz.ErrEmptyBitlist
+		return
+	}
 	hh.PutBitlist(a.AggregationBits, 2048)
 
 	// Field (1) 'Data'
@@ -1792,6 +1990,9 @@ func (a *AggregateAttestationAndProof) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (2) 'SelectionProof'
+	if cap(a.SelectionProof) == 0 {
+		a.SelectionProof = make([]byte, 0, len(buf[12:108]))
+	}
 	a.SelectionProof = append(a.SelectionProof, buf[12:108]...)
 
 	// Field (1) 'Aggregate'
@@ -1897,6 +2098,9 @@ func (s *SignedAggregateAttestationAndProof) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (1) 'Signature'
+	if cap(s.Signature) == 0 {
+		s.Signature = make([]byte, 0, len(buf[4:100]))
+	}
 	s.Signature = append(s.Signature, buf[4:100]...)
 
 	// Field (0) 'Message'
@@ -1960,7 +2164,7 @@ func (a *AttestationData) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 
 	// Field (0) 'Slot'
-	dst = ssz.MarshalUint64(dst, a.Slot)
+	dst = ssz.MarshalUint64(dst, uint64(a.Slot))
 
 	// Field (1) 'CommitteeIndex'
 	dst = ssz.MarshalUint64(dst, a.CommitteeIndex)
@@ -2000,12 +2204,15 @@ func (a *AttestationData) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (0) 'Slot'
-	a.Slot = ssz.UnmarshallUint64(buf[0:8])
+	a.Slot = github_com_farazdagi_prysm_shared_types.Slot(ssz.UnmarshallUint64(buf[0:8]))
 
 	// Field (1) 'CommitteeIndex'
 	a.CommitteeIndex = ssz.UnmarshallUint64(buf[8:16])
 
 	// Field (2) 'BeaconBlockRoot'
+	if cap(a.BeaconBlockRoot) == 0 {
+		a.BeaconBlockRoot = make([]byte, 0, len(buf[16:48]))
+	}
 	a.BeaconBlockRoot = append(a.BeaconBlockRoot, buf[16:48]...)
 
 	// Field (3) 'Source'
@@ -2043,7 +2250,7 @@ func (a *AttestationData) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Slot'
-	hh.PutUint64(a.Slot)
+	hh.PutUint64(uint64(a.Slot))
 
 	// Field (1) 'CommitteeIndex'
 	hh.PutUint64(a.CommitteeIndex)
@@ -2079,7 +2286,7 @@ func (c *Checkpoint) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 
 	// Field (0) 'Epoch'
-	dst = ssz.MarshalUint64(dst, c.Epoch)
+	dst = ssz.MarshalUint64(dst, uint64(c.Epoch))
 
 	// Field (1) 'Root'
 	if len(c.Root) != 32 {
@@ -2100,9 +2307,12 @@ func (c *Checkpoint) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (0) 'Epoch'
-	c.Epoch = ssz.UnmarshallUint64(buf[0:8])
+	c.Epoch = github_com_farazdagi_prysm_shared_types.Epoch(ssz.UnmarshallUint64(buf[0:8]))
 
 	// Field (1) 'Root'
+	if cap(c.Root) == 0 {
+		c.Root = make([]byte, 0, len(buf[8:40]))
+	}
 	c.Root = append(c.Root, buf[8:40]...)
 
 	return err
@@ -2124,7 +2334,7 @@ func (c *Checkpoint) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Epoch'
-	hh.PutUint64(c.Epoch)
+	hh.PutUint64(uint64(c.Epoch))
 
 	// Field (1) 'Root'
 	if len(c.Root) != 32 {
@@ -2132,136 +2342,6 @@ func (c *Checkpoint) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 		return
 	}
 	hh.PutBytes(c.Root)
-
-	hh.Merkleize(indx)
-	return
-}
-
-// MarshalSSZ ssz marshals the Validator object
-func (v *Validator) MarshalSSZ() ([]byte, error) {
-	return ssz.MarshalSSZ(v)
-}
-
-// MarshalSSZTo ssz marshals the Validator object to a target array
-func (v *Validator) MarshalSSZTo(buf []byte) (dst []byte, err error) {
-	dst = buf
-
-	// Field (0) 'PublicKey'
-	if len(v.PublicKey) != 48 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	dst = append(dst, v.PublicKey...)
-
-	// Field (1) 'WithdrawalCredentials'
-	if len(v.WithdrawalCredentials) != 32 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	dst = append(dst, v.WithdrawalCredentials...)
-
-	// Field (2) 'EffectiveBalance'
-	dst = ssz.MarshalUint64(dst, v.EffectiveBalance)
-
-	// Field (3) 'Slashed'
-	dst = ssz.MarshalBool(dst, v.Slashed)
-
-	// Field (4) 'ActivationEligibilityEpoch'
-	dst = ssz.MarshalUint64(dst, v.ActivationEligibilityEpoch)
-
-	// Field (5) 'ActivationEpoch'
-	dst = ssz.MarshalUint64(dst, v.ActivationEpoch)
-
-	// Field (6) 'ExitEpoch'
-	dst = ssz.MarshalUint64(dst, v.ExitEpoch)
-
-	// Field (7) 'WithdrawableEpoch'
-	dst = ssz.MarshalUint64(dst, v.WithdrawableEpoch)
-
-	return
-}
-
-// UnmarshalSSZ ssz unmarshals the Validator object
-func (v *Validator) UnmarshalSSZ(buf []byte) error {
-	var err error
-	size := uint64(len(buf))
-	if size != 121 {
-		return ssz.ErrSize
-	}
-
-	// Field (0) 'PublicKey'
-	v.PublicKey = append(v.PublicKey, buf[0:48]...)
-
-	// Field (1) 'WithdrawalCredentials'
-	v.WithdrawalCredentials = append(v.WithdrawalCredentials, buf[48:80]...)
-
-	// Field (2) 'EffectiveBalance'
-	v.EffectiveBalance = ssz.UnmarshallUint64(buf[80:88])
-
-	// Field (3) 'Slashed'
-	v.Slashed = ssz.UnmarshalBool(buf[88:89])
-
-	// Field (4) 'ActivationEligibilityEpoch'
-	v.ActivationEligibilityEpoch = ssz.UnmarshallUint64(buf[89:97])
-
-	// Field (5) 'ActivationEpoch'
-	v.ActivationEpoch = ssz.UnmarshallUint64(buf[97:105])
-
-	// Field (6) 'ExitEpoch'
-	v.ExitEpoch = ssz.UnmarshallUint64(buf[105:113])
-
-	// Field (7) 'WithdrawableEpoch'
-	v.WithdrawableEpoch = ssz.UnmarshallUint64(buf[113:121])
-
-	return err
-}
-
-// SizeSSZ returns the ssz encoded size in bytes for the Validator object
-func (v *Validator) SizeSSZ() (size int) {
-	size = 121
-	return
-}
-
-// HashTreeRoot ssz hashes the Validator object
-func (v *Validator) HashTreeRoot() ([32]byte, error) {
-	return ssz.HashWithDefaultHasher(v)
-}
-
-// HashTreeRootWith ssz hashes the Validator object with a hasher
-func (v *Validator) HashTreeRootWith(hh *ssz.Hasher) (err error) {
-	indx := hh.Index()
-
-	// Field (0) 'PublicKey'
-	if len(v.PublicKey) != 48 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	hh.PutBytes(v.PublicKey)
-
-	// Field (1) 'WithdrawalCredentials'
-	if len(v.WithdrawalCredentials) != 32 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	hh.PutBytes(v.WithdrawalCredentials)
-
-	// Field (2) 'EffectiveBalance'
-	hh.PutUint64(v.EffectiveBalance)
-
-	// Field (3) 'Slashed'
-	hh.PutBool(v.Slashed)
-
-	// Field (4) 'ActivationEligibilityEpoch'
-	hh.PutUint64(v.ActivationEligibilityEpoch)
-
-	// Field (5) 'ActivationEpoch'
-	hh.PutUint64(v.ActivationEpoch)
-
-	// Field (6) 'ExitEpoch'
-	hh.PutUint64(v.ExitEpoch)
-
-	// Field (7) 'WithdrawableEpoch'
-	hh.PutUint64(v.WithdrawableEpoch)
 
 	hh.Merkleize(indx)
 	return
