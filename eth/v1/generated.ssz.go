@@ -39,13 +39,13 @@ func (v *Validator) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = ssz.MarshalUint64(dst, v.ActivationEligibilityEpoch)
 
 	// Field (5) 'ActivationEpoch'
-	dst = ssz.MarshalUint64(dst, v.ActivationEpoch)
+	dst = ssz.MarshalUint64(dst, uint64(v.ActivationEpoch))
 
 	// Field (6) 'ExitEpoch'
-	dst = ssz.MarshalUint64(dst, v.ExitEpoch)
+	dst = ssz.MarshalUint64(dst, uint64(v.ExitEpoch))
 
 	// Field (7) 'WithdrawableEpoch'
-	dst = ssz.MarshalUint64(dst, v.WithdrawableEpoch)
+	dst = ssz.MarshalUint64(dst, uint64(v.WithdrawableEpoch))
 
 	return
 }
@@ -80,13 +80,13 @@ func (v *Validator) UnmarshalSSZ(buf []byte) error {
 	v.ActivationEligibilityEpoch = ssz.UnmarshallUint64(buf[89:97])
 
 	// Field (5) 'ActivationEpoch'
-	v.ActivationEpoch = ssz.UnmarshallUint64(buf[97:105])
+	v.ActivationEpoch = github_com_farazdagi_prysm_shared_types.Epoch(ssz.UnmarshallUint64(buf[97:105]))
 
 	// Field (6) 'ExitEpoch'
-	v.ExitEpoch = ssz.UnmarshallUint64(buf[105:113])
+	v.ExitEpoch = github_com_farazdagi_prysm_shared_types.Epoch(ssz.UnmarshallUint64(buf[105:113]))
 
 	// Field (7) 'WithdrawableEpoch'
-	v.WithdrawableEpoch = ssz.UnmarshallUint64(buf[113:121])
+	v.WithdrawableEpoch = github_com_farazdagi_prysm_shared_types.Epoch(ssz.UnmarshallUint64(buf[113:121]))
 
 	return err
 }
@@ -130,13 +130,13 @@ func (v *Validator) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	hh.PutUint64(v.ActivationEligibilityEpoch)
 
 	// Field (5) 'ActivationEpoch'
-	hh.PutUint64(v.ActivationEpoch)
+	hh.PutUint64(uint64(v.ActivationEpoch))
 
 	// Field (6) 'ExitEpoch'
-	hh.PutUint64(v.ExitEpoch)
+	hh.PutUint64(uint64(v.ExitEpoch))
 
 	// Field (7) 'WithdrawableEpoch'
-	hh.PutUint64(v.WithdrawableEpoch)
+	hh.PutUint64(uint64(v.WithdrawableEpoch))
 
 	hh.Merkleize(indx)
 	return
@@ -690,7 +690,7 @@ func (b *BeaconBlock) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	offset := int(84)
 
 	// Field (0) 'Slot'
-	dst = ssz.MarshalUint64(dst, b.Slot)
+	dst = ssz.MarshalUint64(dst, uint64(b.Slot))
 
 	// Field (1) 'ProposerIndex'
 	dst = ssz.MarshalUint64(dst, b.ProposerIndex)
@@ -736,7 +736,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 	var o4 uint64
 
 	// Field (0) 'Slot'
-	b.Slot = ssz.UnmarshallUint64(buf[0:8])
+	b.Slot = github_com_farazdagi_prysm_shared_types.Slot(ssz.UnmarshallUint64(buf[0:8]))
 
 	// Field (1) 'ProposerIndex'
 	b.ProposerIndex = ssz.UnmarshallUint64(buf[8:16])
@@ -794,7 +794,7 @@ func (b *BeaconBlock) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Slot'
-	hh.PutUint64(b.Slot)
+	hh.PutUint64(uint64(b.Slot))
 
 	// Field (1) 'ProposerIndex'
 	hh.PutUint64(b.ProposerIndex)
@@ -1784,7 +1784,7 @@ func (v *VoluntaryExit) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 
 	// Field (0) 'Epoch'
-	dst = ssz.MarshalUint64(dst, v.Epoch)
+	dst = ssz.MarshalUint64(dst, uint64(v.Epoch))
 
 	// Field (1) 'ValidatorIndex'
 	dst = ssz.MarshalUint64(dst, v.ValidatorIndex)
@@ -1801,7 +1801,7 @@ func (v *VoluntaryExit) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (0) 'Epoch'
-	v.Epoch = ssz.UnmarshallUint64(buf[0:8])
+	v.Epoch = github_com_farazdagi_prysm_shared_types.Epoch(ssz.UnmarshallUint64(buf[0:8]))
 
 	// Field (1) 'ValidatorIndex'
 	v.ValidatorIndex = ssz.UnmarshallUint64(buf[8:16])
@@ -1825,7 +1825,7 @@ func (v *VoluntaryExit) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Epoch'
-	hh.PutUint64(v.Epoch)
+	hh.PutUint64(uint64(v.Epoch))
 
 	// Field (1) 'ValidatorIndex'
 	hh.PutUint64(v.ValidatorIndex)
@@ -2018,7 +2018,7 @@ func (b *BeaconBlockHeader) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 
 	// Field (0) 'Slot'
-	dst = ssz.MarshalUint64(dst, b.Slot)
+	dst = ssz.MarshalUint64(dst, uint64(b.Slot))
 
 	// Field (1) 'ProposerIndex'
 	dst = ssz.MarshalUint64(dst, b.ProposerIndex)
@@ -2056,7 +2056,7 @@ func (b *BeaconBlockHeader) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (0) 'Slot'
-	b.Slot = ssz.UnmarshallUint64(buf[0:8])
+	b.Slot = github_com_farazdagi_prysm_shared_types.Slot(ssz.UnmarshallUint64(buf[0:8]))
 
 	// Field (1) 'ProposerIndex'
 	b.ProposerIndex = ssz.UnmarshallUint64(buf[8:16])
@@ -2098,7 +2098,7 @@ func (b *BeaconBlockHeader) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Slot'
-	hh.PutUint64(b.Slot)
+	hh.PutUint64(uint64(b.Slot))
 
 	// Field (1) 'ProposerIndex'
 	hh.PutUint64(b.ProposerIndex)

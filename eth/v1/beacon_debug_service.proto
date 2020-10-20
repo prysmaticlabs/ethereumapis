@@ -55,7 +55,7 @@ message ForkChoiceHeadsResponse {
 
 message ForkChoiceHead {
   bytes root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
-  uint64 slot = 2;
+  uint64 slot = 2 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
 }
 
 message BeaconStateResponse {

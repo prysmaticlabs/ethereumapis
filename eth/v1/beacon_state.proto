@@ -32,7 +32,7 @@ message BeaconState {
   // Versioning
   uint64 genesis_time = 1;
   bytes genesis_validators_root = 2 [(gogoproto.moretags) = "ssz-size:\"32\""];
-  uint64 slot = 3;
+  uint64 slot = 3 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
   Fork fork = 4;
 
   // History
@@ -81,7 +81,7 @@ message PendingAttestation {
 
 message Committee {
   uint64 index = 1;
-  uint64 slot = 2;
+  uint64 slot = 2 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
   repeated uint64 validators = 3;
 }
 
@@ -89,5 +89,5 @@ message Committee {
 message Fork {
   bytes previous_version = 1 [(gogoproto.moretags) = "ssz-size:\"4\""];
   bytes current_version = 2 [(gogoproto.moretags) = "ssz-size:\"4\""];
-  uint64 epoch = 3;
+  uint64 epoch = 3 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Epoch"];
 }
