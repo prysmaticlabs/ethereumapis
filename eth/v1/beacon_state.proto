@@ -74,7 +74,7 @@ message PendingAttestation {
   bytes aggregation_bits = 1 [(gogoproto.moretags) = "ssz-max:\"2048\"", (gogoproto.casttype) = "github.com/prysmaticlabs/go-bitfield.Bitlist"];
   AttestationData data = 2;
   // The difference of when attestation gets created and get included on chain.
-  uint64 inclusion_delay = 3;
+  uint64 inclusion_delay = 3 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
   // The proposer who included the attestation in the block.
   uint64 proposer_index = 4;
 }
