@@ -452,7 +452,7 @@ message SignedAggregateSubmitResponse {
 
 message CommitteeSubnetsSubscribeRequest {
     // A list of intended slots to subscribe.
-    repeated uint64 slots = 1;
+    repeated uint64 slots = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
     // A list of intended committee ids to subscribe. It is mapped 1-to-1 with the slots
     repeated uint64 committee_ids = 2;
     // Whether to subscribe as an aggregator or by default attester.
