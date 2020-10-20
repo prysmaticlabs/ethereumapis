@@ -231,7 +231,7 @@ message StateValidatorsRequest {
   bytes state_id = 1; // TODO: Duck type handling.
 
   // An array of either hex encoded public keys (with 0x prefix) or validator indexes.
-  repeated string id = 2; // TODO: Duck type handling.
+  repeated bytes id = 2; // TODO: Duck type handling.
 
   // The status to query validators for, can be one of: pending_initialized, pending_queued, active_ongoing,
   // active_exiting, active_slashed, exited_unslashed, exited_slashed, withdrawal_possible,
@@ -269,10 +269,10 @@ message StateValidatorRequest {
   // The state id which can be any of: "head" (canonical head in node's view),
   // "genesis", "finalized", "justified", <slot>, <hex encoded stateRoot with 0x prefix>.
   // Uses the provided state_id for the request.
-  string state_id = 1; // TODO: Duck type handling.
+  bytes state_id = 1; // TODO: Duck type handling.
 
   // The public key or index for the validator to retrieve information for.
-  string validator_id = 2;
+  bytes validator_id = 2;
 }
 
 message StateValidatorResponse {
