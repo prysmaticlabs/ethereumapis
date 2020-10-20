@@ -199,7 +199,7 @@ message GenesisResponse {
   bytes genesis_validators_root = 2 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
   // 4 byte genesis fork version.
-  bytes genesis_fork_version = 3 [(gogoproto.moretags) = "ssz-size:\"4\""];;
+  bytes genesis_fork_version = 3 [(gogoproto.moretags) = "ssz-size:\"4\""];
 }
 
 message StateRequest {
