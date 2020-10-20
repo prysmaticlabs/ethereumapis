@@ -23,6 +23,77 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
+type ValidatorContainer struct {
+	Index                uint64     `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty"`
+	Balance              uint64     `protobuf:"varint,2,opt,name=balance,proto3" json:"balance,omitempty"`
+	Status               string     `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`
+	Validator            *Validator `protobuf:"bytes,4,opt,name=validator,proto3" json:"validator,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
+	XXX_unrecognized     []byte     `json:"-"`
+	XXX_sizecache        int32      `json:"-"`
+}
+
+func (m *ValidatorContainer) Reset()         { *m = ValidatorContainer{} }
+func (m *ValidatorContainer) String() string { return proto.CompactTextString(m) }
+func (*ValidatorContainer) ProtoMessage()    {}
+func (*ValidatorContainer) Descriptor() ([]byte, []int) {
+	return fileDescriptor_3e824961df2399d0, []int{0}
+}
+func (m *ValidatorContainer) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ValidatorContainer) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ValidatorContainer.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ValidatorContainer) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ValidatorContainer.Merge(m, src)
+}
+func (m *ValidatorContainer) XXX_Size() int {
+	return m.Size()
+}
+func (m *ValidatorContainer) XXX_DiscardUnknown() {
+	xxx_messageInfo_ValidatorContainer.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ValidatorContainer proto.InternalMessageInfo
+
+func (m *ValidatorContainer) GetIndex() uint64 {
+	if m != nil {
+		return m.Index
+	}
+	return 0
+}
+
+func (m *ValidatorContainer) GetBalance() uint64 {
+	if m != nil {
+		return m.Balance
+	}
+	return 0
+}
+
+func (m *ValidatorContainer) GetStatus() string {
+	if m != nil {
+		return m.Status
+	}
+	return ""
+}
+
+func (m *ValidatorContainer) GetValidator() *Validator {
+	if m != nil {
+		return m.Validator
+	}
+	return nil
+}
+
 type Validator struct {
 	PublicKey                  []byte   `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48" spec-name:"pubkey"`
 	WithdrawalCredentials      []byte   `protobuf:"bytes,2,opt,name=withdrawal_credentials,json=withdrawalCredentials,proto3" json:"withdrawal_credentials,omitempty" ssz-size:"32"`
@@ -41,7 +112,7 @@ func (m *Validator) Reset()         { *m = Validator{} }
 func (m *Validator) String() string { return proto.CompactTextString(m) }
 func (*Validator) ProtoMessage()    {}
 func (*Validator) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3e824961df2399d0, []int{0}
+	return fileDescriptor_3e824961df2399d0, []int{1}
 }
 func (m *Validator) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -126,117 +197,103 @@ func (m *Validator) GetWithdrawableEpoch() uint64 {
 	return 0
 }
 
-type ValidatorContainer struct {
-	Index                uint64     `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty"`
-	Balance              uint64     `protobuf:"varint,2,opt,name=balance,proto3" json:"balance,omitempty"`
-	Status               string     `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`
-	Validator            *Validator `protobuf:"bytes,4,opt,name=validator,proto3" json:"validator,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
-	XXX_unrecognized     []byte     `json:"-"`
-	XXX_sizecache        int32      `json:"-"`
-}
-
-func (m *ValidatorContainer) Reset()         { *m = ValidatorContainer{} }
-func (m *ValidatorContainer) String() string { return proto.CompactTextString(m) }
-func (*ValidatorContainer) ProtoMessage()    {}
-func (*ValidatorContainer) Descriptor() ([]byte, []int) {
-	return fileDescriptor_3e824961df2399d0, []int{1}
-}
-func (m *ValidatorContainer) XXX_Unmarshal(b []byte) error {
-	return m.Unmarshal(b)
-}
-func (m *ValidatorContainer) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	if deterministic {
-		return xxx_messageInfo_ValidatorContainer.Marshal(b, m, deterministic)
-	} else {
-		b = b[:cap(b)]
-		n, err := m.MarshalToSizedBuffer(b)
-		if err != nil {
-			return nil, err
-		}
-		return b[:n], nil
-	}
-}
-func (m *ValidatorContainer) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ValidatorContainer.Merge(m, src)
-}
-func (m *ValidatorContainer) XXX_Size() int {
-	return m.Size()
-}
-func (m *ValidatorContainer) XXX_DiscardUnknown() {
-	xxx_messageInfo_ValidatorContainer.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_ValidatorContainer proto.InternalMessageInfo
-
-func (m *ValidatorContainer) GetIndex() uint64 {
-	if m != nil {
-		return m.Index
-	}
-	return 0
-}
-
-func (m *ValidatorContainer) GetBalance() uint64 {
-	if m != nil {
-		return m.Balance
-	}
-	return 0
-}
-
-func (m *ValidatorContainer) GetStatus() string {
-	if m != nil {
-		return m.Status
-	}
-	return ""
-}
-
-func (m *ValidatorContainer) GetValidator() *Validator {
-	if m != nil {
-		return m.Validator
-	}
-	return nil
-}
-
 func init() {
-	proto.RegisterType((*Validator)(nil), "ethereum.eth.v1.Validator")
 	proto.RegisterType((*ValidatorContainer)(nil), "ethereum.eth.v1.ValidatorContainer")
+	proto.RegisterType((*Validator)(nil), "ethereum.eth.v1.Validator")
 }
 
 func init() { proto.RegisterFile("eth/v1/validator.proto", fileDescriptor_3e824961df2399d0) }
 
 var fileDescriptor_3e824961df2399d0 = []byte{
-	// 496 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0x92, 0x4f, 0x6a, 0xdb, 0x40,
-	0x14, 0xc6, 0x99, 0xc4, 0x71, 0xe2, 0xe9, 0x1f, 0xc7, 0xd3, 0xd6, 0x08, 0xd3, 0x3a, 0x46, 0x74,
+	// 498 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x5c, 0x92, 0x41, 0x6a, 0xdb, 0x40,
+	0x14, 0x86, 0x99, 0x38, 0xb1, 0xe3, 0x69, 0x5a, 0xc7, 0xd3, 0xd6, 0x08, 0xd3, 0x3a, 0x46, 0x74,
 	0xe1, 0xd2, 0x5a, 0xc2, 0x49, 0x17, 0x21, 0xab, 0x62, 0x63, 0x28, 0x74, 0x13, 0xb4, 0xe8, 0xa2,
-	0x04, 0xcc, 0x48, 0x7a, 0x96, 0x86, 0x8c, 0x35, 0x42, 0x33, 0x52, 0xa2, 0xec, 0x7b, 0x85, 0xae,
-	0x7a, 0x82, 0x9e, 0xa4, 0x74, 0xd5, 0x13, 0x84, 0xe2, 0x23, 0xe4, 0x04, 0x45, 0x23, 0x4b, 0x32,
-	0xd9, 0xf9, 0x7b, 0xef, 0xf7, 0x7d, 0x46, 0x6f, 0x3e, 0xdc, 0x07, 0x15, 0xda, 0xd9, 0xd4, 0xce,
-	0x28, 0x67, 0x3e, 0x55, 0x22, 0xb1, 0xe2, 0x44, 0x28, 0x41, 0xba, 0xa0, 0x42, 0x48, 0x20, 0x5d,
-	0x5b, 0xa0, 0x42, 0x2b, 0x9b, 0x0e, 0x26, 0x01, 0x53, 0x61, 0xea, 0x5a, 0x9e, 0x58, 0xdb, 0x81,
-	0x08, 0x84, 0xad, 0x39, 0x37, 0x5d, 0x69, 0xa5, 0x85, 0xfe, 0x55, 0xfa, 0xcd, 0x9f, 0xfb, 0xb8,
-	0xf3, 0xb5, 0xca, 0x24, 0x73, 0x8c, 0xe3, 0xd4, 0xe5, 0xcc, 0x5b, 0x5e, 0x43, 0x6e, 0xa0, 0x11,
-	0x1a, 0x3f, 0x9d, 0xbd, 0x7d, 0xb8, 0x3f, 0x19, 0x49, 0x79, 0x37, 0x91, 0xec, 0x0e, 0x2e, 0xcc,
-	0x8f, 0xe7, 0xe6, 0x48, 0xc6, 0xe0, 0x4d, 0x22, 0xba, 0x86, 0x0b, 0x33, 0x4e, 0xdd, 0x6b, 0xc8,
-	0x4d, 0xa7, 0x53, 0xfa, 0xbe, 0x40, 0x4e, 0x3e, 0xe3, 0xfe, 0x0d, 0x53, 0xa1, 0x9f, 0xd0, 0x1b,
-	0xca, 0x97, 0x5e, 0x02, 0x3e, 0x44, 0x8a, 0x51, 0x2e, 0x8d, 0x3d, 0x1d, 0xd8, 0x7b, 0xb8, 0x3f,
-	0x79, 0xd6, 0x04, 0x9e, 0x9d, 0x9a, 0xce, 0xab, 0xc6, 0x30, 0x6f, 0x78, 0xf2, 0x1e, 0xf7, 0x60,
-	0xb5, 0x02, 0x4f, 0xb1, 0x0c, 0x96, 0x2e, 0xe5, 0x34, 0xf2, 0xc0, 0xd8, 0x1f, 0xa1, 0x71, 0xcb,
-	0x39, 0xae, 0x17, 0xb3, 0x72, 0x4e, 0x0c, 0x7c, 0x28, 0x39, 0x95, 0x21, 0xf8, 0x46, 0x6b, 0x84,
-	0xc6, 0x47, 0x4e, 0x25, 0xc9, 0x27, 0xfc, 0x9a, 0x16, 0x28, 0x55, 0x4c, 0x44, 0x4b, 0xe0, 0x2c,
-	0x60, 0x2e, 0xe3, 0x4c, 0xe5, 0x4b, 0x88, 0x85, 0x17, 0x1a, 0x07, 0x3a, 0x71, 0xd0, 0x30, 0x8b,
-	0x06, 0x59, 0x14, 0x04, 0x79, 0x87, 0x8f, 0x77, 0x13, 0xb4, 0xab, 0xad, 0x5d, 0xdd, 0x1d, 0x97,
-	0x46, 0xdf, 0x60, 0x0c, 0xb7, 0x4c, 0x6d, 0xa1, 0x43, 0x0d, 0x75, 0x8a, 0x49, 0xb9, 0x9e, 0x60,
-	0x52, 0x7f, 0xab, 0xcb, 0x61, 0x8b, 0x1d, 0x69, 0xac, 0xb7, 0xbb, 0xd1, 0xb8, 0xf9, 0x03, 0x61,
-	0x52, 0x3f, 0xcf, 0x5c, 0x44, 0x8a, 0xb2, 0x08, 0x12, 0xf2, 0x12, 0x1f, 0xb0, 0xc8, 0x87, 0x5b,
-	0xfd, 0x44, 0x2d, 0xa7, 0x14, 0xc5, 0x05, 0xaa, 0x23, 0xed, 0xe9, 0x79, 0x25, 0x49, 0x1f, 0xb7,
-	0xa5, 0xa2, 0x2a, 0x95, 0xfa, 0x7a, 0x1d, 0x67, 0xab, 0xc8, 0x39, 0xee, 0xd4, 0x85, 0xd2, 0x57,
-	0x7b, 0x72, 0x3a, 0xb0, 0x1e, 0x35, 0xca, 0xaa, 0xff, 0xdf, 0x69, 0xe0, 0xd9, 0x77, 0xf4, 0x7b,
-	0x33, 0x44, 0x7f, 0x37, 0x43, 0xf4, 0x6f, 0x33, 0x44, 0xf8, 0x85, 0x48, 0x82, 0xc7, 0xc6, 0xd9,
-	0xf3, 0xda, 0x79, 0x59, 0x74, 0xed, 0x12, 0x7d, 0xfb, 0xb0, 0x53, 0xce, 0x38, 0xc9, 0xe5, 0x9a,
-	0x2a, 0xe6, 0x71, 0xea, 0x4a, 0xbb, 0xf2, 0xd2, 0x98, 0x69, 0x61, 0x67, 0xd3, 0x5f, 0x7b, 0xdd,
-	0x45, 0x95, 0xb8, 0xd0, 0x89, 0x7f, 0x9a, 0xc9, 0xd5, 0x42, 0x85, 0x57, 0xd9, 0xd4, 0x6d, 0xeb,
-	0x1a, 0x9f, 0xfd, 0x0f, 0x00, 0x00, 0xff, 0xff, 0xdd, 0x21, 0x45, 0x47, 0x20, 0x03, 0x00, 0x00,
+	0x04, 0xc4, 0x48, 0x7a, 0x96, 0x86, 0x8c, 0x35, 0x42, 0x33, 0x52, 0xa2, 0xec, 0x7b, 0x85, 0xae,
+	0x7a, 0x82, 0x9e, 0xa4, 0x74, 0xd5, 0x13, 0x84, 0xe2, 0x23, 0xe4, 0x04, 0xc1, 0x63, 0x4b, 0x32,
+	0xd9, 0xe9, 0x9f, 0xf7, 0xfd, 0xbf, 0xde, 0xbc, 0x79, 0xb8, 0x07, 0x2a, 0xb2, 0xf3, 0x89, 0x9d,
+	0x53, 0xce, 0x02, 0xaa, 0x44, 0x6a, 0x25, 0xa9, 0x50, 0x82, 0x74, 0x40, 0x45, 0x90, 0x42, 0xb6,
+	0xb4, 0x40, 0x45, 0x56, 0x3e, 0xe9, 0x8f, 0x43, 0xa6, 0xa2, 0xcc, 0xb3, 0x7c, 0xb1, 0xb4, 0x43,
+	0x11, 0x0a, 0x5b, 0x73, 0x5e, 0xb6, 0xd0, 0x4a, 0x0b, 0xfd, 0xb5, 0xf1, 0x9b, 0x3f, 0x11, 0x26,
+	0xdf, 0xca, 0xcc, 0x99, 0x88, 0x15, 0x65, 0x31, 0xa4, 0xe4, 0x15, 0x3e, 0x60, 0x71, 0x00, 0xb7,
+	0x06, 0x1a, 0xa2, 0xd1, 0xbe, 0xb3, 0x11, 0xc4, 0xc0, 0x2d, 0x8f, 0x72, 0x1a, 0xfb, 0x60, 0xec,
+	0xe9, 0xf3, 0x52, 0x92, 0x1e, 0x6e, 0x4a, 0x45, 0x55, 0x26, 0x8d, 0xc6, 0x10, 0x8d, 0xda, 0xce,
+	0x56, 0x91, 0x73, 0xdc, 0xae, 0x3a, 0x36, 0xf6, 0x87, 0x68, 0xf4, 0xec, 0xb4, 0x6f, 0x3d, 0x69,
+	0xd9, 0xaa, 0xfe, 0xef, 0xd4, 0xb0, 0xf9, 0xab, 0x81, 0xdb, 0x55, 0x81, 0xcc, 0x30, 0x4e, 0x32,
+	0x8f, 0x33, 0xdf, 0xbd, 0x86, 0x42, 0x37, 0x75, 0x34, 0x7d, 0xf7, 0x70, 0x7f, 0x32, 0x94, 0xf2,
+	0x6e, 0x2c, 0xd9, 0x1d, 0x5c, 0x98, 0x9f, 0xce, 0xcd, 0xa1, 0x4c, 0xc0, 0x1f, 0xc7, 0x74, 0x09,
+	0x17, 0x66, 0x92, 0x79, 0xd7, 0x50, 0x98, 0x4e, 0x7b, 0xe3, 0xfb, 0x0a, 0x05, 0xf9, 0x82, 0x7b,
+	0x37, 0x4c, 0x45, 0x41, 0x4a, 0x6f, 0x28, 0x77, 0xfd, 0x14, 0x02, 0x88, 0x15, 0xa3, 0x5c, 0xea,
+	0xdb, 0x1c, 0x4d, 0xbb, 0x0f, 0xf7, 0x27, 0xcf, 0xeb, 0xc0, 0xb3, 0x53, 0xd3, 0x79, 0x5d, 0x1b,
+	0x66, 0x35, 0x4f, 0x3e, 0xe0, 0x2e, 0x2c, 0x16, 0xe0, 0x2b, 0x96, 0x83, 0x5b, 0x8e, 0xa4, 0xa1,
+	0x47, 0x72, 0x5c, 0x15, 0xa6, 0xdb, 0xd9, 0x18, 0xb8, 0x25, 0x39, 0x95, 0x11, 0x04, 0x7a, 0x02,
+	0x87, 0x4e, 0x29, 0xc9, 0x67, 0xfc, 0x86, 0xae, 0x51, 0xaa, 0x98, 0x88, 0x5d, 0xe0, 0x2c, 0x64,
+	0x1e, 0xe3, 0x4c, 0x15, 0x2e, 0x24, 0xc2, 0x8f, 0x8c, 0x03, 0x9d, 0xd8, 0xaf, 0x99, 0x79, 0x8d,
+	0xcc, 0xd7, 0x04, 0x79, 0x8f, 0x8f, 0x77, 0x13, 0xb4, 0xab, 0xa9, 0x5d, 0x9d, 0x1d, 0x97, 0x46,
+	0xdf, 0x62, 0x0c, 0xb7, 0x4c, 0x6d, 0xa1, 0x96, 0x86, 0xda, 0xeb, 0x93, 0x4d, 0x79, 0x8c, 0x49,
+	0x75, 0x57, 0x8f, 0xc3, 0x16, 0x3b, 0xd4, 0x58, 0x77, 0xb7, 0xa2, 0xf1, 0xe9, 0x0f, 0xf4, 0x67,
+	0x35, 0x40, 0xff, 0x56, 0x03, 0xf4, 0x7f, 0x35, 0x40, 0xf8, 0xa5, 0x48, 0xc3, 0xa7, 0xef, 0x3a,
+	0x7d, 0x51, 0xbd, 0xdf, 0xe5, 0x7a, 0xd7, 0x2e, 0xd1, 0xf7, 0x8f, 0x3b, 0xcb, 0x99, 0xa4, 0x85,
+	0x5c, 0x52, 0xc5, 0x7c, 0x4e, 0x3d, 0x69, 0x97, 0x5e, 0x9a, 0x30, 0x2d, 0xec, 0x7c, 0xf2, 0x7b,
+	0xaf, 0x33, 0x2f, 0x13, 0xe7, 0x3a, 0xf1, 0x6f, 0x7d, 0x72, 0x35, 0x57, 0xd1, 0x55, 0x3e, 0xf1,
+	0x9a, 0x7a, 0x8d, 0xcf, 0x1e, 0x03, 0x00, 0x00, 0xff, 0xff, 0x32, 0x0f, 0x13, 0xef, 0x20, 0x03,
+	0x00, 0x00,
+}
+
+func (m *ValidatorContainer) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ValidatorContainer) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ValidatorContainer) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Validator != nil {
+		{
+			size, err := m.Validator.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintValidator(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.Status) > 0 {
+		i -= len(m.Status)
+		copy(dAtA[i:], m.Status)
+		i = encodeVarintValidator(dAtA, i, uint64(len(m.Status)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Balance != 0 {
+		i = encodeVarintValidator(dAtA, i, uint64(m.Balance))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Index != 0 {
+		i = encodeVarintValidator(dAtA, i, uint64(m.Index))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
 }
 
 func (m *Validator) Marshal() (dAtA []byte, err error) {
@@ -315,62 +372,6 @@ func (m *Validator) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
-func (m *ValidatorContainer) Marshal() (dAtA []byte, err error) {
-	size := m.Size()
-	dAtA = make([]byte, size)
-	n, err := m.MarshalToSizedBuffer(dAtA[:size])
-	if err != nil {
-		return nil, err
-	}
-	return dAtA[:n], nil
-}
-
-func (m *ValidatorContainer) MarshalTo(dAtA []byte) (int, error) {
-	size := m.Size()
-	return m.MarshalToSizedBuffer(dAtA[:size])
-}
-
-func (m *ValidatorContainer) MarshalToSizedBuffer(dAtA []byte) (int, error) {
-	i := len(dAtA)
-	_ = i
-	var l int
-	_ = l
-	if m.XXX_unrecognized != nil {
-		i -= len(m.XXX_unrecognized)
-		copy(dAtA[i:], m.XXX_unrecognized)
-	}
-	if m.Validator != nil {
-		{
-			size, err := m.Validator.MarshalToSizedBuffer(dAtA[:i])
-			if err != nil {
-				return 0, err
-			}
-			i -= size
-			i = encodeVarintValidator(dAtA, i, uint64(size))
-		}
-		i--
-		dAtA[i] = 0x22
-	}
-	if len(m.Status) > 0 {
-		i -= len(m.Status)
-		copy(dAtA[i:], m.Status)
-		i = encodeVarintValidator(dAtA, i, uint64(len(m.Status)))
-		i--
-		dAtA[i] = 0x1a
-	}
-	if m.Balance != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Balance))
-		i--
-		dAtA[i] = 0x10
-	}
-	if m.Index != 0 {
-		i = encodeVarintValidator(dAtA, i, uint64(m.Index))
-		i--
-		dAtA[i] = 0x8
-	}
-	return len(dAtA) - i, nil
-}
-
 func encodeVarintValidator(dAtA []byte, offset int, v uint64) int {
 	offset -= sovValidator(v)
 	base := offset
@@ -382,6 +383,32 @@ func encodeVarintValidator(dAtA []byte, offset int, v uint64) int {
 	dAtA[offset] = uint8(v)
 	return base
 }
+func (m *ValidatorContainer) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Index != 0 {
+		n += 1 + sovValidator(uint64(m.Index))
+	}
+	if m.Balance != 0 {
+		n += 1 + sovValidator(uint64(m.Balance))
+	}
+	l = len(m.Status)
+	if l > 0 {
+		n += 1 + l + sovValidator(uint64(l))
+	}
+	if m.Validator != nil {
+		l = m.Validator.Size()
+		n += 1 + l + sovValidator(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *Validator) Size() (n int) {
 	if m == nil {
 		return 0
@@ -420,37 +447,171 @@ func (m *Validator) Size() (n int) {
 	return n
 }
 
-func (m *ValidatorContainer) Size() (n int) {
-	if m == nil {
-		return 0
-	}
-	var l int
-	_ = l
-	if m.Index != 0 {
-		n += 1 + sovValidator(uint64(m.Index))
-	}
-	if m.Balance != 0 {
-		n += 1 + sovValidator(uint64(m.Balance))
-	}
-	l = len(m.Status)
-	if l > 0 {
-		n += 1 + l + sovValidator(uint64(l))
-	}
-	if m.Validator != nil {
-		l = m.Validator.Size()
-		n += 1 + l + sovValidator(uint64(l))
-	}
-	if m.XXX_unrecognized != nil {
-		n += len(m.XXX_unrecognized)
-	}
-	return n
-}
-
 func sovValidator(x uint64) (n int) {
 	return (math_bits.Len64(x|1) + 6) / 7
 }
 func sozValidator(x uint64) (n int) {
 	return sovValidator(uint64((x << 1) ^ uint64((int64(x) >> 63))))
+}
+func (m *ValidatorContainer) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowValidator
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ValidatorContainer: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ValidatorContainer: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Index", wireType)
+			}
+			m.Index = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowValidator
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Index |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Balance", wireType)
+			}
+			m.Balance = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowValidator
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Balance |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowValidator
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= uint64(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthValidator
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex < 0 {
+				return ErrInvalidLengthValidator
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Status = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Validator", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowValidator
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthValidator
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthValidator
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Validator == nil {
+				m.Validator = &Validator{}
+			}
+			if err := m.Validator.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipValidator(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthValidator
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthValidator
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
 }
 func (m *Validator) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
@@ -664,166 +825,6 @@ func (m *Validator) Unmarshal(dAtA []byte) error {
 					break
 				}
 			}
-		default:
-			iNdEx = preIndex
-			skippy, err := skipValidator(dAtA[iNdEx:])
-			if err != nil {
-				return err
-			}
-			if skippy < 0 {
-				return ErrInvalidLengthValidator
-			}
-			if (iNdEx + skippy) < 0 {
-				return ErrInvalidLengthValidator
-			}
-			if (iNdEx + skippy) > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
-			iNdEx += skippy
-		}
-	}
-
-	if iNdEx > l {
-		return io.ErrUnexpectedEOF
-	}
-	return nil
-}
-func (m *ValidatorContainer) Unmarshal(dAtA []byte) error {
-	l := len(dAtA)
-	iNdEx := 0
-	for iNdEx < l {
-		preIndex := iNdEx
-		var wire uint64
-		for shift := uint(0); ; shift += 7 {
-			if shift >= 64 {
-				return ErrIntOverflowValidator
-			}
-			if iNdEx >= l {
-				return io.ErrUnexpectedEOF
-			}
-			b := dAtA[iNdEx]
-			iNdEx++
-			wire |= uint64(b&0x7F) << shift
-			if b < 0x80 {
-				break
-			}
-		}
-		fieldNum := int32(wire >> 3)
-		wireType := int(wire & 0x7)
-		if wireType == 4 {
-			return fmt.Errorf("proto: ValidatorContainer: wiretype end group for non-group")
-		}
-		if fieldNum <= 0 {
-			return fmt.Errorf("proto: ValidatorContainer: illegal tag %d (wire type %d)", fieldNum, wire)
-		}
-		switch fieldNum {
-		case 1:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Index", wireType)
-			}
-			m.Index = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowValidator
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Index |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 2:
-			if wireType != 0 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Balance", wireType)
-			}
-			m.Balance = 0
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowValidator
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				m.Balance |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-		case 3:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
-			}
-			var stringLen uint64
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowValidator
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				stringLen |= uint64(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			intStringLen := int(stringLen)
-			if intStringLen < 0 {
-				return ErrInvalidLengthValidator
-			}
-			postIndex := iNdEx + intStringLen
-			if postIndex < 0 {
-				return ErrInvalidLengthValidator
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			m.Status = string(dAtA[iNdEx:postIndex])
-			iNdEx = postIndex
-		case 4:
-			if wireType != 2 {
-				return fmt.Errorf("proto: wrong wireType = %d for field Validator", wireType)
-			}
-			var msglen int
-			for shift := uint(0); ; shift += 7 {
-				if shift >= 64 {
-					return ErrIntOverflowValidator
-				}
-				if iNdEx >= l {
-					return io.ErrUnexpectedEOF
-				}
-				b := dAtA[iNdEx]
-				iNdEx++
-				msglen |= int(b&0x7F) << shift
-				if b < 0x80 {
-					break
-				}
-			}
-			if msglen < 0 {
-				return ErrInvalidLengthValidator
-			}
-			postIndex := iNdEx + msglen
-			if postIndex < 0 {
-				return ErrInvalidLengthValidator
-			}
-			if postIndex > l {
-				return io.ErrUnexpectedEOF
-			}
-			if m.Validator == nil {
-				m.Validator = &Validator{}
-			}
-			if err := m.Validator.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
-				return err
-			}
-			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipValidator(dAtA[iNdEx:])
