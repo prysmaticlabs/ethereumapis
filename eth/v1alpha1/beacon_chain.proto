@@ -649,7 +649,7 @@ message ValidatorPerformanceResponse {
     repeated uint64 inclusion_slots = 2 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
     // The distance of when validator submitted and got included in the chain, the distance
     // is mapped 1-to-1 with the request's public keys.
-    repeated uint64 inclusion_distances = 3;
+    repeated uint64 inclusion_distances = 3 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
     // Whether the list of validator recently correctly voted for source at previous epoch, the result
     // is mapped 1-to-1 with the request's public keys.
     repeated bool correctly_voted_source = 4;
