@@ -646,7 +646,7 @@ message ValidatorPerformanceResponse {
     repeated uint64 current_effective_balances = 1;
     // The slot of when validator's attestation got included in the chain at previous epoch, the slot
     // is mapped 1-to-1 with the request's public keys.
-    repeated uint64 inclusion_slots = 2;
+    repeated uint64 inclusion_slots = 2 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
     // The distance of when validator submitted and got included in the chain, the distance
     // is mapped 1-to-1 with the request's public keys.
     repeated uint64 inclusion_distances = 3;
