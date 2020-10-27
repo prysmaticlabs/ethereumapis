@@ -375,7 +375,7 @@ message DutiesResponse {
         uint64 attester_slot = 3 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
 
         // Slots at which a validator must propose a beacon chain block.
-        repeated uint64 proposer_slots = 4;
+        repeated uint64 proposer_slots = 4 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
 
         // 48 byte BLS public key for the validator who's assigned to perform a duty.
         bytes public_key = 5 [(gogoproto.moretags) = "ssz-size:\"48\""];
