@@ -30,7 +30,7 @@ go_rules_dependencies()
 
 go_register_toolchains()
 
-load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies")
+load("@bazel_gazelle//:deps.bzl", "gazelle_dependencies", "go_repository")
 
 gazelle_dependencies()
 
@@ -56,3 +56,24 @@ load("//tools:ethereumapi_dependencies.bzl", "ethereumapi_deps")
 
 # gazelle:repository_macro tools/ethereumapi_dependencies.bzl%ethereumapi_deps
 ethereumapi_deps()
+
+go_repository(
+    name = "com_github_prysmaticlabs_protoc_gen_go_cast",
+    importpath = "github.com/prysmaticlabs/protoc-gen-go-cast",
+    sum = "h1:7eHKThyUMG7fKURCcvq1wlggt2Low9371QkUHzfceUI=",
+    version = "v0.0.0-20201116173832-6f0c5167cb72",
+)
+
+go_repository(
+    name = "com_github_yuin_goldmark",
+    importpath = "github.com/yuin/goldmark",
+    sum = "h1:ruQGxdhGHe7FWOJPT0mKs5+pD2Xs1Bm/kdGlHO04FmM=",
+    version = "v1.2.1",
+)
+
+go_repository(
+    name = "org_golang_x_mod",
+    importpath = "golang.org/x/mod",
+    sum = "h1:RM4zey1++hCTbCVQfnWeKs9/IEsaBLA8vTkd0WVtmH4=",
+    version = "v0.3.0",
+)

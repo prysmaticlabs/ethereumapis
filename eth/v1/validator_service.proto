@@ -15,19 +15,20 @@ syntax = "proto3";
 
 package ethereum.eth.v1;
 
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+import "google/protobuf/empty.proto";
+
+import "eth/v1/options.proto";
+import "eth/v1/attestation.proto";
+import "eth/v1/beacon_block.proto";
+
 option csharp_namespace = "Ethereum.Eth.v1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
 option java_multiple_files = true;
 option java_outer_classname = "ValidatorServiceProto";
 option java_package = "org.ethereum.eth.v1";
 option php_namespace = "Ethereum\\Eth\\v1";
-
-import "github.com/gogo/protobuf/gogoproto/gogo.proto";
-import "google/api/annotations.proto";
-import "google/protobuf/empty.proto";
-
-import "eth/v1/attestation.proto";
-import "eth/v1/beacon_block.proto";
 
 // Beacon chain validator API
 //
@@ -118,7 +119,7 @@ message AttesterDutiesResponse {
 
 message AttesterDuty {
   // 48 byte BLS public key for the validator who's assigned to perform a duty.
-  bytes pubkey = 1 [(gogoproto.moretags) = "ssz-size:\"48\""];
+  bytes pubkey = 1 [(ssz_size_option) = 48];
 
   // The index of the validator in the beacon state.
   uint64 validator_index = 2;
@@ -150,7 +151,7 @@ message ProposerDutiesResponse {
 
 message ProposerDuty {
   // 48 byte BLS public key for the validator who's assigned to perform a duty.
-  bytes pubkey = 1 [(gogoproto.moretags) = "ssz-size:\"48\""];
+  bytes pubkey = 1 [(ssz_size_option) = 48];
 
   // The index of the validator in the beacon state.
   uint64 validator_index = 2;
@@ -164,11 +165,11 @@ message ProposerBlockRequest {
   uint64 slot = 1;
 
   // The validators RANDAO reveal 96 byte value.
-  bytes randao_reveal = 2 [(gogoproto.moretags) = "ssz-size:\"96\""];
+  bytes randao_reveal = 2 [(ssz_size_option) = 96];
 
   // 32 byte field of arbitrary data. This field may contain any data and
   // is not used for anything other than a fun message.
-  bytes graffiti = 3 [(gogoproto.moretags) = "ssz-size:\"32\""];
+  bytes graffiti = 3 [(ssz_size_option) = 32];
 }
 
 message ProposerBlockResponse {
@@ -189,7 +190,7 @@ message AttestationDataResponse {
 
 message AggregateAttestationRequest {
   // The root of the attestation data requesting the aggregate for.
-  bytes attestation_data_root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
+  bytes attestation_data_root = 1 [(ssz_size_option) = 32];
 
   // The slot for the requested aggregate attestation.
   uint64 slot = 2;

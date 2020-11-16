@@ -15,7 +15,9 @@ syntax = "proto3";
 
 package ethereum.eth.v1;
 
-import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+import "google/protobuf/descriptor.proto";
+
+import "eth/v1/options.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
@@ -34,10 +36,10 @@ message ValidatorContainer {
 // An Ethereum 2.0 validator.
 message Validator {
     // 48 byte BLS public key used for the validator's activities.
-    bytes public_key = 1 [(gogoproto.moretags) = "ssz-size:\"48\" spec-name:\"pubkey\""];
+    bytes public_key = 1 [(ssz_size_option) = 48, (spec_name_option) = "pubkey"];
 
     // 32 byte hash of the withdrawal destination public key.
-    bytes withdrawal_credentials = 2 [(gogoproto.moretags) = "ssz-size:\"32\""];
+    bytes withdrawal_credentials = 2 [(ssz_size_option) = 32];
 
     // The validators current effective balance in gwei.
     uint64 effective_balance = 3;

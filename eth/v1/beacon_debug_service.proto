@@ -15,19 +15,20 @@ syntax = "proto3";
 
 package ethereum.eth.v1;
 
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+import "google/protobuf/empty.proto";
+
+import "eth/v1/beacon_state.proto";
+import "eth/v1/beacon_chain_service.proto";
+import "eth/v1/options.proto";
+
 option csharp_namespace = "Ethereum.Eth.v1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
 option java_multiple_files = true;
 option java_outer_classname = "BeaconDebugProto";
 option java_package = "org.ethereum.eth.v1";
 option php_namespace = "Ethereum\\Eth\\v1";
-
-import "github.com/gogo/protobuf/gogoproto/gogo.proto";
-import "google/api/annotations.proto";
-import "google/protobuf/empty.proto";
-
-import "eth/v1/beacon_state.proto";
-import "eth/v1/beacon_chain_service.proto";
 
 // Beacon chain debug API
 //
@@ -51,7 +52,7 @@ message ForkChoiceHeadsResponse {
 }
 
 message ForkChoiceHead {
-  bytes root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
+  bytes root = 1 [(ssz_size_option) = 32];
   uint64 slot = 2;
 }
 

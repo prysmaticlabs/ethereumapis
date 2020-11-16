@@ -15,9 +15,11 @@ syntax = "proto3";
 
 package ethereum.eth.v1;
 
-import "github.com/gogo/protobuf/gogoproto/gogo.proto";
-import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+import "google/protobuf/empty.proto";
+
+import "eth/v1/options.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
@@ -92,7 +94,7 @@ message Metadata {
   // the node MUST increment seq_number by 1.
   uint64 seq_number = 1;
   // Attnets is a bitvector representing the node's persistent attestation subnet subscriptions.
-  bytes attnets = 2 [(gogoproto.moretags) = "ssz-size:\"8\"", (gogoproto.casttype) = "github.com/prysmaticlabs/go-bitfield.Bitvector64"];
+  bytes attnets = 2 [(ssz_size_option) = 8, (cast_type_option) = "github.com/prysmaticlabs/go-bitfield.Bitvector64"];
 }
 
 message PeerRequest {

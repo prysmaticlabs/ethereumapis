@@ -1,8 +1,51 @@
+##############################################################################
+# Common
+##############################################################################
+
 load("@rules_proto//proto:defs.bzl", "proto_library")
+load("@rules_java//java:defs.bzl", "java_proto_library")
+
+##############################################################################
+# Go
+##############################################################################
+# gazelle:ignore
 load("@io_bazel_rules_go//go:def.bzl", "go_library")
 load("@io_bazel_rules_go//proto:def.bzl", "go_proto_library")
 load("//tools:ssz.bzl", "SSZ_DEPS", "ssz_gen_marshal")
 
+proto_library(
+    name = "v1_proto",
+    srcs = [
+        "attestation.proto",
+        "beacon_block.proto",
+        "beacon_chain_service.proto",
+        "beacon_debug_service.proto",
+        "beacon_state.proto",
+        "node.proto",
+        "options.proto",
+        "validator.proto",
+        "validator_service.proto",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_google_protobuf//:empty_proto",
+        "@com_google_protobuf//:timestamp_proto",
+        "@com_google_protobuf//:descriptor_proto",
+        "@go_googleapis//google/api:annotations_proto",
+    ],
+)
+
+##############################################################################
+# Java
+##############################################################################
+java_proto_library(
+    name = "java_proto",
+    deps = [":proto"],
+)
+
+##############################################################################
+# Go
+##############################################################################
 ssz_gen_marshal(
     name = "ssz_generated_files",
     go_proto = ":v1_go_proto",
@@ -27,36 +70,17 @@ ssz_gen_marshal(
     ],
 )
 
-proto_library(
-    name = "v1_proto",
-    srcs = [
-        "attestation.proto",
-        "beacon_block.proto",
-        "beacon_chain_service.proto",
-        "beacon_debug_service.proto",
-        "beacon_state.proto",
-        "node.proto",
-        "validator.proto",
-        "validator_service.proto",
-    ],
-    visibility = ["//visibility:public"],
-    deps = [
-        "@com_google_protobuf//:empty_proto",
-        "@com_google_protobuf//:timestamp_proto",
-        "@go_googleapis//google/api:annotations_proto",
-        "@gogo_special_proto//github.com/gogo/protobuf/gogoproto",  # keep
-    ],
-)
-
 go_proto_library(
     name = "v1_go_proto",
-    compilers = ["@io_bazel_rules_go//proto:gogofast_grpc"],
+    compilers = ["@io_bazel_rules_go//proto:go_grpc"],
     importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1",
     proto = ":v1_proto",
     visibility = ["//visibility:public"],
     deps = [
-        "@com_github_gogo_protobuf//gogoproto:go_default_library",  # keep
+        "@com_github_prysmaticlabs_protoc_gen_go_cast//:go_default_library",  # keep
         "@com_github_prysmaticlabs_go_bitfield//:go_default_library",  # keep
+        "@com_github_golang_protobuf//descriptor:go_default_library",
+        "@com_github_golang_protobuf//ptypes/empty:go_default_library",
         "@go_googleapis//google/api:annotations_go_proto",
     ],
 )
