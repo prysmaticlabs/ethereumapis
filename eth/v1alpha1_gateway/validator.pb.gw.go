@@ -143,23 +143,6 @@ func request_BeaconNodeValidator_WaitForChainStart_0(ctx context.Context, marsha
 
 }
 
-func request_BeaconNodeValidator_WaitForSynced_0(ctx context.Context, marshaler runtime.Marshaler, client BeaconNodeValidatorClient, req *http.Request, pathParams map[string]string) (BeaconNodeValidator_WaitForSyncedClient, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
-	var metadata runtime.ServerMetadata
-
-	stream, err := client.WaitForSynced(ctx, &protoReq)
-	if err != nil {
-		return nil, metadata, err
-	}
-	header, err := stream.Header()
-	if err != nil {
-		return nil, metadata, err
-	}
-	metadata.HeaderMD = header
-	return stream, metadata, nil
-
-}
-
 var (
 	filter_BeaconNodeValidator_WaitForActivation_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
@@ -616,13 +599,6 @@ func RegisterBeaconNodeValidatorHandlerServer(ctx context.Context, mux *runtime.
 		return
 	})
 
-	mux.Handle("GET", pattern_BeaconNodeValidator_WaitForSynced_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		err := status.Error(codes.Unimplemented, "streaming calls are not yet supported in the in-process transport")
-		_, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-		return
-	})
-
 	mux.Handle("GET", pattern_BeaconNodeValidator_WaitForActivation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		err := status.Error(codes.Unimplemented, "streaming calls are not yet supported in the in-process transport")
 		_, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -971,26 +947,6 @@ func RegisterBeaconNodeValidatorHandlerClient(ctx context.Context, mux *runtime.
 
 	})
 
-	mux.Handle("GET", pattern_BeaconNodeValidator_WaitForSynced_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_BeaconNodeValidator_WaitForSynced_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_BeaconNodeValidator_WaitForSynced_0(ctx, mux, outboundMarshaler, w, req, func() (proto.Message, error) { return resp.Recv() }, mux.GetForwardResponseOptions()...)
-
-	})
-
 	mux.Handle("GET", pattern_BeaconNodeValidator_WaitForActivation_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
@@ -1243,8 +1199,6 @@ var (
 
 	pattern_BeaconNodeValidator_WaitForChainStart_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"eth", "v1alpha1", "validator", "chainstart", "stream"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_BeaconNodeValidator_WaitForSynced_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"eth", "v1alpha1", "validator", "synced", "stream"}, "", runtime.AssumeColonVerbOpt(true)))
-
 	pattern_BeaconNodeValidator_WaitForActivation_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"eth", "v1alpha1", "validator", "activation", "stream"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_BeaconNodeValidator_ValidatorIndex_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"eth", "v1alpha1", "validator", "index"}, "", runtime.AssumeColonVerbOpt(true)))
@@ -1278,8 +1232,6 @@ var (
 	forward_BeaconNodeValidator_DomainData_0 = runtime.ForwardResponseMessage
 
 	forward_BeaconNodeValidator_WaitForChainStart_0 = runtime.ForwardResponseStream
-
-	forward_BeaconNodeValidator_WaitForSynced_0 = runtime.ForwardResponseStream
 
 	forward_BeaconNodeValidator_WaitForActivation_0 = runtime.ForwardResponseStream
 
