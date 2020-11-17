@@ -290,10 +290,10 @@ message StateCommitteesRequest {
   uint64 epoch = 2;
 
   // Committee index requested.
-  optional uint64 index = 3;
+  uint64 index = 3;
 
   // Committee slot requested.
-  optional uint64 slot = 4;
+  uint64 slot = 4;
 }
 
 message StateCommitteesResponse {
@@ -317,7 +317,7 @@ message BlockRootResponse {
 
 message BlockHeadersRequest {
   // Beacon chain slot of the requested block.
-  optional uint64 slot = 1;
+  uint64 slot = 1;
 
   // 32 byte merkle tree root of the ssz encoded parent block.
   bytes parent_root = 2 [(ssz_size_option) = 32];
@@ -372,8 +372,8 @@ message BeaconBlockContainer {
 // Beacon Pool related API service.
 
 message AttestationsPoolRequest {
-  optional uint64 slot = 1;
-  optional uint64 committee_index = 2;
+  uint64 slot = 1;
+  uint64 committee_index = 2;
 }
 
 message AttestationsPoolResponse {
