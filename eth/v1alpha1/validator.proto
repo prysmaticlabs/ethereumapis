@@ -262,6 +262,9 @@ message ChainStartResponse {
 
     // The genesis time of the beacon chain.
     uint64 genesis_time = 2;
+
+    // 32 byte hash tree root of the genesis validator set.
+    bytes genesis_validators_root = 3 [(gogoproto.moretags) = "ssz-size:\"32\""];
 }
 
 message SyncedResponse {
