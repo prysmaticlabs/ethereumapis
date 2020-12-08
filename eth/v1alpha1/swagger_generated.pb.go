@@ -5,9 +5,10 @@ package eth
 
 import (
 	fmt "fmt"
+	math "math"
+
 	proto "github.com/gogo/protobuf/proto"
 	_ "github.com/grpc-ecosystem/grpc-gateway/protoc-gen-swagger/options"
-	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
