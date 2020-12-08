@@ -52,7 +52,7 @@ message ForkChoiceHeadsResponse {
 }
 
 message ForkChoiceHead {
-  bytes root = 1 [(ssz_size_option) = 32];
+  bytes root = 1 [(ssz_size) = "32"];
   uint64 slot = 2;
 }
 

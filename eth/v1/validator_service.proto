@@ -119,7 +119,7 @@ message AttesterDutiesResponse {
 
 message AttesterDuty {
   // 48 byte BLS public key for the validator who's assigned to perform a duty.
-  bytes pubkey = 1 [(ssz_size_option) = 48];
+  bytes pubkey = 1 [(ssz_size) = "48"];
 
   // The index of the validator in the beacon state.
   uint64 validator_index = 2;
@@ -151,7 +151,7 @@ message ProposerDutiesResponse {
 
 message ProposerDuty {
   // 48 byte BLS public key for the validator who's assigned to perform a duty.
-  bytes pubkey = 1 [(ssz_size_option) = 48];
+  bytes pubkey = 1 [(ssz_size) = "48"];
 
   // The index of the validator in the beacon state.
   uint64 validator_index = 2;
@@ -165,11 +165,11 @@ message ProposerBlockRequest {
   uint64 slot = 1;
 
   // The validators RANDAO reveal 96 byte value.
-  bytes randao_reveal = 2 [(ssz_size_option) = 96];
+  bytes randao_reveal = 2 [(ssz_size) = "96"];
 
   // 32 byte field of arbitrary data. This field may contain any data and
   // is not used for anything other than a fun message.
-  bytes graffiti = 3 [(ssz_size_option) = 32];
+  bytes graffiti = 3 [(ssz_size) = "32"];
 }
 
 message ProposerBlockResponse {
@@ -190,7 +190,7 @@ message AttestationDataResponse {
 
 message AggregateAttestationRequest {
   // The root of the attestation data requesting the aggregate for.
-  bytes attestation_data_root = 1 [(ssz_size_option) = 32];
+  bytes attestation_data_root = 1 [(ssz_size) = "32"];
 
   // The slot for the requested aggregate attestation.
   uint64 slot = 2;

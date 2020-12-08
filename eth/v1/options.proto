@@ -25,9 +25,8 @@ option java_package = "org.ethereum.eth.v1";
 option php_namespace = "Ethereum\\Eth\\v1";
 
 extend google.protobuf.FieldOptions {
-  uint64 ssz_size_option = 50000;
-  uint64 ssz_size_2_option = 50001;
-  uint64 ssz_max_option = 50002;
-  string spec_name_option = 50003;
-  string cast_type_option = 50004;
+  string cast_type = 50000;
+  string ssz_size = 50001;
+  string ssz_max = 50002;
+  string spec_name = 50003;
 }

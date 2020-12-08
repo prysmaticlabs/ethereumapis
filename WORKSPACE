@@ -60,8 +60,8 @@ ethereumapi_deps()
 go_repository(
     name = "com_github_prysmaticlabs_protoc_gen_go_cast",
     importpath = "github.com/prysmaticlabs/protoc-gen-go-cast",
-    sum = "h1:LlejsnZOKFiwhc73ClPcJGAs0iN5AJ1F3yR10H9kymo=",
-    version = "v0.0.0-20201116211027-b5c6f01f52d9",
+    sum = "h1:SKKGGzWJZk8uaRYQ+YC+BT3mNiMhfr3U/KBYh2uukjg=",
+    version = "v0.0.0-20201208011853-2c59a13ca905",
 )
 
 go_repository(
@@ -76,4 +76,74 @@ go_repository(
     importpath = "golang.org/x/mod",
     sum = "h1:RM4zey1++hCTbCVQfnWeKs9/IEsaBLA8vTkd0WVtmH4=",
     version = "v0.3.0",
+)
+
+go_repository(
+    name = "com_github_iancoleman_strcase",
+    importpath = "github.com/iancoleman/strcase",
+    sum = "h1:gnomlvw9tnV3ITTAxzKSgTF+8kFWcU/f+TgttpXGz1U=",
+    version = "v0.1.2",
+)
+
+go_repository(
+    name = "com_github_google_renameio",
+    importpath = "github.com/google/renameio",
+    sum = "h1:GOZbcHa3HfsPKPlmyPyN2KEohoMXOhdMbHrvbpl2QaA=",
+    version = "v0.1.0",
+)
+
+go_repository(
+    name = "com_github_gordonklaus_ineffassign",
+    importpath = "github.com/gordonklaus/ineffassign",
+    sum = "h1:vc7Dmrk4JwS0ZPS6WZvWlwDflgDTA26jItmbSj83nug=",
+    version = "v0.0.0-20200309095847-7953dde2c7bf",
+)
+
+go_repository(
+    name = "com_github_jhump_protoreflect",
+    importpath = "github.com/jhump/protoreflect",
+    sum = "h1:IT3tPTsfSWPVQh5ue8bOwdARu7ZQmPilEmZlBdjftPE=",
+    version = "v1.8.0",
+)
+
+go_repository(
+    name = "com_github_kr_pretty",
+    importpath = "github.com/kr/pretty",
+    sum = "h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=",
+    version = "v0.1.0",
+)
+
+go_repository(
+    name = "com_github_kr_pty",
+    importpath = "github.com/kr/pty",
+    sum = "h1:VkoXIwSboBpnk99O/KFauAEILuNHv5DVFKZMBN/gUgw=",
+    version = "v1.1.1",
+)
+
+go_repository(
+    name = "com_github_kr_text",
+    importpath = "github.com/kr/text",
+    sum = "h1:45sCR5RtlFHMR4UwH9sdQ5TC8v0qDQCHnXt+kaKSTVE=",
+    version = "v0.1.0",
+)
+
+go_repository(
+    name = "com_github_nishanths_predeclared",
+    importpath = "github.com/nishanths/predeclared",
+    sum = "h1:3f0nxAmdj/VoCGN/ijdMy7bj6SBagaqYg1B0hu8clMA=",
+    version = "v0.0.0-20200524104333-86fad755b4d3",
+)
+
+go_repository(
+    name = "com_github_rogpeppe_go_internal",
+    importpath = "github.com/rogpeppe/go-internal",
+    sum = "h1:RR9dF3JtopPvtkroDZuVD7qquD0bnHlKSqaQhgwt8yk=",
+    version = "v1.3.0",
+)
+
+go_repository(
+    name = "in_gopkg_errgo_v2",
+    importpath = "gopkg.in/errgo.v2",
+    sum = "h1:0vLT13EuvQ0hNvakwLuFZ/jYrLp5F3kcWHXdRggjCE8=",
+    version = "v2.1.0",
 )

@@ -36,10 +36,10 @@ message ValidatorContainer {
 // An Ethereum 2.0 validator.
 message Validator {
     // 48 byte BLS public key used for the validator's activities.
-    bytes public_key = 1 [(ssz_size_option) = 48, (spec_name_option) = "pubkey"];
+    bytes public_key = 1 [(ssz_size) = "48", (spec_name) = "pubkey"];
 
     // 32 byte hash of the withdrawal destination public key.
-    bytes withdrawal_credentials = 2 [(ssz_size_option) = 32];
+    bytes withdrawal_credentials = 2 [(ssz_size) = "32"];
 
     // The validators current effective balance in gwei.
     uint64 effective_balance = 3;

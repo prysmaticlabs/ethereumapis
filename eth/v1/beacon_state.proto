@@ -32,38 +32,38 @@ option php_namespace = "Ethereum\\Eth\\v1";
 message BeaconState {
   // Versioning
   uint64 genesis_time = 1;
-  bytes genesis_validators_root = 2 [(ssz_size_option) = 32];
+  bytes genesis_validators_root = 2 [(ssz_size) = "32"];
   uint64 slot = 3;
   Fork fork = 4;
 
   // History
   BeaconBlockHeader latest_block_header = 5;
-  repeated bytes block_roots = 6 [(ssz_size_option) = 8192];
-  repeated bytes state_roots = 7 [(ssz_size_option) = 8192];
-  repeated bytes historical_roots = 8 [(ssz_size_option) = 32, (ssz_max_option) = 16777216];
+  repeated bytes block_roots = 6 [(ssz_size) = "8192"];
+  repeated bytes state_roots = 7 [(ssz_size) = "8192"];
+  repeated bytes historical_roots = 8 [(ssz_size) = "32", (ssz_max) = "16777216"];
 
   // Eth1
   Eth1Data eth1_data = 9;
-  repeated Eth1Data eth1_data_votes = 10 [(ssz_max_option) = 1024];
+  repeated Eth1Data eth1_data_votes = 10 [(ssz_max) = "1024"];
   uint64 eth1_deposit_index = 11;
 
   // Registry
-  repeated Validator validators = 12 [(ssz_max_option) = 1099511627776];
-  repeated uint64 balances = 13 [(ssz_max_option) = 1099511627776];
+  repeated Validator validators = 12 [(ssz_max) = "1099511627776"];
+  repeated uint64 balances = 13 [(ssz_max) = "1099511627776"];
 
   // Randomness
-  repeated bytes randao_mixes = 14 [(ssz_size_option) = 65536];
+  repeated bytes randao_mixes = 14 [(ssz_size) = "65536"];
 
   // Slashings
-  repeated uint64 slashings = 15 [(ssz_size_option) = 65536];
+  repeated uint64 slashings = 15 [(ssz_size) = "65536"];
 
   // Attestations
-  repeated PendingAttestation previous_epoch_attestations = 16 [(ssz_max_option) = 4096];
-  repeated PendingAttestation current_epoch_attestations = 17 [(ssz_max_option) = 4096];
+  repeated PendingAttestation previous_epoch_attestations = 16 [(ssz_max) = "4096"];
+  repeated PendingAttestation current_epoch_attestations = 17 [(ssz_max) = "4096"];
 
   // Finality
   // Spec type [4]Bitvector which means this would be a fixed size of 4 bits.
-  bytes justification_bits = 18 [(ssz_size_option) = 1, (cast_type_option) = "github.com/prysmaticlabs/go-bitfield.Bitvector4"];
+  bytes justification_bits = 18 [(ssz_size) = "1", (cast_type) = "github.com/prysmaticlabs/go-bitfield.Bitvector4"];
   Checkpoint previous_justified_checkpoint = 19;
   Checkpoint current_justified_checkpoint = 20;
   Checkpoint finalized_checkpoint = 21;
@@ -72,7 +72,7 @@ message BeaconState {
 message PendingAttestation {
   // Bitfield representation of validator indices that have voted exactly
   // the same vote and have been aggregated into this attestation.
-  bytes aggregation_bits = 1 [(ssz_max_option) = 2048, (cast_type_option) = "github.com/prysmaticlabs/go-bitfield.Bitlist"];
+  bytes aggregation_bits = 1 [(ssz_max) = "2048", (cast_type) = "github.com/prysmaticlabs/go-bitfield.Bitlist"];
   AttestationData data = 2;
   // The difference of when attestation gets created and get included on chain.
   uint64 inclusion_delay = 3;
@@ -88,7 +88,7 @@ message Committee {
 
 // Fork structure used for indicating beacon chain versioning and forks.
 message Fork {
-  bytes previous_version = 1 [(ssz_size_option) = 4];
-  bytes current_version = 2 [(ssz_size_option) = 4];
+  bytes previous_version = 1 [(ssz_size) = "4"];
+  bytes current_version = 2 [(ssz_size) = "4"];
   uint64 epoch = 3;
 }

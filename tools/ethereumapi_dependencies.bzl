@@ -17,8 +17,8 @@ def ethereumapi_deps():
     go_repository(
         name = "co_honnef_go_tools",
         importpath = "honnef.co/go/tools",
-        sum = "h1:/hemPrYIhOhy8zYrNj+069zDB68us2sMGsfkFJO0iZs=",
-        version = "v0.0.0-20190523083050-ea95bdfd59fc",
+        sum = "h1:UoveltGrhghAA7ePc+e+QYDHXrBps2PqFZiHkGR/xK8=",
+        version = "v0.0.1-2020.1.4",
     )
     go_repository(
         name = "com_github_antihax_optional",
@@ -215,8 +215,8 @@ def ethereumapi_deps():
     go_repository(
         name = "in_gopkg_check_v1",
         importpath = "gopkg.in/check.v1",
-        sum = "h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=",
-        version = "v0.0.0-20161208181325-20d25e280405",
+        sum = "h1:qIbj1fsPNlZgppZ+VLlY7N33q108Sa+fhmuc+sWQYwY=",
+        version = "v1.0.0-20180628173108-788fd7840127",
     )
     go_repository(
         name = "org_golang_google_appengine",
@@ -239,8 +239,8 @@ def ethereumapi_deps():
     go_repository(
         name = "org_golang_google_protobuf",
         importpath = "google.golang.org/protobuf",
-        sum = "h1:Ejskq+SyPohKW+1uil0JJMtmHCgJPJ/qWTxr8qp+R4c=",
-        version = "v1.25.0",
+        sum = "h1:OwhZOOMuf7leLaSCuxtQ9FW7ui2L2L6UKOtKAUqovUQ=",
+        version = "v1.25.1-0.20200805231151-a709e31e5d12",
     )
     go_repository(
         name = "org_golang_x_crypto",
@@ -293,8 +293,8 @@ def ethereumapi_deps():
     go_repository(
         name = "org_golang_x_tools",
         importpath = "golang.org/x/tools",
-        sum = "h1:QEy3Xa/NrmW1ReQDWZq9JhNZaS2eWWumNV6RAEKnQzQ=",
-        version = "v0.0.0-20201116165547-1a2739ce1bfb",
+        sum = "h1:m/pavz5iHQjTS53xz7jWmXK6qZIJaGy7rQwODcna+cs=",
+        version = "v0.0.0-20201208002638-66f931576d67",
     )
     go_repository(
         name = "org_golang_x_xerrors",

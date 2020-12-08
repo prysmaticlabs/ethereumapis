@@ -197,10 +197,10 @@ message GenesisResponse {
   google.protobuf.Timestamp genesis_time = 1;
 
   // 32 byte hash tree root of the genesis validator set.
-  bytes genesis_validators_root = 2 [(ssz_size_option) = 32];
+  bytes genesis_validators_root = 2 [(ssz_size) = "32"];
 
   // 4 byte genesis fork version.
-  bytes genesis_fork_version = 3 [(ssz_size_option) = 4];
+  bytes genesis_fork_version = 3 [(ssz_size) = "4"];
 }
 
 message StateRequest {
@@ -212,7 +212,7 @@ message StateRequest {
 
 message StateRootResponse {
   // SSZ encoded state root for the requested state.
-  bytes state_root = 1 [(ssz_size_option) = 32];
+  bytes state_root = 1 [(ssz_size) = "32"];
 }
 
 message StateForkResponse {
@@ -237,7 +237,7 @@ message StateValidatorsRequest {
   // The status to query validators for, can be one of: pending_initialized, pending_queued, active_ongoing,
   // active_exiting, active_slashed, exited_unslashed, exited_slashed, withdrawal_possible,
   // withdrawal_done, active, pending, exited, withdrawal
-  string status = 3; // TODO: Enum.
+  repeated string status = 3; // TODO: Enum.
 }
 
 message ValidatorBalancesRequest {
@@ -308,7 +308,7 @@ message BlockAttestationsResponse {
 
 message BlockRootContainer {
   // 32 byte merkle tree root of the ssz encoded block.
-  bytes root = 1 [(ssz_size_option) = 32];
+  bytes root = 1 [(ssz_size) = "32"];
 }
 
 message BlockRootResponse {
@@ -320,7 +320,7 @@ message BlockHeadersRequest {
   uint64 slot = 1;
 
   // 32 byte merkle tree root of the ssz encoded parent block.
-  bytes parent_root = 2 [(ssz_size_option) = 32];
+  bytes parent_root = 2 [(ssz_size) = "32"];
 }
 
 message BlockHeadersResponse {
@@ -339,7 +339,7 @@ message BlockHeaderResponse {
 
 message BlockHeaderContainer {
   // 32 byte merkle tree root of the ssz encoded block.
-  bytes root = 1 [(ssz_size_option) = 32];
+  bytes root = 1 [(ssz_size) = "32"];
 
   // Boolean indicating whether the block is canonical.
   bool canonical = 2;
@@ -354,7 +354,7 @@ message BeaconBlockHeaderContainer {
   BeaconBlockHeader message = 1;
 
   // 96 byte BLS signature from the validator that produced this block header.
-  bytes signature = 2 [(ssz_size_option) = 96];
+  bytes signature = 2 [(ssz_size) = "96"];
 }
 
 message BlockResponse {
@@ -366,7 +366,7 @@ message BeaconBlockContainer {
   BeaconBlock message = 1;
 
   // 96 byte BLS signature from the validator that produced this block.
-  bytes signature = 2 [(ssz_size_option) = 96];
+  bytes signature = 2 [(ssz_size) = "96"];
 }
 
 // Beacon Pool related API service.
