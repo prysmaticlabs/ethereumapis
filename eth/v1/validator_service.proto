@@ -169,7 +169,7 @@ message ProposerBlockRequest {
 
   // 32 byte field of arbitrary data. This field may contain any data and
   // is not used for anything other than a fun message.
-  optional bytes graffiti = 3 [(ssz_size) = "32"];
+  bytes graffiti = 3 [(ssz_size) = "32"];
 }
 
 message ProposerBlockResponse {
