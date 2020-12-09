@@ -293,8 +293,8 @@ def ethereumapi_deps():
     go_repository(
         name = "org_golang_x_tools",
         importpath = "golang.org/x/tools",
-        sum = "h1:m/pavz5iHQjTS53xz7jWmXK6qZIJaGy7rQwODcna+cs=",
-        version = "v0.0.0-20201208002638-66f931576d67",
+        sum = "h1:vEtypaVub6UvKkiXZ2xx9QIvp9TL7sI7xp7vdi2kezA=",
+        version = "v0.0.0-20201208233053-a543418bbed2",
     )
     go_repository(
         name = "org_golang_x_xerrors",
