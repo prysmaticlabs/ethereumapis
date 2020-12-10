@@ -293,8 +293,8 @@ def ethereumapi_deps():
     go_repository(
         name = "org_golang_x_tools",
         importpath = "golang.org/x/tools",
-        sum = "h1:vEtypaVub6UvKkiXZ2xx9QIvp9TL7sI7xp7vdi2kezA=",
-        version = "v0.0.0-20201208233053-a543418bbed2",
+        sum = "h1:Pg9rlomzMhg26WdvwSujvC1Pr2lxOfFfhnQ+/LQcjLw=",
+        version = "v0.0.0-20201210181237-6d345e82f1d8",
     )
     go_repository(
         name = "org_golang_x_xerrors",
@@ -311,8 +311,8 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_ferranbt_fastssz",
         importpath = "github.com/ferranbt/fastssz",
-        sum = "h1:qLZC3oQLJ5eb18EZS3yDcnX7zmlEt8WTWlQR7x5wS5I=",
-        version = "v0.0.0-20200728110133-0b6e349af87a",
+        sum = "h1:W2w+U6B6jVYrSAtip8HylYbu0G3XoJLLvggm1kuPKq4=",
+        version = "v0.0.0-20201210095258-318e164fe1dd",
     )
     go_repository(
         name = "com_github_ghodss_yaml",
@@ -329,8 +329,8 @@ def ethereumapi_deps():
     go_repository(
         name = "in_gopkg_yaml_v2",
         importpath = "gopkg.in/yaml.v2",
-        sum = "h1:clyUAQHOM3G0M3f5vQj7LuJrETvjVot3Z5el9nffUtU=",
-        version = "v2.3.0",
+        sum = "h1:D8xgwECY7CYvx+Y2n4sBz93Jn9JRvxdiyyo8CTfuKaY=",
+        version = "v2.4.0",
     )
     go_repository(
         name = "com_github_grpc_ecosystem_grpc_gateway",
@@ -341,6 +341,6 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_mitchellh_mapstructure",
         importpath = "github.com/mitchellh/mapstructure",
-        sum = "h1:mRS76wmkOn3KkKAyXDu42V+6ebnXWIztFSYGN7GeoRg=",
-        version = "v1.3.2",
+        sum = "h1:7ks8ZkOP5/ujthUsT07rNv+nkLXCQWKNHuwzOAesEks=",
+        version = "v1.4.0",
     )

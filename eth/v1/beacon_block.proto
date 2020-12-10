@@ -106,25 +106,26 @@ message AttesterSlashing {
 
 // Deposit into the Ethereum 2.0 from the Ethereum 1.x deposit contract.
 message Deposit {
-    message Data {
-        // 48 byte BLS public key of the validator.
-        bytes public_key = 1 [(ssz_size) = "48", (spec_name) = "pubkey"];
-
-        // A 32 byte hash of the withdrawal address public key.
-        bytes withdrawal_credentials = 2 [(ssz_size) = "32"];
-
-        // Deposit amount in gwei.
-        uint64 amount = 3;
-
-        // 96 byte signature from the validators public key.
-        bytes signature = 4 [(ssz_size) = "96"];
-    }
-
     // 32 byte roots in the deposit tree branch.
-    repeated bytes proof = 1 [(ssz_size) = "33, 32"];
+    repeated bytes proof = 1 [(ssz_size) = "33,32"];
 
-    Data data = 2;
+    DepositData data = 2;
 }
+
+message DepositData {
+    // 48 byte BLS public key of the validator.
+    bytes public_key = 1 [(ssz_size) = "48", (spec_name) = "pubkey"];
+
+    // A 32 byte hash of the withdrawal address public key.
+    bytes withdrawal_credentials = 2 [(ssz_size) = "32"];
+
+    // Deposit amount in gwei.
+    uint64 amount = 3;
+
+    // 96 byte signature from the validators public key.
+    bytes signature = 4 [(ssz_size) = "96"];
+}
+
 
 // A message that represents a validator signaling that they want to voluntarily
 // withdraw from the active validator set. The message does not contain a
