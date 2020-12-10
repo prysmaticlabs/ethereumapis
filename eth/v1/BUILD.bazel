@@ -94,7 +94,7 @@ go_proto_library(
 go_library(
     name = "go_default_library",
     srcs = [
-        #        ":ssz_generated_files",  # keep
+        ":ssz_generated_files",  # keep
     ],
     embed = [":go_proto"],
     importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1",

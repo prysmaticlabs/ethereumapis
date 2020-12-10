@@ -9,7 +9,7 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway v1.13.0
 	github.com/jhump/protoreflect v1.8.0 // indirect
 	github.com/prysmaticlabs/go-bitfield v0.0.0-20200322041314-62c2aee71669
-	github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20201209092527-b158ffbd46bf // indirect
+	github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20201210013736-8a16b5166f54 // indirect
 	golang.org/x/tools v0.0.0-20201208233053-a543418bbed2 // indirect
 	google.golang.org/genproto v0.0.0-20200528191852-705c0b31589b
 	google.golang.org/grpc v1.29.1

@@ -61,6 +61,8 @@ github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20201209091649-28c542b1e320 h
 github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20201209091649-28c542b1e320/go.mod h1:rclk5fXHSgE1Bk0zvJ95HrOZcJAnbf6KKWECqJpiQEY=
 github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20201209092527-b158ffbd46bf h1:eICBjRCRvV8xrQ4ANhezsPvEjW6yRxmnAhiOsZLZ2Sw=
 github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20201209092527-b158ffbd46bf/go.mod h1:rclk5fXHSgE1Bk0zvJ95HrOZcJAnbf6KKWECqJpiQEY=
+github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20201210013736-8a16b5166f54 h1:U5moXNZZd5G3t0Y05/X3eNStBFC0sPfu2QT0q7atK7c=
+github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20201210013736-8a16b5166f54/go.mod h1:rclk5fXHSgE1Bk0zvJ95HrOZcJAnbf6KKWECqJpiQEY=
 github.com/rogpeppe/fastuuid v1.2.0/go.mod h1:jVj6XXZzXRy/MSR5jhDC/2q6DgLz+nrA6LYCDYWNEvQ=
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=
 github.com/yuin/goldmark v1.1.27/go.mod h1:3hX8gzYuyVAZsxl0MRgGTJEmQBFcNTphYh9decYSb74=
