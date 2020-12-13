@@ -1,24 +1,28 @@
-ethV1Path=eth/v1/
-ethV1GatewayPath=eth/v1_gateway/
-ethV1Files=$(ls eth/v1/*.proto)
-for protoFile in $ethV1Files
+bazel build //eth/v1alpha1:go_grpc_gateway_library
+
+protoPath=eth/v1/
+protoGatewayPath=eth/v1_gateway/
+protoFiles=$(ls eth/v1/*.proto)
+for protoFile in $protoFiles
 do
-  protoc -I. -Ibazel-ethereumapis/external/go_googleapis/ -Ibazel-ethereumapis/$ethV1Path -Ibazel-ethereumapis/external/com_google_protobuf/src --experimental_allow_proto3_optional "$protoFile" --go-cast_out=$ethV1Path
-  protoc -I. -Ibazel-ethereumapis/external/go_googleapis/ -Ibazel-ethereumapis/$ethV1Path -Ibazel-ethereumapis/external/com_google_protobuf/src --experimental_allow_proto3_optional --grpc-gateway_out $ethV1GatewayPath "$protoFile"
+  if [ "${protoFile}" != "eth/v1alpha1/swagger.proto" ]; then
+    protoc -I. -Ibazel-ethereumapis/external/go_googleapis/ -Ibazel-ethereumapis/$protoPath -Ibazel-ethereumapis/external/com_google_protobuf/src --experimental_allow_proto3_optional --go-cast_out=$protoPath "$protoFile"
+    protoc -I. -Ibazel-ethereumapis/external/go_googleapis/ -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/ -Ibazel-ethereumapis/$protoPath -Ibazel-ethereumapis/external/com_google_protobuf/src --experimental_allow_proto3_optional --grpc-gateway_out=$protoGatewayPath "$protoFile"
+  fi
 done
 
 ethV1PBFiles=$(ls eth/v1/github.com/prysmaticlabs/ethereumapis/eth/v1/*.pb.go)
 for pbGoFile in $ethV1PBFiles
 do
   filename="${pbGoFile##*/}"
-  mv "$pbGoFile" "$ethV1Path$filename"
+  mv "$pbGoFile" "$protoPath$filename"
 done
 
-ethV1PBFiles=$(ls eth/v1_gateway/github.com/prysmaticlabs/ethereumapis/eth/v1/*.pb.go)
+ethV1PBFiles=$(ls eth/v1_gateway/github.com/prysmaticlabs/ethereumapis/eth/v1/*.pb.gw.go)
 for pbGoFile in $ethV1PBFiles
 do
   filename="${pbGoFile##*/}"
-  mv "$pbGoFile" "$ethV1GatewayPath$filename"
+  mv "$pbGoFile" "$protoGatewayPath$filename"
 done
 
 rm -rf eth/v1/github.com/
@@ -26,28 +30,34 @@ rm -rf eth/v1_gateway/github.com/
 
 bazel build //eth/v1:go_default_library
 
-cp "bazel-out/k8-fastbuild/bin/${ethV1Path}generated.ssz.go" "$ethV1Path/generated.ssz.go"
+cp "bazel-out/k8-fastbuild/bin/${protoPath}generated.ssz.go" "$protoPath/generated.ssz.go"
 
-ethV1Path=eth/v1alpha1/
-ethV1GatewayPath=eth/v1alpha1_gateway/
-ethV1Files=$(ls eth/v1alpha1/*.proto)
-for protoFile in $ethV1Files
+protoPath=eth/v1alpha1/
+protoGatewayPath=eth/v1alpha1_gateway/
+protoFiles=$(ls eth/v1alpha1/*.proto)
+for protoFile in $protoFiles
 do
-  protoc -I. -Ibazel-ethereumapis/external/go_googleapis/ -Ibazel-ethereumapis/$ethV1Path -Ibazel-ethereumapis/external/com_google_protobuf/src --experimental_allow_proto3_optional "$protoFile" --go-cast_out=$ethV1Path
+  if [ "${protoFile}" != "eth/v1alpha1/swagger.proto" ]; then
+    protoc -I. -Ibazel-ethereumapis/external/go_googleapis/ -Ibazel-ethereumapis/$protoPath -Ibazel-ethereumapis/external/com_google_protobuf/src --experimental_allow_proto3_optional --go-cast_out=$protoPath "$protoFile"
+    protoc -I. -Ibazel-ethereumapis/external/go_googleapis/ -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/ -Ibazel-ethereumapis/$protoPath -Ibazel-ethereumapis/external/com_google_protobuf/src --experimental_allow_proto3_optional --grpc-gateway_out=$protoGatewayPath "$protoFile"
+  fi
 done
+
+protoc -I. -Ibazel-ethereumapis/external/go_googleapis/ -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/ -Ibazel-ethereumapis/$protoPath -Ibazel-ethereumapis/external/com_google_protobuf/src --experimental_allow_proto3_optional --openapiv2_out=$protoGatewayPath "${protoPath}/swagger.proto"
+
 
 ethV1PBFiles=$(ls eth/v1alpha1/github.com/prysmaticlabs/ethereumapis/eth/v1alpha1/*.pb.go)
 for pbGoFile in $ethV1PBFiles
 do
   filename="${pbGoFile##*/}"
-  mv "$pbGoFile" "$ethV1Path$filename"
+  mv "$pbGoFile" "$protoPath$filename"
 done
 
-ethV1PBFiles=$(ls eth/v1_gateway/github.com/prysmaticlabs/ethereumapis/eth/v1alpha1/*.pb.go)
+ethV1PBFiles=$(ls eth/v1alpha1_gateway/github.com/prysmaticlabs/ethereumapis/eth/v1alpha1/*.pb.gw.go)
 for pbGoFile in $ethV1PBFiles
 do
   filename="${pbGoFile##*/}"
-  mv "$pbGoFile" "$ethV1GatewayPath$filename"
+  mv "$pbGoFile" "$protoGatewayPath$filename"
 done
 
 rm -rf eth/v1alpha1/github.com/
@@ -55,5 +65,5 @@ rm -rf eth/v1alpha1_gateway/github.com/
 
 bazel build //eth/v1alpha1:go_default_library
 
-cp "bazel-out/k8-fastbuild/bin/${ethV1Path}generated.ssz.go" "$ethV1Path/generated.ssz.go"
+cp "bazel-out/k8-fastbuild/bin/${protoPath}generated.ssz.go" "$protoPath/generated.ssz.go"
 
