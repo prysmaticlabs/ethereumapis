@@ -25,17 +25,19 @@ proto_library(
         "beacon_block.proto",
         "beacon_chain.proto",
         "node.proto",
+        "options.proto",
         "validator.proto",
         ":generated_swagger_proto",
     ],
     visibility = ["//visibility:public"],
     deps = [
-        "@com_google_protobuf//:empty_proto",
+        "@com_github_grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_proto",
         "@com_google_protobuf//:any_proto",
+        "@com_google_protobuf//:descriptor_proto",
+        "@com_google_protobuf//:empty_proto",
         "@com_google_protobuf//:timestamp_proto",
         "@go_googleapis//google/api:annotations_proto",
         "@gogo_special_proto//github.com/gogo/protobuf/gogoproto",
-        "@com_github_grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_proto",
     ],
 )
 
@@ -76,14 +78,18 @@ ssz_gen_marshal(
 
 go_proto_library(
     name = "go_proto",
-    compilers = ["@io_bazel_rules_go//proto:gogofast_grpc"],
+    compilers = [
+        "@com_github_prysmaticlabs_protoc_gen_go_cast//:go_cast",
+    ],
     importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1",
     proto = ":proto",
     visibility = ["//visibility:public"],
     deps = [
-        "@go_googleapis//google/api:annotations_go_proto",
+        "@com_github_golang_protobuf//descriptor:go_default_library",
+        "@com_github_golang_protobuf//protoc-gen-go/descriptor:go_default_library",
         "@com_github_grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_go_proto",
         "@com_github_prysmaticlabs_go_bitfield//:go_default_library",
+        "@go_googleapis//google/api:annotations_go_proto",
     ],
 )
 
@@ -97,12 +103,12 @@ go_proto_library(
     proto = ":proto",
     visibility = ["//visibility:public"],
     deps = [
-        "@go_googleapis//google/api:annotations_go_proto",
-        "@com_github_grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_go_proto",
         "@com_github_gogo_protobuf//gogoproto:go_default_library",
         "@com_github_golang_protobuf//descriptor:go_default_library",
         "@com_github_golang_protobuf//ptypes/empty:go_default_library",
+        "@com_github_grpc_ecosystem_grpc_gateway//protoc-gen-swagger/options:options_go_proto",
         "@com_github_prysmaticlabs_go_bitfield//:go_default_library",
+        "@go_googleapis//google/api:annotations_go_proto",
     ],
 )
 

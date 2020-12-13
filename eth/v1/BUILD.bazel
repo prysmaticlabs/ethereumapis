@@ -94,10 +94,20 @@ go_proto_library(
 go_library(
     name = "go_default_library",
     srcs = [
-        ":ssz_generated_files",  # keep
-    ],
-    embed = [":go_proto"],
+#        ":ssz_generated_files",  # keep
+    ] + glob(["*.pb.go"]),
+#    embed = [":go_proto"],
     importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1",
     visibility = ["//visibility:public"],
-    deps = SSZ_DEPS,  # keep
+    deps = SSZ_DEPS + [
+        "@com_github_golang_protobuf//descriptor:go_default_library",
+        "@com_github_golang_protobuf//proto:go_default_library",
+        "@com_github_golang_protobuf//protoc-gen-go/descriptor:go_default_library",
+        "@com_github_golang_protobuf//ptypes/empty:go_default_library",
+        "@com_github_golang_protobuf//ptypes/timestamp:go_default_library",
+        "@com_github_prysmaticlabs_go_bitfield//:go_default_library",  # keep
+        "@go_googleapis//google/api:annotations_go_proto",
+        "@org_golang_google_protobuf//reflect/protoreflect:go_default_library",
+        "@org_golang_google_protobuf//runtime/protoimpl:go_default_library",
+    ],  # keep
 )

@@ -14,6 +14,7 @@ require (
 	golang.org/x/tools v0.0.0-20201210181237-6d345e82f1d8 // indirect
 	google.golang.org/genproto v0.0.0-20200528191852-705c0b31589b
 	google.golang.org/grpc v1.29.1
+	google.golang.org/grpc/cmd/protoc-gen-go-grpc v1.0.1 // indirect
 	google.golang.org/protobuf v1.25.1-0.20200805231151-a709e31e5d12
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
