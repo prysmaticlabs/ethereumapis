@@ -286,7 +286,7 @@ type Metadata struct {
 	// the node MUST increment seq_number by 1.
 	SeqNumber uint64 `protobuf:"varint,1,opt,name=seq_number,json=seqNumber,proto3" json:"seq_number,omitempty"`
 	// Attnets is a bitvector representing the node's persistent attestation subnet subscriptions.
-	Attnets github_com_prysmaticlabs_go_bitfield.Bitvector64 `protobuf:"bytes,2,opt,name=attnets,proto3" json:"attnets,omitempty" ssz-size:"8" cast-type:"github.com/prysmaticlabs/go-bitfield.Bitvector64"`
+	Attnets github_com_prysmaticlabs_go_bitfield.Bitvector64 `protobuf:"bytes,2,opt,name=attnets,proto3" json:"attnets,omitempty" cast-type:"github.com/prysmaticlabs/go-bitfield.Bitvector64" ssz-size:"8"`
 }
 
 func (x *Metadata) Reset() {

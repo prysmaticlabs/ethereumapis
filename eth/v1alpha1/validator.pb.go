@@ -440,7 +440,7 @@ type ValidatorIndexRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// A 48 byte validator public key.
-	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48" spec-name:"pubkey"`
 }
 
 func (x *ValidatorIndexRequest) Reset() {
@@ -536,7 +536,7 @@ type ValidatorStatusRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// A 48 byte validator public key.
-	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48" spec-name:"pubkey"`
 }
 
 func (x *ValidatorStatusRequest) Reset() {
@@ -1187,7 +1187,7 @@ type AggregateSelectionRequest struct {
 	// Committee index of the validator at the given slot.
 	CommitteeIndex uint64 `protobuf:"varint,2,opt,name=committee_index,json=committeeIndex,proto3" json:"committee_index,omitempty"`
 	// 48 byte public key of the validator.
-	PublicKey []byte `protobuf:"bytes,3,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey []byte `protobuf:"bytes,3,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48" spec-name:"pubkey"`
 	// 96 byte signature of the validator on the slot. This is used as proof that the validator is
 	// an aggregator for the given slot.
 	SlotSignature []byte `protobuf:"bytes,4,opt,name=slot_signature,json=slotSignature,proto3" json:"slot_signature,omitempty" ssz-size:"96"`
@@ -1473,7 +1473,7 @@ type Validator struct {
 	unknownFields protoimpl.UnknownFields
 
 	// 48 byte BLS public key used for the validator's activities.
-	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48" spec-name:"pubkey"`
 	// 32 byte hash of the withdrawal destination public key.
 	WithdrawalCredentials []byte `protobuf:"bytes,2,opt,name=withdrawal_credentials,json=withdrawalCredentials,proto3" json:"withdrawal_credentials,omitempty" ssz-size:"32"`
 	// The validators current effective balance in gwei.
@@ -1736,7 +1736,7 @@ type ValidatorInfo struct {
 	unknownFields protoimpl.UnknownFields
 
 	// The validator's 48 byte BLS public key.
-	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48" spec-name:"pubkey"`
 	// The validator's index in the beacon state.
 	Index uint64 `protobuf:"varint,2,opt,name=index,proto3" json:"index,omitempty"`
 	// The epoch for which the information pertains.
@@ -1847,7 +1847,7 @@ type ValidatorActivationResponse_Status struct {
 	unknownFields protoimpl.UnknownFields
 
 	// A 48 byte validator public key.
-	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48" spec-name:"pubkey"`
 	// A wrapper representing a validator's status object.
 	Status *ValidatorStatusResponse `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
 	// The validators index in the beacon state.
@@ -1921,7 +1921,7 @@ type DutiesResponse_Duty struct {
 	// Slots at which a validator must propose a beacon chain block.
 	ProposerSlots []uint64 `protobuf:"varint,4,rep,packed,name=proposer_slots,json=proposerSlots,proto3" json:"proposer_slots,omitempty"`
 	// 48 byte BLS public key for the validator who's assigned to perform a duty.
-	PublicKey []byte `protobuf:"bytes,5,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey []byte `protobuf:"bytes,5,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48" spec-name:"pubkey"`
 	// The current status of the validator assigned to perform the duty.
 	Status ValidatorStatus `protobuf:"varint,6,opt,name=status,proto3,enum=ethereum.eth.v1alpha1.ValidatorStatus" json:"status,omitempty"`
 	// The index of the validator in the beacon state.

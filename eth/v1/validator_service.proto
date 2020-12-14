@@ -77,10 +77,7 @@ service BeaconValidator {
   //
   // - 500: Beacon node internal error.
   rpc SubmitAggregateAndProofs(AggregateAndProofsSubmit) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      post: "/eth/v1/validator/aggregate_and_proofs"
-      body: "data"
-    };
+    option (google.api.http) = { post: "/eth/v1/validator/aggregate_and_proofs" };
   }
 
   // SubmitBeaconCommitteeSubscription requests the beacon node to search using discv5 for peers related to
@@ -97,11 +94,8 @@ service BeaconValidator {
   // - 500: Beacon node internal error.
   //
   // - 503: Beacon node is currently syncing, try again later.
-  rpc SubmitBeaconCommitteeSubscription(BeaconCommitteeSubscribeSubmit) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      post: "/eth/v1/validator/beacon_committee_subscriptions"
-      body: "data"
-    };
+  rpc SubmitBeaconCommitteeSubscription(ListValue) returns (google.protobuf.Empty) {
+    option (google.api.http) = { post: "/eth/v1/validator/beacon_committee_subscriptions" };
   }
 }
 
@@ -200,12 +194,12 @@ message AttestationResponse {
   Attestation data = 1;
 }
 
-message AggregateAndProofsSubmit {
-  repeated AggregateAttestationAndProof data = 1;
+message AggregateAndProofsSubmitListValue {
+  repeated AggregateAttestationAndProof value = 1;
 }
 
-message BeaconCommitteeSubscribeSubmit {
-  repeated BeaconCommitteeSubscribe data = 1;
+message BeaconCommitteesSubmitListValue {
+  repeated BeaconCommitteeSubscribe value = 1;
 }
 
 message BeaconCommitteeSubscribe {
