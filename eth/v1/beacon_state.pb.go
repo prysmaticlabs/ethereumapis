@@ -55,7 +55,7 @@ type BeaconState struct {
 	LatestBlockHeader *BeaconBlockHeader `protobuf:"bytes,5,opt,name=latest_block_header,json=latestBlockHeader,proto3" json:"latest_block_header,omitempty"`
 	BlockRoots        [][]byte           `protobuf:"bytes,6,rep,name=block_roots,json=blockRoots,proto3" json:"block_roots,omitempty" ssz-size:"8192"`
 	StateRoots        [][]byte           `protobuf:"bytes,7,rep,name=state_roots,json=stateRoots,proto3" json:"state_roots,omitempty" ssz-size:"8192"`
-	HistoricalRoots   [][]byte           `protobuf:"bytes,8,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-size:"32" ssz-max:"16777216"`
+	HistoricalRoots   [][]byte           `protobuf:"bytes,8,rep,name=historical_roots,json=historicalRoots,proto3" json:"historical_roots,omitempty" ssz-max:"16777216" ssz-size:"32"`
 	// Eth1
 	Eth1Data         *Eth1Data   `protobuf:"bytes,9,opt,name=eth1_data,json=eth1Data,proto3" json:"eth1_data,omitempty"`
 	Eth1DataVotes    []*Eth1Data `protobuf:"bytes,10,rep,name=eth1_data_votes,json=eth1DataVotes,proto3" json:"eth1_data_votes,omitempty" ssz-max:"1024"`

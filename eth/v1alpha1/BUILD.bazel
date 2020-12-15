@@ -54,7 +54,7 @@ java_proto_library(
 ##############################################################################
 ssz_gen_marshal(
     name = "ssz_generated_files",
-    go_proto = ":go_proto",
+    srcs = glob(["*.pb.go"]),
     objs = [
         "AggregateAttestationAndProof",
         "Attestation",
@@ -76,22 +76,22 @@ ssz_gen_marshal(
     ],
 )
 
-go_proto_library(
-    name = "go_proto",
-    compilers = [
-        "@com_github_prysmaticlabs_protoc_gen_go_cast//:go_cast",
-    ],
-    importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1",
-    proto = ":proto",
-    visibility = ["//visibility:public"],
-    deps = [
-        "@com_github_golang_protobuf//descriptor:go_default_library",
-        "@com_github_golang_protobuf//protoc-gen-go/descriptor:go_default_library",
-        "@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-openapiv2/options:options_go_proto",
-        "@com_github_prysmaticlabs_go_bitfield//:go_default_library",
-        "@go_googleapis//google/api:annotations_go_proto",
-    ],
-)
+#go_proto_library(
+#    name = "go_proto",
+#    compilers = [
+#        "@com_github_prysmaticlabs_protoc_gen_go_cast//:go_cast",
+#    ],
+#    importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1",
+#    proto = ":proto",
+#    visibility = ["//visibility:public"],
+#    deps = [
+#        "@com_github_golang_protobuf//descriptor:go_default_library",
+#        "@com_github_golang_protobuf//protoc-gen-go/descriptor:go_default_library",
+#        "@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-openapiv2/options:options_go_proto",
+#        "@com_github_prysmaticlabs_go_bitfield//:go_default_library",
+#        "@go_googleapis//google/api:annotations_go_proto",
+#    ],
+#)
 
 go_proto_library(
     name = "go_grpc_gateway_library",
@@ -115,7 +115,7 @@ go_proto_library(
 go_library(
     name = "go_default_library",
     srcs = [
-        #        ":ssz_generated_files",  # keep
+        ":ssz_generated_files",  # keep
     ] + glob(["*.pb.go"]),
     #    embed = [":go_proto"],
     importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1",

@@ -275,8 +275,8 @@ def ethereumapi_deps():
     go_repository(
         name = "org_golang_x_sync",
         importpath = "golang.org/x/sync",
-        sum = "h1:qwRHBd0NqMbJxfbotnDhm2ByMI1Shq4Y6oRJo21SGJA=",
-        version = "v0.0.0-20200625203802-6e8e738ad208",
+        sum = "h1:SQFwaSi55rU7vdNs9Yr0Z324VNlrF+0wMqRXT4St8ck=",
+        version = "v0.0.0-20201020160332-67f06af15bc9",
     )
     go_repository(
         name = "org_golang_x_sys",
@@ -293,8 +293,8 @@ def ethereumapi_deps():
     go_repository(
         name = "org_golang_x_tools",
         importpath = "golang.org/x/tools",
-        sum = "h1:W07d4xkoAUSNOkOzdzXCdFGxT7o2rW4q8M34tB2i//k=",
-        version = "v0.0.0-20200825202427-b303f430e36d",
+        sum = "h1:SLHKXsC4wI4NdEGVGe/yxcTBkF/mPUS7agW3Qt5smVg=",
+        version = "v0.0.0-20201215192005-fa10ef0b8743",
     )
     go_repository(
         name = "org_golang_x_xerrors",

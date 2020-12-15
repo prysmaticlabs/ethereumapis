@@ -10,7 +10,9 @@ require (
 	github.com/kr/pretty v0.1.0 // indirect
 	github.com/mitchellh/mapstructure v1.4.0 // indirect
 	github.com/prysmaticlabs/go-bitfield v0.0.0-20200322041314-62c2aee71669
+	github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20201215225152-2992501386ab // indirect
 	golang.org/x/net v0.0.0-20201021035429-f5854403a974 // indirect
+	golang.org/x/tools v0.0.0-20201215192005-fa10ef0b8743 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	google.golang.org/genproto v0.0.0-20201211151036-40ec1c210f7a
 	google.golang.org/grpc v1.33.1

@@ -60,15 +60,15 @@ ethereumapi_deps()
 go_repository(
     name = "com_github_prysmaticlabs_protoc_gen_go_cast",
     importpath = "github.com/prysmaticlabs/protoc-gen-go-cast",
-    sum = "h1:mm0SKXfYkmcDc+2Jy9N0sUo0w65a617nO2CsMkMn3lo=",
-    version = "v0.0.0-20201210230745-1451ec2916a9",
+    sum = "h1:VlXlb+7zpzj9X4RFbf7YR84gzIUq6tSBuIGRcAL5954=",
+    version = "v0.0.0-20201215225152-2992501386ab",
 )
 
 go_repository(
     name = "com_github_yuin_goldmark",
     importpath = "github.com/yuin/goldmark",
-    sum = "h1:5tjfNdR2ki3yYQ842+eX2sQHeiwpKJ0RnHO4IYOc4V8=",
-    version = "v1.1.32",
+    sum = "h1:ruQGxdhGHe7FWOJPT0mKs5+pD2Xs1Bm/kdGlHO04FmM=",
+    version = "v1.2.1",
 )
 
 go_repository(
