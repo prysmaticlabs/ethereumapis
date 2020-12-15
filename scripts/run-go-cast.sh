@@ -6,7 +6,7 @@ protoFiles=$(ls eth/v1/*.proto)
 for protoFile in $protoFiles
 do
   if [ "${protoFile}" != "eth/v1/swagger.proto" ]; then
-    protoc -I. -Ibazel-ethereumapis/external/go_googleapis/ -Ibazel-ethereumapis/$protoPath -Ibazel-ethereumapis/external/com_google_protobuf/src --experimental_allow_proto3_optional --go-cast_out=$protoPath "$protoFile"
+    protoc -I. -Ibazel-ethereumapis/external/go_googleapis/ -Ibazel-ethereumapis/$protoPath -Ibazel-ethereumapis/external/com_google_protobuf/src --experimental_allow_proto3_optional --go-cast_out=$protoPath --go-grpc_out=$protoPath "$protoFile"
     protoc -I. -Ibazel-ethereumapis/external/go_googleapis/ -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/ -Ibazel-ethereumapis/$protoPath -Ibazel-ethereumapis/external/com_google_protobuf/src --experimental_allow_proto3_optional --grpc-gateway_out=$protoGatewayPath "$protoFile"
   fi
 done
@@ -38,7 +38,7 @@ protoFiles=$(ls eth/v1alpha1/*.proto)
 for protoFile in $protoFiles
 do
   if [ "${protoFile}" != "eth/v1alpha1/swagger.proto" ]; then
-    protoc -I. -Ibazel-ethereumapis/external/go_googleapis/ -Ibazel-ethereumapis/$protoPath -Ibazel-ethereumapis/external/com_google_protobuf/src --experimental_allow_proto3_optional --go-cast_out=$protoPath "$protoFile"
+    protoc -I. -Ibazel-ethereumapis/external/go_googleapis/ -Ibazel-ethereumapis/$protoPath -Ibazel-ethereumapis/external/com_google_protobuf/src --experimental_allow_proto3_optional --go-cast_out=$protoPath --go-grpc_out=$protoPath "$protoFile"
     protoc -I. -Ibazel-ethereumapis/external/go_googleapis/ -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/ -Ibazel-ethereumapis/$protoPath -Ibazel-ethereumapis/external/com_google_protobuf/src --experimental_allow_proto3_optional --grpc-gateway_out=$protoGatewayPath "$protoFile"
   fi
 done

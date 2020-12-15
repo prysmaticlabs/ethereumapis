@@ -336,7 +336,7 @@ var (
 )
 
 func request_BeaconValidator_SubmitBeaconCommitteeSubscription_0(ctx context.Context, marshaler runtime.Marshaler, client BeaconValidatorClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListValue
+	var protoReq BeaconCommitteesSubscribeSubmit
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
@@ -352,7 +352,7 @@ func request_BeaconValidator_SubmitBeaconCommitteeSubscription_0(ctx context.Con
 }
 
 func local_request_BeaconValidator_SubmitBeaconCommitteeSubscription_0(ctx context.Context, marshaler runtime.Marshaler, server BeaconValidatorServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq ListValue
+	var protoReq BeaconCommitteesSubscribeSubmit
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {

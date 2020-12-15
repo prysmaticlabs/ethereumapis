@@ -3,10 +3,10 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 go_library(
     name = "go_default_library",
     srcs = [
-        "beacon_chain_service_grpc.pb.go",
-        "beacon_debug_service_grpc.pb.go",
-        "node_grpc.pb.go",
-        "validator_service_grpc.pb.go",
+        "beacon_chain_service.pb.gw.go",
+        "beacon_debug_service.pb.gw.go",
+        "node.pb.gw.go",
+        "validator_service.pb.gw.go",
     ],
     importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1_gateway",
     visibility = ["//visibility:public"],
