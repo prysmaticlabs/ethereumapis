@@ -47,7 +47,7 @@ type Attestation struct {
 
 	// A bitfield representation of validator indices that have voted exactly
 	// the same vote and have been aggregated into this attestation.
-	AggregationBits github_com_prysmaticlabs_go_bitfield.Bitlist `protobuf:"bytes,1,opt,name=aggregation_bits,json=aggregationBits,proto3" json:"aggregation_bits,omitempty" ssz-max:"2048" cast-type:"github.com/prysmaticlabs/go-bitfield.Bitlist"`
+	AggregationBits github_com_prysmaticlabs_go_bitfield.Bitlist `protobuf:"bytes,1,opt,name=aggregation_bits,json=aggregationBits,proto3" json:"aggregation_bits,omitempty" cast-type:"github.com/prysmaticlabs/go-bitfield.Bitlist" ssz-max:"2048"`
 	Data            *AttestationData                             `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
 	// 96 byte BLS aggregate signature.
 	Signature []byte `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`

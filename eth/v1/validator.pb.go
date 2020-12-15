@@ -118,7 +118,7 @@ type Validator struct {
 	unknownFields protoimpl.UnknownFields
 
 	// 48 byte BLS public key used for the validator's activities.
-	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48" spec-name:"pubkey"`
 	// 32 byte hash of the withdrawal destination public key.
 	WithdrawalCredentials []byte `protobuf:"bytes,2,opt,name=withdrawal_credentials,json=withdrawalCredentials,proto3" json:"withdrawal_credentials,omitempty" ssz-size:"32"`
 	// The validators current effective balance in gwei.

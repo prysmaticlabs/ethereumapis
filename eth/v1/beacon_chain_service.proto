@@ -287,13 +287,13 @@ message StateCommitteesRequest {
   bytes state_id = 1; // TODO: Duck type handling.
 
   // The epoch to retrieve the committees of.
-  uint64 epoch = 2;
+  optional uint64 epoch = 2;
 
   // Committee index requested.
-  uint64 index = 3;
+  optional uint64 index = 3;
 
   // Committee slot requested.
-  uint64 slot = 4;
+  optional uint64 slot = 4;
 }
 
 message StateCommitteesResponse {

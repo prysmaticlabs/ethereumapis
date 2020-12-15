@@ -43,8 +43,7 @@ do
   fi
 done
 
-protoc -I. -Ibazel-ethereumapis/external/go_googleapis/ -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/ -Ibazel-ethereumapis/$protoPath -Ibazel-ethereumapis/external/com_google_protobuf/src --openapiv2_out=$protoGatewayPath "${protoPath}/swagger.proto"
-
+bazel build //eth/v1alpha1:swagger
 
 ethV1PBFiles=$(ls eth/v1alpha1/github.com/prysmaticlabs/ethereumapis/eth/v1alpha1/*.pb.go)
 for pbGoFile in $ethV1PBFiles
