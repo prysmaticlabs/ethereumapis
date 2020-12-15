@@ -87,12 +87,6 @@ def ethereumapi_deps():
         version = "v0.1.0",
     )
     go_repository(
-        name = "com_github_gogo_protobuf",
-        importpath = "github.com/gogo/protobuf",
-        sum = "h1:DqDEcV5aeaTmdFBePNpYsp3FlcVH/2ISVVM9Qf8PSls=",
-        version = "v1.3.1",
-    )
-    go_repository(
         name = "com_github_golang_glog",
         importpath = "github.com/golang/glog",
         sum = "h1:VKtxabqXZkF25pY9ekfRL6a582T4P37/31XEstQ5p58=",

@@ -37,7 +37,6 @@ proto_library(
         "@com_google_protobuf//:empty_proto",
         "@com_google_protobuf//:timestamp_proto",
         "@go_googleapis//google/api:annotations_proto",
-        "@gogo_special_proto//github.com/gogo/protobuf/gogoproto",
     ],
 )
 
@@ -103,7 +102,6 @@ go_proto_library(
     proto = ":proto",
     visibility = ["//visibility:public"],
     deps = [
-        "@com_github_gogo_protobuf//gogoproto:go_default_library",
         "@com_github_golang_protobuf//descriptor:go_default_library",
         "@com_github_golang_protobuf//ptypes/empty:go_default_library",
         "@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-openapiv2/options:options_go_proto",
