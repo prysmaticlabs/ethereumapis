@@ -60,8 +60,8 @@ ethereumapi_deps()
 go_repository(
     name = "com_github_prysmaticlabs_protoc_gen_go_cast",
     importpath = "github.com/prysmaticlabs/protoc-gen-go-cast",
-    sum = "h1:VlXlb+7zpzj9X4RFbf7YR84gzIUq6tSBuIGRcAL5954=",
-    version = "v0.0.0-20201215225152-2992501386ab",
+    sum = "h1:0yt1t312VhbUNcJwKuG51w7DLP3HbrTLFtwCpjLt8wU=",
+    version = "v0.0.0-20201215233554-4f4b9d357e1b",
 )
 
 go_repository(
