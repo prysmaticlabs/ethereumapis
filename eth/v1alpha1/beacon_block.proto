@@ -103,8 +103,16 @@ message AttesterSlashing {
     IndexedAttestation attestation_2 = 2;
 }
 
-// Data that is encoded into a deposit signature.
-message Data {
+// Deposit into the Ethereum 2.0 from the Ethereum 1.x deposit contract.
+message Deposit {
+    // 32 byte roots in the deposit tree branch.
+    repeated bytes proof = 1 [(ssz_size) = "33,32"];
+
+    DepositData data = 2;
+}
+
+// DepositData that is encoded into a deposit signature.
+message DepositData {
     // 48 byte BLS public key of the validator.
     bytes public_key = 1 [(ssz_size) = "48", (spec_name) = "pubkey"];
 
@@ -116,14 +124,6 @@ message Data {
 
     // 96 byte signature from the validators public key.
     bytes signature = 4 [(ssz_size) = "96"];
-}
-
-// Deposit into the Ethereum 2.0 from the Ethereum 1.x deposit contract.
-message Deposit {
-    // 32 byte roots in the deposit tree branch.
-    repeated bytes proof = 1 [(ssz_size) = "33,32"];
-
-    Data data = 2;
 }
 
 // A message that represents a validator signaling that they want to voluntarily
