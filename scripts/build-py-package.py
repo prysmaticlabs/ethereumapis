@@ -140,7 +140,7 @@ from ethereumapis.v1 import (
                 )
             )
 
-            _progress = tqdm.tqdm()
+            _progress = tqdm.tqdm(disable=None)  # do not display on non-tty
 
             class Progress(git.remote.RemoteProgress):
                 _total = 0
