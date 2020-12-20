@@ -16,3 +16,4 @@
 # Ignore Python build artifacts.
 /build/
 /dist/
+/setup.py

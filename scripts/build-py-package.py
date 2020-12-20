@@ -19,11 +19,18 @@ scripts/build-py-package.py bdist_wheel
 """
 
 import os
+import shutil
 import sys
 
-_REPOSITORY_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
+_IS_SETUP_PY = os.path.basename(__file__) == "setup.py"
+if _IS_SETUP_PY:
+    _REPOSITORY_ROOT = os.path.dirname(__file__)
+else:
+    _REPOSITORY_ROOT = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), os.pardir)
+    )
+_DIST_ROOT = os.path.join(_REPOSITORY_ROOT, "dist")
 _README_FILENAME = os.path.join(_REPOSITORY_ROOT, "README.md")
-_LICENSE_FILENAME = os.path.join(_REPOSITORY_ROOT, "LICENSE")
 
 if __name__ == "__main__" and sys.argv[1] == "build_proto_venv":
     if sys.prefix == sys.base_prefix:
@@ -36,11 +43,8 @@ if __name__ == "__main__" and sys.argv[1] == "build_proto_venv":
     import grpc_tools.protoc
     import pkg_resources
     import re
-    import shutil
     import tempfile
     import tqdm
-
-    _DIST_ROOT = os.path.join(_REPOSITORY_ROOT, "dist")
 
     _API_VERSIONS = ["v1", "v1alpha1"]
     _INIT_FILES = {
@@ -269,6 +273,7 @@ from ethereumapis.v1 import (
 import setuptools
 import setuptools.command.build_py
 import setuptools.command.install_lib
+import setuptools.command.sdist
 
 
 class ProtoBuilder(setuptools.Command):
@@ -336,7 +341,8 @@ class ProtoBuildHook(setuptools.command.build_py.build_py):
     """Build hook to ensure ProtoBuilder is run at build-time."""
 
     def run(self):
-        self.run_command("build_proto")
+        if not _IS_SETUP_PY:
+            self.run_command("build_proto")
         setuptools.command.build_py.build_py.run(self)
 
 
@@ -347,6 +353,16 @@ class InstallHook(setuptools.command.install_lib.install_lib):
         self.install()
 
 
+class SourceDistHook(setuptools.command.sdist.sdist):
+    """Ensure that compiled proto output is available before running sdist."""
+
+    def run(self):
+        shutil.copyfile(__file__, os.path.join(_REPOSITORY_ROOT, "setup.py"))
+        if not os.path.exists(os.path.join(_DIST_ROOT, "ethereumapis")):
+            self.run_command("build_proto")
+        setuptools.command.sdist.sdist.run(self)
+
+
 setuptools.setup(
     name="ethereumapis",
     version="0.12.0",
@@ -354,7 +370,10 @@ setuptools.setup(
     description="Prysm's service interface definitions for the Ethereum 2.0 API",
     author="Prysmatic Labs",
     author_email="contact@prysmaticlabs.com",
+    maintainer="wbn",
+    maintainer_email="wbn@striated.space",
     long_description=open(_README_FILENAME, "r").read(),
+    long_description_content_type="text/markdown",
     license="Apache License 2.0",
     platforms=["any"],
     classifiers=[
@@ -385,5 +404,6 @@ setuptools.setup(
         "build_proto": ProtoBuilder,
         "build_py": ProtoBuildHook,
         "install_lib": InstallHook,
+        "sdist": SourceDistHook,
     },
 )
