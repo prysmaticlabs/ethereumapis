@@ -11,11 +11,11 @@ functions (packaging, metadata, etc.) happens outside the virtualenv and is
 handled by setuptools.
 
 Usage:
-# compile the libraries into dist/ethereumapis/
-scripts/build-py-package.py build
-
 # build the Python wheel package for distribution
-scripts/build-py-package.py bdist_wheel
+scripts/build-py-package.py bdist_wheel sdist
+
+# clean intermediate compiled output
+scripts/build-py-package.py clean
 """
 
 import os
@@ -274,6 +274,7 @@ import setuptools
 import setuptools.command.build_py
 import setuptools.command.install_lib
 import setuptools.command.sdist
+import distutils.command.clean
 
 
 class ProtoBuilder(setuptools.Command):
@@ -363,6 +364,23 @@ class SourceDistHook(setuptools.command.sdist.sdist):
         setuptools.command.sdist.sdist.run(self)
 
 
+class CleanHook(distutils.command.clean.clean):
+    """Clean up compiled output as well."""
+
+    _PROTO_OUTPUT_DIR = os.path.join(_DIST_ROOT, "ethereumapis")
+    _SETUP_PY = os.path.join(_REPOSITORY_ROOT, "setup.py")
+
+    def run(self):
+        if os.path.exists(self._PROTO_OUTPUT_DIR):
+            distutils.command.clean.remove_tree(
+                self._PROTO_OUTPUT_DIR, dry_run=self.dry_run
+            )
+        if not self.dry_run and not _IS_SETUP_PY and os.path.exists(self._SETUP_PY):
+            os.remove(self._SETUP_PY)
+
+        distutils.command.clean.clean.run(self)
+
+
 setuptools.setup(
     name="ethereumapis",
     version="0.12.0",
@@ -403,6 +421,7 @@ setuptools.setup(
     cmdclass={
         "build_proto": ProtoBuilder,
         "build_py": ProtoBuildHook,
+        "clean": CleanHook,
         "install_lib": InstallHook,
         "sdist": SourceDistHook,
     },
