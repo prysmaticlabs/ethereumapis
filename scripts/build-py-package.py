@@ -19,7 +19,6 @@ scripts/build-py-package.py clean
 """
 
 import os
-import shutil
 import sys
 
 _IS_SETUP_PY = os.path.basename(__file__) == "setup.py"
@@ -43,6 +42,7 @@ if __name__ == "__main__" and sys.argv[1] == "build_proto_venv":
     import grpc_tools.protoc
     import pkg_resources
     import re
+    import shutil
     import tempfile
     import tqdm
 
@@ -266,6 +266,8 @@ from ethereumapis.v1 import (
             dirs_exist_ok=True,
         )
 
+    shutil.copyfile(__file__, os.path.join(_REPOSITORY_ROOT, "setup.py"))
+
     print("\N{check mark}  Done building ethereumapis")
     sys.exit(0)
 
@@ -358,7 +360,6 @@ class SourceDistHook(setuptools.command.sdist.sdist):
     """Ensure that compiled proto output is available before running sdist."""
 
     def run(self):
-        shutil.copyfile(__file__, os.path.join(_REPOSITORY_ROOT, "setup.py"))
         if not os.path.exists(os.path.join(_DIST_ROOT, "ethereumapis")):
             self.run_command("build_proto")
         setuptools.command.sdist.sdist.run(self)
