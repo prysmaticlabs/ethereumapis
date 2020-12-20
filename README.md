@@ -24,7 +24,7 @@ More indepth descriptions of each service are available in [this section](https:
 
 Thanks for wanting to contribute to our eth2 API! Go libraries may be generated from the [ethereumapis repository](https://github.com/prysmaticlabs/ethereumapis) using [Bazel](https://bazel.build), making it easy to make changes to the schemas needed and generate Go files from them.
 
-Python libraries can be generated using [`scripts/build-py-package.py`](https://github.com/prysmaticlabs/ethereumapis/blob/master/scripts/build-py-package.py); we regularly push these libraries to PyPI as [ethereumapis](https://pypi.org/project/ethereumapis/).
+Python libraries can be generated using [`scripts/build-py-package.py`](https://github.com/prysmaticlabs/ethereumapis/blob/master/scripts/build-py-package.py); we regularly publish these libraries to PyPI as [ethereumapis](https://pypi.org/project/ethereumapis/).
 
 ### Dependencies
 
