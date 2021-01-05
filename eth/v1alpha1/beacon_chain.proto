@@ -397,6 +397,7 @@ message ListBlocksResponse {
     int32 total_size = 3;
 }
 
+// Request to only return blocks that is verified by the beacon node.
 message StreamBlocksRequest {
     bool verified_only = 1;
 }
