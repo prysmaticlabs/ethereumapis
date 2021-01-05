@@ -215,6 +215,23 @@ func request_BeaconChain_StreamBlocks_0(ctx context.Context, marshaler runtime.M
 
 }
 
+func request_BeaconChain_StreamVerifiedBlocks_0(ctx context.Context, marshaler runtime.Marshaler, client BeaconChainClient, req *http.Request, pathParams map[string]string) (BeaconChain_StreamVerifiedBlocksClient, runtime.ServerMetadata, error) {
+	var protoReq empty.Empty
+	var metadata runtime.ServerMetadata
+
+	stream, err := client.StreamVerifiedBlocks(ctx, &protoReq)
+	if err != nil {
+		return nil, metadata, err
+	}
+	header, err := stream.Header()
+	if err != nil {
+		return nil, metadata, err
+	}
+	metadata.HeaderMD = header
+	return stream, metadata, nil
+
+}
+
 func request_BeaconChain_StreamChainHead_0(ctx context.Context, marshaler runtime.Marshaler, client BeaconChainClient, req *http.Request, pathParams map[string]string) (BeaconChain_StreamChainHeadClient, runtime.ServerMetadata, error) {
 	var protoReq empty.Empty
 	var metadata runtime.ServerMetadata
@@ -825,6 +842,13 @@ func RegisterBeaconChainHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		return
 	})
 
+	mux.Handle("GET", pattern_BeaconChain_StreamVerifiedBlocks_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		err := status.Error(codes.Unimplemented, "streaming calls are not yet supported in the in-process transport")
+		_, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+		return
+	})
+
 	mux.Handle("GET", pattern_BeaconChain_StreamChainHead_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		err := status.Error(codes.Unimplemented, "streaming calls are not yet supported in the in-process transport")
 		_, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
@@ -1320,6 +1344,26 @@ func RegisterBeaconChainHandlerClient(ctx context.Context, mux *runtime.ServeMux
 
 	})
 
+	mux.Handle("GET", pattern_BeaconChain_StreamVerifiedBlocks_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_BeaconChain_StreamVerifiedBlocks_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_BeaconChain_StreamVerifiedBlocks_0(ctx, mux, outboundMarshaler, w, req, func() (proto.Message, error) { return resp.Recv() }, mux.GetForwardResponseOptions()...)
+
+	})
+
 	mux.Handle("GET", pattern_BeaconChain_StreamChainHead_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
@@ -1678,6 +1722,8 @@ var (
 
 	pattern_BeaconChain_StreamBlocks_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"eth", "v1alpha1", "beacon", "blocks", "stream"}, "", runtime.AssumeColonVerbOpt(true)))
 
+	pattern_BeaconChain_StreamVerifiedBlocks_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"eth", "v1alpha1", "beacon", "verified-blocks", "stream"}, "", runtime.AssumeColonVerbOpt(true)))
+
 	pattern_BeaconChain_StreamChainHead_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 2, 4}, []string{"eth", "v1alpha1", "beacon", "chainhead", "stream"}, "", runtime.AssumeColonVerbOpt(true)))
 
 	pattern_BeaconChain_GetChainHead_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"eth", "v1alpha1", "beacon", "chainhead"}, "", runtime.AssumeColonVerbOpt(true)))
@@ -1727,6 +1773,8 @@ var (
 	forward_BeaconChain_ListBlocks_0 = runtime.ForwardResponseMessage
 
 	forward_BeaconChain_StreamBlocks_0 = runtime.ForwardResponseStream
+
+	forward_BeaconChain_StreamVerifiedBlocks_0 = runtime.ForwardResponseStream
 
 	forward_BeaconChain_StreamChainHead_0 = runtime.ForwardResponseStream
 
