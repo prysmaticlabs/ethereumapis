@@ -106,19 +106,11 @@ service BeaconChain {
         };
     }
 
-    // Server-side stream of all unverified signed blocks as they are received by
+    // Server-side stream of all signed blocks as they are received by
     // the beacon chain node.
-    rpc StreamBlocks(google.protobuf.Empty) returns (stream SignedBeaconBlock) {
+    rpc StreamBlocks(StreamBlocksRequest) returns (stream SignedBeaconBlock) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/blocks/stream"
-        };
-    }
-
-    // Server-side stream of all verified signed blocks as they are received by
-    // the beacon chain node.
-    rpc StreamVerifiedBlocks(google.protobuf.Empty) returns (stream SignedBeaconBlock) {
-        option (google.api.http) = {
-            get: "/eth/v1alpha1/beacon/verified-blocks/stream"
         };
     }
 
@@ -403,6 +395,10 @@ message ListBlocksResponse {
 
     // Total count of Blocks matching the request filter.
     int32 total_size = 3;
+}
+
+message StreamBlocksRequest {
+    bool verified_only = 1;
 }
 
 // A container that contains both the beacon block
