@@ -125,6 +125,18 @@ message Deposit {
     Data data = 2;
 }
 
+// DepositSigningData is a subset of DepositData in order to get the signing root.
+message DepositSigningData {
+    // 48 byte BLS public key of the validator.
+    bytes public_key = 1 [(gogoproto.moretags) = "ssz-size:\"48\" spec-name:\"pubkey\""];
+
+    // A 32 byte hash of the withdrawal address public key.
+    bytes withdrawal_credentials = 2 [(gogoproto.moretags) = "ssz-size:\"32\""];
+
+    // Deposit amount in gwei.
+    uint64 amount = 3;
+}
+
 // A message that represents a validator signaling that they want to voluntarily
 // withdraw from the active validator set. The message does not contain a
 // validator signature.
