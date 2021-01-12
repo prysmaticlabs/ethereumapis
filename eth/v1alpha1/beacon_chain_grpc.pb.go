@@ -58,7 +58,7 @@ type BeaconChainClient interface {
 	ListBlocks(ctx context.Context, in *ListBlocksRequest, opts ...grpc.CallOption) (*ListBlocksResponse, error)
 	// Server-side stream of all signed blocks as they are received by
 	// the beacon chain node.
-	StreamBlocks(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (BeaconChain_StreamBlocksClient, error)
+	StreamBlocks(ctx context.Context, in *StreamBlocksRequest, opts ...grpc.CallOption) (BeaconChain_StreamBlocksClient, error)
 	// Server-side stream of information about the head of the beacon chain
 	// from the view of the beacon chain node.
 	//
@@ -241,7 +241,7 @@ func (c *beaconChainClient) ListBlocks(ctx context.Context, in *ListBlocksReques
 	return out, nil
 }
 
-func (c *beaconChainClient) StreamBlocks(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (BeaconChain_StreamBlocksClient, error) {
+func (c *beaconChainClient) StreamBlocks(ctx context.Context, in *StreamBlocksRequest, opts ...grpc.CallOption) (BeaconChain_StreamBlocksClient, error) {
 	stream, err := c.cc.NewStream(ctx, &_BeaconChain_serviceDesc.Streams[2], "/ethereum.eth.v1alpha1.BeaconChain/StreamBlocks", opts...)
 	if err != nil {
 		return nil, err
@@ -515,7 +515,7 @@ type BeaconChainServer interface {
 	ListBlocks(context.Context, *ListBlocksRequest) (*ListBlocksResponse, error)
 	// Server-side stream of all signed blocks as they are received by
 	// the beacon chain node.
-	StreamBlocks(*empty.Empty, BeaconChain_StreamBlocksServer) error
+	StreamBlocks(*StreamBlocksRequest, BeaconChain_StreamBlocksServer) error
 	// Server-side stream of information about the head of the beacon chain
 	// from the view of the beacon chain node.
 	//
@@ -613,7 +613,7 @@ func (UnimplementedBeaconChainServer) AttestationPool(context.Context, *Attestat
 func (UnimplementedBeaconChainServer) ListBlocks(context.Context, *ListBlocksRequest) (*ListBlocksResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListBlocks not implemented")
 }
-func (UnimplementedBeaconChainServer) StreamBlocks(*empty.Empty, BeaconChain_StreamBlocksServer) error {
+func (UnimplementedBeaconChainServer) StreamBlocks(*StreamBlocksRequest, BeaconChain_StreamBlocksServer) error {
 	return status.Errorf(codes.Unimplemented, "method StreamBlocks not implemented")
 }
 func (UnimplementedBeaconChainServer) StreamChainHead(*empty.Empty, BeaconChain_StreamChainHeadServer) error {
@@ -795,7 +795,7 @@ func _BeaconChain_ListBlocks_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _BeaconChain_StreamBlocks_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(empty.Empty)
+	m := new(StreamBlocksRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
