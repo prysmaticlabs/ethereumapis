@@ -10,6 +10,8 @@ require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.0.1
 	github.com/mitchellh/mapstructure v1.4.0 // indirect
 	github.com/prysmaticlabs/go-bitfield v0.0.0-20200322041314-62c2aee71669
+	github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20210114090155-77d630fd185e // indirect
+	golang.org/x/tools v0.0.0-20210114065538-d78b04bdf963 // indirect
 	google.golang.org/genproto v0.0.0-20201211151036-40ec1c210f7a
 	google.golang.org/grpc v1.33.1
 	google.golang.org/protobuf v1.25.1-0.20200805231151-a709e31e5d12
