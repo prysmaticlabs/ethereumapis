@@ -78,7 +78,7 @@ ssz_gen_marshal(
 go_proto_library(
     name = "go_proto",
     compilers = [
-        "@com_github_prysmaticlabs_protoc_gen_go_cast//:go_cast",
+        "@com_github_prysmaticlabs_protoc_gen_go_cast//:go_cast_grpc",
     ],
     importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1",
     proto = ":proto",

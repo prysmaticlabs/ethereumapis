@@ -32,8 +32,8 @@ type BeaconBlock struct {
 
 	Slot          uint64           `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty"`
 	ProposerIndex uint64           `protobuf:"varint,2,opt,name=proposer_index,json=proposerIndex,proto3" json:"proposer_index,omitempty"`
-	ParentRoot    []byte           `protobuf:"bytes,3,opt,name=parent_root,json=parentRoot,proto3" json:"parent_root,omitempty" ssz-size:"32"`
-	StateRoot     []byte           `protobuf:"bytes,4,opt,name=state_root,json=stateRoot,proto3" json:"state_root,omitempty" ssz-size:"32"`
+	ParentRoot    []byte           `protobuf:"bytes,3,opt,name=parent_root,json=parentRoot,proto3" json:"parent_root,omitempty"`
+	StateRoot     []byte           `protobuf:"bytes,4,opt,name=state_root,json=stateRoot,proto3" json:"state_root,omitempty"`
 	Body          *BeaconBlockBody `protobuf:"bytes,5,opt,name=body,proto3" json:"body,omitempty"`
 }
 
@@ -110,7 +110,7 @@ type SignedBeaconBlock struct {
 	unknownFields protoimpl.UnknownFields
 
 	Block     *BeaconBlock `protobuf:"bytes,1,opt,name=block,proto3" json:"block,omitempty"`
-	Signature []byte       `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
+	Signature []byte       `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty"`
 }
 
 func (x *SignedBeaconBlock) Reset() {
@@ -164,14 +164,14 @@ type BeaconBlockBody struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	RandaoReveal      []byte                 `protobuf:"bytes,1,opt,name=randao_reveal,json=randaoReveal,proto3" json:"randao_reveal,omitempty" ssz-size:"96"`
+	RandaoReveal      []byte                 `protobuf:"bytes,1,opt,name=randao_reveal,json=randaoReveal,proto3" json:"randao_reveal,omitempty"`
 	Eth1Data          *Eth1Data              `protobuf:"bytes,2,opt,name=eth1_data,json=eth1Data,proto3" json:"eth1_data,omitempty"`
-	Graffiti          []byte                 `protobuf:"bytes,3,opt,name=graffiti,proto3" json:"graffiti,omitempty" ssz-size:"32"`
-	ProposerSlashings []*ProposerSlashing    `protobuf:"bytes,4,rep,name=proposer_slashings,json=proposerSlashings,proto3" json:"proposer_slashings,omitempty" ssz-max:"16"`
-	AttesterSlashings []*AttesterSlashing    `protobuf:"bytes,5,rep,name=attester_slashings,json=attesterSlashings,proto3" json:"attester_slashings,omitempty" ssz-max:"2"`
-	Attestations      []*Attestation         `protobuf:"bytes,6,rep,name=attestations,proto3" json:"attestations,omitempty" ssz-max:"128"`
-	Deposits          []*Deposit             `protobuf:"bytes,7,rep,name=deposits,proto3" json:"deposits,omitempty" ssz-max:"16"`
-	VoluntaryExits    []*SignedVoluntaryExit `protobuf:"bytes,8,rep,name=voluntary_exits,json=voluntaryExits,proto3" json:"voluntary_exits,omitempty" ssz-max:"16"`
+	Graffiti          []byte                 `protobuf:"bytes,3,opt,name=graffiti,proto3" json:"graffiti,omitempty"`
+	ProposerSlashings []*ProposerSlashing    `protobuf:"bytes,4,rep,name=proposer_slashings,json=proposerSlashings,proto3" json:"proposer_slashings,omitempty"`
+	AttesterSlashings []*AttesterSlashing    `protobuf:"bytes,5,rep,name=attester_slashings,json=attesterSlashings,proto3" json:"attester_slashings,omitempty"`
+	Attestations      []*Attestation         `protobuf:"bytes,6,rep,name=attestations,proto3" json:"attestations,omitempty"`
+	Deposits          []*Deposit             `protobuf:"bytes,7,rep,name=deposits,proto3" json:"deposits,omitempty"`
+	VoluntaryExits    []*SignedVoluntaryExit `protobuf:"bytes,8,rep,name=voluntary_exits,json=voluntaryExits,proto3" json:"voluntary_exits,omitempty"`
 }
 
 func (x *BeaconBlockBody) Reset() {
@@ -377,7 +377,7 @@ type Deposit struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Proof [][]byte     `protobuf:"bytes,1,rep,name=proof,proto3" json:"proof,omitempty" ssz-size:"33,32"`
+	Proof [][]byte     `protobuf:"bytes,1,rep,name=proof,proto3" json:"proof,omitempty"`
 	Data  *DepositData `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
 }
 
@@ -432,10 +432,10 @@ type DepositData struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKey             []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
-	WithdrawalCredentials []byte `protobuf:"bytes,2,opt,name=withdrawal_credentials,json=withdrawalCredentials,proto3" json:"withdrawal_credentials,omitempty" ssz-size:"32"`
+	PublicKey             []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
+	WithdrawalCredentials []byte `protobuf:"bytes,2,opt,name=withdrawal_credentials,json=withdrawalCredentials,proto3" json:"withdrawal_credentials,omitempty"`
 	Amount                uint64 `protobuf:"varint,3,opt,name=amount,proto3" json:"amount,omitempty"`
-	Signature             []byte `protobuf:"bytes,4,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
+	Signature             []byte `protobuf:"bytes,4,opt,name=signature,proto3" json:"signature,omitempty"`
 }
 
 func (x *DepositData) Reset() {
@@ -559,7 +559,7 @@ type SignedVoluntaryExit struct {
 	unknownFields protoimpl.UnknownFields
 
 	Exit      *VoluntaryExit `protobuf:"bytes,1,opt,name=exit,proto3" json:"exit,omitempty"`
-	Signature []byte         `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
+	Signature []byte         `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty"`
 }
 
 func (x *SignedVoluntaryExit) Reset() {
@@ -613,9 +613,9 @@ type Eth1Data struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	DepositRoot  []byte `protobuf:"bytes,1,opt,name=deposit_root,json=depositRoot,proto3" json:"deposit_root,omitempty" ssz-size:"32"`
+	DepositRoot  []byte `protobuf:"bytes,1,opt,name=deposit_root,json=depositRoot,proto3" json:"deposit_root,omitempty"`
 	DepositCount uint64 `protobuf:"varint,2,opt,name=deposit_count,json=depositCount,proto3" json:"deposit_count,omitempty"`
-	BlockHash    []byte `protobuf:"bytes,3,opt,name=block_hash,json=blockHash,proto3" json:"block_hash,omitempty" ssz-size:"32"`
+	BlockHash    []byte `protobuf:"bytes,3,opt,name=block_hash,json=blockHash,proto3" json:"block_hash,omitempty"`
 }
 
 func (x *Eth1Data) Reset() {
@@ -678,9 +678,9 @@ type BeaconBlockHeader struct {
 
 	Slot          uint64 `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty"`
 	ProposerIndex uint64 `protobuf:"varint,2,opt,name=proposer_index,json=proposerIndex,proto3" json:"proposer_index,omitempty"`
-	ParentRoot    []byte `protobuf:"bytes,3,opt,name=parent_root,json=parentRoot,proto3" json:"parent_root,omitempty" ssz-size:"32"`
-	StateRoot     []byte `protobuf:"bytes,4,opt,name=state_root,json=stateRoot,proto3" json:"state_root,omitempty" ssz-size:"32"`
-	BodyRoot      []byte `protobuf:"bytes,5,opt,name=body_root,json=bodyRoot,proto3" json:"body_root,omitempty" ssz-size:"32"`
+	ParentRoot    []byte `protobuf:"bytes,3,opt,name=parent_root,json=parentRoot,proto3" json:"parent_root,omitempty"`
+	StateRoot     []byte `protobuf:"bytes,4,opt,name=state_root,json=stateRoot,proto3" json:"state_root,omitempty"`
+	BodyRoot      []byte `protobuf:"bytes,5,opt,name=body_root,json=bodyRoot,proto3" json:"body_root,omitempty"`
 }
 
 func (x *BeaconBlockHeader) Reset() {
@@ -756,7 +756,7 @@ type SignedBeaconBlockHeader struct {
 	unknownFields protoimpl.UnknownFields
 
 	Header    *BeaconBlockHeader `protobuf:"bytes,1,opt,name=header,proto3" json:"header,omitempty"`
-	Signature []byte             `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
+	Signature []byte             `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty"`
 }
 
 func (x *SignedBeaconBlockHeader) Reset() {
@@ -810,9 +810,9 @@ type IndexedAttestation struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AttestingIndices []uint64         `protobuf:"varint,1,rep,packed,name=attesting_indices,json=attestingIndices,proto3" json:"attesting_indices,omitempty" ssz-max:"2048"`
+	AttestingIndices []uint64         `protobuf:"varint,1,rep,packed,name=attesting_indices,json=attestingIndices,proto3" json:"attesting_indices,omitempty"`
 	Data             *AttestationData `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
-	Signature        []byte           `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
+	Signature        []byte           `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature,omitempty"`
 }
 
 func (x *IndexedAttestation) Reset() {

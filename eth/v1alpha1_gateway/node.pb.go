@@ -187,7 +187,7 @@ type Genesis struct {
 
 	GenesisTime            *timestamp.Timestamp `protobuf:"bytes,1,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
 	DepositContractAddress []byte               `protobuf:"bytes,2,opt,name=deposit_contract_address,json=depositContractAddress,proto3" json:"deposit_contract_address,omitempty"`
-	GenesisValidatorsRoot  []byte               `protobuf:"bytes,3,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
+	GenesisValidatorsRoot  []byte               `protobuf:"bytes,3,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty"`
 }
 
 func (x *Genesis) Reset() {

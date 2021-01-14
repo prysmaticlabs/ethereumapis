@@ -8,7 +8,6 @@ package eth
 
 import (
 	proto "github.com/golang/protobuf/proto"
-	github_com_prysmaticlabs_go_bitfield "github.com/prysmaticlabs/go-bitfield"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -31,9 +30,9 @@ type Attestation struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AggregationBits github_com_prysmaticlabs_go_bitfield.Bitlist `protobuf:"bytes,1,opt,name=aggregation_bits,json=aggregationBits,proto3" json:"aggregation_bits,omitempty" cast-type:"github.com/prysmaticlabs/go-bitfield.Bitlist" ssz-max:"2048"`
-	Data            *AttestationData                             `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
-	Signature       []byte                                       `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
+	AggregationBits []byte           `protobuf:"bytes,1,opt,name=aggregation_bits,json=aggregationBits,proto3" json:"aggregation_bits,omitempty"`
+	Data            *AttestationData `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
+	Signature       []byte           `protobuf:"bytes,3,opt,name=signature,proto3" json:"signature,omitempty"`
 }
 
 func (x *Attestation) Reset() {
@@ -96,7 +95,7 @@ type AggregateAttestationAndProof struct {
 
 	AggregatorIndex uint64       `protobuf:"varint,1,opt,name=aggregator_index,json=aggregatorIndex,proto3" json:"aggregator_index,omitempty"`
 	Aggregate       *Attestation `protobuf:"bytes,3,opt,name=aggregate,proto3" json:"aggregate,omitempty"`
-	SelectionProof  []byte       `protobuf:"bytes,2,opt,name=selection_proof,json=selectionProof,proto3" json:"selection_proof,omitempty" ssz-size:"96"`
+	SelectionProof  []byte       `protobuf:"bytes,2,opt,name=selection_proof,json=selectionProof,proto3" json:"selection_proof,omitempty"`
 }
 
 func (x *AggregateAttestationAndProof) Reset() {
@@ -158,7 +157,7 @@ type SignedAggregateAttestationAndProof struct {
 	unknownFields protoimpl.UnknownFields
 
 	Message   *AggregateAttestationAndProof `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	Signature []byte                        `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
+	Signature []byte                        `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty"`
 }
 
 func (x *SignedAggregateAttestationAndProof) Reset() {
@@ -214,7 +213,7 @@ type AttestationData struct {
 
 	Slot            uint64      `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty"`
 	CommitteeIndex  uint64      `protobuf:"varint,2,opt,name=committee_index,json=committeeIndex,proto3" json:"committee_index,omitempty"`
-	BeaconBlockRoot []byte      `protobuf:"bytes,3,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty" ssz-size:"32"`
+	BeaconBlockRoot []byte      `protobuf:"bytes,3,opt,name=beacon_block_root,json=beaconBlockRoot,proto3" json:"beacon_block_root,omitempty"`
 	Source          *Checkpoint `protobuf:"bytes,4,opt,name=source,proto3" json:"source,omitempty"`
 	Target          *Checkpoint `protobuf:"bytes,5,opt,name=target,proto3" json:"target,omitempty"`
 }
@@ -292,7 +291,7 @@ type Checkpoint struct {
 	unknownFields protoimpl.UnknownFields
 
 	Epoch uint64 `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty"`
-	Root  []byte `protobuf:"bytes,2,opt,name=root,proto3" json:"root,omitempty" ssz-size:"32"`
+	Root  []byte `protobuf:"bytes,2,opt,name=root,proto3" json:"root,omitempty"`
 }
 
 func (x *Checkpoint) Reset() {

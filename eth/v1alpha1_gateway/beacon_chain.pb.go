@@ -86,7 +86,7 @@ type ValidatorChangeSet struct {
 	unknownFields protoimpl.UnknownFields
 
 	Action     SetAction `protobuf:"varint,1,opt,name=action,proto3,enum=ethereum.eth.v1alpha1.SetAction" json:"action,omitempty"`
-	PublicKeys [][]byte  `protobuf:"bytes,2,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	PublicKeys [][]byte  `protobuf:"bytes,2,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
 }
 
 func (x *ValidatorChangeSet) Reset() {
@@ -749,16 +749,16 @@ type ChainHead struct {
 
 	HeadSlot                   uint64 `protobuf:"varint,1,opt,name=head_slot,json=headSlot,proto3" json:"head_slot,omitempty"`
 	HeadEpoch                  uint64 `protobuf:"varint,2,opt,name=head_epoch,json=headEpoch,proto3" json:"head_epoch,omitempty"`
-	HeadBlockRoot              []byte `protobuf:"bytes,3,opt,name=head_block_root,json=headBlockRoot,proto3" json:"head_block_root,omitempty" ssz-size:"32"`
+	HeadBlockRoot              []byte `protobuf:"bytes,3,opt,name=head_block_root,json=headBlockRoot,proto3" json:"head_block_root,omitempty"`
 	FinalizedSlot              uint64 `protobuf:"varint,4,opt,name=finalized_slot,json=finalizedSlot,proto3" json:"finalized_slot,omitempty"`
 	FinalizedEpoch             uint64 `protobuf:"varint,5,opt,name=finalized_epoch,json=finalizedEpoch,proto3" json:"finalized_epoch,omitempty"`
-	FinalizedBlockRoot         []byte `protobuf:"bytes,6,opt,name=finalized_block_root,json=finalizedBlockRoot,proto3" json:"finalized_block_root,omitempty" ssz-size:"32"`
+	FinalizedBlockRoot         []byte `protobuf:"bytes,6,opt,name=finalized_block_root,json=finalizedBlockRoot,proto3" json:"finalized_block_root,omitempty"`
 	JustifiedSlot              uint64 `protobuf:"varint,7,opt,name=justified_slot,json=justifiedSlot,proto3" json:"justified_slot,omitempty"`
 	JustifiedEpoch             uint64 `protobuf:"varint,8,opt,name=justified_epoch,json=justifiedEpoch,proto3" json:"justified_epoch,omitempty"`
-	JustifiedBlockRoot         []byte `protobuf:"bytes,9,opt,name=justified_block_root,json=justifiedBlockRoot,proto3" json:"justified_block_root,omitempty" ssz-size:"32"`
+	JustifiedBlockRoot         []byte `protobuf:"bytes,9,opt,name=justified_block_root,json=justifiedBlockRoot,proto3" json:"justified_block_root,omitempty"`
 	PreviousJustifiedSlot      uint64 `protobuf:"varint,10,opt,name=previous_justified_slot,json=previousJustifiedSlot,proto3" json:"previous_justified_slot,omitempty"`
 	PreviousJustifiedEpoch     uint64 `protobuf:"varint,11,opt,name=previous_justified_epoch,json=previousJustifiedEpoch,proto3" json:"previous_justified_epoch,omitempty"`
-	PreviousJustifiedBlockRoot []byte `protobuf:"bytes,12,opt,name=previous_justified_block_root,json=previousJustifiedBlockRoot,proto3" json:"previous_justified_block_root,omitempty" ssz-size:"32"`
+	PreviousJustifiedBlockRoot []byte `protobuf:"bytes,12,opt,name=previous_justified_block_root,json=previousJustifiedBlockRoot,proto3" json:"previous_justified_block_root,omitempty"`
 }
 
 func (x *ChainHead) Reset() {
@@ -1029,7 +1029,7 @@ type ListValidatorBalancesRequest struct {
 	//	*ListValidatorBalancesRequest_Epoch
 	//	*ListValidatorBalancesRequest_Genesis
 	QueryFilter isListValidatorBalancesRequest_QueryFilter `protobuf_oneof:"query_filter"`
-	PublicKeys  [][]byte                                   `protobuf:"bytes,3,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	PublicKeys  [][]byte                                   `protobuf:"bytes,3,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
 	Indices     []uint64                                   `protobuf:"varint,4,rep,packed,name=indices,proto3" json:"indices,omitempty"`
 	PageSize    int32                                      `protobuf:"varint,5,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	PageToken   string                                     `protobuf:"bytes,6,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
@@ -1215,7 +1215,7 @@ type ListValidatorsRequest struct {
 	Active      bool                                `protobuf:"varint,3,opt,name=active,proto3" json:"active,omitempty"`
 	PageSize    int32                               `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	PageToken   string                              `protobuf:"bytes,5,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
-	PublicKeys  [][]byte                            `protobuf:"bytes,6,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	PublicKeys  [][]byte                            `protobuf:"bytes,6,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
 	Indices     []uint64                            `protobuf:"varint,7,rep,packed,name=indices,proto3" json:"indices,omitempty"`
 }
 
@@ -1396,7 +1396,7 @@ type GetValidatorRequest_Index struct {
 }
 
 type GetValidatorRequest_PublicKey struct {
-	PublicKey []byte `protobuf:"bytes,2,opt,name=public_key,json=publicKey,proto3,oneof" ssz-size:"48"`
+	PublicKey []byte `protobuf:"bytes,2,opt,name=public_key,json=publicKey,proto3,oneof"`
 }
 
 func (*GetValidatorRequest_Index) isGetValidatorRequest_QueryFilter() {}
@@ -1562,13 +1562,13 @@ type ActiveSetChanges struct {
 	unknownFields protoimpl.UnknownFields
 
 	Epoch               uint64   `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty"`
-	ActivatedPublicKeys [][]byte `protobuf:"bytes,2,rep,name=activated_public_keys,json=activatedPublicKeys,proto3" json:"activated_public_keys,omitempty" ssz-size:"?,48"`
+	ActivatedPublicKeys [][]byte `protobuf:"bytes,2,rep,name=activated_public_keys,json=activatedPublicKeys,proto3" json:"activated_public_keys,omitempty"`
 	ActivatedIndices    []uint64 `protobuf:"varint,3,rep,packed,name=activated_indices,json=activatedIndices,proto3" json:"activated_indices,omitempty"`
-	ExitedPublicKeys    [][]byte `protobuf:"bytes,4,rep,name=exited_public_keys,json=exitedPublicKeys,proto3" json:"exited_public_keys,omitempty" ssz-size:"?,48"`
+	ExitedPublicKeys    [][]byte `protobuf:"bytes,4,rep,name=exited_public_keys,json=exitedPublicKeys,proto3" json:"exited_public_keys,omitempty"`
 	ExitedIndices       []uint64 `protobuf:"varint,5,rep,packed,name=exited_indices,json=exitedIndices,proto3" json:"exited_indices,omitempty"`
-	SlashedPublicKeys   [][]byte `protobuf:"bytes,6,rep,name=slashed_public_keys,json=slashedPublicKeys,proto3" json:"slashed_public_keys,omitempty" ssz-size:"?,48"`
+	SlashedPublicKeys   [][]byte `protobuf:"bytes,6,rep,name=slashed_public_keys,json=slashedPublicKeys,proto3" json:"slashed_public_keys,omitempty"`
 	SlashedIndices      []uint64 `protobuf:"varint,7,rep,packed,name=slashed_indices,json=slashedIndices,proto3" json:"slashed_indices,omitempty"`
-	EjectedPublicKeys   [][]byte `protobuf:"bytes,8,rep,name=ejected_public_keys,json=ejectedPublicKeys,proto3" json:"ejected_public_keys,omitempty" ssz-size:"?,48"`
+	EjectedPublicKeys   [][]byte `protobuf:"bytes,8,rep,name=ejected_public_keys,json=ejectedPublicKeys,proto3" json:"ejected_public_keys,omitempty"`
 	EjectedIndices      []uint64 `protobuf:"varint,9,rep,packed,name=ejected_indices,json=ejectedIndices,proto3" json:"ejected_indices,omitempty"`
 }
 
@@ -1673,7 +1673,7 @@ type ValidatorPerformanceRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// Deprecated: Do not use.
-	PublicKeys [][]byte `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	PublicKeys [][]byte `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
 	Indices    []uint64 `protobuf:"varint,2,rep,packed,name=indices,proto3" json:"indices,omitempty"`
 }
 
@@ -1739,7 +1739,7 @@ type ValidatorPerformanceResponse struct {
 	BalancesAfterEpochTransition  []uint64 `protobuf:"varint,8,rep,packed,name=balances_after_epoch_transition,json=balancesAfterEpochTransition,proto3" json:"balances_after_epoch_transition,omitempty"`
 	MissingValidators             [][]byte `protobuf:"bytes,9,rep,name=missing_validators,json=missingValidators,proto3" json:"missing_validators,omitempty"`
 	AverageActiveValidatorBalance float32  `protobuf:"fixed32,10,opt,name=average_active_validator_balance,json=averageActiveValidatorBalance,proto3" json:"average_active_validator_balance,omitempty"`
-	PublicKeys                    [][]byte `protobuf:"bytes,11,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	PublicKeys                    [][]byte `protobuf:"bytes,11,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
 }
 
 func (x *ValidatorPerformanceResponse) Reset() {
@@ -1858,9 +1858,9 @@ type ValidatorQueue struct {
 
 	ChurnLimit uint64 `protobuf:"varint,1,opt,name=churn_limit,json=churnLimit,proto3" json:"churn_limit,omitempty"`
 	// Deprecated: Do not use.
-	ActivationPublicKeys [][]byte `protobuf:"bytes,2,rep,name=activation_public_keys,json=activationPublicKeys,proto3" json:"activation_public_keys,omitempty" ssz-size:"?,48"`
+	ActivationPublicKeys [][]byte `protobuf:"bytes,2,rep,name=activation_public_keys,json=activationPublicKeys,proto3" json:"activation_public_keys,omitempty"`
 	// Deprecated: Do not use.
-	ExitPublicKeys             [][]byte `protobuf:"bytes,3,rep,name=exit_public_keys,json=exitPublicKeys,proto3" json:"exit_public_keys,omitempty" ssz-size:"?,48"`
+	ExitPublicKeys             [][]byte `protobuf:"bytes,3,rep,name=exit_public_keys,json=exitPublicKeys,proto3" json:"exit_public_keys,omitempty"`
 	ActivationValidatorIndices []uint64 `protobuf:"varint,4,rep,packed,name=activation_validator_indices,json=activationValidatorIndices,proto3" json:"activation_validator_indices,omitempty"`
 	ExitValidatorIndices       []uint64 `protobuf:"varint,5,rep,packed,name=exit_validator_indices,json=exitValidatorIndices,proto3" json:"exit_validator_indices,omitempty"`
 }
@@ -1943,7 +1943,7 @@ type ListValidatorAssignmentsRequest struct {
 	//	*ListValidatorAssignmentsRequest_Epoch
 	//	*ListValidatorAssignmentsRequest_Genesis
 	QueryFilter isListValidatorAssignmentsRequest_QueryFilter `protobuf_oneof:"query_filter"`
-	PublicKeys  [][]byte                                      `protobuf:"bytes,3,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	PublicKeys  [][]byte                                      `protobuf:"bytes,3,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
 	Indices     []uint64                                      `protobuf:"varint,4,rep,packed,name=indices,proto3" json:"indices,omitempty"`
 	PageSize    int32                                         `protobuf:"varint,5,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	PageToken   string                                        `protobuf:"bytes,6,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
@@ -2478,7 +2478,7 @@ type IndividualVotesRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	Epoch      uint64   `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty"`
-	PublicKeys [][]byte `protobuf:"bytes,2,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	PublicKeys [][]byte `protobuf:"bytes,2,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
 	Indices    []uint64 `protobuf:"varint,3,rep,packed,name=indices,proto3" json:"indices,omitempty"`
 }
 
@@ -2744,7 +2744,7 @@ type ValidatorBalances_Balance struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48"`
+	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
 	Index     uint64 `protobuf:"varint,2,opt,name=index,proto3" json:"index,omitempty"`
 	Balance   uint64 `protobuf:"varint,3,opt,name=balance,proto3" json:"balance,omitempty"`
 	Status    string `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"`
@@ -2875,7 +2875,7 @@ type ValidatorAssignments_CommitteeAssignment struct {
 	AttesterSlot     uint64   `protobuf:"varint,3,opt,name=attester_slot,json=attesterSlot,proto3" json:"attester_slot,omitempty"`
 	ProposerSlots    []uint64 `protobuf:"varint,4,rep,packed,name=proposer_slots,json=proposerSlots,proto3" json:"proposer_slots,omitempty"`
 	// Deprecated: Do not use.
-	PublicKey      []byte `protobuf:"bytes,5,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48"`
+	PublicKey      []byte `protobuf:"bytes,5,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
 	ValidatorIndex uint64 `protobuf:"varint,6,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty"`
 }
 
@@ -2960,7 +2960,7 @@ type IndividualVotesRespond_IndividualVote struct {
 	unknownFields protoimpl.UnknownFields
 
 	Epoch                            uint64 `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty"`
-	PublicKey                        []byte `protobuf:"bytes,2,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48"`
+	PublicKey                        []byte `protobuf:"bytes,2,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
 	ValidatorIndex                   uint64 `protobuf:"varint,3,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty"`
 	IsSlashed                        bool   `protobuf:"varint,4,opt,name=is_slashed,json=isSlashed,proto3" json:"is_slashed,omitempty"`
 	IsWithdrawableInCurrentEpoch     bool   `protobuf:"varint,5,opt,name=is_withdrawable_in_current_epoch,json=isWithdrawableInCurrentEpoch,proto3" json:"is_withdrawable_in_current_epoch,omitempty"`

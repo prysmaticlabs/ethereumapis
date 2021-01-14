@@ -119,8 +119,8 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_kisielk_errcheck",
         importpath = "github.com/kisielk/errcheck",
-        sum = "h1:reN85Pxc5larApoH1keMBiu2GWtPqXQ1nc9gx+jOU+E=",
-        version = "v1.2.0",
+        sum = "h1:e8esj/e4R+SAOwFwN+n3zr0nYeCyeweozKfO23MvHzY=",
+        version = "v1.5.0",
     )
     go_repository(
         name = "com_github_kisielk_gotool",
@@ -287,8 +287,8 @@ def ethereumapi_deps():
     go_repository(
         name = "org_golang_x_tools",
         importpath = "golang.org/x/tools",
-        sum = "h1:SLHKXsC4wI4NdEGVGe/yxcTBkF/mPUS7agW3Qt5smVg=",
-        version = "v0.0.0-20201215192005-fa10ef0b8743",
+        sum = "h1:K+NlvTLy0oONtRtkl1jRD9xIhnItbG2PiE7YOdjPb+k=",
+        version = "v0.0.0-20210114065538-d78b04bdf963",
     )
     go_repository(
         name = "org_golang_x_xerrors",
@@ -329,8 +329,8 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_grpc_ecosystem_grpc_gateway",
         importpath = "github.com/grpc-ecosystem/grpc-gateway",
-        sum = "h1:sBDQoHXrOlfPobnKw69FIKa1wg9qsLLvvQ/Y19WtFgI=",
-        version = "v1.13.0",
+        sum = "h1:gmcG1KaJ57LophUzW0Hy8NmPhnMZb4M0+kPpLofRdBo=",
+        version = "v1.16.0",
     )
     go_repository(
         name = "com_github_mitchellh_mapstructure",

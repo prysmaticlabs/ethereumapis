@@ -60,8 +60,8 @@ ethereumapi_deps()
 go_repository(
     name = "com_github_prysmaticlabs_protoc_gen_go_cast",
     importpath = "github.com/prysmaticlabs/protoc-gen-go-cast",
-    sum = "h1:0yt1t312VhbUNcJwKuG51w7DLP3HbrTLFtwCpjLt8wU=",
-    version = "v0.0.0-20201215233554-4f4b9d357e1b",
+    sum = "h1:z4MDdC6/RksfiKj75TlPwDw3v2nGNI1N9G0UI51uv+U=",
+    version = "v0.0.0-20210114085119-330fad51983b",
 )
 
 go_repository(
@@ -363,4 +363,11 @@ go_repository(
     importpath = "golang.org/x/time",
     sum = "h1:/5xXl8Y5W96D+TtHSlonuFqGHIWVuyCkGJLwGh9JJFs=",
     version = "v0.0.0-20191024005414-555d28b269f0",
+)
+
+go_repository(
+    name = "com_github_gogo_protobuf",
+    importpath = "github.com/gogo/protobuf",
+    sum = "h1:Ov1cvc58UF3b5XjBnZv7+opcTcQFZebYjWzi34vdm4Q=",
+    version = "v1.3.2",
 )

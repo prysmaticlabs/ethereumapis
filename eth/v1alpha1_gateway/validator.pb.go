@@ -205,7 +205,7 @@ type ValidatorActivationRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKeys [][]byte `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	PublicKeys [][]byte `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
 }
 
 func (x *ValidatorActivationRequest) Reset() {
@@ -301,7 +301,7 @@ type ChainStartResponse struct {
 
 	Started               bool   `protobuf:"varint,1,opt,name=started,proto3" json:"started,omitempty"`
 	GenesisTime           uint64 `protobuf:"varint,2,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
-	GenesisValidatorsRoot []byte `protobuf:"bytes,3,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
+	GenesisValidatorsRoot []byte `protobuf:"bytes,3,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty"`
 }
 
 func (x *ChainStartResponse) Reset() {
@@ -417,7 +417,7 @@ type ValidatorIndexRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
 }
 
 func (x *ValidatorIndexRequest) Reset() {
@@ -511,7 +511,7 @@ type ValidatorStatusRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
 }
 
 func (x *ValidatorStatusRequest) Reset() {
@@ -637,7 +637,7 @@ type MultipleValidatorStatusRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKeys [][]byte `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	PublicKeys [][]byte `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
 	Indices    []int64  `protobuf:"varint,2,rep,packed,name=indices,proto3" json:"indices,omitempty"`
 }
 
@@ -692,7 +692,7 @@ type MultipleValidatorStatusResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKeys [][]byte                   `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	PublicKeys [][]byte                   `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
 	Statuses   []*ValidatorStatusResponse `protobuf:"bytes,2,rep,name=statuses,proto3" json:"statuses,omitempty"`
 	Indices    []uint64                   `protobuf:"varint,3,rep,packed,name=indices,proto3" json:"indices,omitempty"`
 }
@@ -756,7 +756,7 @@ type DutiesRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	Epoch      uint64   `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty"`
-	PublicKeys [][]byte `protobuf:"bytes,2,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	PublicKeys [][]byte `protobuf:"bytes,2,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
 }
 
 func (x *DutiesRequest) Reset() {
@@ -876,8 +876,8 @@ type BlockRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	Slot         uint64 `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty"`
-	RandaoReveal []byte `protobuf:"bytes,2,opt,name=randao_reveal,json=randaoReveal,proto3" json:"randao_reveal,omitempty" ssz-size:"48"`
-	Graffiti     []byte `protobuf:"bytes,3,opt,name=graffiti,proto3" json:"graffiti,omitempty" ssz-size:"32"`
+	RandaoReveal []byte `protobuf:"bytes,2,opt,name=randao_reveal,json=randaoReveal,proto3" json:"randao_reveal,omitempty"`
+	Graffiti     []byte `protobuf:"bytes,3,opt,name=graffiti,proto3" json:"graffiti,omitempty"`
 }
 
 func (x *BlockRequest) Reset() {
@@ -938,7 +938,7 @@ type ProposeResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	BlockRoot []byte `protobuf:"bytes,1,opt,name=block_root,json=blockRoot,proto3" json:"block_root,omitempty" ssz-size:"32"`
+	BlockRoot []byte `protobuf:"bytes,1,opt,name=block_root,json=blockRoot,proto3" json:"block_root,omitempty"`
 }
 
 func (x *ProposeResponse) Reset() {
@@ -985,7 +985,7 @@ type ProposeExitResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ExitRoot []byte `protobuf:"bytes,1,opt,name=exit_root,json=exitRoot,proto3" json:"exit_root,omitempty" ssz-size:"32"`
+	ExitRoot []byte `protobuf:"bytes,1,opt,name=exit_root,json=exitRoot,proto3" json:"exit_root,omitempty"`
 }
 
 func (x *ProposeExitResponse) Reset() {
@@ -1087,7 +1087,7 @@ type AttestResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AttestationDataRoot []byte `protobuf:"bytes,1,opt,name=attestation_data_root,json=attestationDataRoot,proto3" json:"attestation_data_root,omitempty" ssz-size:"32"`
+	AttestationDataRoot []byte `protobuf:"bytes,1,opt,name=attestation_data_root,json=attestationDataRoot,proto3" json:"attestation_data_root,omitempty"`
 }
 
 func (x *AttestResponse) Reset() {
@@ -1136,8 +1136,8 @@ type AggregateSelectionRequest struct {
 
 	Slot           uint64 `protobuf:"varint,1,opt,name=slot,proto3" json:"slot,omitempty"`
 	CommitteeIndex uint64 `protobuf:"varint,2,opt,name=committee_index,json=committeeIndex,proto3" json:"committee_index,omitempty"`
-	PublicKey      []byte `protobuf:"bytes,3,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
-	SlotSignature  []byte `protobuf:"bytes,4,opt,name=slot_signature,json=slotSignature,proto3" json:"slot_signature,omitempty" ssz-size:"96"`
+	PublicKey      []byte `protobuf:"bytes,3,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
+	SlotSignature  []byte `protobuf:"bytes,4,opt,name=slot_signature,json=slotSignature,proto3" json:"slot_signature,omitempty"`
 }
 
 func (x *AggregateSelectionRequest) Reset() {
@@ -1299,7 +1299,7 @@ type SignedAggregateSubmitResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	AttestationDataRoot []byte `protobuf:"bytes,1,opt,name=attestation_data_root,json=attestationDataRoot,proto3" json:"attestation_data_root,omitempty" ssz-size:"32"`
+	AttestationDataRoot []byte `protobuf:"bytes,1,opt,name=attestation_data_root,json=attestationDataRoot,proto3" json:"attestation_data_root,omitempty"`
 }
 
 func (x *SignedAggregateSubmitResponse) Reset() {
@@ -1409,8 +1409,8 @@ type Validator struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKey                  []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
-	WithdrawalCredentials      []byte `protobuf:"bytes,2,opt,name=withdrawal_credentials,json=withdrawalCredentials,proto3" json:"withdrawal_credentials,omitempty" ssz-size:"32"`
+	PublicKey                  []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
+	WithdrawalCredentials      []byte `protobuf:"bytes,2,opt,name=withdrawal_credentials,json=withdrawalCredentials,proto3" json:"withdrawal_credentials,omitempty"`
 	EffectiveBalance           uint64 `protobuf:"varint,3,opt,name=effective_balance,json=effectiveBalance,proto3" json:"effective_balance,omitempty"`
 	Slashed                    bool   `protobuf:"varint,4,opt,name=slashed,proto3" json:"slashed,omitempty"`
 	ActivationEligibilityEpoch uint64 `protobuf:"varint,5,opt,name=activation_eligibility_epoch,json=activationEligibilityEpoch,proto3" json:"activation_eligibility_epoch,omitempty"`
@@ -1637,7 +1637,7 @@ type ValidatorInfo struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKey           []byte          `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey           []byte          `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
 	Index               uint64          `protobuf:"varint,2,opt,name=index,proto3" json:"index,omitempty"`
 	Epoch               uint64          `protobuf:"varint,3,opt,name=epoch,proto3" json:"epoch,omitempty"`
 	Status              ValidatorStatus `protobuf:"varint,4,opt,name=status,proto3,enum=ethereum.eth.v1alpha1.ValidatorStatus" json:"status,omitempty"`
@@ -1732,7 +1732,7 @@ type ValidatorActivationResponse_Status struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKey []byte                   `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey []byte                   `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
 	Status    *ValidatorStatusResponse `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
 	Index     uint64                   `protobuf:"varint,3,opt,name=index,proto3" json:"index,omitempty"`
 }
@@ -1799,7 +1799,7 @@ type DutiesResponse_Duty struct {
 	CommitteeIndex uint64          `protobuf:"varint,2,opt,name=committee_index,json=committeeIndex,proto3" json:"committee_index,omitempty"`
 	AttesterSlot   uint64          `protobuf:"varint,3,opt,name=attester_slot,json=attesterSlot,proto3" json:"attester_slot,omitempty"`
 	ProposerSlots  []uint64        `protobuf:"varint,4,rep,packed,name=proposer_slots,json=proposerSlots,proto3" json:"proposer_slots,omitempty"`
-	PublicKey      []byte          `protobuf:"bytes,5,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey      []byte          `protobuf:"bytes,5,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
 	Status         ValidatorStatus `protobuf:"varint,6,opt,name=status,proto3,enum=ethereum.eth.v1alpha1.ValidatorStatus" json:"status,omitempty"`
 	ValidatorIndex uint64          `protobuf:"varint,7,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty"`
 }
