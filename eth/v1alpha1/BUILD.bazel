@@ -27,7 +27,7 @@ proto_library(
         "node.proto",
         "options.proto",
         "validator.proto",
-        #        ":generated_swagger_proto",
+        ":generated_swagger_proto",
     ],
     visibility = ["//visibility:public"],
     deps = [

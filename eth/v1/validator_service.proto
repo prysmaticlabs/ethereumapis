@@ -199,7 +199,7 @@ message AggregateAndProofsSubmit {
 }
 
 message BeaconCommitteesSubscribeSubmit {
-  repeated BeaconCommitteeSubscribe value = 1;
+  repeated BeaconCommitteeSubscribe data = 1;
 }
 
 message BeaconCommitteeSubscribe {

@@ -60,8 +60,8 @@ ethereumapi_deps()
 go_repository(
     name = "com_github_prysmaticlabs_protoc_gen_go_cast",
     importpath = "github.com/prysmaticlabs/protoc-gen-go-cast",
-    sum = "h1:jzqxojw6fh+tVSMxviW/PDAIxwY8Lr+feSgE79gtdSo=",
-    version = "v0.0.0-20210114090155-77d630fd185e",
+    sum = "h1:A2JHvGB7nvh6bVTKmn91pkOVvYO1Z8plGe+MBYAl4Lk=",
+    version = "v0.0.0-20210115193350-b6e0bcebe6a3",
 )
 
 go_repository(
@@ -81,8 +81,8 @@ go_repository(
 go_repository(
     name = "com_github_iancoleman_strcase",
     importpath = "github.com/iancoleman/strcase",
-    sum = "h1:gnomlvw9tnV3ITTAxzKSgTF+8kFWcU/f+TgttpXGz1U=",
-    version = "v0.1.2",
+    sum = "h1:dJBk1m2/qjL1twPLf68JND55vvivMupZ4wIzE8CTdBw=",
+    version = "v0.1.3",
 )
 
 go_repository(

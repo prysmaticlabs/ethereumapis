@@ -287,8 +287,8 @@ def ethereumapi_deps():
     go_repository(
         name = "org_golang_x_tools",
         importpath = "golang.org/x/tools",
-        sum = "h1:K+NlvTLy0oONtRtkl1jRD9xIhnItbG2PiE7YOdjPb+k=",
-        version = "v0.0.0-20210114065538-d78b04bdf963",
+        sum = "h1:BTs2GMGSMWpgtCpv1CE7vkJTv7XcHdcLLnAMu7UbgTY=",
+        version = "v0.0.0-20210115202250-e0d201561e39",
     )
     go_repository(
         name = "org_golang_x_xerrors",
@@ -317,8 +317,8 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_prysmaticlabs_go_bitfield",
         importpath = "github.com/prysmaticlabs/go-bitfield",
-        sum = "h1:cX6YRZnZ9sgMqM5U14llxUiXVNJ3u07Res1IIjTOgtI=",
-        version = "v0.0.0-20200322041314-62c2aee71669",
+        sum = "h1:Ws/Of2yg9JTVV9n8lQGXAf1RDDNthAu3SvTj93HkHgM=",
+        version = "v0.0.0-20210108222456-8e92c3709aa0",
     )
     go_repository(
         name = "in_gopkg_yaml_v2",
