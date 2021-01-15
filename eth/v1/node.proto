@@ -121,7 +121,9 @@ message PeersResponse {
 }
 
 message PeerCountResponse {
-  message Data {
+  PeerCount data = 1;
+
+  message PeerCount {
     // The number of disconnected peers.
     uint64 disconnected = 1;
     // The number of connecting peers.
