@@ -110,20 +110,13 @@ message PeerRequest {
 message PeersRequest {
   // Requested peer states (available values: disconnected, connecting, connected, disconnecting).
   repeated string state = 1;
+
   // Requested peer directions (available values: inbound, outbound).
   repeated string direction=2;
 }
 
 message PeerResponse {
   Peer data = 1;
-}
-
-message PeersRequest {
-  // The requested state for queried peers.
-  repeated string state = 1;
-
-  // The requested direction for queried peers.
-  repeated string direction = 2;
 }
 
 message PeersResponse {
