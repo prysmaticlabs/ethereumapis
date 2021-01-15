@@ -121,18 +121,16 @@ message PeersResponse {
 }
 
 message PeerCountResponse {
-  PeerCount data = 1;
-}
-
-message PeerCount {
-  // The number of disconnected peers.
-  uint64 disconnected = 1;
-  // The number of connecting peers.
-  uint64 connecting = 2;
-  // The number of connected peers.
-  uint64 connected = 3;
-  // The number of disconnecting peers.
-  uint64 disconnecting = 4;
+  message Data {
+    // The number of disconnected peers.
+    uint64 disconnected = 1;
+    // The number of connecting peers.
+    uint64 connecting = 2;
+    // The number of connected peers.
+    uint64 connected = 3;
+    // The number of disconnecting peers.
+    uint64 disconnecting = 4;
+  }
 }
 
 // Peer provides details of a peer on the network.
