@@ -45,6 +45,11 @@ service BeaconNode {
     option (google.api.http) = {get: "/eth/v1/node/peers"};
   }
 
+  // PeerCount retrieves number of known peers.
+  rpc PeerCount(google.protobuf.Empty) returns (PeerCountResponse) {
+    option (google.api.http) = {get: "/eth/v1/node/peer_count"};
+  }
+
   // GetVersion requests that the beacon node identify information about its implementation in a
   // format similar to a HTTP User-Agent field.
   rpc GetVersion(google.protobuf.Empty) returns (VersionResponse) {
@@ -113,6 +118,17 @@ message PeerResponse {
 
 message PeersResponse {
   repeated Peer data = 1;
+}
+
+message PeerCountResponse {
+  PeerCount data = 1;
+}
+
+message PeerCount {
+  uint64 disconnected = 1;
+  uint64 connecting = 2;
+  uint64 connected = 3;
+  uint64 disconnecting = 4;
 }
 
 // Peer provides details of a peer on the network.
