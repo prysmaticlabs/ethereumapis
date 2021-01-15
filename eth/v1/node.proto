@@ -41,7 +41,7 @@ service BeaconNode {
   }
 
   // ListPeers retrieves data about the node's network peers.
-  rpc ListPeers(google.protobuf.Empty) returns (PeersResponse) {
+  rpc ListPeers(PeersRequest) returns (PeersResponse) {
     option (google.api.http) = {get: "/eth/v1/node/peers"};
   }
 
@@ -98,6 +98,13 @@ message Metadata {
 message PeerRequest {
   // Peer id of the peer requested.
   string peer_id = 1;
+}
+
+message PeersRequest {
+  // Requested peer states (available values: disconnected, connecting, connected, disconnecting).
+  repeated string state = 1;
+  // Requested peer directions (available values: inbound, outbound).
+  repeated string direction=2;
 }
 
 message PeerResponse {
