@@ -11,9 +11,7 @@ def _ssz_go_proto_library_impl(ctx):
         package_path = input_files[0].dirname
     elif hasattr(ctx.attr, "srcs") and len(ctx.attr.srcs) > 0:
         package_path = ctx.attr.srcs[0].files.to_list()[0].dirname
-        input_files = []
-        for ff in ctx.attr.srcs:
-            input_files += ff.files.to_list()
+        input_files = ctx.attr.srcs[0].files.to_list()
     else:
         fail("Must have go_proto or srcs")
 
