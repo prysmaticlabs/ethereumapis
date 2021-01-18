@@ -409,6 +409,9 @@ message BeaconBlockContainer {
 
     // 32 byte merkle tree root of contained beacon block.
     bytes block_root = 2;
+
+    // Boolean indicating whether the block is canonical.
+    bool canonical = 3;
 }
 
 // Information about the head of the beacon chain.
