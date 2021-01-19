@@ -3,7 +3,7 @@ module github.com/prysmaticlabs/ethereumapis
 go 1.13
 
 require (
-	github.com/ferranbt/fastssz v0.0.0-20200728110133-0b6e349af87a
+	github.com/ferranbt/fastssz v0.0.0-20210118190430-6ca267833c4b
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/protobuf v1.4.2
 	github.com/grpc-ecosystem/grpc-gateway v1.13.0

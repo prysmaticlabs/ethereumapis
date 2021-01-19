@@ -311,8 +311,8 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_ferranbt_fastssz",
         importpath = "github.com/ferranbt/fastssz",
-        sum = "h1:qLZC3oQLJ5eb18EZS3yDcnX7zmlEt8WTWlQR7x5wS5I=",
-        version = "v0.0.0-20200728110133-0b6e349af87a",
+        sum = "h1:Xun9jB2EhB8JZbVhjpW7/o6pLEwXb89tHkN8Q08kEZM=",
+        version = "v0.0.0-20210118190430-6ca267833c4b",
     )
     go_repository(
         name = "com_github_ghodss_yaml",
