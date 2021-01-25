@@ -57,6 +57,7 @@ ssz_gen_marshal(
         "BeaconBlockHeader",
         "Checkpoint",
         "Deposit",
+        "DepositData",
         "Eth1Data",
         "IndexedAttestation",
         "ProposerSlashing",
