@@ -395,7 +395,7 @@ message VoluntaryExitsPoolResponse {
 
 message ForkScheduleResponse {
   // The fork data used for beacon chain versioning.
-  Fork data = 1;
+  repeated Fork data = 1;
 }
 
 // Spec response is a generic flat map of key values.
