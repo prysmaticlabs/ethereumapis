@@ -3,7 +3,7 @@ module github.com/prysmaticlabs/ethereumapis
 go 1.13
 
 require (
-	github.com/farazdagi/prysm-shared-types v0.0.0-20201019221602-a80cc791f553 // indirect
+	github.com/farazdagi/prysm-shared-types v0.0.0-20201019221602-a80cc791f553
 	github.com/ferranbt/fastssz v0.0.0-20210120143747-11b9eff30ea9
 	github.com/gogo/protobuf v1.3.1
 	github.com/golang/protobuf v1.4.2
