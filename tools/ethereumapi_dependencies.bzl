@@ -311,8 +311,8 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_ferranbt_fastssz",
         importpath = "github.com/ferranbt/fastssz",
-        sum = "h1:CyZfS2WJR1gLblUd84UXkz8M47dENiwe3/AcQaIuLdg=",
-        version = "v0.0.0-20201019195157-d731d50f87dd",
+        sum = "h1:9VDpsWq096+oGMDTT/SgBD/VgZYf4pTF+KTPmZ+OaKM=",
+        version = "v0.0.0-20210120143747-11b9eff30ea9",
     )
     go_repository(
         name = "com_github_ghodss_yaml",
@@ -345,8 +345,8 @@ def ethereumapi_deps():
         version = "v1.3.2",
     )
     go_repository(
-        name = "com_github_farazdagi_prysm_shared_types",
-        importpath = "github.com/farazdagi/prysm-shared-types",
-        sum = "h1:e2zkyhuTX0jnreU2xB7JJlZonpekt1wWREJ/x1C79r8=",
-        version = "v0.0.0-20201019221602-a80cc791f553",
+        name = "com_github_prysmaticlabs_eth2_types",
+        importpath = "github.com/prysmaticlabs/eth2-types",
+        sum = "h1:n/ZI+/bZfkMoGoV2Rult3YvS5LT4dvpAFOuISq+I+GY=",
+        version = "v0.0.0-20210127031309-22cbe426eba6",
     )
