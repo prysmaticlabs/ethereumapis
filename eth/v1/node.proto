@@ -154,7 +154,7 @@ message SyncingResponse {
 
 message SyncInfo {
   // A uint64 states the latest head slot of the current node.
-  uint64 head_slot = 1 [(gogoproto.casttype) = "github.com/farazdagi/prysm-shared-types.Slot"];
+  uint64 head_slot = 1;
   // A uint64 indicating how many slots are left for the beacon node sync to complete.
   uint64 sync_distance = 2;
 }
