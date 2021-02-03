@@ -12,6 +12,7 @@ import (
 	_ "github.com/golang/protobuf/protoc-gen-go/descriptor"
 	empty "github.com/golang/protobuf/ptypes/empty"
 	timestamp "github.com/golang/protobuf/ptypes/timestamp"
+	_ "github.com/prysmaticlabs/ethereumapis/eth/ext"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
@@ -38,9 +39,7 @@ type GenesisResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	GenesisTime           *timestamp.Timestamp `protobuf:"bytes,1,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
-	GenesisValidatorsRoot []byte               `protobuf:"bytes,2,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty"`
-	GenesisForkVersion    []byte               `protobuf:"bytes,3,opt,name=genesis_fork_version,json=genesisForkVersion,proto3" json:"genesis_fork_version,omitempty"`
+	Data *Genesis `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
 }
 
 func (x *GenesisResponse) Reset() {
@@ -75,21 +74,70 @@ func (*GenesisResponse) Descriptor() ([]byte, []int) {
 	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *GenesisResponse) GetGenesisTime() *timestamp.Timestamp {
+func (x *GenesisResponse) GetData() *Genesis {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type Genesis struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	GenesisTime           *timestamp.Timestamp `protobuf:"bytes,1,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
+	GenesisValidatorsRoot []byte               `protobuf:"bytes,2,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty"`
+	GenesisForkVersion    []byte               `protobuf:"bytes,3,opt,name=genesis_fork_version,json=genesisForkVersion,proto3" json:"genesis_fork_version,omitempty"`
+}
+
+func (x *Genesis) Reset() {
+	*x = Genesis{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[1]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *Genesis) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Genesis) ProtoMessage() {}
+
+func (x *Genesis) ProtoReflect() protoreflect.Message {
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[1]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Genesis.ProtoReflect.Descriptor instead.
+func (*Genesis) Descriptor() ([]byte, []int) {
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *Genesis) GetGenesisTime() *timestamp.Timestamp {
 	if x != nil {
 		return x.GenesisTime
 	}
 	return nil
 }
 
-func (x *GenesisResponse) GetGenesisValidatorsRoot() []byte {
+func (x *Genesis) GetGenesisValidatorsRoot() []byte {
 	if x != nil {
 		return x.GenesisValidatorsRoot
 	}
 	return nil
 }
 
-func (x *GenesisResponse) GetGenesisForkVersion() []byte {
+func (x *Genesis) GetGenesisForkVersion() []byte {
 	if x != nil {
 		return x.GenesisForkVersion
 	}
@@ -107,7 +155,7 @@ type StateRequest struct {
 func (x *StateRequest) Reset() {
 	*x = StateRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[1]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[2]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -120,7 +168,7 @@ func (x *StateRequest) String() string {
 func (*StateRequest) ProtoMessage() {}
 
 func (x *StateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[1]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[2]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -133,7 +181,7 @@ func (x *StateRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StateRequest.ProtoReflect.Descriptor instead.
 func (*StateRequest) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{1}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *StateRequest) GetStateId() []byte {
@@ -148,13 +196,13 @@ type StateRootResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	StateRoot []byte `protobuf:"bytes,1,opt,name=state_root,json=stateRoot,proto3" json:"state_root,omitempty"`
+	Data *StateRoot `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
 }
 
 func (x *StateRootResponse) Reset() {
 	*x = StateRootResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[2]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[3]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -167,7 +215,7 @@ func (x *StateRootResponse) String() string {
 func (*StateRootResponse) ProtoMessage() {}
 
 func (x *StateRootResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[2]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[3]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -180,10 +228,57 @@ func (x *StateRootResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StateRootResponse.ProtoReflect.Descriptor instead.
 func (*StateRootResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{2}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *StateRootResponse) GetStateRoot() []byte {
+func (x *StateRootResponse) GetData() *StateRoot {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type StateRoot struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	StateRoot []byte `protobuf:"bytes,1,opt,name=state_root,json=stateRoot,proto3" json:"state_root,omitempty"`
+}
+
+func (x *StateRoot) Reset() {
+	*x = StateRoot{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StateRoot) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StateRoot) ProtoMessage() {}
+
+func (x *StateRoot) ProtoReflect() protoreflect.Message {
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StateRoot.ProtoReflect.Descriptor instead.
+func (*StateRoot) Descriptor() ([]byte, []int) {
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *StateRoot) GetStateRoot() []byte {
 	if x != nil {
 		return x.StateRoot
 	}
@@ -195,13 +290,13 @@ type StateForkResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Fork *Fork `protobuf:"bytes,1,opt,name=fork,proto3" json:"fork,omitempty"`
+	Data *Fork `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
 }
 
 func (x *StateForkResponse) Reset() {
 	*x = StateForkResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[3]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[5]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -214,7 +309,7 @@ func (x *StateForkResponse) String() string {
 func (*StateForkResponse) ProtoMessage() {}
 
 func (x *StateForkResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[3]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[5]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -227,12 +322,12 @@ func (x *StateForkResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StateForkResponse.ProtoReflect.Descriptor instead.
 func (*StateForkResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{3}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *StateForkResponse) GetFork() *Fork {
+func (x *StateForkResponse) GetData() *Fork {
 	if x != nil {
-		return x.Fork
+		return x.Data
 	}
 	return nil
 }
@@ -242,15 +337,13 @@ type StateFinalityCheckpointResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PreviousJustified *Checkpoint `protobuf:"bytes,1,opt,name=previous_justified,json=previousJustified,proto3" json:"previous_justified,omitempty"`
-	CurrentJustified  *Checkpoint `protobuf:"bytes,2,opt,name=current_justified,json=currentJustified,proto3" json:"current_justified,omitempty"`
-	Finalized         *Checkpoint `protobuf:"bytes,3,opt,name=finalized,proto3" json:"finalized,omitempty"`
+	Data *StateFinalityCheckpoint `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
 }
 
 func (x *StateFinalityCheckpointResponse) Reset() {
 	*x = StateFinalityCheckpointResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[4]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -263,7 +356,7 @@ func (x *StateFinalityCheckpointResponse) String() string {
 func (*StateFinalityCheckpointResponse) ProtoMessage() {}
 
 func (x *StateFinalityCheckpointResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[4]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -276,24 +369,73 @@ func (x *StateFinalityCheckpointResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StateFinalityCheckpointResponse.ProtoReflect.Descriptor instead.
 func (*StateFinalityCheckpointResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{4}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *StateFinalityCheckpointResponse) GetPreviousJustified() *Checkpoint {
+func (x *StateFinalityCheckpointResponse) GetData() *StateFinalityCheckpoint {
+	if x != nil {
+		return x.Data
+	}
+	return nil
+}
+
+type StateFinalityCheckpoint struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	PreviousJustified *Checkpoint `protobuf:"bytes,1,opt,name=previous_justified,json=previousJustified,proto3" json:"previous_justified,omitempty"`
+	CurrentJustified  *Checkpoint `protobuf:"bytes,2,opt,name=current_justified,json=currentJustified,proto3" json:"current_justified,omitempty"`
+	Finalized         *Checkpoint `protobuf:"bytes,3,opt,name=finalized,proto3" json:"finalized,omitempty"`
+}
+
+func (x *StateFinalityCheckpoint) Reset() {
+	*x = StateFinalityCheckpoint{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[7]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StateFinalityCheckpoint) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StateFinalityCheckpoint) ProtoMessage() {}
+
+func (x *StateFinalityCheckpoint) ProtoReflect() protoreflect.Message {
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[7]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StateFinalityCheckpoint.ProtoReflect.Descriptor instead.
+func (*StateFinalityCheckpoint) Descriptor() ([]byte, []int) {
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *StateFinalityCheckpoint) GetPreviousJustified() *Checkpoint {
 	if x != nil {
 		return x.PreviousJustified
 	}
 	return nil
 }
 
-func (x *StateFinalityCheckpointResponse) GetCurrentJustified() *Checkpoint {
+func (x *StateFinalityCheckpoint) GetCurrentJustified() *Checkpoint {
 	if x != nil {
 		return x.CurrentJustified
 	}
 	return nil
 }
 
-func (x *StateFinalityCheckpointResponse) GetFinalized() *Checkpoint {
+func (x *StateFinalityCheckpoint) GetFinalized() *Checkpoint {
 	if x != nil {
 		return x.Finalized
 	}
@@ -313,7 +455,7 @@ type StateValidatorsRequest struct {
 func (x *StateValidatorsRequest) Reset() {
 	*x = StateValidatorsRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[5]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[8]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -326,7 +468,7 @@ func (x *StateValidatorsRequest) String() string {
 func (*StateValidatorsRequest) ProtoMessage() {}
 
 func (x *StateValidatorsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[5]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[8]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -339,7 +481,7 @@ func (x *StateValidatorsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StateValidatorsRequest.ProtoReflect.Descriptor instead.
 func (*StateValidatorsRequest) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{5}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *StateValidatorsRequest) GetStateId() []byte {
@@ -375,7 +517,7 @@ type ValidatorBalancesRequest struct {
 func (x *ValidatorBalancesRequest) Reset() {
 	*x = ValidatorBalancesRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[6]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[9]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -388,7 +530,7 @@ func (x *ValidatorBalancesRequest) String() string {
 func (*ValidatorBalancesRequest) ProtoMessage() {}
 
 func (x *ValidatorBalancesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[6]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[9]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -401,7 +543,7 @@ func (x *ValidatorBalancesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidatorBalancesRequest.ProtoReflect.Descriptor instead.
 func (*ValidatorBalancesRequest) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{6}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *ValidatorBalancesRequest) GetStateId() []byte {
@@ -429,7 +571,7 @@ type StateValidatorsResponse struct {
 func (x *StateValidatorsResponse) Reset() {
 	*x = StateValidatorsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[7]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[10]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -442,7 +584,7 @@ func (x *StateValidatorsResponse) String() string {
 func (*StateValidatorsResponse) ProtoMessage() {}
 
 func (x *StateValidatorsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[7]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[10]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -455,7 +597,7 @@ func (x *StateValidatorsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StateValidatorsResponse.ProtoReflect.Descriptor instead.
 func (*StateValidatorsResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{7}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *StateValidatorsResponse) GetData() []*ValidatorContainer {
@@ -476,7 +618,7 @@ type ValidatorBalancesResponse struct {
 func (x *ValidatorBalancesResponse) Reset() {
 	*x = ValidatorBalancesResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[8]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[11]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -489,7 +631,7 @@ func (x *ValidatorBalancesResponse) String() string {
 func (*ValidatorBalancesResponse) ProtoMessage() {}
 
 func (x *ValidatorBalancesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[8]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[11]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -502,7 +644,7 @@ func (x *ValidatorBalancesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidatorBalancesResponse.ProtoReflect.Descriptor instead.
 func (*ValidatorBalancesResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{8}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ValidatorBalancesResponse) GetData() []*ValidatorBalance {
@@ -524,7 +666,7 @@ type ValidatorBalance struct {
 func (x *ValidatorBalance) Reset() {
 	*x = ValidatorBalance{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[9]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[12]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -537,7 +679,7 @@ func (x *ValidatorBalance) String() string {
 func (*ValidatorBalance) ProtoMessage() {}
 
 func (x *ValidatorBalance) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[9]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[12]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -550,7 +692,7 @@ func (x *ValidatorBalance) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ValidatorBalance.ProtoReflect.Descriptor instead.
 func (*ValidatorBalance) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{9}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *ValidatorBalance) GetIndex() uint64 {
@@ -579,7 +721,7 @@ type StateValidatorRequest struct {
 func (x *StateValidatorRequest) Reset() {
 	*x = StateValidatorRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[10]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[13]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -592,7 +734,7 @@ func (x *StateValidatorRequest) String() string {
 func (*StateValidatorRequest) ProtoMessage() {}
 
 func (x *StateValidatorRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[10]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[13]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -605,7 +747,7 @@ func (x *StateValidatorRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StateValidatorRequest.ProtoReflect.Descriptor instead.
 func (*StateValidatorRequest) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{10}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *StateValidatorRequest) GetStateId() []byte {
@@ -633,7 +775,7 @@ type StateValidatorResponse struct {
 func (x *StateValidatorResponse) Reset() {
 	*x = StateValidatorResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[11]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[14]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -646,7 +788,7 @@ func (x *StateValidatorResponse) String() string {
 func (*StateValidatorResponse) ProtoMessage() {}
 
 func (x *StateValidatorResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[11]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[14]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -659,7 +801,7 @@ func (x *StateValidatorResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StateValidatorResponse.ProtoReflect.Descriptor instead.
 func (*StateValidatorResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{11}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *StateValidatorResponse) GetData() *ValidatorContainer {
@@ -683,7 +825,7 @@ type StateCommitteesRequest struct {
 func (x *StateCommitteesRequest) Reset() {
 	*x = StateCommitteesRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[12]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[15]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -696,7 +838,7 @@ func (x *StateCommitteesRequest) String() string {
 func (*StateCommitteesRequest) ProtoMessage() {}
 
 func (x *StateCommitteesRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[12]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[15]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -709,7 +851,7 @@ func (x *StateCommitteesRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StateCommitteesRequest.ProtoReflect.Descriptor instead.
 func (*StateCommitteesRequest) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{12}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *StateCommitteesRequest) GetStateId() []byte {
@@ -751,7 +893,7 @@ type StateCommitteesResponse struct {
 func (x *StateCommitteesResponse) Reset() {
 	*x = StateCommitteesResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[13]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[16]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -764,7 +906,7 @@ func (x *StateCommitteesResponse) String() string {
 func (*StateCommitteesResponse) ProtoMessage() {}
 
 func (x *StateCommitteesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[13]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[16]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -777,7 +919,7 @@ func (x *StateCommitteesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StateCommitteesResponse.ProtoReflect.Descriptor instead.
 func (*StateCommitteesResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{13}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *StateCommitteesResponse) GetData() []*Committee {
@@ -798,7 +940,7 @@ type BlockAttestationsResponse struct {
 func (x *BlockAttestationsResponse) Reset() {
 	*x = BlockAttestationsResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[14]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[17]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -811,7 +953,7 @@ func (x *BlockAttestationsResponse) String() string {
 func (*BlockAttestationsResponse) ProtoMessage() {}
 
 func (x *BlockAttestationsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[14]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[17]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -824,7 +966,7 @@ func (x *BlockAttestationsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BlockAttestationsResponse.ProtoReflect.Descriptor instead.
 func (*BlockAttestationsResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{14}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *BlockAttestationsResponse) GetData() []*Attestation {
@@ -845,7 +987,7 @@ type BlockRootContainer struct {
 func (x *BlockRootContainer) Reset() {
 	*x = BlockRootContainer{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[15]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[18]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -858,7 +1000,7 @@ func (x *BlockRootContainer) String() string {
 func (*BlockRootContainer) ProtoMessage() {}
 
 func (x *BlockRootContainer) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[15]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[18]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -871,7 +1013,7 @@ func (x *BlockRootContainer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BlockRootContainer.ProtoReflect.Descriptor instead.
 func (*BlockRootContainer) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{15}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *BlockRootContainer) GetRoot() []byte {
@@ -892,7 +1034,7 @@ type BlockRootResponse struct {
 func (x *BlockRootResponse) Reset() {
 	*x = BlockRootResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[16]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[19]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -905,7 +1047,7 @@ func (x *BlockRootResponse) String() string {
 func (*BlockRootResponse) ProtoMessage() {}
 
 func (x *BlockRootResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[16]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[19]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -918,7 +1060,7 @@ func (x *BlockRootResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BlockRootResponse.ProtoReflect.Descriptor instead.
 func (*BlockRootResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{16}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *BlockRootResponse) GetData() *BlockRootContainer {
@@ -940,7 +1082,7 @@ type BlockHeadersRequest struct {
 func (x *BlockHeadersRequest) Reset() {
 	*x = BlockHeadersRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[17]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -953,7 +1095,7 @@ func (x *BlockHeadersRequest) String() string {
 func (*BlockHeadersRequest) ProtoMessage() {}
 
 func (x *BlockHeadersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[17]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -966,7 +1108,7 @@ func (x *BlockHeadersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BlockHeadersRequest.ProtoReflect.Descriptor instead.
 func (*BlockHeadersRequest) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{17}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *BlockHeadersRequest) GetSlot() uint64 {
@@ -994,7 +1136,7 @@ type BlockHeadersResponse struct {
 func (x *BlockHeadersResponse) Reset() {
 	*x = BlockHeadersResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[18]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1007,7 +1149,7 @@ func (x *BlockHeadersResponse) String() string {
 func (*BlockHeadersResponse) ProtoMessage() {}
 
 func (x *BlockHeadersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[18]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1020,7 +1162,7 @@ func (x *BlockHeadersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BlockHeadersResponse.ProtoReflect.Descriptor instead.
 func (*BlockHeadersResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{18}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *BlockHeadersResponse) GetData() []*BlockHeaderContainer {
@@ -1041,7 +1183,7 @@ type BlockRequest struct {
 func (x *BlockRequest) Reset() {
 	*x = BlockRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[19]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1054,7 +1196,7 @@ func (x *BlockRequest) String() string {
 func (*BlockRequest) ProtoMessage() {}
 
 func (x *BlockRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[19]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1067,7 +1209,7 @@ func (x *BlockRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BlockRequest.ProtoReflect.Descriptor instead.
 func (*BlockRequest) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{19}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *BlockRequest) GetBlockId() []byte {
@@ -1088,7 +1230,7 @@ type BlockHeaderResponse struct {
 func (x *BlockHeaderResponse) Reset() {
 	*x = BlockHeaderResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[20]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1101,7 +1243,7 @@ func (x *BlockHeaderResponse) String() string {
 func (*BlockHeaderResponse) ProtoMessage() {}
 
 func (x *BlockHeaderResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[20]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1114,7 +1256,7 @@ func (x *BlockHeaderResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BlockHeaderResponse.ProtoReflect.Descriptor instead.
 func (*BlockHeaderResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{20}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *BlockHeaderResponse) GetData() *BlockHeaderContainer {
@@ -1137,7 +1279,7 @@ type BlockHeaderContainer struct {
 func (x *BlockHeaderContainer) Reset() {
 	*x = BlockHeaderContainer{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[21]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1150,7 +1292,7 @@ func (x *BlockHeaderContainer) String() string {
 func (*BlockHeaderContainer) ProtoMessage() {}
 
 func (x *BlockHeaderContainer) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[21]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1163,7 +1305,7 @@ func (x *BlockHeaderContainer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BlockHeaderContainer.ProtoReflect.Descriptor instead.
 func (*BlockHeaderContainer) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{21}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *BlockHeaderContainer) GetRoot() []byte {
@@ -1199,7 +1341,7 @@ type BeaconBlockHeaderContainer struct {
 func (x *BeaconBlockHeaderContainer) Reset() {
 	*x = BeaconBlockHeaderContainer{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[22]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1212,7 +1354,7 @@ func (x *BeaconBlockHeaderContainer) String() string {
 func (*BeaconBlockHeaderContainer) ProtoMessage() {}
 
 func (x *BeaconBlockHeaderContainer) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[22]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1225,7 +1367,7 @@ func (x *BeaconBlockHeaderContainer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BeaconBlockHeaderContainer.ProtoReflect.Descriptor instead.
 func (*BeaconBlockHeaderContainer) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{22}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *BeaconBlockHeaderContainer) GetMessage() *BeaconBlockHeader {
@@ -1253,7 +1395,7 @@ type BlockResponse struct {
 func (x *BlockResponse) Reset() {
 	*x = BlockResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[23]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1266,7 +1408,7 @@ func (x *BlockResponse) String() string {
 func (*BlockResponse) ProtoMessage() {}
 
 func (x *BlockResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[23]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1279,7 +1421,7 @@ func (x *BlockResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BlockResponse.ProtoReflect.Descriptor instead.
 func (*BlockResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{23}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *BlockResponse) GetData() *BeaconBlockContainer {
@@ -1301,7 +1443,7 @@ type BeaconBlockContainer struct {
 func (x *BeaconBlockContainer) Reset() {
 	*x = BeaconBlockContainer{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[24]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1314,7 +1456,7 @@ func (x *BeaconBlockContainer) String() string {
 func (*BeaconBlockContainer) ProtoMessage() {}
 
 func (x *BeaconBlockContainer) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[24]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1327,7 +1469,7 @@ func (x *BeaconBlockContainer) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BeaconBlockContainer.ProtoReflect.Descriptor instead.
 func (*BeaconBlockContainer) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{24}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *BeaconBlockContainer) GetMessage() *BeaconBlock {
@@ -1356,7 +1498,7 @@ type AttestationsPoolRequest struct {
 func (x *AttestationsPoolRequest) Reset() {
 	*x = AttestationsPoolRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[25]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1369,7 +1511,7 @@ func (x *AttestationsPoolRequest) String() string {
 func (*AttestationsPoolRequest) ProtoMessage() {}
 
 func (x *AttestationsPoolRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[25]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1382,7 +1524,7 @@ func (x *AttestationsPoolRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AttestationsPoolRequest.ProtoReflect.Descriptor instead.
 func (*AttestationsPoolRequest) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{25}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *AttestationsPoolRequest) GetSlot() uint64 {
@@ -1410,7 +1552,7 @@ type AttestationsPoolResponse struct {
 func (x *AttestationsPoolResponse) Reset() {
 	*x = AttestationsPoolResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[26]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1423,7 +1565,7 @@ func (x *AttestationsPoolResponse) String() string {
 func (*AttestationsPoolResponse) ProtoMessage() {}
 
 func (x *AttestationsPoolResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[26]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1436,7 +1578,7 @@ func (x *AttestationsPoolResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AttestationsPoolResponse.ProtoReflect.Descriptor instead.
 func (*AttestationsPoolResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{26}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *AttestationsPoolResponse) GetData() []*Attestation {
@@ -1457,7 +1599,7 @@ type AttesterSlashingsPoolResponse struct {
 func (x *AttesterSlashingsPoolResponse) Reset() {
 	*x = AttesterSlashingsPoolResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[27]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[30]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1470,7 +1612,7 @@ func (x *AttesterSlashingsPoolResponse) String() string {
 func (*AttesterSlashingsPoolResponse) ProtoMessage() {}
 
 func (x *AttesterSlashingsPoolResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[27]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[30]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1483,7 +1625,7 @@ func (x *AttesterSlashingsPoolResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AttesterSlashingsPoolResponse.ProtoReflect.Descriptor instead.
 func (*AttesterSlashingsPoolResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{27}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *AttesterSlashingsPoolResponse) GetData() []*AttesterSlashing {
@@ -1504,7 +1646,7 @@ type ProposerSlashingPoolResponse struct {
 func (x *ProposerSlashingPoolResponse) Reset() {
 	*x = ProposerSlashingPoolResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[28]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[31]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1517,7 +1659,7 @@ func (x *ProposerSlashingPoolResponse) String() string {
 func (*ProposerSlashingPoolResponse) ProtoMessage() {}
 
 func (x *ProposerSlashingPoolResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[28]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[31]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1530,7 +1672,7 @@ func (x *ProposerSlashingPoolResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ProposerSlashingPoolResponse.ProtoReflect.Descriptor instead.
 func (*ProposerSlashingPoolResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{28}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *ProposerSlashingPoolResponse) GetData() []*ProposerSlashing {
@@ -1551,7 +1693,7 @@ type VoluntaryExitsPoolResponse struct {
 func (x *VoluntaryExitsPoolResponse) Reset() {
 	*x = VoluntaryExitsPoolResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[29]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[32]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1564,7 +1706,7 @@ func (x *VoluntaryExitsPoolResponse) String() string {
 func (*VoluntaryExitsPoolResponse) ProtoMessage() {}
 
 func (x *VoluntaryExitsPoolResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[29]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[32]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1577,7 +1719,7 @@ func (x *VoluntaryExitsPoolResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VoluntaryExitsPoolResponse.ProtoReflect.Descriptor instead.
 func (*VoluntaryExitsPoolResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{29}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{32}
 }
 
 func (x *VoluntaryExitsPoolResponse) GetData() []*SignedVoluntaryExit {
@@ -1592,13 +1734,13 @@ type ForkScheduleResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Data *Fork `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	Data []*Fork `protobuf:"bytes,1,rep,name=data,proto3" json:"data,omitempty"`
 }
 
 func (x *ForkScheduleResponse) Reset() {
 	*x = ForkScheduleResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[30]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[33]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1611,7 +1753,7 @@ func (x *ForkScheduleResponse) String() string {
 func (*ForkScheduleResponse) ProtoMessage() {}
 
 func (x *ForkScheduleResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[30]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[33]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1624,10 +1766,10 @@ func (x *ForkScheduleResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ForkScheduleResponse.ProtoReflect.Descriptor instead.
 func (*ForkScheduleResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{30}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{33}
 }
 
-func (x *ForkScheduleResponse) GetData() *Fork {
+func (x *ForkScheduleResponse) GetData() []*Fork {
 	if x != nil {
 		return x.Data
 	}
@@ -1645,7 +1787,7 @@ type SpecResponse struct {
 func (x *SpecResponse) Reset() {
 	*x = SpecResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[31]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[34]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1658,7 +1800,7 @@ func (x *SpecResponse) String() string {
 func (*SpecResponse) ProtoMessage() {}
 
 func (x *SpecResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[31]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[34]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1671,7 +1813,7 @@ func (x *SpecResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SpecResponse.ProtoReflect.Descriptor instead.
 func (*SpecResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{31}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{34}
 }
 
 func (x *SpecResponse) GetData() map[string]string {
@@ -1692,7 +1834,7 @@ type DepositContractResponse struct {
 func (x *DepositContractResponse) Reset() {
 	*x = DepositContractResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[32]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[35]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1705,7 +1847,7 @@ func (x *DepositContractResponse) String() string {
 func (*DepositContractResponse) ProtoMessage() {}
 
 func (x *DepositContractResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[32]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[35]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1718,7 +1860,7 @@ func (x *DepositContractResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DepositContractResponse.ProtoReflect.Descriptor instead.
 func (*DepositContractResponse) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{32}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *DepositContractResponse) GetData() *DepositContract {
@@ -1740,7 +1882,7 @@ type DepositContract struct {
 func (x *DepositContract) Reset() {
 	*x = DepositContract{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[33]
+		mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[36]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1753,7 +1895,7 @@ func (x *DepositContract) String() string {
 func (*DepositContract) ProtoMessage() {}
 
 func (x *DepositContract) ProtoReflect() protoreflect.Message {
-	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[33]
+	mi := &file_eth_v1_beacon_chain_service_proto_msgTypes[36]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1766,7 +1908,7 @@ func (x *DepositContract) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DepositContract.ProtoReflect.Descriptor instead.
 func (*DepositContract) Descriptor() ([]byte, []int) {
-	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{33}
+	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *DepositContract) GetChainId() uint64 {
@@ -1797,40 +1939,53 @@ var file_eth_v1_beacon_chain_service_proto_rawDesc = []byte{
 	0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x65, 0x6d, 0x70, 0x74, 0x79, 0x2e, 0x70, 0x72, 0x6f, 0x74,
 	0x6f, 0x1a, 0x1f, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62,
 	0x75, 0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x1a, 0x18, 0x65, 0x74, 0x68, 0x2f, 0x76, 0x31, 0x2f, 0x61, 0x74, 0x74, 0x65, 0x73,
-	0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x65, 0x74,
-	0x68, 0x2f, 0x76, 0x31, 0x2f, 0x62, 0x65, 0x61, 0x63, 0x6f, 0x6e, 0x5f, 0x62, 0x6c, 0x6f, 0x63,
-	0x6b, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x65, 0x74, 0x68, 0x2f, 0x76, 0x31, 0x2f,
-	0x62, 0x65, 0x61, 0x63, 0x6f, 0x6e, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x65, 0x2e, 0x70, 0x72, 0x6f,
-	0x74, 0x6f, 0x1a, 0x14, 0x65, 0x74, 0x68, 0x2f, 0x76, 0x31, 0x2f, 0x6f, 0x70, 0x74, 0x69, 0x6f,
-	0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x16, 0x65, 0x74, 0x68, 0x2f, 0x76, 0x31,
-	0x2f, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
-	0x22, 0xc9, 0x01, 0x0a, 0x0f, 0x47, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x3d, 0x0a, 0x0c, 0x67, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x5f,
-	0x74, 0x69, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f,
-	0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d,
-	0x65, 0x73, 0x74, 0x61, 0x6d, 0x70, 0x52, 0x0b, 0x67, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x54,
-	0x69, 0x6d, 0x65, 0x12, 0x3e, 0x0a, 0x17, 0x67, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x5f, 0x76,
-	0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x5f, 0x72, 0x6f, 0x6f, 0x74, 0x18, 0x02,
-	0x20, 0x01, 0x28, 0x0c, 0x42, 0x06, 0x8a, 0xb5, 0x18, 0x02, 0x33, 0x32, 0x52, 0x15, 0x67, 0x65,
-	0x6e, 0x65, 0x73, 0x69, 0x73, 0x56, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x52,
-	0x6f, 0x6f, 0x74, 0x12, 0x37, 0x0a, 0x14, 0x67, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x5f, 0x66,
-	0x6f, 0x72, 0x6b, 0x5f, 0x76, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28,
-	0x0c, 0x42, 0x05, 0x8a, 0xb5, 0x18, 0x01, 0x34, 0x52, 0x12, 0x67, 0x65, 0x6e, 0x65, 0x73, 0x69,
-	0x73, 0x46, 0x6f, 0x72, 0x6b, 0x56, 0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x22, 0x29, 0x0a, 0x0c,
-	0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x19, 0x0a, 0x08,
-	0x73, 0x74, 0x61, 0x74, 0x65, 0x5f, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x07,
-	0x73, 0x74, 0x61, 0x74, 0x65, 0x49, 0x64, 0x22, 0x3a, 0x0a, 0x11, 0x53, 0x74, 0x61, 0x74, 0x65,
-	0x52, 0x6f, 0x6f, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x25, 0x0a, 0x0a,
-	0x73, 0x74, 0x61, 0x74, 0x65, 0x5f, 0x72, 0x6f, 0x6f, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c,
-	0x42, 0x06, 0x8a, 0xb5, 0x18, 0x02, 0x33, 0x32, 0x52, 0x09, 0x73, 0x74, 0x61, 0x74, 0x65, 0x52,
-	0x6f, 0x6f, 0x74, 0x22, 0x3e, 0x0a, 0x11, 0x53, 0x74, 0x61, 0x74, 0x65, 0x46, 0x6f, 0x72, 0x6b,
-	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x29, 0x0a, 0x04, 0x66, 0x6f, 0x72, 0x6b,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x65, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75,
-	0x6d, 0x2e, 0x65, 0x74, 0x68, 0x2e, 0x76, 0x31, 0x2e, 0x46, 0x6f, 0x72, 0x6b, 0x52, 0x04, 0x66,
-	0x6f, 0x72, 0x6b, 0x22, 0xf2, 0x01, 0x0a, 0x1f, 0x53, 0x74, 0x61, 0x74, 0x65, 0x46, 0x69, 0x6e,
-	0x61, 0x6c, 0x69, 0x74, 0x79, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x52,
-	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x4a, 0x0a, 0x12, 0x70, 0x72, 0x65, 0x76, 0x69,
+	0x74, 0x6f, 0x1a, 0x15, 0x65, 0x74, 0x68, 0x2f, 0x65, 0x78, 0x74, 0x2f, 0x6f, 0x70, 0x74, 0x69,
+	0x6f, 0x6e, 0x73, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x18, 0x65, 0x74, 0x68, 0x2f, 0x76,
+	0x31, 0x2f, 0x61, 0x74, 0x74, 0x65, 0x73, 0x74, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x2e, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x1a, 0x19, 0x65, 0x74, 0x68, 0x2f, 0x76, 0x31, 0x2f, 0x62, 0x65, 0x61, 0x63,
+	0x6f, 0x6e, 0x5f, 0x62, 0x6c, 0x6f, 0x63, 0x6b, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x19,
+	0x65, 0x74, 0x68, 0x2f, 0x76, 0x31, 0x2f, 0x62, 0x65, 0x61, 0x63, 0x6f, 0x6e, 0x5f, 0x73, 0x74,
+	0x61, 0x74, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x16, 0x65, 0x74, 0x68, 0x2f, 0x76,
+	0x31, 0x2f, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x2e, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x22, 0x3f, 0x0a, 0x0f, 0x47, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2c, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x0b, 0x32, 0x18, 0x2e, 0x65, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x2e, 0x65, 0x74,
+	0x68, 0x2e, 0x76, 0x31, 0x2e, 0x47, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x52, 0x04, 0x64, 0x61,
+	0x74, 0x61, 0x22, 0xc1, 0x01, 0x0a, 0x07, 0x47, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x12, 0x3d,
+	0x0a, 0x0c, 0x67, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x5f, 0x74, 0x69, 0x6d, 0x65, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x67, 0x6f, 0x6f, 0x67, 0x6c, 0x65, 0x2e, 0x70, 0x72,
+	0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2e, 0x54, 0x69, 0x6d, 0x65, 0x73, 0x74, 0x61, 0x6d, 0x70,
+	0x52, 0x0b, 0x67, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x3e, 0x0a,
+	0x17, 0x67, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x5f, 0x76, 0x61, 0x6c, 0x69, 0x64, 0x61, 0x74,
+	0x6f, 0x72, 0x73, 0x5f, 0x72, 0x6f, 0x6f, 0x74, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0c, 0x42, 0x06,
+	0x8a, 0xb5, 0x18, 0x02, 0x33, 0x32, 0x52, 0x15, 0x67, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x56,
+	0x61, 0x6c, 0x69, 0x64, 0x61, 0x74, 0x6f, 0x72, 0x73, 0x52, 0x6f, 0x6f, 0x74, 0x12, 0x37, 0x0a,
+	0x14, 0x67, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x5f, 0x66, 0x6f, 0x72, 0x6b, 0x5f, 0x76, 0x65,
+	0x72, 0x73, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0c, 0x42, 0x05, 0x8a, 0xb5, 0x18,
+	0x01, 0x34, 0x52, 0x12, 0x67, 0x65, 0x6e, 0x65, 0x73, 0x69, 0x73, 0x46, 0x6f, 0x72, 0x6b, 0x56,
+	0x65, 0x72, 0x73, 0x69, 0x6f, 0x6e, 0x22, 0x29, 0x0a, 0x0c, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52,
+	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x19, 0x0a, 0x08, 0x73, 0x74, 0x61, 0x74, 0x65, 0x5f,
+	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x07, 0x73, 0x74, 0x61, 0x74, 0x65, 0x49,
+	0x64, 0x22, 0x43, 0x0a, 0x11, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x6f, 0x6f, 0x74, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x2e, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x0b, 0x32, 0x1a, 0x2e, 0x65, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x2e,
+	0x65, 0x74, 0x68, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52, 0x6f, 0x6f, 0x74,
+	0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x32, 0x0a, 0x09, 0x53, 0x74, 0x61, 0x74, 0x65, 0x52,
+	0x6f, 0x6f, 0x74, 0x12, 0x25, 0x0a, 0x0a, 0x73, 0x74, 0x61, 0x74, 0x65, 0x5f, 0x72, 0x6f, 0x6f,
+	0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0c, 0x42, 0x06, 0x8a, 0xb5, 0x18, 0x02, 0x33, 0x32, 0x52,
+	0x09, 0x73, 0x74, 0x61, 0x74, 0x65, 0x52, 0x6f, 0x6f, 0x74, 0x22, 0x3e, 0x0a, 0x11, 0x53, 0x74,
+	0x61, 0x74, 0x65, 0x46, 0x6f, 0x72, 0x6b, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x29, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x15, 0x2e,
+	0x65, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x2e, 0x65, 0x74, 0x68, 0x2e, 0x76, 0x31, 0x2e,
+	0x46, 0x6f, 0x72, 0x6b, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0x5f, 0x0a, 0x1f, 0x53, 0x74,
+	0x61, 0x74, 0x65, 0x46, 0x69, 0x6e, 0x61, 0x6c, 0x69, 0x74, 0x79, 0x43, 0x68, 0x65, 0x63, 0x6b,
+	0x70, 0x6f, 0x69, 0x6e, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x3c, 0x0a,
+	0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x28, 0x2e, 0x65, 0x74,
+	0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x2e, 0x65, 0x74, 0x68, 0x2e, 0x76, 0x31, 0x2e, 0x53, 0x74,
+	0x61, 0x74, 0x65, 0x46, 0x69, 0x6e, 0x61, 0x6c, 0x69, 0x74, 0x79, 0x43, 0x68, 0x65, 0x63, 0x6b,
+	0x70, 0x6f, 0x69, 0x6e, 0x74, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22, 0xea, 0x01, 0x0a, 0x17,
+	0x53, 0x74, 0x61, 0x74, 0x65, 0x46, 0x69, 0x6e, 0x61, 0x6c, 0x69, 0x74, 0x79, 0x43, 0x68, 0x65,
+	0x63, 0x6b, 0x70, 0x6f, 0x69, 0x6e, 0x74, 0x12, 0x4a, 0x0a, 0x12, 0x70, 0x72, 0x65, 0x76, 0x69,
 	0x6f, 0x75, 0x73, 0x5f, 0x6a, 0x75, 0x73, 0x74, 0x69, 0x66, 0x69, 0x65, 0x64, 0x18, 0x01, 0x20,
 	0x01, 0x28, 0x0b, 0x32, 0x1b, 0x2e, 0x65, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d, 0x2e, 0x65,
 	0x74, 0x68, 0x2e, 0x76, 0x31, 0x2e, 0x43, 0x68, 0x65, 0x63, 0x6b, 0x70, 0x6f, 0x69, 0x6e, 0x74,
@@ -1981,7 +2136,7 @@ var file_eth_v1_beacon_chain_service_proto_rawDesc = []byte{
 	0x6e, 0x74, 0x61, 0x72, 0x79, 0x45, 0x78, 0x69, 0x74, 0x52, 0x04, 0x64, 0x61, 0x74, 0x61, 0x22,
 	0x41, 0x0a, 0x14, 0x46, 0x6f, 0x72, 0x6b, 0x53, 0x63, 0x68, 0x65, 0x64, 0x75, 0x6c, 0x65, 0x52,
 	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x29, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18,
-	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x65, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d,
+	0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x15, 0x2e, 0x65, 0x74, 0x68, 0x65, 0x72, 0x65, 0x75, 0x6d,
 	0x2e, 0x65, 0x74, 0x68, 0x2e, 0x76, 0x31, 0x2e, 0x46, 0x6f, 0x72, 0x6b, 0x52, 0x04, 0x64, 0x61,
 	0x74, 0x61, 0x22, 0x84, 0x01, 0x0a, 0x0c, 0x53, 0x70, 0x65, 0x63, 0x52, 0x65, 0x73, 0x70, 0x6f,
 	0x6e, 0x73, 0x65, 0x12, 0x3b, 0x0a, 0x04, 0x64, 0x61, 0x74, 0x61, 0x18, 0x01, 0x20, 0x03, 0x28,
@@ -2239,136 +2394,142 @@ func file_eth_v1_beacon_chain_service_proto_rawDescGZIP() []byte {
 	return file_eth_v1_beacon_chain_service_proto_rawDescData
 }
 
-var file_eth_v1_beacon_chain_service_proto_msgTypes = make([]protoimpl.MessageInfo, 35)
+var file_eth_v1_beacon_chain_service_proto_msgTypes = make([]protoimpl.MessageInfo, 38)
 var file_eth_v1_beacon_chain_service_proto_goTypes = []interface{}{
 	(*GenesisResponse)(nil),                 // 0: ethereum.eth.v1.GenesisResponse
-	(*StateRequest)(nil),                    // 1: ethereum.eth.v1.StateRequest
-	(*StateRootResponse)(nil),               // 2: ethereum.eth.v1.StateRootResponse
-	(*StateForkResponse)(nil),               // 3: ethereum.eth.v1.StateForkResponse
-	(*StateFinalityCheckpointResponse)(nil), // 4: ethereum.eth.v1.StateFinalityCheckpointResponse
-	(*StateValidatorsRequest)(nil),          // 5: ethereum.eth.v1.StateValidatorsRequest
-	(*ValidatorBalancesRequest)(nil),        // 6: ethereum.eth.v1.ValidatorBalancesRequest
-	(*StateValidatorsResponse)(nil),         // 7: ethereum.eth.v1.StateValidatorsResponse
-	(*ValidatorBalancesResponse)(nil),       // 8: ethereum.eth.v1.ValidatorBalancesResponse
-	(*ValidatorBalance)(nil),                // 9: ethereum.eth.v1.ValidatorBalance
-	(*StateValidatorRequest)(nil),           // 10: ethereum.eth.v1.StateValidatorRequest
-	(*StateValidatorResponse)(nil),          // 11: ethereum.eth.v1.StateValidatorResponse
-	(*StateCommitteesRequest)(nil),          // 12: ethereum.eth.v1.StateCommitteesRequest
-	(*StateCommitteesResponse)(nil),         // 13: ethereum.eth.v1.StateCommitteesResponse
-	(*BlockAttestationsResponse)(nil),       // 14: ethereum.eth.v1.BlockAttestationsResponse
-	(*BlockRootContainer)(nil),              // 15: ethereum.eth.v1.BlockRootContainer
-	(*BlockRootResponse)(nil),               // 16: ethereum.eth.v1.BlockRootResponse
-	(*BlockHeadersRequest)(nil),             // 17: ethereum.eth.v1.BlockHeadersRequest
-	(*BlockHeadersResponse)(nil),            // 18: ethereum.eth.v1.BlockHeadersResponse
-	(*BlockRequest)(nil),                    // 19: ethereum.eth.v1.BlockRequest
-	(*BlockHeaderResponse)(nil),             // 20: ethereum.eth.v1.BlockHeaderResponse
-	(*BlockHeaderContainer)(nil),            // 21: ethereum.eth.v1.BlockHeaderContainer
-	(*BeaconBlockHeaderContainer)(nil),      // 22: ethereum.eth.v1.BeaconBlockHeaderContainer
-	(*BlockResponse)(nil),                   // 23: ethereum.eth.v1.BlockResponse
-	(*BeaconBlockContainer)(nil),            // 24: ethereum.eth.v1.BeaconBlockContainer
-	(*AttestationsPoolRequest)(nil),         // 25: ethereum.eth.v1.AttestationsPoolRequest
-	(*AttestationsPoolResponse)(nil),        // 26: ethereum.eth.v1.AttestationsPoolResponse
-	(*AttesterSlashingsPoolResponse)(nil),   // 27: ethereum.eth.v1.AttesterSlashingsPoolResponse
-	(*ProposerSlashingPoolResponse)(nil),    // 28: ethereum.eth.v1.ProposerSlashingPoolResponse
-	(*VoluntaryExitsPoolResponse)(nil),      // 29: ethereum.eth.v1.VoluntaryExitsPoolResponse
-	(*ForkScheduleResponse)(nil),            // 30: ethereum.eth.v1.ForkScheduleResponse
-	(*SpecResponse)(nil),                    // 31: ethereum.eth.v1.SpecResponse
-	(*DepositContractResponse)(nil),         // 32: ethereum.eth.v1.DepositContractResponse
-	(*DepositContract)(nil),                 // 33: ethereum.eth.v1.DepositContract
-	nil,                                     // 34: ethereum.eth.v1.SpecResponse.DataEntry
-	(*timestamp.Timestamp)(nil),             // 35: google.protobuf.Timestamp
-	(*Fork)(nil),                            // 36: ethereum.eth.v1.Fork
-	(*Checkpoint)(nil),                      // 37: ethereum.eth.v1.Checkpoint
-	(*ValidatorContainer)(nil),              // 38: ethereum.eth.v1.ValidatorContainer
-	(*Committee)(nil),                       // 39: ethereum.eth.v1.Committee
-	(*Attestation)(nil),                     // 40: ethereum.eth.v1.Attestation
-	(*BeaconBlockHeader)(nil),               // 41: ethereum.eth.v1.BeaconBlockHeader
-	(*BeaconBlock)(nil),                     // 42: ethereum.eth.v1.BeaconBlock
-	(*AttesterSlashing)(nil),                // 43: ethereum.eth.v1.AttesterSlashing
-	(*ProposerSlashing)(nil),                // 44: ethereum.eth.v1.ProposerSlashing
-	(*SignedVoluntaryExit)(nil),             // 45: ethereum.eth.v1.SignedVoluntaryExit
-	(*empty.Empty)(nil),                     // 46: google.protobuf.Empty
+	(*Genesis)(nil),                         // 1: ethereum.eth.v1.Genesis
+	(*StateRequest)(nil),                    // 2: ethereum.eth.v1.StateRequest
+	(*StateRootResponse)(nil),               // 3: ethereum.eth.v1.StateRootResponse
+	(*StateRoot)(nil),                       // 4: ethereum.eth.v1.StateRoot
+	(*StateForkResponse)(nil),               // 5: ethereum.eth.v1.StateForkResponse
+	(*StateFinalityCheckpointResponse)(nil), // 6: ethereum.eth.v1.StateFinalityCheckpointResponse
+	(*StateFinalityCheckpoint)(nil),         // 7: ethereum.eth.v1.StateFinalityCheckpoint
+	(*StateValidatorsRequest)(nil),          // 8: ethereum.eth.v1.StateValidatorsRequest
+	(*ValidatorBalancesRequest)(nil),        // 9: ethereum.eth.v1.ValidatorBalancesRequest
+	(*StateValidatorsResponse)(nil),         // 10: ethereum.eth.v1.StateValidatorsResponse
+	(*ValidatorBalancesResponse)(nil),       // 11: ethereum.eth.v1.ValidatorBalancesResponse
+	(*ValidatorBalance)(nil),                // 12: ethereum.eth.v1.ValidatorBalance
+	(*StateValidatorRequest)(nil),           // 13: ethereum.eth.v1.StateValidatorRequest
+	(*StateValidatorResponse)(nil),          // 14: ethereum.eth.v1.StateValidatorResponse
+	(*StateCommitteesRequest)(nil),          // 15: ethereum.eth.v1.StateCommitteesRequest
+	(*StateCommitteesResponse)(nil),         // 16: ethereum.eth.v1.StateCommitteesResponse
+	(*BlockAttestationsResponse)(nil),       // 17: ethereum.eth.v1.BlockAttestationsResponse
+	(*BlockRootContainer)(nil),              // 18: ethereum.eth.v1.BlockRootContainer
+	(*BlockRootResponse)(nil),               // 19: ethereum.eth.v1.BlockRootResponse
+	(*BlockHeadersRequest)(nil),             // 20: ethereum.eth.v1.BlockHeadersRequest
+	(*BlockHeadersResponse)(nil),            // 21: ethereum.eth.v1.BlockHeadersResponse
+	(*BlockRequest)(nil),                    // 22: ethereum.eth.v1.BlockRequest
+	(*BlockHeaderResponse)(nil),             // 23: ethereum.eth.v1.BlockHeaderResponse
+	(*BlockHeaderContainer)(nil),            // 24: ethereum.eth.v1.BlockHeaderContainer
+	(*BeaconBlockHeaderContainer)(nil),      // 25: ethereum.eth.v1.BeaconBlockHeaderContainer
+	(*BlockResponse)(nil),                   // 26: ethereum.eth.v1.BlockResponse
+	(*BeaconBlockContainer)(nil),            // 27: ethereum.eth.v1.BeaconBlockContainer
+	(*AttestationsPoolRequest)(nil),         // 28: ethereum.eth.v1.AttestationsPoolRequest
+	(*AttestationsPoolResponse)(nil),        // 29: ethereum.eth.v1.AttestationsPoolResponse
+	(*AttesterSlashingsPoolResponse)(nil),   // 30: ethereum.eth.v1.AttesterSlashingsPoolResponse
+	(*ProposerSlashingPoolResponse)(nil),    // 31: ethereum.eth.v1.ProposerSlashingPoolResponse
+	(*VoluntaryExitsPoolResponse)(nil),      // 32: ethereum.eth.v1.VoluntaryExitsPoolResponse
+	(*ForkScheduleResponse)(nil),            // 33: ethereum.eth.v1.ForkScheduleResponse
+	(*SpecResponse)(nil),                    // 34: ethereum.eth.v1.SpecResponse
+	(*DepositContractResponse)(nil),         // 35: ethereum.eth.v1.DepositContractResponse
+	(*DepositContract)(nil),                 // 36: ethereum.eth.v1.DepositContract
+	nil,                                     // 37: ethereum.eth.v1.SpecResponse.DataEntry
+	(*timestamp.Timestamp)(nil),             // 38: google.protobuf.Timestamp
+	(*Fork)(nil),                            // 39: ethereum.eth.v1.Fork
+	(*Checkpoint)(nil),                      // 40: ethereum.eth.v1.Checkpoint
+	(*ValidatorContainer)(nil),              // 41: ethereum.eth.v1.ValidatorContainer
+	(*Committee)(nil),                       // 42: ethereum.eth.v1.Committee
+	(*Attestation)(nil),                     // 43: ethereum.eth.v1.Attestation
+	(*BeaconBlockHeader)(nil),               // 44: ethereum.eth.v1.BeaconBlockHeader
+	(*BeaconBlock)(nil),                     // 45: ethereum.eth.v1.BeaconBlock
+	(*AttesterSlashing)(nil),                // 46: ethereum.eth.v1.AttesterSlashing
+	(*ProposerSlashing)(nil),                // 47: ethereum.eth.v1.ProposerSlashing
+	(*SignedVoluntaryExit)(nil),             // 48: ethereum.eth.v1.SignedVoluntaryExit
+	(*empty.Empty)(nil),                     // 49: google.protobuf.Empty
 }
 var file_eth_v1_beacon_chain_service_proto_depIdxs = []int32{
-	35, // 0: ethereum.eth.v1.GenesisResponse.genesis_time:type_name -> google.protobuf.Timestamp
-	36, // 1: ethereum.eth.v1.StateForkResponse.fork:type_name -> ethereum.eth.v1.Fork
-	37, // 2: ethereum.eth.v1.StateFinalityCheckpointResponse.previous_justified:type_name -> ethereum.eth.v1.Checkpoint
-	37, // 3: ethereum.eth.v1.StateFinalityCheckpointResponse.current_justified:type_name -> ethereum.eth.v1.Checkpoint
-	37, // 4: ethereum.eth.v1.StateFinalityCheckpointResponse.finalized:type_name -> ethereum.eth.v1.Checkpoint
-	38, // 5: ethereum.eth.v1.StateValidatorsResponse.data:type_name -> ethereum.eth.v1.ValidatorContainer
-	9,  // 6: ethereum.eth.v1.ValidatorBalancesResponse.data:type_name -> ethereum.eth.v1.ValidatorBalance
-	38, // 7: ethereum.eth.v1.StateValidatorResponse.data:type_name -> ethereum.eth.v1.ValidatorContainer
-	39, // 8: ethereum.eth.v1.StateCommitteesResponse.data:type_name -> ethereum.eth.v1.Committee
-	40, // 9: ethereum.eth.v1.BlockAttestationsResponse.data:type_name -> ethereum.eth.v1.Attestation
-	15, // 10: ethereum.eth.v1.BlockRootResponse.data:type_name -> ethereum.eth.v1.BlockRootContainer
-	21, // 11: ethereum.eth.v1.BlockHeadersResponse.data:type_name -> ethereum.eth.v1.BlockHeaderContainer
-	21, // 12: ethereum.eth.v1.BlockHeaderResponse.data:type_name -> ethereum.eth.v1.BlockHeaderContainer
-	22, // 13: ethereum.eth.v1.BlockHeaderContainer.header:type_name -> ethereum.eth.v1.BeaconBlockHeaderContainer
-	41, // 14: ethereum.eth.v1.BeaconBlockHeaderContainer.message:type_name -> ethereum.eth.v1.BeaconBlockHeader
-	24, // 15: ethereum.eth.v1.BlockResponse.data:type_name -> ethereum.eth.v1.BeaconBlockContainer
-	42, // 16: ethereum.eth.v1.BeaconBlockContainer.message:type_name -> ethereum.eth.v1.BeaconBlock
-	40, // 17: ethereum.eth.v1.AttestationsPoolResponse.data:type_name -> ethereum.eth.v1.Attestation
-	43, // 18: ethereum.eth.v1.AttesterSlashingsPoolResponse.data:type_name -> ethereum.eth.v1.AttesterSlashing
-	44, // 19: ethereum.eth.v1.ProposerSlashingPoolResponse.data:type_name -> ethereum.eth.v1.ProposerSlashing
-	45, // 20: ethereum.eth.v1.VoluntaryExitsPoolResponse.data:type_name -> ethereum.eth.v1.SignedVoluntaryExit
-	36, // 21: ethereum.eth.v1.ForkScheduleResponse.data:type_name -> ethereum.eth.v1.Fork
-	34, // 22: ethereum.eth.v1.SpecResponse.data:type_name -> ethereum.eth.v1.SpecResponse.DataEntry
-	33, // 23: ethereum.eth.v1.DepositContractResponse.data:type_name -> ethereum.eth.v1.DepositContract
-	46, // 24: ethereum.eth.v1.BeaconChain.GetGenesis:input_type -> google.protobuf.Empty
-	1,  // 25: ethereum.eth.v1.BeaconChain.GetStateRoot:input_type -> ethereum.eth.v1.StateRequest
-	1,  // 26: ethereum.eth.v1.BeaconChain.GetStateFork:input_type -> ethereum.eth.v1.StateRequest
-	1,  // 27: ethereum.eth.v1.BeaconChain.GetFinalityCheckpoints:input_type -> ethereum.eth.v1.StateRequest
-	10, // 28: ethereum.eth.v1.BeaconChain.GetValidator:input_type -> ethereum.eth.v1.StateValidatorRequest
-	5,  // 29: ethereum.eth.v1.BeaconChain.ListValidators:input_type -> ethereum.eth.v1.StateValidatorsRequest
-	6,  // 30: ethereum.eth.v1.BeaconChain.ListValidatorBalances:input_type -> ethereum.eth.v1.ValidatorBalancesRequest
-	12, // 31: ethereum.eth.v1.BeaconChain.ListCommittees:input_type -> ethereum.eth.v1.StateCommitteesRequest
-	19, // 32: ethereum.eth.v1.BeaconChain.GetBlockHeader:input_type -> ethereum.eth.v1.BlockRequest
-	17, // 33: ethereum.eth.v1.BeaconChain.ListBlockHeaders:input_type -> ethereum.eth.v1.BlockHeadersRequest
-	24, // 34: ethereum.eth.v1.BeaconChain.SubmitBlock:input_type -> ethereum.eth.v1.BeaconBlockContainer
-	19, // 35: ethereum.eth.v1.BeaconChain.GetBlock:input_type -> ethereum.eth.v1.BlockRequest
-	19, // 36: ethereum.eth.v1.BeaconChain.GetBlockRoot:input_type -> ethereum.eth.v1.BlockRequest
-	19, // 37: ethereum.eth.v1.BeaconChain.ListBlockAttestations:input_type -> ethereum.eth.v1.BlockRequest
-	25, // 38: ethereum.eth.v1.BeaconChain.ListPoolAttestations:input_type -> ethereum.eth.v1.AttestationsPoolRequest
-	40, // 39: ethereum.eth.v1.BeaconChain.SubmitAttestation:input_type -> ethereum.eth.v1.Attestation
-	46, // 40: ethereum.eth.v1.BeaconChain.ListPoolAttesterSlashings:input_type -> google.protobuf.Empty
-	43, // 41: ethereum.eth.v1.BeaconChain.SubmitAttesterSlashing:input_type -> ethereum.eth.v1.AttesterSlashing
-	46, // 42: ethereum.eth.v1.BeaconChain.ListPoolProposerSlashings:input_type -> google.protobuf.Empty
-	44, // 43: ethereum.eth.v1.BeaconChain.SubmitProposerSlashing:input_type -> ethereum.eth.v1.ProposerSlashing
-	46, // 44: ethereum.eth.v1.BeaconChain.ListPoolVoluntaryExits:input_type -> google.protobuf.Empty
-	45, // 45: ethereum.eth.v1.BeaconChain.SubmitVoluntaryExit:input_type -> ethereum.eth.v1.SignedVoluntaryExit
-	46, // 46: ethereum.eth.v1.BeaconChain.GetForkSchedule:input_type -> google.protobuf.Empty
-	46, // 47: ethereum.eth.v1.BeaconChain.GetSpec:input_type -> google.protobuf.Empty
-	46, // 48: ethereum.eth.v1.BeaconChain.GetDepositContract:input_type -> google.protobuf.Empty
-	0,  // 49: ethereum.eth.v1.BeaconChain.GetGenesis:output_type -> ethereum.eth.v1.GenesisResponse
-	2,  // 50: ethereum.eth.v1.BeaconChain.GetStateRoot:output_type -> ethereum.eth.v1.StateRootResponse
-	3,  // 51: ethereum.eth.v1.BeaconChain.GetStateFork:output_type -> ethereum.eth.v1.StateForkResponse
-	4,  // 52: ethereum.eth.v1.BeaconChain.GetFinalityCheckpoints:output_type -> ethereum.eth.v1.StateFinalityCheckpointResponse
-	11, // 53: ethereum.eth.v1.BeaconChain.GetValidator:output_type -> ethereum.eth.v1.StateValidatorResponse
-	7,  // 54: ethereum.eth.v1.BeaconChain.ListValidators:output_type -> ethereum.eth.v1.StateValidatorsResponse
-	8,  // 55: ethereum.eth.v1.BeaconChain.ListValidatorBalances:output_type -> ethereum.eth.v1.ValidatorBalancesResponse
-	13, // 56: ethereum.eth.v1.BeaconChain.ListCommittees:output_type -> ethereum.eth.v1.StateCommitteesResponse
-	20, // 57: ethereum.eth.v1.BeaconChain.GetBlockHeader:output_type -> ethereum.eth.v1.BlockHeaderResponse
-	18, // 58: ethereum.eth.v1.BeaconChain.ListBlockHeaders:output_type -> ethereum.eth.v1.BlockHeadersResponse
-	46, // 59: ethereum.eth.v1.BeaconChain.SubmitBlock:output_type -> google.protobuf.Empty
-	23, // 60: ethereum.eth.v1.BeaconChain.GetBlock:output_type -> ethereum.eth.v1.BlockResponse
-	16, // 61: ethereum.eth.v1.BeaconChain.GetBlockRoot:output_type -> ethereum.eth.v1.BlockRootResponse
-	14, // 62: ethereum.eth.v1.BeaconChain.ListBlockAttestations:output_type -> ethereum.eth.v1.BlockAttestationsResponse
-	26, // 63: ethereum.eth.v1.BeaconChain.ListPoolAttestations:output_type -> ethereum.eth.v1.AttestationsPoolResponse
-	46, // 64: ethereum.eth.v1.BeaconChain.SubmitAttestation:output_type -> google.protobuf.Empty
-	27, // 65: ethereum.eth.v1.BeaconChain.ListPoolAttesterSlashings:output_type -> ethereum.eth.v1.AttesterSlashingsPoolResponse
-	46, // 66: ethereum.eth.v1.BeaconChain.SubmitAttesterSlashing:output_type -> google.protobuf.Empty
-	28, // 67: ethereum.eth.v1.BeaconChain.ListPoolProposerSlashings:output_type -> ethereum.eth.v1.ProposerSlashingPoolResponse
-	46, // 68: ethereum.eth.v1.BeaconChain.SubmitProposerSlashing:output_type -> google.protobuf.Empty
-	29, // 69: ethereum.eth.v1.BeaconChain.ListPoolVoluntaryExits:output_type -> ethereum.eth.v1.VoluntaryExitsPoolResponse
-	46, // 70: ethereum.eth.v1.BeaconChain.SubmitVoluntaryExit:output_type -> google.protobuf.Empty
-	30, // 71: ethereum.eth.v1.BeaconChain.GetForkSchedule:output_type -> ethereum.eth.v1.ForkScheduleResponse
-	31, // 72: ethereum.eth.v1.BeaconChain.GetSpec:output_type -> ethereum.eth.v1.SpecResponse
-	32, // 73: ethereum.eth.v1.BeaconChain.GetDepositContract:output_type -> ethereum.eth.v1.DepositContractResponse
-	49, // [49:74] is the sub-list for method output_type
-	24, // [24:49] is the sub-list for method input_type
-	24, // [24:24] is the sub-list for extension type_name
-	24, // [24:24] is the sub-list for extension extendee
-	0,  // [0:24] is the sub-list for field type_name
+	1,  // 0: ethereum.eth.v1.GenesisResponse.data:type_name -> ethereum.eth.v1.Genesis
+	38, // 1: ethereum.eth.v1.Genesis.genesis_time:type_name -> google.protobuf.Timestamp
+	4,  // 2: ethereum.eth.v1.StateRootResponse.data:type_name -> ethereum.eth.v1.StateRoot
+	39, // 3: ethereum.eth.v1.StateForkResponse.data:type_name -> ethereum.eth.v1.Fork
+	7,  // 4: ethereum.eth.v1.StateFinalityCheckpointResponse.data:type_name -> ethereum.eth.v1.StateFinalityCheckpoint
+	40, // 5: ethereum.eth.v1.StateFinalityCheckpoint.previous_justified:type_name -> ethereum.eth.v1.Checkpoint
+	40, // 6: ethereum.eth.v1.StateFinalityCheckpoint.current_justified:type_name -> ethereum.eth.v1.Checkpoint
+	40, // 7: ethereum.eth.v1.StateFinalityCheckpoint.finalized:type_name -> ethereum.eth.v1.Checkpoint
+	41, // 8: ethereum.eth.v1.StateValidatorsResponse.data:type_name -> ethereum.eth.v1.ValidatorContainer
+	12, // 9: ethereum.eth.v1.ValidatorBalancesResponse.data:type_name -> ethereum.eth.v1.ValidatorBalance
+	41, // 10: ethereum.eth.v1.StateValidatorResponse.data:type_name -> ethereum.eth.v1.ValidatorContainer
+	42, // 11: ethereum.eth.v1.StateCommitteesResponse.data:type_name -> ethereum.eth.v1.Committee
+	43, // 12: ethereum.eth.v1.BlockAttestationsResponse.data:type_name -> ethereum.eth.v1.Attestation
+	18, // 13: ethereum.eth.v1.BlockRootResponse.data:type_name -> ethereum.eth.v1.BlockRootContainer
+	24, // 14: ethereum.eth.v1.BlockHeadersResponse.data:type_name -> ethereum.eth.v1.BlockHeaderContainer
+	24, // 15: ethereum.eth.v1.BlockHeaderResponse.data:type_name -> ethereum.eth.v1.BlockHeaderContainer
+	25, // 16: ethereum.eth.v1.BlockHeaderContainer.header:type_name -> ethereum.eth.v1.BeaconBlockHeaderContainer
+	44, // 17: ethereum.eth.v1.BeaconBlockHeaderContainer.message:type_name -> ethereum.eth.v1.BeaconBlockHeader
+	27, // 18: ethereum.eth.v1.BlockResponse.data:type_name -> ethereum.eth.v1.BeaconBlockContainer
+	45, // 19: ethereum.eth.v1.BeaconBlockContainer.message:type_name -> ethereum.eth.v1.BeaconBlock
+	43, // 20: ethereum.eth.v1.AttestationsPoolResponse.data:type_name -> ethereum.eth.v1.Attestation
+	46, // 21: ethereum.eth.v1.AttesterSlashingsPoolResponse.data:type_name -> ethereum.eth.v1.AttesterSlashing
+	47, // 22: ethereum.eth.v1.ProposerSlashingPoolResponse.data:type_name -> ethereum.eth.v1.ProposerSlashing
+	48, // 23: ethereum.eth.v1.VoluntaryExitsPoolResponse.data:type_name -> ethereum.eth.v1.SignedVoluntaryExit
+	39, // 24: ethereum.eth.v1.ForkScheduleResponse.data:type_name -> ethereum.eth.v1.Fork
+	37, // 25: ethereum.eth.v1.SpecResponse.data:type_name -> ethereum.eth.v1.SpecResponse.DataEntry
+	36, // 26: ethereum.eth.v1.DepositContractResponse.data:type_name -> ethereum.eth.v1.DepositContract
+	49, // 27: ethereum.eth.v1.BeaconChain.GetGenesis:input_type -> google.protobuf.Empty
+	2,  // 28: ethereum.eth.v1.BeaconChain.GetStateRoot:input_type -> ethereum.eth.v1.StateRequest
+	2,  // 29: ethereum.eth.v1.BeaconChain.GetStateFork:input_type -> ethereum.eth.v1.StateRequest
+	2,  // 30: ethereum.eth.v1.BeaconChain.GetFinalityCheckpoints:input_type -> ethereum.eth.v1.StateRequest
+	13, // 31: ethereum.eth.v1.BeaconChain.GetValidator:input_type -> ethereum.eth.v1.StateValidatorRequest
+	8,  // 32: ethereum.eth.v1.BeaconChain.ListValidators:input_type -> ethereum.eth.v1.StateValidatorsRequest
+	9,  // 33: ethereum.eth.v1.BeaconChain.ListValidatorBalances:input_type -> ethereum.eth.v1.ValidatorBalancesRequest
+	15, // 34: ethereum.eth.v1.BeaconChain.ListCommittees:input_type -> ethereum.eth.v1.StateCommitteesRequest
+	22, // 35: ethereum.eth.v1.BeaconChain.GetBlockHeader:input_type -> ethereum.eth.v1.BlockRequest
+	20, // 36: ethereum.eth.v1.BeaconChain.ListBlockHeaders:input_type -> ethereum.eth.v1.BlockHeadersRequest
+	27, // 37: ethereum.eth.v1.BeaconChain.SubmitBlock:input_type -> ethereum.eth.v1.BeaconBlockContainer
+	22, // 38: ethereum.eth.v1.BeaconChain.GetBlock:input_type -> ethereum.eth.v1.BlockRequest
+	22, // 39: ethereum.eth.v1.BeaconChain.GetBlockRoot:input_type -> ethereum.eth.v1.BlockRequest
+	22, // 40: ethereum.eth.v1.BeaconChain.ListBlockAttestations:input_type -> ethereum.eth.v1.BlockRequest
+	28, // 41: ethereum.eth.v1.BeaconChain.ListPoolAttestations:input_type -> ethereum.eth.v1.AttestationsPoolRequest
+	43, // 42: ethereum.eth.v1.BeaconChain.SubmitAttestation:input_type -> ethereum.eth.v1.Attestation
+	49, // 43: ethereum.eth.v1.BeaconChain.ListPoolAttesterSlashings:input_type -> google.protobuf.Empty
+	46, // 44: ethereum.eth.v1.BeaconChain.SubmitAttesterSlashing:input_type -> ethereum.eth.v1.AttesterSlashing
+	49, // 45: ethereum.eth.v1.BeaconChain.ListPoolProposerSlashings:input_type -> google.protobuf.Empty
+	47, // 46: ethereum.eth.v1.BeaconChain.SubmitProposerSlashing:input_type -> ethereum.eth.v1.ProposerSlashing
+	49, // 47: ethereum.eth.v1.BeaconChain.ListPoolVoluntaryExits:input_type -> google.protobuf.Empty
+	48, // 48: ethereum.eth.v1.BeaconChain.SubmitVoluntaryExit:input_type -> ethereum.eth.v1.SignedVoluntaryExit
+	49, // 49: ethereum.eth.v1.BeaconChain.GetForkSchedule:input_type -> google.protobuf.Empty
+	49, // 50: ethereum.eth.v1.BeaconChain.GetSpec:input_type -> google.protobuf.Empty
+	49, // 51: ethereum.eth.v1.BeaconChain.GetDepositContract:input_type -> google.protobuf.Empty
+	0,  // 52: ethereum.eth.v1.BeaconChain.GetGenesis:output_type -> ethereum.eth.v1.GenesisResponse
+	3,  // 53: ethereum.eth.v1.BeaconChain.GetStateRoot:output_type -> ethereum.eth.v1.StateRootResponse
+	5,  // 54: ethereum.eth.v1.BeaconChain.GetStateFork:output_type -> ethereum.eth.v1.StateForkResponse
+	6,  // 55: ethereum.eth.v1.BeaconChain.GetFinalityCheckpoints:output_type -> ethereum.eth.v1.StateFinalityCheckpointResponse
+	14, // 56: ethereum.eth.v1.BeaconChain.GetValidator:output_type -> ethereum.eth.v1.StateValidatorResponse
+	10, // 57: ethereum.eth.v1.BeaconChain.ListValidators:output_type -> ethereum.eth.v1.StateValidatorsResponse
+	11, // 58: ethereum.eth.v1.BeaconChain.ListValidatorBalances:output_type -> ethereum.eth.v1.ValidatorBalancesResponse
+	16, // 59: ethereum.eth.v1.BeaconChain.ListCommittees:output_type -> ethereum.eth.v1.StateCommitteesResponse
+	23, // 60: ethereum.eth.v1.BeaconChain.GetBlockHeader:output_type -> ethereum.eth.v1.BlockHeaderResponse
+	21, // 61: ethereum.eth.v1.BeaconChain.ListBlockHeaders:output_type -> ethereum.eth.v1.BlockHeadersResponse
+	49, // 62: ethereum.eth.v1.BeaconChain.SubmitBlock:output_type -> google.protobuf.Empty
+	26, // 63: ethereum.eth.v1.BeaconChain.GetBlock:output_type -> ethereum.eth.v1.BlockResponse
+	19, // 64: ethereum.eth.v1.BeaconChain.GetBlockRoot:output_type -> ethereum.eth.v1.BlockRootResponse
+	17, // 65: ethereum.eth.v1.BeaconChain.ListBlockAttestations:output_type -> ethereum.eth.v1.BlockAttestationsResponse
+	29, // 66: ethereum.eth.v1.BeaconChain.ListPoolAttestations:output_type -> ethereum.eth.v1.AttestationsPoolResponse
+	49, // 67: ethereum.eth.v1.BeaconChain.SubmitAttestation:output_type -> google.protobuf.Empty
+	30, // 68: ethereum.eth.v1.BeaconChain.ListPoolAttesterSlashings:output_type -> ethereum.eth.v1.AttesterSlashingsPoolResponse
+	49, // 69: ethereum.eth.v1.BeaconChain.SubmitAttesterSlashing:output_type -> google.protobuf.Empty
+	31, // 70: ethereum.eth.v1.BeaconChain.ListPoolProposerSlashings:output_type -> ethereum.eth.v1.ProposerSlashingPoolResponse
+	49, // 71: ethereum.eth.v1.BeaconChain.SubmitProposerSlashing:output_type -> google.protobuf.Empty
+	32, // 72: ethereum.eth.v1.BeaconChain.ListPoolVoluntaryExits:output_type -> ethereum.eth.v1.VoluntaryExitsPoolResponse
+	49, // 73: ethereum.eth.v1.BeaconChain.SubmitVoluntaryExit:output_type -> google.protobuf.Empty
+	33, // 74: ethereum.eth.v1.BeaconChain.GetForkSchedule:output_type -> ethereum.eth.v1.ForkScheduleResponse
+	34, // 75: ethereum.eth.v1.BeaconChain.GetSpec:output_type -> ethereum.eth.v1.SpecResponse
+	35, // 76: ethereum.eth.v1.BeaconChain.GetDepositContract:output_type -> ethereum.eth.v1.DepositContractResponse
+	52, // [52:77] is the sub-list for method output_type
+	27, // [27:52] is the sub-list for method input_type
+	27, // [27:27] is the sub-list for extension type_name
+	27, // [27:27] is the sub-list for extension extendee
+	0,  // [0:27] is the sub-list for field type_name
 }
 
 func init() { file_eth_v1_beacon_chain_service_proto_init() }
@@ -2379,7 +2540,6 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 	file_eth_v1_attestation_proto_init()
 	file_eth_v1_beacon_block_proto_init()
 	file_eth_v1_beacon_state_proto_init()
-	file_eth_v1_options_proto_init()
 	file_eth_v1_validator_proto_init()
 	if !protoimpl.UnsafeEnabled {
 		file_eth_v1_beacon_chain_service_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
@@ -2395,7 +2555,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[1].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StateRequest); i {
+			switch v := v.(*Genesis); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2407,7 +2567,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[2].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StateRootResponse); i {
+			switch v := v.(*StateRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2419,7 +2579,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[3].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StateForkResponse); i {
+			switch v := v.(*StateRootResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2431,7 +2591,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StateFinalityCheckpointResponse); i {
+			switch v := v.(*StateRoot); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2443,7 +2603,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StateValidatorsRequest); i {
+			switch v := v.(*StateForkResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2455,7 +2615,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ValidatorBalancesRequest); i {
+			switch v := v.(*StateFinalityCheckpointResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2467,7 +2627,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StateValidatorsResponse); i {
+			switch v := v.(*StateFinalityCheckpoint); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2479,7 +2639,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[8].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ValidatorBalancesResponse); i {
+			switch v := v.(*StateValidatorsRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2491,7 +2651,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ValidatorBalance); i {
+			switch v := v.(*ValidatorBalancesRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2503,7 +2663,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[10].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StateValidatorRequest); i {
+			switch v := v.(*StateValidatorsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2515,7 +2675,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[11].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StateValidatorResponse); i {
+			switch v := v.(*ValidatorBalancesResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2527,7 +2687,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[12].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StateCommitteesRequest); i {
+			switch v := v.(*ValidatorBalance); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2539,7 +2699,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[13].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StateCommitteesResponse); i {
+			switch v := v.(*StateValidatorRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2551,7 +2711,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[14].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BlockAttestationsResponse); i {
+			switch v := v.(*StateValidatorResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2563,7 +2723,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BlockRootContainer); i {
+			switch v := v.(*StateCommitteesRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2575,7 +2735,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BlockRootResponse); i {
+			switch v := v.(*StateCommitteesResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2587,7 +2747,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BlockHeadersRequest); i {
+			switch v := v.(*BlockAttestationsResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2599,7 +2759,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BlockHeadersResponse); i {
+			switch v := v.(*BlockRootContainer); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2611,7 +2771,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BlockRequest); i {
+			switch v := v.(*BlockRootResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2623,7 +2783,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BlockHeaderResponse); i {
+			switch v := v.(*BlockHeadersRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2635,7 +2795,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BlockHeaderContainer); i {
+			switch v := v.(*BlockHeadersResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2647,7 +2807,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BeaconBlockHeaderContainer); i {
+			switch v := v.(*BlockRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2659,7 +2819,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BlockResponse); i {
+			switch v := v.(*BlockHeaderResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2671,7 +2831,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*BeaconBlockContainer); i {
+			switch v := v.(*BlockHeaderContainer); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2683,7 +2843,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AttestationsPoolRequest); i {
+			switch v := v.(*BeaconBlockHeaderContainer); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2695,7 +2855,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AttestationsPoolResponse); i {
+			switch v := v.(*BlockResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2707,7 +2867,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AttesterSlashingsPoolResponse); i {
+			switch v := v.(*BeaconBlockContainer); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2719,7 +2879,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ProposerSlashingPoolResponse); i {
+			switch v := v.(*AttestationsPoolRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2731,7 +2891,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*VoluntaryExitsPoolResponse); i {
+			switch v := v.(*AttestationsPoolResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2743,7 +2903,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ForkScheduleResponse); i {
+			switch v := v.(*AttesterSlashingsPoolResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2755,7 +2915,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SpecResponse); i {
+			switch v := v.(*ProposerSlashingPoolResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2767,7 +2927,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DepositContractResponse); i {
+			switch v := v.(*VoluntaryExitsPoolResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2779,6 +2939,42 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			}
 		}
 		file_eth_v1_beacon_chain_service_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ForkScheduleResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_eth_v1_beacon_chain_service_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SpecResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_eth_v1_beacon_chain_service_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DepositContractResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_eth_v1_beacon_chain_service_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DepositContract); i {
 			case 0:
 				return &v.state
@@ -2797,7 +2993,7 @@ func file_eth_v1_beacon_chain_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_eth_v1_beacon_chain_service_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   35,
+			NumMessages:   38,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
