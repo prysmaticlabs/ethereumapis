@@ -2,11 +2,12 @@ package main
 
 import (
 	"context"
-	pb "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1"
-	grpc "google.golang.org/grpc"
 	"log"
 	"os"
 	"strings"
+
+	pb "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1"
+	grpc "google.golang.org/grpc"
 )
 
 func main() {
@@ -20,10 +21,9 @@ func main() {
 	}
 
 	rpc := pb.NewBeaconChainClient(conn)
-	
-	
+
 	req := pb.ListBlocksRequest{
-		QueryFilter:          &pb.ListBlocksRequest_Slot{Slot:123},
+		QueryFilter: &pb.ListBlocksRequest_Slot{Slot: 123},
 	}
 	res, error := rpc.ListBlocks(context.Background(), &req)
 	if error != nil {
@@ -36,5 +36,5 @@ func main() {
 func getRPCProvider() string {
 	argsWithoutProg := os.Args[1:]
 
-	return strings.Split(argsWithoutProg[0],"=")[1]
+	return strings.Split(argsWithoutProg[0], "=")[1]
 }

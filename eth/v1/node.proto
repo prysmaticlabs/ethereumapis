@@ -41,8 +41,13 @@ service BeaconNode {
   }
 
   // ListPeers retrieves data about the node's network peers.
-  rpc ListPeers(google.protobuf.Empty) returns (PeersResponse) {
+  rpc ListPeers(PeersRequest) returns (PeersResponse) {
     option (google.api.http) = {get: "/eth/v1/node/peers"};
+  }
+
+  // PeerCount retrieves number of known peers.
+  rpc PeerCount(google.protobuf.Empty) returns (PeerCountResponse) {
+    option (google.api.http) = {get: "/eth/v1/node/peer_count"};
   }
 
   // GetVersion requests that the beacon node identify information about its implementation in a
@@ -100,12 +105,34 @@ message PeerRequest {
   string peer_id = 1;
 }
 
+message PeersRequest {
+  // Requested peer states (available values: disconnected, connecting, connected, disconnecting).
+  repeated string state = 1;
+  // Requested peer directions (available values: inbound, outbound).
+  repeated string direction=2;
+}
+
 message PeerResponse {
   Peer data = 1;
 }
 
 message PeersResponse {
   repeated Peer data = 1;
+}
+
+message PeerCountResponse {
+  PeerCount data = 1;
+
+  message PeerCount {
+    // The number of disconnected peers.
+    uint64 disconnected = 1;
+    // The number of connecting peers.
+    uint64 connecting = 2;
+    // The number of connected peers.
+    uint64 connected = 3;
+    // The number of disconnecting peers.
+    uint64 disconnecting = 4;
+  }
 }
 
 // Peer provides details of a peer on the network.

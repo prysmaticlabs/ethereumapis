@@ -107,7 +107,7 @@ service BeaconChain {
 
     // Server-side stream of all signed blocks as they are received by
     // the beacon chain node.
-    rpc StreamBlocks(google.protobuf.Empty) returns (stream SignedBeaconBlock) {
+    rpc StreamBlocks(StreamBlocksRequest) returns (stream SignedBeaconBlock) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/blocks/stream"
         };
@@ -396,6 +396,11 @@ message ListBlocksResponse {
     int32 total_size = 3;
 }
 
+// Request to only return blocks that is verified by the beacon node.
+message StreamBlocksRequest {
+    bool verified_only = 1;
+}
+
 // A container that contains both the beacon block
 // and its corresponding root.
 message BeaconBlockContainer {
@@ -404,6 +409,9 @@ message BeaconBlockContainer {
 
     // 32 byte merkle tree root of contained beacon block.
     bytes block_root = 2;
+
+    // Boolean indicating whether the block is canonical.
+    bool canonical = 3;
 }
 
 // Information about the head of the beacon chain.

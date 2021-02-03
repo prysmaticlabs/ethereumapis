@@ -75,22 +75,10 @@ service BeaconNodeValidator {
     //
     // If the chain has not yet started, this endpoint starts a server-side stream which updates
     // the client when the beacon chain is ready.
-    //
-    // This RPC is deprecated. Please use WaitForSynced.
     rpc WaitForChainStart(google.protobuf.Empty) returns (stream ChainStartResponse) {
         option deprecated = true;
         option (google.api.http) = {
             get: "/eth/v1alpha1/validator/chainstart/stream"
-        };
-    }
-
-    // WaitForSynced checks if the beacon node is synced and ready to communicate with the validator.
-    //
-    // If the node is not synced yet, this endpoint starts a server-side stream which updates
-    // the validator client when the beacon chain is ready.
-    rpc WaitForSynced(google.protobuf.Empty) returns (stream SyncedResponse) {
-        option (google.api.http) = {
-            get: "/eth/v1alpha1/validator/synced/stream"
         };
     }
 
@@ -269,13 +257,14 @@ message ValidatorActivationResponse {
 }
 
 message ChainStartResponse {
-    option deprecated = true; // Please use SyncedResponse and WaitForSynced.
-
     // A boolean specifying whether or not the chain has started.
     bool started = 1;
 
     // The genesis time of the beacon chain.
     uint64 genesis_time = 2;
+
+    // 32 byte hash tree root of the genesis validator set.
+    bytes genesis_validators_root = 3 [(gogoproto.moretags) = "ssz-size:\"32\""];
 }
 
 message SyncedResponse {
