@@ -17,7 +17,7 @@ package ethereum.eth.v1;
 
 import "google/protobuf/descriptor.proto";
 
-import "eth/v1/options.proto";
+import "eth/ext/options.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
@@ -36,10 +36,10 @@ message ValidatorContainer {
 // An Ethereum 2.0 validator.
 message Validator {
     // 48 byte BLS public key used for the validator's activities.
-    bytes public_key = 1 [(ssz_size) = "48", (spec_name) = "pubkey"];
+    bytes public_key = 1 [(ethereum.eth.ext.ssz_size) = "48", (ethereum.eth.ext.spec_name) = "pubkey"];
 
     // 32 byte hash of the withdrawal destination public key.
-    bytes withdrawal_credentials = 2 [(ssz_size) = "32"];
+    bytes withdrawal_credentials = 2 [(ethereum.eth.ext.ssz_size) = "32"];
 
     // The validators current effective balance in gwei.
     uint64 effective_balance = 3;

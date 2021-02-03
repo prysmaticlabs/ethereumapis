@@ -13,16 +13,16 @@
 // limitations under the License.
 syntax = "proto3";
 
-package ethereum.eth.v1;
+package ethereum.eth.ext;
 
 import "google/protobuf/descriptor.proto";
 
-option csharp_namespace = "Ethereum.Eth.v1";
-option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
+option csharp_namespace = "Ethereum.Eth.ext";
+option go_package = "github.com/prysmaticlabs/ethereumapis/eth/ext";
 option java_multiple_files = true;
 option java_outer_classname = "OptionsProto";
-option java_package = "org.ethereum.eth.v1";
-option php_namespace = "Ethereum\\Eth\\v1";
+option java_package = "org.ethereum.eth.ext";
+option php_namespace = "Ethereum\\Eth\\ext";
 
 extend google.protobuf.FieldOptions {
   string cast_type = 50000;

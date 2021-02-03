@@ -15,9 +15,9 @@ syntax = "proto3";
 
 package ethereum.eth.v1;
 
-import "eth/v1/attestation.proto";
-import "eth/v1/options.proto";
 import "google/protobuf/descriptor.proto";
+import "eth/ext/options.proto";
+import "eth/v1/attestation.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
@@ -35,10 +35,10 @@ message BeaconBlock {
     uint64 proposer_index = 2;
 
     // 32 byte root of the parent block.
-    bytes parent_root = 3 [(ssz_size) = "32"];
+    bytes parent_root = 3 [(ethereum.eth.ext.ssz_size) = "32"];
 
     // 32 byte root of the resulting state after processing this block.
-    bytes state_root = 4 [(ssz_size) = "32"];
+    bytes state_root = 4 [(ethereum.eth.ext.ssz_size) = "32"];
 
     // The block body itself.
     BeaconBlockBody body = 5;
@@ -50,38 +50,38 @@ message SignedBeaconBlock {
     BeaconBlock block = 1;
 
     // 96 byte BLS signature from the validator that produced this block.
-    bytes signature = 2 [(ssz_size) = "96"];
+    bytes signature = 2 [(ethereum.eth.ext.ssz_size) = "96"];
 }
 
 // The block body of an Ethereum 2.0 beacon block.
 message BeaconBlockBody {
     // The validators RANDAO reveal 96 byte value.
-    bytes randao_reveal = 1 [(ssz_size) = "96"];
+    bytes randao_reveal = 1 [(ethereum.eth.ext.ssz_size) = "96"];
 
     // A reference to the Ethereum 1.x chain.
     Eth1Data eth1_data = 2;
 
     // 32 byte field of arbitrary data. This field may contain any data and
     // is not used for anything other than a fun message.
-    bytes graffiti = 3 [(ssz_size) = "32"];
+    bytes graffiti = 3 [(ethereum.eth.ext.ssz_size) = "32"];
 
     // Block operations
     // Refer to spec constants at https://github.com/ethereum/eth2.0-specs/blob/dev/specs/core/0_beacon-chain.md#max-operations-per-block
 
     // At most MAX_PROPOSER_SLASHINGS.
-    repeated ProposerSlashing proposer_slashings = 4 [(ssz_max) = "16"];
+    repeated ProposerSlashing proposer_slashings = 4 [(ethereum.eth.ext.ssz_max) = "16"];
 
     // At most MAX_ATTESTER_SLASHINGS.
-    repeated AttesterSlashing attester_slashings = 5 [(ssz_max) = "2"];
+    repeated AttesterSlashing attester_slashings = 5 [(ethereum.eth.ext.ssz_max) = "2"];
 
     // At most MAX_ATTESTATIONS.
-    repeated Attestation attestations = 6 [(ssz_max) = "128"];
+    repeated Attestation attestations = 6 [(ethereum.eth.ext.ssz_max) = "128"];
 
     // At most MAX_DEPOSITS.
-    repeated Deposit deposits = 7 [(ssz_max) = "16"];
+    repeated Deposit deposits = 7 [(ethereum.eth.ext.ssz_max) = "16"];
 
     // At most MAX_VOLUNTARY_EXITS.
-    repeated SignedVoluntaryExit voluntary_exits = 8 [(ssz_max) = "16"];
+    repeated SignedVoluntaryExit voluntary_exits = 8 [(ethereum.eth.ext.ssz_max) = "16"];
 }
 
 // Proposer slashings are proofs that a slashable offense has been committed by
@@ -107,23 +107,23 @@ message AttesterSlashing {
 // Deposit into the Ethereum 2.0 from the Ethereum 1.x deposit contract.
 message Deposit {
     // 32 byte roots in the deposit tree branch.
-    repeated bytes proof = 1 [(ssz_size) = "33,32"];
+    repeated bytes proof = 1 [(ethereum.eth.ext.ssz_size) = "33,32"];
 
     DepositData data = 2;
 }
 
 message DepositData {
     // 48 byte BLS public key of the validator.
-    bytes public_key = 1 [(ssz_size) = "48", (spec_name) = "pubkey"];
+    bytes public_key = 1 [(ethereum.eth.ext.ssz_size) = "48", (ethereum.eth.ext.spec_name) = "pubkey"];
 
     // A 32 byte hash of the withdrawal address public key.
-    bytes withdrawal_credentials = 2 [(ssz_size) = "32"];
+    bytes withdrawal_credentials = 2 [(ethereum.eth.ext.ssz_size) = "32"];
 
     // Deposit amount in gwei.
     uint64 amount = 3;
 
     // 96 byte signature from the validators public key.
-    bytes signature = 4 [(ssz_size) = "96"];
+    bytes signature = 4 [(ethereum.eth.ext.ssz_size) = "96"];
 }
 
 
@@ -144,14 +144,14 @@ message SignedVoluntaryExit {
     VoluntaryExit exit = 1;
 
     // Validator's 96 byte signature
-    bytes signature = 2 [(ssz_size) = "96"];
+    bytes signature = 2 [(ethereum.eth.ext.ssz_size) = "96"];
 }
 
 // Eth1Data represents references to the Ethereum 1.x deposit contract.
 message Eth1Data {
     // The 32 byte deposit tree root for the last deposit included in this
     // block.
-    bytes deposit_root = 1 [(ssz_size) = "32"];
+    bytes deposit_root = 1 [(ethereum.eth.ext.ssz_size) = "32"];
 
     // The total number of deposits included in the beacon chain since genesis
     // including the deposits in this block.
@@ -159,7 +159,7 @@ message Eth1Data {
 
     // The 32 byte block hash of the Ethereum 1.x block considered for deposit
     // inclusion.
-    bytes block_hash = 3 [(ssz_size) = "32"];
+    bytes block_hash = 3 [(ethereum.eth.ext.ssz_size) = "32"];
 }
 
 // A beacon block header is essentially a beacon block with only a reference to
@@ -174,13 +174,13 @@ message BeaconBlockHeader {
     uint64 proposer_index = 2;
 
     // 32 byte merkle tree root of the parent ssz encoded block.
-    bytes parent_root = 3 [(ssz_size) = "32"];
+    bytes parent_root = 3 [(ethereum.eth.ext.ssz_size) = "32"];
 
     // 32 byte merkle tree root of the resulting ssz encoded state after processing this block.
-    bytes state_root = 4 [(ssz_size) = "32"];
+    bytes state_root = 4 [(ethereum.eth.ext.ssz_size) = "32"];
 
     // 32 byte merkle tree root of the ssz encoded block body.
-    bytes body_root = 5 [(ssz_size) = "32"];
+    bytes body_root = 5 [(ethereum.eth.ext.ssz_size) = "32"];
 }
 
 message SignedBeaconBlockHeader {
@@ -188,14 +188,14 @@ message SignedBeaconBlockHeader {
     BeaconBlockHeader header = 1;
 
     // 96 byte BLS signature from the validator that produced this block header.
-    bytes signature = 2 [(ssz_size) = "96"];
+    bytes signature = 2 [(ethereum.eth.ext.ssz_size) = "96"];
 }
 
 message IndexedAttestation {
-    repeated uint64 attesting_indices = 1 [(ssz_max) = "2048"];
+    repeated uint64 attesting_indices = 1 [(ethereum.eth.ext.ssz_max) = "2048"];
 
     AttestationData data = 2;
 
     // 96 bytes aggregate signature.
-    bytes signature = 3 [(ssz_size) = "96"];
+    bytes signature = 3 [(ethereum.eth.ext.ssz_size) = "96"];
 }

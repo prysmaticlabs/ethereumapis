@@ -15,8 +15,8 @@ syntax = "proto3";
 
 package ethereum.eth.v1;
 
-import "eth/v1/options.proto";
 import "google/protobuf/descriptor.proto";
+import "eth/ext/options.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
@@ -28,12 +28,12 @@ option php_namespace = "Ethereum\\Eth\\v1";
 message Attestation {
     // A bitfield representation of validator indices that have voted exactly
     // the same vote and have been aggregated into this attestation.
-    bytes aggregation_bits = 1 [(ssz_max) = "2048", (cast_type) = "github.com/prysmaticlabs/go-bitfield.Bitlist"];
+    bytes aggregation_bits = 1 [(ethereum.eth.ext.ssz_max) = "2048", (ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/go-bitfield.Bitlist"];
 
     AttestationData data = 2;
 
     // 96 byte BLS aggregate signature.
-    bytes signature = 3 [(ssz_size) = "96"];
+    bytes signature = 3 [(ethereum.eth.ext.ssz_size) = "96"];
 }
 
 message AggregateAttestationAndProof {
@@ -44,7 +44,7 @@ message AggregateAttestationAndProof {
     Attestation aggregate = 3;
 
     // 96 byte selection proof signed by the aggregator, which is the signature of the slot to aggregate.
-    bytes selection_proof = 2 [(ssz_size) = "96"];
+    bytes selection_proof = 2 [(ethereum.eth.ext.ssz_size) = "96"];
 }
 
 message SignedAggregateAttestationAndProof {
@@ -52,7 +52,7 @@ message SignedAggregateAttestationAndProof {
     AggregateAttestationAndProof message = 1;
 
     // 96 byte BLS aggregate signature signed by the aggregator over the message.
-    bytes signature = 2 [(ssz_size) = "96"];
+    bytes signature = 2 [(ethereum.eth.ext.ssz_size) = "96"];
 }
 
 message AttestationData {
@@ -66,7 +66,7 @@ message AttestationData {
     uint64 committee_index = 2;
 
     // 32 byte root of the LMD GHOST block vote.
-    bytes beacon_block_root = 3 [(ssz_size) = "32"];
+    bytes beacon_block_root = 3 [(ethereum.eth.ext.ssz_size) = "32"];
 
     // The most recent justified checkpoint in the beacon state
     Checkpoint source = 4;
@@ -83,5 +83,5 @@ message Checkpoint {
     uint64 epoch = 1;
 
     // Block root of the checkpoint references.
-    bytes root = 2 [(ssz_size) = "32"];
+    bytes root = 2 [(ethereum.eth.ext.ssz_size) = "32"];
 }

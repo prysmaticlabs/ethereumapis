@@ -19,9 +19,9 @@ import "google/api/annotations.proto";
 import "google/protobuf/descriptor.proto";
 import "google/protobuf/empty.proto";
 
+import "eth/ext/options.proto";
 import "eth/v1/beacon_state.proto";
 import "eth/v1/beacon_chain_service.proto";
-import "eth/v1/options.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
@@ -52,7 +52,7 @@ message ForkChoiceHeadsResponse {
 }
 
 message ForkChoiceHead {
-  bytes root = 1 [(ssz_size) = "32"];
+  bytes root = 1 [(ethereum.eth.ext.ssz_size) = "32"];
   uint64 slot = 2;
 }
 

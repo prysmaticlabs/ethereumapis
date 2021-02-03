@@ -17,9 +17,10 @@ package ethereum.eth.v1alpha1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
+
+import "eth/ext/options.proto";
 import "eth/v1alpha1/beacon_block.proto";
 import "eth/v1alpha1/attestation.proto";
-import "eth/v1alpha1/options.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1alpha1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1;eth";
@@ -237,7 +238,7 @@ message DomainResponse {
 
 message ValidatorActivationRequest {
     // A list of 48 byte validator public keys.
-    repeated bytes public_keys = 1 [(ssz_size) = "?,48"];
+    repeated bytes public_keys = 1 [(ethereum.eth.ext.ssz_size) = "?,48"];
 }
 
 message ValidatorActivationResponse {
@@ -264,7 +265,7 @@ message ChainStartResponse {
     uint64 genesis_time = 2;
 
     // 32 byte hash tree root of the genesis validator set.
-    bytes genesis_validators_root = 3 [(ssz_size) = "32"];
+    bytes genesis_validators_root = 3 [(ethereum.eth.ext.ssz_size) = "32"];
 }
 
 message SyncedResponse {
@@ -277,7 +278,7 @@ message SyncedResponse {
 
 message ValidatorIndexRequest {
     // A 48 byte validator public key.
-    bytes public_key = 1 [(ssz_size) = "48"];
+    bytes public_key = 1 [(ethereum.eth.ext.ssz_size) = "48"];
 }
 
 message ValidatorIndexResponse {
@@ -287,7 +288,7 @@ message ValidatorIndexResponse {
 
 message ValidatorStatusRequest {
     // A 48 byte validator public key.
-    bytes public_key = 1 [(ssz_size) = "48"];
+    bytes public_key = 1 [(ethereum.eth.ext.ssz_size) = "48"];
 }
 
 enum ValidatorStatus {
@@ -324,14 +325,14 @@ message ValidatorStatusResponse {
 
 message MultipleValidatorStatusRequest {
     // A list of 48 byte validator public keys.
-    repeated bytes public_keys = 1 [(ssz_size) = "?,48"];
+    repeated bytes public_keys = 1 [(ethereum.eth.ext.ssz_size) = "?,48"];
     // A list of validator indices.
     repeated int64 indices = 2;
 }
 
 message MultipleValidatorStatusResponse {
     // A list of 48 byte validator public keys.
-    repeated bytes public_keys = 1 [(ssz_size) = "?,48"];
+    repeated bytes public_keys = 1 [(ethereum.eth.ext.ssz_size) = "?,48"];
     // A list of ValidatorStatusResponses mapped 1-to-1 with the public keys.
     repeated ValidatorStatusResponse statuses = 2;
     // A list of validator indices.
@@ -343,7 +344,7 @@ message DutiesRequest {
     uint64 epoch = 1;
 
     // Array of byte encoded BLS public keys.
-    repeated bytes public_keys = 2 [(ssz_size) = "?,48"];
+    repeated bytes public_keys = 2 [(ethereum.eth.ext.ssz_size) = "?,48"];
 }
 
 message DutiesResponse {
@@ -367,7 +368,7 @@ message DutiesResponse {
         repeated uint64 proposer_slots = 4;
 
         // 48 byte BLS public key for the validator who's assigned to perform a duty.
-        bytes public_key = 5 [(ssz_size) = "48"];
+        bytes public_key = 5 [(ethereum.eth.ext.ssz_size) = "48"];
 
         // The current status of the validator assigned to perform the duty.
         ValidatorStatus status = 6;
@@ -382,21 +383,21 @@ message BlockRequest {
     uint64 slot = 1;
 
     // Validator's 32 byte randao reveal secret of the current epoch.
-    bytes randao_reveal = 2 [(ssz_size) = "48"];
+    bytes randao_reveal = 2 [(ethereum.eth.ext.ssz_size) = "48"];
 
     // Validator's 32 byte graffiti message for the new block.
-    bytes graffiti = 3 [(ssz_size) = "32"];
+    bytes graffiti = 3 [(ethereum.eth.ext.ssz_size) = "32"];
 
 }
 
 message ProposeResponse {
     // The block root of the successfully proposed beacon block.
-    bytes block_root = 1 [(ssz_size) = "32"];
+    bytes block_root = 1 [(ethereum.eth.ext.ssz_size) = "32"];
 }
 
 message ProposeExitResponse {
     // The root of the successfully proposed voluntary exit.
-    bytes exit_root = 1 [(ssz_size) = "32"];
+    bytes exit_root = 1 [(ethereum.eth.ext.ssz_size) = "32"];
 }
 
 message AttestationDataRequest {
@@ -409,7 +410,7 @@ message AttestationDataRequest {
 
 message AttestResponse {
     // The root of the attestation data successfully submitted to the beacon node.
-    bytes attestation_data_root = 1 [(ssz_size) = "32"];
+    bytes attestation_data_root = 1 [(ethereum.eth.ext.ssz_size) = "32"];
 }
 
 message AggregateSelectionRequest {
@@ -418,10 +419,10 @@ message AggregateSelectionRequest {
     // Committee index of the validator at the given slot.
     uint64 committee_index = 2;
     // 48 byte public key of the validator.
-    bytes public_key = 3 [(ssz_size) = "48", (spec_name) = "pubkey"];
+    bytes public_key = 3 [(ethereum.eth.ext.ssz_size) = "48", (ethereum.eth.ext.spec_name) = "pubkey"];
     // 96 byte signature of the validator on the slot. This is used as proof that the validator is
     // an aggregator for the given slot.
-    bytes slot_signature = 4 [(ssz_size) = "96"];
+    bytes slot_signature = 4 [(ethereum.eth.ext.ssz_size) = "96"];
 }
 
 message AggregateSelectionResponse {
@@ -436,7 +437,7 @@ message SignedAggregateSubmitRequest {
 
 message SignedAggregateSubmitResponse {
     // The 32 byte hash tree root of the aggregated attestation data.
-    bytes attestation_data_root = 1  [(ssz_size) = "32"];
+    bytes attestation_data_root = 1  [(ethereum.eth.ext.ssz_size) = "32"];
 }
 
 message CommitteeSubnetsSubscribeRequest {
@@ -454,10 +455,10 @@ message CommitteeSubnetsSubscribeRequest {
 // An Ethereum 2.0 validator.
 message Validator {
     // 48 byte BLS public key used for the validator's activities.
-    bytes public_key = 1 [(ssz_size) = "48", (spec_name) = "pubkey"];
+    bytes public_key = 1 [(ethereum.eth.ext.ssz_size) = "48", (ethereum.eth.ext.spec_name) = "pubkey"];
 
     // 32 byte hash of the withdrawal destination public key.
-    bytes withdrawal_credentials = 2 [(ssz_size) = "32"];
+    bytes withdrawal_credentials = 2 [(ethereum.eth.ext.ssz_size) = "32"];
 
     // The validators current effective balance in gwei.
     uint64 effective_balance = 3;
