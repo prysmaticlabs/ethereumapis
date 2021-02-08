@@ -302,7 +302,7 @@ message StateCommitteesRequest {
   uint64 index = 3;
 
   // Committee slot requested.
-  uint64 slot = 4;
+  uint64 slot = 4 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Slot"];
 }
 
 message StateCommitteesResponse {
@@ -326,7 +326,7 @@ message BlockRootResponse {
 
 message BlockHeadersRequest {
   // Beacon chain slot of the requested block.
-  uint64 slot = 1;
+  uint64 slot = 1 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
   // 32 byte merkle tree root of the ssz encoded parent block.
   bytes parent_root = 2 [(gogoproto.moretags) = "ssz-size:\"32\""];
@@ -381,7 +381,7 @@ message BeaconBlockContainer {
 // Beacon Pool related API service.
 
 message AttestationsPoolRequest {
-  uint64 slot = 1;
+  uint64 slot = 1 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Slot"];
   uint64 committee_index = 2;
 }
 
