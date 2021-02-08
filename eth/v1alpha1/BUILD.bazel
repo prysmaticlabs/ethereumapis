@@ -101,11 +101,11 @@ go_proto_library(
 go_proto_library(
     name = "go_grpc_gateway_library",
     compilers = [
-        "@com_github_prysmaticlabs_protoc_gen_go_cast//:go_cast_grpc",
         "@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-grpc-gateway:go_gen_grpc_gateway",
     ],
     importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1",
     proto = ":proto",
+    embed = [":go_proto"],
     visibility = ["//visibility:public"],
     deps = [
         "//eth/ext:go_default_library",
