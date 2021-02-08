@@ -124,7 +124,7 @@ go_library(
         ":ssz_generated_files",  # keep
     ],
     embed = [
-        ":go_proto",
+        ":go_grpc_gateway_library",
     ],
     importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1",
     visibility = ["//visibility:public"],
