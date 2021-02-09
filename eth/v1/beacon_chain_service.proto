@@ -296,7 +296,7 @@ message StateCommitteesRequest {
   bytes state_id = 1; // TODO: Duck type handling.
 
   // The epoch to retrieve the committees of.
-  uint64 epoch = 2;
+  uint64 epoch = 2 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Epoch"];
 
   // Committee index requested.
   uint64 index = 3;

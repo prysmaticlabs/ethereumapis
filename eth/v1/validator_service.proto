@@ -106,7 +106,7 @@ service BeaconValidator {
 
 message AttesterDutiesRequest {
   // Epoch to request, should only be allowed 1 epoch ahead.
-  uint64 epoch = 1;
+  uint64 epoch = 1 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Epoch"];
 
   // Validator index to request duties for.
   repeated uint64 index = 2;
@@ -141,7 +141,7 @@ message AttesterDuty {
 
 message ProposerDutiesRequest {
   // Epoch to request duties for.
-  uint64 epoch = 1;
+  uint64 epoch = 1 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Epoch"];
 }
 
 message ProposerDutiesResponse {

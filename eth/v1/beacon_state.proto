@@ -89,5 +89,5 @@ message Committee {
 message Fork {
   bytes previous_version = 1 [(gogoproto.moretags) = "ssz-size:\"4\""];
   bytes current_version = 2 [(gogoproto.moretags) = "ssz-size:\"4\""];
-  uint64 epoch = 3;
+  uint64 epoch = 3 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Epoch"];
 }
