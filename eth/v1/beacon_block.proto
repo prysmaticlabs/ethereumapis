@@ -130,7 +130,7 @@ message Deposit {
 // validator signature.
 message VoluntaryExit {
     // The epoch on when exit request becomes valid.
-    uint64 epoch = 1;
+    uint64 epoch = 1 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Epoch"];
 
     // Index of the exiting validator.
     uint64 validator_index = 2;
