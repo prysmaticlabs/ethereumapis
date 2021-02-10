@@ -80,7 +80,7 @@ message Checkpoint {
     // is to link the check points together for justification and finalization.
 
     // Epoch the checkpoint references.
-    uint64 epoch = 1;
+    uint64 epoch = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Epoch"];
 
     // Block root of the checkpoint references.
     bytes root = 2 [(ethereum.eth.ext.ssz_size) = "32"];

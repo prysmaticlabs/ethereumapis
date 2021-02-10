@@ -10,6 +10,7 @@ package v1
 
 import (
 	"context"
+	types "github.com/prysmaticlabs/eth2-types"
 	"io"
 	"net/http"
 
@@ -448,10 +449,11 @@ func request_BeaconChain_ListCommittees_0(ctx context.Context, marshaler runtime
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "epoch")
 	}
 
-	protoReq.Epoch, err = runtime.Uint64(val)
+	epoch, err := runtime.Uint64(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "epoch", err)
 	}
+	protoReq.Epoch = types.Epoch(epoch)
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -491,10 +493,11 @@ func local_request_BeaconChain_ListCommittees_0(ctx context.Context, marshaler r
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "epoch")
 	}
 
-	protoReq.Epoch, err = runtime.Uint64(val)
+	epoch, err := runtime.Uint64(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "epoch", err)
 	}
+	protoReq.Epoch = types.Epoch(epoch)
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)

@@ -309,7 +309,7 @@ func (x *Metadata) GetSeqNumber() uint64 {
 	return 0
 }
 
-func (x *Metadata) GetAttnets() []byte {
+func (x *Metadata) GetAttnets() github_com_prysmaticlabs_go_bitfield.Bitvector64 {
 	if x != nil {
 		return x.Attnets
 	}

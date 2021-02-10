@@ -275,8 +275,8 @@ def ethereumapi_deps():
     go_repository(
         name = "org_golang_x_sys",
         importpath = "golang.org/x/sys",
-        sum = "h1:+Nyd8tzPX9R7BWHguqsrbFdRx3WQ/1ib8I44HXV5yTA=",
-        version = "v0.0.0-20200930185726-fdedc70b468f",
+        sum = "h1:myAQVi0cGEoqQVR5POX+8RR2mrocKqNN1hmeMqhX27k=",
+        version = "v0.0.0-20210119212857-b64e53b001e4",
     )
     go_repository(
         name = "org_golang_x_text",
@@ -287,8 +287,8 @@ def ethereumapi_deps():
     go_repository(
         name = "org_golang_x_tools",
         importpath = "golang.org/x/tools",
-        sum = "h1:BTs2GMGSMWpgtCpv1CE7vkJTv7XcHdcLLnAMu7UbgTY=",
-        version = "v0.0.0-20210115202250-e0d201561e39",
+        sum = "h1:po9/4sTYwZU9lPhi1tOrb4hCv3qrhiQ77LZfGa2OjwY=",
+        version = "v0.1.0",
     )
     go_repository(
         name = "org_golang_x_xerrors",
@@ -305,8 +305,8 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_ferranbt_fastssz",
         importpath = "github.com/ferranbt/fastssz",
-        sum = "h1:W2w+U6B6jVYrSAtip8HylYbu0G3XoJLLvggm1kuPKq4=",
-        version = "v0.0.0-20201210095258-318e164fe1dd",
+        sum = "h1:9VDpsWq096+oGMDTT/SgBD/VgZYf4pTF+KTPmZ+OaKM=",
+        version = "v0.0.0-20210120143747-11b9eff30ea9",
     )
     go_repository(
         name = "com_github_ghodss_yaml",
@@ -337,4 +337,10 @@ def ethereumapi_deps():
         importpath = "github.com/mitchellh/mapstructure",
         sum = "h1:7ks8ZkOP5/ujthUsT07rNv+nkLXCQWKNHuwzOAesEks=",
         version = "v1.4.0",
+    )
+    go_repository(
+        name = "com_github_prysmaticlabs_eth2_types",
+        importpath = "github.com/prysmaticlabs/eth2-types",
+        sum = "h1:n/ZI+/bZfkMoGoV2Rult3YvS5LT4dvpAFOuISq+I+GY=",
+        version = "v0.0.0-20210127031309-22cbe426eba6",
     )

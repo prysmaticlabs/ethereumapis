@@ -10,6 +10,7 @@ package v1
 
 import (
 	"context"
+	types "github.com/prysmaticlabs/eth2-types"
 	"io"
 	"net/http"
 
@@ -51,10 +52,11 @@ func request_BeaconValidator_GetAttesterDuties_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "epoch")
 	}
 
-	protoReq.Epoch, err = runtime.Uint64(val)
+	epoch, err := runtime.Uint64(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "epoch", err)
 	}
+	protoReq.Epoch = types.Epoch(epoch)
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -84,10 +86,11 @@ func local_request_BeaconValidator_GetAttesterDuties_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "epoch")
 	}
 
-	protoReq.Epoch, err = runtime.Uint64(val)
+	epoch, err := runtime.Uint64(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "epoch", err)
 	}
+	protoReq.Epoch = types.Epoch(epoch)
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -117,10 +120,11 @@ func request_BeaconValidator_GetProposerDuties_0(ctx context.Context, marshaler 
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "epoch")
 	}
 
-	protoReq.Epoch, err = runtime.Uint64(val)
+	epoch, err := runtime.Uint64(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "epoch", err)
 	}
+	protoReq.Epoch = types.Epoch(epoch)
 
 	msg, err := client.GetProposerDuties(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -143,10 +147,11 @@ func local_request_BeaconValidator_GetProposerDuties_0(ctx context.Context, mars
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "epoch")
 	}
 
-	protoReq.Epoch, err = runtime.Uint64(val)
+	epoch, err := runtime.Uint64(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "epoch", err)
 	}
+	protoReq.Epoch = types.Epoch(epoch)
 
 	msg, err := server.GetProposerDuties(ctx, &protoReq)
 	return msg, metadata, err
