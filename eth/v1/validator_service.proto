@@ -78,7 +78,10 @@ service BeaconValidator {
   //
   // - 500: Beacon node internal error.
   rpc SubmitAggregateAndProofs(AggregateAndProofsSubmit) returns (google.protobuf.Empty) {
-    option (google.api.http) = { post: "/eth/v1/validator/aggregate_and_proofs" };
+    option (google.api.http) = {
+      post: "/eth/v1/validator/aggregate_and_proofs"
+      body: "data"
+    };
   }
 
   // SubmitBeaconCommitteeSubscription requests the beacon node to search using discv5 for peers related to
@@ -95,8 +98,11 @@ service BeaconValidator {
   // - 500: Beacon node internal error.
   //
   // - 503: Beacon node is currently syncing, try again later.
-  rpc SubmitBeaconCommitteeSubscription(BeaconCommitteesSubscribeSubmit) returns (google.protobuf.Empty) {
-    option (google.api.http) = { post: "/eth/v1/validator/beacon_committee_subscriptions" };
+  rpc SubmitBeaconCommitteeSubscription(BeaconCommitteeSubscribeSubmit) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/eth/v1/validator/beacon_committee_subscriptions"
+      body: "data"
+    };
   }
 }
 
@@ -199,7 +205,7 @@ message AggregateAndProofsSubmit {
   repeated AggregateAttestationAndProof data = 1;
 }
 
-message BeaconCommitteesSubscribeSubmit {
+message BeaconCommitteeSubscribeSubmit {
   repeated BeaconCommitteeSubscribe data = 1;
 }
 
