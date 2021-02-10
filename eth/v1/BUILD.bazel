@@ -97,7 +97,7 @@ go_proto_library(
 )
 
 go_library(
-    name = "grpc_library",
+    name = "go_grpc_gateway_library",
     srcs = glob(["*.pb.gw.go"]),
     embed = [":go_proto"],
     importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1",
@@ -126,7 +126,7 @@ go_library(
         ":ssz_generated_files",  # keep
     ],
     embed = [
-        ":grpc_library",
+        ":go_grpc_gateway_library",
     ],
     importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1",
     visibility = ["//visibility:public"],
