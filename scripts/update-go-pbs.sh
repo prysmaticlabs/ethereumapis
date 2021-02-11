@@ -40,3 +40,9 @@ for ((i = 0; i < ${arraylength}; i++)); do
     cp -R -L "${file_list[i]}" "$destination"
     echo Updated $destination
 done
+
+# Run goimports on newly generated protos until gogo protobuf's proto-gen-go
+# formats imports properly.
+# https://github.com/gogo/protobuf/issues/554
+goimports -w eth/**/*.pb.go
+gofmt -s -w eth/
