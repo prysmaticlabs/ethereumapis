@@ -137,7 +137,7 @@ message AttesterDuty {
   uint64 validator_committee_index = 6;
 
   // The slot this duty is for.
-  uint64 slot = 7;
+  uint64 slot = 7 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 }
 
 message ProposerDutiesRequest {
@@ -157,12 +157,12 @@ message ProposerDuty {
   uint64 validator_index = 2;
 
   // The slot this duty is for.
-  uint64 slot = 3;
+  uint64 slot = 3 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 }
 
 message ProposerBlockRequest {
   // The slot to request a block for.
-  uint64 slot = 1;
+  uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
   // The validators RANDAO reveal 96 byte value.
   bytes randao_reveal = 2 [(ethereum.eth.ext.ssz_size) = "96"];
@@ -178,7 +178,7 @@ message ProposerBlockResponse {
 
 message AttestationDataRequest {
   // Slot for which the attestation data should be retrieved for.
-  uint64 slot = 1;
+  uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
   // Committee index for which the attestation data should be retrieved for.
   uint64 committee_index = 2;
@@ -193,7 +193,7 @@ message AggregateAttestationRequest {
   bytes attestation_data_root = 1 [(ethereum.eth.ext.ssz_size) = "32"];
 
   // The slot for the requested aggregate attestation.
-  uint64 slot = 2;
+  uint64 slot = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 }
 
 message AttestationResponse {
@@ -216,7 +216,7 @@ message BeaconCommitteeSubscribe {
   uint64 committees_at_slot = 2;
 
   // The slot to be subscribed to.
-  uint64 slot = 3;
+  uint64 slot = 3 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
   // If subscribing for aggregator, the beacon node will aggregate all attestations received.
   bool is_aggregator = 4;

@@ -10,10 +10,10 @@ package v1
 
 import (
 	"context"
-	types "github.com/prysmaticlabs/eth2-types"
 	"io"
 	"net/http"
 
+	types "github.com/prysmaticlabs/eth2-types"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
 	"google.golang.org/grpc"
@@ -54,7 +54,7 @@ func request_BeaconValidator_GetAttesterDuties_0(ctx context.Context, marshaler 
 
 	epoch, err := runtime.Uint64(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "epoch", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "slot", err)
 	}
 	protoReq.Epoch = types.Epoch(epoch)
 
@@ -88,7 +88,7 @@ func local_request_BeaconValidator_GetAttesterDuties_0(ctx context.Context, mars
 
 	epoch, err := runtime.Uint64(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "epoch", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "slot", err)
 	}
 	protoReq.Epoch = types.Epoch(epoch)
 
@@ -122,7 +122,7 @@ func request_BeaconValidator_GetProposerDuties_0(ctx context.Context, marshaler 
 
 	epoch, err := runtime.Uint64(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "epoch", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "slot", err)
 	}
 	protoReq.Epoch = types.Epoch(epoch)
 
@@ -149,7 +149,7 @@ func local_request_BeaconValidator_GetProposerDuties_0(ctx context.Context, mars
 
 	epoch, err := runtime.Uint64(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "epoch", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "slot", err)
 	}
 	protoReq.Epoch = types.Epoch(epoch)
 
@@ -178,10 +178,11 @@ func request_BeaconValidator_GetBlock_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "slot")
 	}
 
-	protoReq.Slot, err = runtime.Uint64(val)
+	slot, err := runtime.Uint64(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "slot", err)
 	}
+	protoReq.Slot = types.Slot(slot)
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -211,10 +212,11 @@ func local_request_BeaconValidator_GetBlock_0(ctx context.Context, marshaler run
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "slot")
 	}
 
-	protoReq.Slot, err = runtime.Uint64(val)
+	slot, err := runtime.Uint64(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "slot", err)
 	}
+	protoReq.Slot = types.Slot(slot)
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -300,18 +302,15 @@ func local_request_BeaconValidator_GetAggregateAttestation_0(ctx context.Context
 
 }
 
-var (
-	filter_BeaconValidator_SubmitAggregateAndProofs_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
-)
-
 func request_BeaconValidator_SubmitAggregateAndProofs_0(ctx context.Context, marshaler runtime.Marshaler, client BeaconValidatorClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq AggregateAndProofsSubmit
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_BeaconValidator_SubmitAggregateAndProofs_0); err != nil {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Data); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -324,10 +323,11 @@ func local_request_BeaconValidator_SubmitAggregateAndProofs_0(ctx context.Contex
 	var protoReq AggregateAndProofsSubmit
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_BeaconValidator_SubmitAggregateAndProofs_0); err != nil {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Data); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -336,18 +336,15 @@ func local_request_BeaconValidator_SubmitAggregateAndProofs_0(ctx context.Contex
 
 }
 
-var (
-	filter_BeaconValidator_SubmitBeaconCommitteeSubscription_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
-)
-
 func request_BeaconValidator_SubmitBeaconCommitteeSubscription_0(ctx context.Context, marshaler runtime.Marshaler, client BeaconValidatorClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq BeaconCommitteeSubscribeSubmit
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_BeaconValidator_SubmitBeaconCommitteeSubscription_0); err != nil {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Data); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -360,10 +357,11 @@ func local_request_BeaconValidator_SubmitBeaconCommitteeSubscription_0(ctx conte
 	var protoReq BeaconCommitteeSubscribeSubmit
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_BeaconValidator_SubmitBeaconCommitteeSubscription_0); err != nil {
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq.Data); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 

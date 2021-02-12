@@ -313,7 +313,7 @@ message ValidatorStatusResponse {
 
     // The slot in the beacon chain in which the validator's
     // deposit was included in a block.
-    uint64 deposit_inclusion_slot = 3;
+    uint64 deposit_inclusion_slot = 3 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
     // The epoch in the beacon chain in which the validator
     // is determined as active.
@@ -362,10 +362,10 @@ message DutiesResponse {
         uint64 committee_index = 2;
 
         // Slot at which a validator must attest.
-        uint64 attester_slot = 3;
+        uint64 attester_slot = 3 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
         // Slots at which a validator must propose a beacon chain block.
-        repeated uint64 proposer_slots = 4;
+        repeated uint64 proposer_slots = 4 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
         // 48 byte BLS public key for the validator who's assigned to perform a duty.
         bytes public_key = 5 [(ethereum.eth.ext.ssz_size) = "48"];
@@ -380,7 +380,7 @@ message DutiesResponse {
 
 message BlockRequest {
     // Slot for which the block should be proposed.
-    uint64 slot = 1;
+    uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
     // Validator's 32 byte randao reveal secret of the current epoch.
     bytes randao_reveal = 2 [(ethereum.eth.ext.ssz_size) = "48"];
@@ -402,7 +402,7 @@ message ProposeExitResponse {
 
 message AttestationDataRequest {
     // Slot for which the attestation should be created.
-    uint64 slot = 1;
+    uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
     // Committee index the attestation should be created for.
     uint64 committee_index = 2;
@@ -415,7 +415,7 @@ message AttestResponse {
 
 message AggregateSelectionRequest {
     // Slot for which the aggregation request applies.
-    uint64 slot = 1;
+    uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
     // Committee index of the validator at the given slot.
     uint64 committee_index = 2;
     // 48 byte public key of the validator.
@@ -442,7 +442,7 @@ message SignedAggregateSubmitResponse {
 
 message CommitteeSubnetsSubscribeRequest {
     // A list of intended slots to subscribe.
-    repeated uint64 slots = 1;
+    repeated uint64 slots = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
     // A list of intended committee ids to subscribe. It is mapped 1-to-1 with the slots
     repeated uint64 committee_ids = 2;
     // Whether to subscribe as an aggregator or by default attester.

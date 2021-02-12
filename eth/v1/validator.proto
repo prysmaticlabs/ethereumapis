@@ -50,7 +50,7 @@ message Validator {
     // Epoch when the validator became eligible for activation. This field may
     // be zero if the validator was present in the Ethereum 2.0 genesis. This
     // field is FAR_FUTURE_EPOCH if the validator has not been activated.
-    uint64 activation_eligibility_epoch = 5;
+    uint64 activation_eligibility_epoch = 5 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Epoch"];
 
     // Epoch when the validator was activated. This field may be zero if the
     // validator was present in the Ethereum 2.0 genesis. This field is

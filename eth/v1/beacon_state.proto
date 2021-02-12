@@ -33,7 +33,7 @@ message BeaconState {
   // Versioning
   uint64 genesis_time = 1;
   bytes genesis_validators_root = 2 [(ethereum.eth.ext.ssz_size) = "32"];
-  uint64 slot = 3;
+  uint64 slot = 3 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
   Fork fork = 4;
 
   // History
@@ -75,14 +75,14 @@ message PendingAttestation {
   bytes aggregation_bits = 1 [(ethereum.eth.ext.ssz_max) = "2048", (ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/go-bitfield.Bitlist"];
   AttestationData data = 2;
   // The difference of when attestation gets created and get included on chain.
-  uint64 inclusion_delay = 3;
+  uint64 inclusion_delay = 3 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
   // The proposer who included the attestation in the block.
   uint64 proposer_index = 4;
 }
 
 message Committee {
   uint64 index = 1;
-  uint64 slot = 2;
+  uint64 slot = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
   repeated uint64 validators = 3;
 }
 

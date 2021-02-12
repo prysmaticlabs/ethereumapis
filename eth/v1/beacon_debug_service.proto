@@ -53,7 +53,7 @@ message ForkChoiceHeadsResponse {
 
 message ForkChoiceHead {
   bytes root = 1 [(ethereum.eth.ext.ssz_size) = "32"];
-  uint64 slot = 2;
+  uint64 slot = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 }
 
 message BeaconStateResponse {

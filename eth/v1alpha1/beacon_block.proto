@@ -28,7 +28,7 @@ option php_namespace = "Ethereum\\Eth\\v1alpha1";
 // The Ethereum 2.0 beacon block. The message does not contain a validator signature.
 message BeaconBlock {
     // Beacon chain slot that this block represents.
-    uint64 slot = 1;
+    uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
     // Validator index of the validator that proposed the block header.
     uint64 proposer_index = 2;
@@ -167,7 +167,7 @@ message Eth1Data {
 // a validator signature.
 message BeaconBlockHeader {
     // Beacon chain slot that this block represents.
-    uint64 slot = 1;
+    uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
     // Validator index of the validator that proposed the block header.
     uint64 proposer_index = 2;

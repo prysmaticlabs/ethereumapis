@@ -59,7 +59,7 @@ message AttestationData {
     // See: https://arxiv.org/pdf/1710.09437.pdf
 
     // Slot of the attestation attesting for.
-    uint64 slot = 1;
+    uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
     // The committee index that submitted this attestation.
     uint64 committee_index = 2;

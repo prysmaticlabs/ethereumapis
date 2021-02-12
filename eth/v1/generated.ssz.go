@@ -360,7 +360,7 @@ func (a *AttestationData) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 
 	// Field (0) 'Slot'
-	dst = ssz.MarshalUint64(dst, a.Slot)
+	dst = ssz.MarshalUint64(dst, uint64(a.Slot))
 
 	// Field (1) 'CommitteeIndex'
 	dst = ssz.MarshalUint64(dst, a.CommitteeIndex)
@@ -400,7 +400,7 @@ func (a *AttestationData) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (0) 'Slot'
-	a.Slot = ssz.UnmarshallUint64(buf[0:8])
+	a.Slot = github_com_prysmaticlabs_eth2_types.Slot(ssz.UnmarshallUint64(buf[0:8]))
 
 	// Field (1) 'CommitteeIndex'
 	a.CommitteeIndex = ssz.UnmarshallUint64(buf[8:16])
@@ -446,7 +446,7 @@ func (a *AttestationData) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Slot'
-	hh.PutUint64(a.Slot)
+	hh.PutUint64(uint64(a.Slot))
 
 	// Field (1) 'CommitteeIndex'
 	hh.PutUint64(a.CommitteeIndex)
@@ -554,7 +554,7 @@ func (b *BeaconBlock) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	offset := int(84)
 
 	// Field (0) 'Slot'
-	dst = ssz.MarshalUint64(dst, b.Slot)
+	dst = ssz.MarshalUint64(dst, uint64(b.Slot))
 
 	// Field (1) 'ProposerIndex'
 	dst = ssz.MarshalUint64(dst, b.ProposerIndex)
@@ -600,7 +600,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 	var o4 uint64
 
 	// Field (0) 'Slot'
-	b.Slot = ssz.UnmarshallUint64(buf[0:8])
+	b.Slot = github_com_prysmaticlabs_eth2_types.Slot(ssz.UnmarshallUint64(buf[0:8]))
 
 	// Field (1) 'ProposerIndex'
 	b.ProposerIndex = ssz.UnmarshallUint64(buf[8:16])
@@ -658,7 +658,7 @@ func (b *BeaconBlock) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Slot'
-	hh.PutUint64(b.Slot)
+	hh.PutUint64(uint64(b.Slot))
 
 	// Field (1) 'ProposerIndex'
 	hh.PutUint64(b.ProposerIndex)
@@ -1882,7 +1882,7 @@ func (b *BeaconBlockHeader) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 
 	// Field (0) 'Slot'
-	dst = ssz.MarshalUint64(dst, b.Slot)
+	dst = ssz.MarshalUint64(dst, uint64(b.Slot))
 
 	// Field (1) 'ProposerIndex'
 	dst = ssz.MarshalUint64(dst, b.ProposerIndex)
@@ -1920,7 +1920,7 @@ func (b *BeaconBlockHeader) UnmarshalSSZ(buf []byte) error {
 	}
 
 	// Field (0) 'Slot'
-	b.Slot = ssz.UnmarshallUint64(buf[0:8])
+	b.Slot = github_com_prysmaticlabs_eth2_types.Slot(ssz.UnmarshallUint64(buf[0:8]))
 
 	// Field (1) 'ProposerIndex'
 	b.ProposerIndex = ssz.UnmarshallUint64(buf[8:16])
@@ -1962,7 +1962,7 @@ func (b *BeaconBlockHeader) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'Slot'
-	hh.PutUint64(b.Slot)
+	hh.PutUint64(uint64(b.Slot))
 
 	// Field (1) 'ProposerIndex'
 	hh.PutUint64(b.ProposerIndex)
@@ -2241,7 +2241,7 @@ func (v *Validator) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = ssz.MarshalBool(dst, v.Slashed)
 
 	// Field (4) 'ActivationEligibilityEpoch'
-	dst = ssz.MarshalUint64(dst, v.ActivationEligibilityEpoch)
+	dst = ssz.MarshalUint64(dst, uint64(v.ActivationEligibilityEpoch))
 
 	// Field (5) 'ActivationEpoch'
 	dst = ssz.MarshalUint64(dst, uint64(v.ActivationEpoch))
@@ -2282,7 +2282,7 @@ func (v *Validator) UnmarshalSSZ(buf []byte) error {
 	v.Slashed = ssz.UnmarshalBool(buf[88:89])
 
 	// Field (4) 'ActivationEligibilityEpoch'
-	v.ActivationEligibilityEpoch = ssz.UnmarshallUint64(buf[89:97])
+	v.ActivationEligibilityEpoch = github_com_prysmaticlabs_eth2_types.Epoch(ssz.UnmarshallUint64(buf[89:97]))
 
 	// Field (5) 'ActivationEpoch'
 	v.ActivationEpoch = github_com_prysmaticlabs_eth2_types.Epoch(ssz.UnmarshallUint64(buf[97:105]))
@@ -2332,7 +2332,7 @@ func (v *Validator) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	hh.PutBool(v.Slashed)
 
 	// Field (4) 'ActivationEligibilityEpoch'
-	hh.PutUint64(v.ActivationEligibilityEpoch)
+	hh.PutUint64(uint64(v.ActivationEligibilityEpoch))
 
 	// Field (5) 'ActivationEpoch'
 	hh.PutUint64(uint64(v.ActivationEpoch))

@@ -364,7 +364,7 @@ message ListBlocksRequest {
         // Slot to lookup a block. If the slot is not yet finalized, this
         // criteria may yield multiple valid blocks if the node has seen blocks
         // from another fork.
-        uint64 slot = 2;
+        uint64 slot = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
         // The epoch number for which to retrieve blocks. If specified, this
         // will return all blocks found within the span of the specified epoch.
@@ -417,7 +417,7 @@ message BeaconBlockContainer {
 // Information about the head of the beacon chain.
 message ChainHead {
     // Slot of the head block.
-    uint64 head_slot = 1;
+    uint64 head_slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
     // Epoch of the head block.
     uint64 head_epoch = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Epoch"];
@@ -426,7 +426,7 @@ message ChainHead {
     bytes head_block_root = 3 [(ethereum.eth.ext.ssz_size) = "32"];
 
     // Most recent slot that contains the finalized block.
-    uint64 finalized_slot = 4;
+    uint64 finalized_slot = 4 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
     // Epoch of the finalized block.
     uint64 finalized_epoch = 5 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Epoch"];
@@ -435,7 +435,7 @@ message ChainHead {
     bytes finalized_block_root = 6 [(ethereum.eth.ext.ssz_size) = "32"];
 
     // Most recent slot that contains the justified block.
-    uint64 justified_slot = 7;
+    uint64 justified_slot = 7 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
     // Epoch of the justified block.
     uint64 justified_epoch = 8 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Epoch"];
@@ -444,7 +444,7 @@ message ChainHead {
     bytes justified_block_root = 9 [(ethereum.eth.ext.ssz_size) = "32"];
 
     // Most recent slot that contains the previous justified block.
-    uint64 previous_justified_slot = 10;
+    uint64 previous_justified_slot = 10 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
     // Epoch of the previous justified block.
     uint64 previous_justified_epoch = 11 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Epoch"];
@@ -654,10 +654,10 @@ message ValidatorPerformanceResponse {
     repeated uint64 current_effective_balances = 1;
     // The slot of when validator's attestation got included in the chain at previous epoch, the slot
     // is mapped 1-to-1 with the request's public keys.
-    repeated uint64 inclusion_slots = 2;
+    repeated uint64 inclusion_slots = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
     // The distance of when validator submitted and got included in the chain, the distance
     // is mapped 1-to-1 with the request's public keys.
-    repeated uint64 inclusion_distances = 3;
+    repeated uint64 inclusion_distances = 3 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
     // Whether the list of validator recently correctly voted for source at previous epoch, the result
     // is mapped 1-to-1 with the request's public keys.
     repeated bool correctly_voted_source = 4;
@@ -740,11 +740,11 @@ message ValidatorAssignments {
 
         // Beacon chain slot in which the validator must perform its assigned
         // duty as an attester.
-        uint64 attester_slot = 3;
+        uint64 attester_slot = 3 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
         // Beacon chain slots in which the validator must perform its assigned
         // duty as a proposer.
-        repeated uint64 proposer_slots = 4;
+        repeated uint64 proposer_slots = 4 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
         // 48 byte BLS public key.
         bytes public_key = 5 [(ethereum.eth.ext.ssz_size) = "48", deprecated = true];
@@ -862,9 +862,9 @@ message IndividualVotesRespond {
         // The current effective balance of the validator.
         uint64 current_epoch_effective_balance_gwei = 13;
         // The slots of when the validator's attestation got included in the block.
-        uint64 inclusion_slot = 14;
+        uint64 inclusion_slot = 14 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
         // How many slots have passed until the validator's attestation got included in the block.
-        uint64 inclusion_distance = 15;
+        uint64 inclusion_distance = 15 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
     }
 
     repeated IndividualVote individual_votes = 1;
