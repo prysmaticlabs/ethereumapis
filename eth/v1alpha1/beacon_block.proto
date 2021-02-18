@@ -190,7 +190,7 @@ message SignedBeaconBlockHeader {
 }
 
 message IndexedAttestation {
-    repeated uint64 attesting_indices = 1 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex", (gogoproto.moretags) = "ssz-max:\"2048\""];
+    repeated uint64 attesting_indices = 1 [(gogoproto.moretags) = "ssz-max:\"2048\""];
 
     AttestationData data = 2;
 

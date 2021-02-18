@@ -2110,7 +2110,7 @@ func (i *IndexedAttestation) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 		return
 	}
 	for ii := 0; ii < len(i.AttestingIndices); ii++ {
-		dst = ssz.MarshalUint64(dst, uint64(i.AttestingIndices[ii]))
+		dst = ssz.MarshalUint64(dst, i.AttestingIndices[ii])
 	}
 
 	return
@@ -2155,7 +2155,7 @@ func (i *IndexedAttestation) UnmarshalSSZ(buf []byte) error {
 		}
 		i.AttestingIndices = ssz.ExtendUint64(i.AttestingIndices, num)
 		for ii := 0; ii < num; ii++ {
-			i.AttestingIndices[ii] = github_com_prysmaticlabs_eth2_types.ValidatorIndex(ssz.UnmarshallUint64(buf[ii*8 : (ii+1)*8]))
+			i.AttestingIndices[ii] = ssz.UnmarshallUint64(buf[ii*8 : (ii+1)*8])
 		}
 	}
 	return err
