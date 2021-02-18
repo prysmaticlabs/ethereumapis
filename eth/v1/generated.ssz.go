@@ -142,7 +142,7 @@ func (a *AggregateAttestationAndProof) MarshalSSZTo(buf []byte) (dst []byte, err
 	offset := int(108)
 
 	// Field (0) 'AggregatorIndex'
-	dst = ssz.MarshalUint64(dst, a.AggregatorIndex)
+	dst = ssz.MarshalUint64(dst, uint64(a.AggregatorIndex))
 
 	// Offset (1) 'Aggregate'
 	dst = ssz.WriteOffset(dst, offset)
@@ -178,7 +178,7 @@ func (a *AggregateAttestationAndProof) UnmarshalSSZ(buf []byte) error {
 	var o1 uint64
 
 	// Field (0) 'AggregatorIndex'
-	a.AggregatorIndex = ssz.UnmarshallUint64(buf[0:8])
+	a.AggregatorIndex = github_com_prysmaticlabs_eth2_types.ValidatorIndex(ssz.UnmarshallUint64(buf[0:8]))
 
 	// Offset (1) 'Aggregate'
 	if o1 = ssz.ReadOffset(buf[8:12]); o1 > size {
@@ -227,7 +227,7 @@ func (a *AggregateAttestationAndProof) HashTreeRootWith(hh *ssz.Hasher) (err err
 	indx := hh.Index()
 
 	// Field (0) 'AggregatorIndex'
-	hh.PutUint64(a.AggregatorIndex)
+	hh.PutUint64(uint64(a.AggregatorIndex))
 
 	// Field (1) 'Aggregate'
 	if err = a.Aggregate.HashTreeRootWith(hh); err != nil {
@@ -557,7 +557,7 @@ func (b *BeaconBlock) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = ssz.MarshalUint64(dst, uint64(b.Slot))
 
 	// Field (1) 'ProposerIndex'
-	dst = ssz.MarshalUint64(dst, b.ProposerIndex)
+	dst = ssz.MarshalUint64(dst, uint64(b.ProposerIndex))
 
 	// Field (2) 'ParentRoot'
 	if len(b.ParentRoot) != 32 {
@@ -603,7 +603,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 	b.Slot = github_com_prysmaticlabs_eth2_types.Slot(ssz.UnmarshallUint64(buf[0:8]))
 
 	// Field (1) 'ProposerIndex'
-	b.ProposerIndex = ssz.UnmarshallUint64(buf[8:16])
+	b.ProposerIndex = github_com_prysmaticlabs_eth2_types.ValidatorIndex(ssz.UnmarshallUint64(buf[8:16]))
 
 	// Field (2) 'ParentRoot'
 	if cap(b.ParentRoot) == 0 {
@@ -661,7 +661,7 @@ func (b *BeaconBlock) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	hh.PutUint64(uint64(b.Slot))
 
 	// Field (1) 'ProposerIndex'
-	hh.PutUint64(b.ProposerIndex)
+	hh.PutUint64(uint64(b.ProposerIndex))
 
 	// Field (2) 'ParentRoot'
 	if len(b.ParentRoot) != 32 {
@@ -1651,7 +1651,7 @@ func (v *VoluntaryExit) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = ssz.MarshalUint64(dst, uint64(v.Epoch))
 
 	// Field (1) 'ValidatorIndex'
-	dst = ssz.MarshalUint64(dst, v.ValidatorIndex)
+	dst = ssz.MarshalUint64(dst, uint64(v.ValidatorIndex))
 
 	return
 }
@@ -1668,7 +1668,7 @@ func (v *VoluntaryExit) UnmarshalSSZ(buf []byte) error {
 	v.Epoch = github_com_prysmaticlabs_eth2_types.Epoch(ssz.UnmarshallUint64(buf[0:8]))
 
 	// Field (1) 'ValidatorIndex'
-	v.ValidatorIndex = ssz.UnmarshallUint64(buf[8:16])
+	v.ValidatorIndex = github_com_prysmaticlabs_eth2_types.ValidatorIndex(ssz.UnmarshallUint64(buf[8:16]))
 
 	return err
 }
@@ -1692,7 +1692,7 @@ func (v *VoluntaryExit) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	hh.PutUint64(uint64(v.Epoch))
 
 	// Field (1) 'ValidatorIndex'
-	hh.PutUint64(v.ValidatorIndex)
+	hh.PutUint64(uint64(v.ValidatorIndex))
 
 	hh.Merkleize(indx)
 	return
@@ -1885,7 +1885,7 @@ func (b *BeaconBlockHeader) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = ssz.MarshalUint64(dst, uint64(b.Slot))
 
 	// Field (1) 'ProposerIndex'
-	dst = ssz.MarshalUint64(dst, b.ProposerIndex)
+	dst = ssz.MarshalUint64(dst, uint64(b.ProposerIndex))
 
 	// Field (2) 'ParentRoot'
 	if len(b.ParentRoot) != 32 {
@@ -1923,7 +1923,7 @@ func (b *BeaconBlockHeader) UnmarshalSSZ(buf []byte) error {
 	b.Slot = github_com_prysmaticlabs_eth2_types.Slot(ssz.UnmarshallUint64(buf[0:8]))
 
 	// Field (1) 'ProposerIndex'
-	b.ProposerIndex = ssz.UnmarshallUint64(buf[8:16])
+	b.ProposerIndex = github_com_prysmaticlabs_eth2_types.ValidatorIndex(ssz.UnmarshallUint64(buf[8:16]))
 
 	// Field (2) 'ParentRoot'
 	if cap(b.ParentRoot) == 0 {
@@ -1965,7 +1965,7 @@ func (b *BeaconBlockHeader) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	hh.PutUint64(uint64(b.Slot))
 
 	// Field (1) 'ProposerIndex'
-	hh.PutUint64(b.ProposerIndex)
+	hh.PutUint64(uint64(b.ProposerIndex))
 
 	// Field (2) 'ParentRoot'
 	if len(b.ParentRoot) != 32 {
@@ -2110,7 +2110,7 @@ func (i *IndexedAttestation) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 		return
 	}
 	for ii := 0; ii < len(i.AttestingIndices); ii++ {
-		dst = ssz.MarshalUint64(dst, i.AttestingIndices[ii])
+		dst = ssz.MarshalUint64(dst, uint64(i.AttestingIndices[ii]))
 	}
 
 	return
@@ -2155,7 +2155,7 @@ func (i *IndexedAttestation) UnmarshalSSZ(buf []byte) error {
 		}
 		i.AttestingIndices = ssz.ExtendUint64(i.AttestingIndices, num)
 		for ii := 0; ii < num; ii++ {
-			i.AttestingIndices[ii] = ssz.UnmarshallUint64(buf[ii*8 : (ii+1)*8])
+			i.AttestingIndices[ii] = github_com_prysmaticlabs_eth2_types.ValidatorIndex(ssz.UnmarshallUint64(buf[ii*8 : (ii+1)*8]))
 		}
 	}
 	return err
