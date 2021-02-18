@@ -363,7 +363,7 @@ func (a *AttestationData) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = ssz.MarshalUint64(dst, uint64(a.Slot))
 
 	// Field (1) 'CommitteeIndex'
-	dst = ssz.MarshalUint64(dst, a.CommitteeIndex)
+	dst = ssz.MarshalUint64(dst, uint64(a.CommitteeIndex))
 
 	// Field (2) 'BeaconBlockRoot'
 	if len(a.BeaconBlockRoot) != 32 {
@@ -403,7 +403,7 @@ func (a *AttestationData) UnmarshalSSZ(buf []byte) error {
 	a.Slot = github_com_prysmaticlabs_eth2_types.Slot(ssz.UnmarshallUint64(buf[0:8]))
 
 	// Field (1) 'CommitteeIndex'
-	a.CommitteeIndex = ssz.UnmarshallUint64(buf[8:16])
+	a.CommitteeIndex = github_com_prysmaticlabs_eth2_types.CommitteeIndex(ssz.UnmarshallUint64(buf[8:16]))
 
 	// Field (2) 'BeaconBlockRoot'
 	if cap(a.BeaconBlockRoot) == 0 {
@@ -449,7 +449,7 @@ func (a *AttestationData) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	hh.PutUint64(uint64(a.Slot))
 
 	// Field (1) 'CommitteeIndex'
-	hh.PutUint64(a.CommitteeIndex)
+	hh.PutUint64(uint64(a.CommitteeIndex))
 
 	// Field (2) 'BeaconBlockRoot'
 	if len(a.BeaconBlockRoot) != 32 {

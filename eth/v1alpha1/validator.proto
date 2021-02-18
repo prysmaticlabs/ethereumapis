@@ -358,7 +358,7 @@ message DutiesResponse {
         repeated uint64 committee = 1;
 
         // The index into the committee where the validator belongs in.
-        uint64 committee_index = 2;
+        uint64 committee_index = 2  [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
 
         // Slot at which a validator must attest.
         uint64 attester_slot = 3 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Slot"];
@@ -404,7 +404,7 @@ message AttestationDataRequest {
     uint64 slot = 1 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
     // Committee index the attestation should be created for.
-    uint64 committee_index = 2;
+    uint64 committee_index = 2  [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
 }
 
 message AttestResponse {
@@ -416,7 +416,7 @@ message AggregateSelectionRequest {
     // Slot for which the aggregation request applies.
     uint64 slot = 1 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Slot"];
     // Committee index of the validator at the given slot.
-    uint64 committee_index = 2;
+    uint64 committee_index = 2  [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
     // 48 byte public key of the validator.
     bytes public_key = 3 [(gogoproto.moretags) = "ssz-size:\"48\" spec-name:\"pubkey\""];
     // 96 byte signature of the validator on the slot. This is used as proof that the validator is
