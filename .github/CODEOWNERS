@@ -2,7 +2,7 @@
 * @prysmaticlabs/core-team
 
 # Proto files owners
-*.proto @rauljordan @prestonvanloon @terencechain @nisdas
+*.proto @prysmaticlabs/core-team
 
 # Starlark changes
 *.bzl @prestonvanloon
