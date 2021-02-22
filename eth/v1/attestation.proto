@@ -63,7 +63,7 @@ message AttestationData {
     uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
     // The committee index that submitted this attestation.
-    uint64 committee_index = 2;
+    uint64 committee_index = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
 
     // 32 byte root of the LMD GHOST block vote.
     bytes beacon_block_root = 3 [(ethereum.eth.ext.ssz_size) = "32"];

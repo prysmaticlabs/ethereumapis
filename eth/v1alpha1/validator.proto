@@ -359,7 +359,7 @@ message DutiesResponse {
         repeated uint64 committee = 1;
 
         // The index into the committee where the validator belongs in.
-        uint64 committee_index = 2;
+        uint64 committee_index = 2  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
 
         // Slot at which a validator must attest.
         uint64 attester_slot = 3 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
@@ -405,7 +405,7 @@ message AttestationDataRequest {
     uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
     // Committee index the attestation should be created for.
-    uint64 committee_index = 2;
+    uint64 committee_index = 2  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
 }
 
 message AttestResponse {
@@ -417,7 +417,7 @@ message AggregateSelectionRequest {
     // Slot for which the aggregation request applies.
     uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
     // Committee index of the validator at the given slot.
-    uint64 committee_index = 2;
+    uint64 committee_index = 2  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
     // 48 byte public key of the validator.
     bytes public_key = 3 [(ethereum.eth.ext.ssz_size) = "48", (ethereum.eth.ext.spec_name) = "pubkey"];
     // 96 byte signature of the validator on the slot. This is used as proof that the validator is

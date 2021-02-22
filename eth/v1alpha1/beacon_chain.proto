@@ -736,7 +736,7 @@ message ValidatorAssignments {
         repeated uint64 beacon_committees = 1;
 
         // Committee index represents the committee of validator that's in.
-        uint64 committee_index = 2;
+        uint64 committee_index = 2  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
 
         // Beacon chain slot in which the validator must perform its assigned
         // duty as an attester.
