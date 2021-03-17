@@ -40,6 +40,11 @@ service BeaconDebug {
     option (google.api.http) = {get: "/eth/v1/debug/beacon/states/{state_id}"};
   }
 
+  // GetBeaconStateSsz returns full BeaconState object for given stateId in SSZ-serialized form.
+  rpc GetBeaconStateSsz(StateRequest) returns (BeaconStateSszResponse) {
+    option (google.api.http) = {get: "/eth/v1/debug/beacon/states-ssz/{state_id}"};
+  }
+
   // ListForkChoiceHeads retrieves all possible chain heads (leaves of fork choice tree).
   rpc ListForkChoiceHeads(google.protobuf.Empty) returns (ForkChoiceHeadsResponse) {
     option (google.api.http) = {get: "/eth/v1/debug/beacon/heads"};
@@ -50,6 +55,10 @@ message ForkChoiceHeadsResponse {
   repeated ForkChoiceHead data = 1;
 }
 
+message ForkChoiceHeadsSszResponse {
+  bytes data = 1;
+}
+
 message ForkChoiceHead {
   bytes root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
   uint64 slot = 2 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Slot"];
@@ -57,4 +66,8 @@ message ForkChoiceHead {
 
 message BeaconStateResponse {
   BeaconState data = 1;
+}
+
+message BeaconStateSszResponse {
+  bytes root = 1;
 }

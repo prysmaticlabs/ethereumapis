@@ -78,6 +78,53 @@ func (m *ForkChoiceHeadsResponse) GetData() []*ForkChoiceHead {
 	return nil
 }
 
+type ForkChoiceHeadsSszResponse struct {
+	Data                 []byte   `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ForkChoiceHeadsSszResponse) Reset()         { *m = ForkChoiceHeadsSszResponse{} }
+func (m *ForkChoiceHeadsSszResponse) String() string { return proto.CompactTextString(m) }
+func (*ForkChoiceHeadsSszResponse) ProtoMessage()    {}
+func (*ForkChoiceHeadsSszResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5c4891f2a5dc2c4a, []int{1}
+}
+func (m *ForkChoiceHeadsSszResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *ForkChoiceHeadsSszResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_ForkChoiceHeadsSszResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *ForkChoiceHeadsSszResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ForkChoiceHeadsSszResponse.Merge(m, src)
+}
+func (m *ForkChoiceHeadsSszResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *ForkChoiceHeadsSszResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_ForkChoiceHeadsSszResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ForkChoiceHeadsSszResponse proto.InternalMessageInfo
+
+func (m *ForkChoiceHeadsSszResponse) GetData() []byte {
+	if m != nil {
+		return m.Data
+	}
+	return nil
+}
+
 type ForkChoiceHead struct {
 	Root                 []byte                                   `protobuf:"bytes,1,opt,name=root,proto3" json:"root,omitempty" ssz-size:"32"`
 	Slot                 github_com_prysmaticlabs_eth2_types.Slot `protobuf:"varint,2,opt,name=slot,proto3,casttype=github.com/prysmaticlabs/eth2-types.Slot" json:"slot,omitempty"`
@@ -90,7 +137,7 @@ func (m *ForkChoiceHead) Reset()         { *m = ForkChoiceHead{} }
 func (m *ForkChoiceHead) String() string { return proto.CompactTextString(m) }
 func (*ForkChoiceHead) ProtoMessage()    {}
 func (*ForkChoiceHead) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c4891f2a5dc2c4a, []int{1}
+	return fileDescriptor_5c4891f2a5dc2c4a, []int{2}
 }
 func (m *ForkChoiceHead) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -144,7 +191,7 @@ func (m *BeaconStateResponse) Reset()         { *m = BeaconStateResponse{} }
 func (m *BeaconStateResponse) String() string { return proto.CompactTextString(m) }
 func (*BeaconStateResponse) ProtoMessage()    {}
 func (*BeaconStateResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_5c4891f2a5dc2c4a, []int{2}
+	return fileDescriptor_5c4891f2a5dc2c4a, []int{3}
 }
 func (m *BeaconStateResponse) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -180,48 +227,100 @@ func (m *BeaconStateResponse) GetData() *BeaconState {
 	return nil
 }
 
+type BeaconStateSszResponse struct {
+	Root                 []byte   `protobuf:"bytes,1,opt,name=root,proto3" json:"root,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *BeaconStateSszResponse) Reset()         { *m = BeaconStateSszResponse{} }
+func (m *BeaconStateSszResponse) String() string { return proto.CompactTextString(m) }
+func (*BeaconStateSszResponse) ProtoMessage()    {}
+func (*BeaconStateSszResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_5c4891f2a5dc2c4a, []int{4}
+}
+func (m *BeaconStateSszResponse) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *BeaconStateSszResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_BeaconStateSszResponse.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *BeaconStateSszResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BeaconStateSszResponse.Merge(m, src)
+}
+func (m *BeaconStateSszResponse) XXX_Size() int {
+	return m.Size()
+}
+func (m *BeaconStateSszResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_BeaconStateSszResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_BeaconStateSszResponse proto.InternalMessageInfo
+
+func (m *BeaconStateSszResponse) GetRoot() []byte {
+	if m != nil {
+		return m.Root
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*ForkChoiceHeadsResponse)(nil), "ethereum.eth.v1.ForkChoiceHeadsResponse")
+	proto.RegisterType((*ForkChoiceHeadsSszResponse)(nil), "ethereum.eth.v1.ForkChoiceHeadsSszResponse")
 	proto.RegisterType((*ForkChoiceHead)(nil), "ethereum.eth.v1.ForkChoiceHead")
 	proto.RegisterType((*BeaconStateResponse)(nil), "ethereum.eth.v1.BeaconStateResponse")
+	proto.RegisterType((*BeaconStateSszResponse)(nil), "ethereum.eth.v1.BeaconStateSszResponse")
 }
 
 func init() { proto.RegisterFile("eth/v1/beacon_debug_service.proto", fileDescriptor_5c4891f2a5dc2c4a) }
 
 var fileDescriptor_5c4891f2a5dc2c4a = []byte{
-	// 503 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x52, 0x4f, 0x8b, 0x13, 0x4f,
-	0x10, 0xa5, 0xf3, 0x0b, 0xbf, 0x43, 0x47, 0x77, 0xb5, 0x03, 0x1a, 0xc7, 0x98, 0xc4, 0x41, 0x65,
-	0x0e, 0x9b, 0x6e, 0x93, 0xdc, 0x3c, 0x49, 0x34, 0xae, 0x07, 0x91, 0x25, 0x7b, 0x93, 0x85, 0xd0,
-	0x33, 0x29, 0x67, 0x1a, 0x93, 0xe9, 0x71, 0xba, 0x26, 0x90, 0x5d, 0xbc, 0x08, 0xe2, 0x5d, 0xbf,
-	0x85, 0x9f, 0x44, 0x3c, 0x09, 0xde, 0x17, 0x09, 0x7e, 0x02, 0x8f, 0x9e, 0x64, 0x3a, 0xb3, 0x31,
-	0xc9, 0xca, 0x7a, 0x9a, 0xe9, 0xfa, 0xf3, 0xea, 0xbd, 0x7a, 0x45, 0x6f, 0x03, 0x46, 0x62, 0xd6,
-	0x11, 0x3e, 0xc8, 0x40, 0xc7, 0xa3, 0x31, 0xf8, 0x59, 0x38, 0x32, 0x90, 0xce, 0x54, 0x00, 0x3c,
-	0x49, 0x35, 0x6a, 0xb6, 0x0b, 0x18, 0x41, 0x0a, 0xd9, 0x94, 0x03, 0x46, 0x7c, 0xd6, 0x71, 0xda,
-	0xa1, 0xc2, 0x28, 0xf3, 0x79, 0xa0, 0xa7, 0x22, 0xd4, 0xa1, 0x16, 0xb6, 0xce, 0xcf, 0x5e, 0xda,
-	0x97, 0x7d, 0xd8, 0xbf, 0x65, 0xbf, 0x53, 0x0f, 0xb5, 0x0e, 0x27, 0x20, 0x64, 0xa2, 0x84, 0x8c,
-	0x63, 0x8d, 0x12, 0x95, 0x8e, 0x4d, 0x91, 0xbd, 0x59, 0x64, 0x57, 0x18, 0x30, 0x4d, 0x70, 0x5e,
-	0x24, 0x6f, 0x6c, 0xb2, 0x33, 0x28, 0xb1, 0x60, 0xe5, 0x6c, 0x11, 0x0f, 0x22, 0xa9, 0xe2, 0x4d,
-	0xe2, 0xee, 0x73, 0x7a, 0xfd, 0x89, 0x4e, 0x5f, 0x3d, 0x8a, 0xb4, 0x0a, 0xe0, 0x29, 0xc8, 0xb1,
-	0x19, 0x82, 0x49, 0x74, 0x6c, 0x80, 0xf5, 0x68, 0x79, 0x2c, 0x51, 0xd6, 0x48, 0xeb, 0x3f, 0xaf,
-	0xd2, 0x6d, 0xf2, 0x2d, 0x89, 0x7c, 0xb3, 0x6f, 0x68, 0x8b, 0xdd, 0x39, 0xdd, 0xd9, 0x8c, 0xb3,
-	0xbb, 0xb4, 0x9c, 0x6a, 0x8d, 0x35, 0xd2, 0x22, 0xde, 0xa5, 0xfe, 0xd5, 0x9f, 0xa7, 0xcd, 0xcb,
-	0xc6, 0x1c, 0xb7, 0x8d, 0x3a, 0x86, 0x07, 0x6e, 0xaf, 0xeb, 0x0e, 0x6d, 0x9a, 0x3d, 0xa4, 0x65,
-	0x33, 0xd1, 0x58, 0x2b, 0xb5, 0x88, 0x57, 0xee, 0xef, 0xfd, 0x3a, 0x6d, 0x7a, 0x6b, 0x2b, 0x4c,
-	0xd2, 0xb9, 0x99, 0x4a, 0x54, 0xc1, 0x44, 0xfa, 0x46, 0x00, 0x46, 0xdd, 0x36, 0xce, 0x13, 0x30,
-	0xfc, 0x70, 0xa2, 0x71, 0x68, 0x3b, 0xdd, 0x7d, 0x5a, 0xed, 0x5b, 0xa1, 0x87, 0xf9, 0x0a, 0x56,
-	0x32, 0xee, 0xaf, 0x64, 0x10, 0xaf, 0xd2, 0xad, 0x9f, 0x93, 0xb1, 0xde, 0x63, 0x2b, 0xbb, 0x1f,
-	0x4a, 0xb4, 0xb2, 0x8c, 0x3e, 0xce, 0xad, 0x66, 0xef, 0x08, 0xdd, 0xd9, 0x07, 0x5c, 0x2b, 0x64,
-	0xb7, 0xce, 0xc1, 0x14, 0x43, 0x5f, 0x67, 0x60, 0xd0, 0xb9, 0x73, 0xe1, 0x94, 0x82, 0x99, 0xcb,
-	0xdf, 0x7e, 0xfb, 0xf1, 0xb1, 0xe4, 0xb1, 0x7b, 0xa2, 0xf0, 0xc9, 0x5e, 0x56, 0xe1, 0x96, 0xb0,
-	0x46, 0x1a, 0x71, 0x62, 0xbf, 0x23, 0x35, 0x7e, 0xc3, 0x4e, 0x68, 0xf5, 0x99, 0x32, 0xb8, 0xe5,
-	0x17, 0xbb, 0xc6, 0x97, 0xe7, 0xc1, 0xcf, 0xce, 0x83, 0x0f, 0xf2, 0xf3, 0x70, 0xbc, 0x7f, 0x38,
-	0xb6, 0x72, 0xda, 0x75, 0x2d, 0x91, 0x3a, 0x73, 0xfe, 0x4a, 0x24, 0xca, 0x6b, 0xfb, 0xef, 0xc9,
-	0xe7, 0x45, 0x83, 0x7c, 0x5d, 0x34, 0xc8, 0xf7, 0x45, 0x83, 0xd0, 0xaa, 0x4e, 0xc3, 0x6d, 0xfc,
-	0xfe, 0x95, 0xb5, 0xad, 0x1d, 0xe4, 0x64, 0x0e, 0xc8, 0x8b, 0xbd, 0x8b, 0x5c, 0xb4, 0xdd, 0x32,
-	0x51, 0xa6, 0x18, 0xfc, 0xa9, 0xb4, 0x3b, 0x38, 0xc3, 0x1c, 0x58, 0xcc, 0x2f, 0x7f, 0x22, 0x47,
-	0x03, 0x8c, 0x8e, 0x66, 0x1d, 0xff, 0x7f, 0xab, 0xb3, 0xf7, 0x3b, 0x00, 0x00, 0xff, 0xff, 0xdc,
-	0x52, 0xbc, 0x6e, 0x97, 0x03, 0x00, 0x00,
+	// 559 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x93, 0xcf, 0x6e, 0xd3, 0x40,
+	0x10, 0xc6, 0xe5, 0x36, 0xe2, 0xb0, 0x85, 0x96, 0x6e, 0xa5, 0x52, 0x4c, 0x48, 0x8a, 0xc5, 0x1f,
+	0x0b, 0x25, 0xeb, 0xc6, 0xb9, 0x71, 0x42, 0x81, 0x50, 0x0e, 0x08, 0x55, 0xc9, 0x0d, 0x55, 0x8a,
+	0xd6, 0xce, 0x62, 0xaf, 0x48, 0xbc, 0xc6, 0x33, 0x89, 0x94, 0x54, 0x5c, 0x90, 0x10, 0x47, 0x0e,
+	0xbc, 0x02, 0x27, 0x9e, 0x04, 0x71, 0x42, 0xe2, 0x5e, 0xa1, 0x88, 0x27, 0xe0, 0xc8, 0x09, 0x65,
+	0xed, 0xa6, 0x8e, 0x8b, 0xd2, 0x53, 0x62, 0xcf, 0x7c, 0xdf, 0xfe, 0x66, 0xfc, 0x2d, 0xb9, 0x23,
+	0x30, 0x74, 0xc6, 0x0d, 0xc7, 0x13, 0xdc, 0x57, 0x51, 0xaf, 0x2f, 0xbc, 0x51, 0xd0, 0x03, 0x91,
+	0x8c, 0xa5, 0x2f, 0x58, 0x9c, 0x28, 0x54, 0x74, 0x4b, 0x60, 0x28, 0x12, 0x31, 0x1a, 0x32, 0x81,
+	0x21, 0x1b, 0x37, 0xcc, 0x7a, 0x20, 0x31, 0x1c, 0x79, 0xcc, 0x57, 0x43, 0x27, 0x50, 0x81, 0x72,
+	0x74, 0x9f, 0x37, 0x7a, 0xad, 0x9f, 0xf4, 0x83, 0xfe, 0x97, 0xea, 0xcd, 0x72, 0xa0, 0x54, 0x30,
+	0x10, 0x0e, 0x8f, 0xa5, 0xc3, 0xa3, 0x48, 0x21, 0x47, 0xa9, 0x22, 0xc8, 0xaa, 0xb7, 0xb2, 0xea,
+	0xc2, 0x43, 0x0c, 0x63, 0x9c, 0x64, 0xc5, 0x9b, 0xcb, 0x74, 0x80, 0x1c, 0x33, 0x2a, 0xb3, 0x00,
+	0xee, 0x87, 0x5c, 0x46, 0xcb, 0xe0, 0xd6, 0x4b, 0x72, 0xe3, 0x99, 0x4a, 0xde, 0x3c, 0x09, 0x95,
+	0xf4, 0xc5, 0x73, 0xc1, 0xfb, 0xd0, 0x11, 0x10, 0xab, 0x08, 0x04, 0x6d, 0x92, 0x52, 0x9f, 0x23,
+	0xdf, 0x33, 0xf6, 0xd7, 0xed, 0x0d, 0xb7, 0xca, 0x0a, 0x23, 0xb2, 0x65, 0x5d, 0x47, 0x37, 0x5b,
+	0x07, 0xc4, 0x2c, 0xf8, 0x75, 0x61, 0xba, 0xb0, 0xa4, 0x0b, 0x4b, 0xc3, 0xbe, 0x9a, 0x29, 0x26,
+	0x64, 0x73, 0x59, 0x41, 0xef, 0x91, 0x52, 0xa2, 0x14, 0xa6, 0x5d, 0xad, 0xed, 0x3f, 0xa7, 0xd5,
+	0x6b, 0x00, 0xd3, 0x3a, 0xc8, 0xa9, 0x78, 0x64, 0x35, 0x5d, 0xab, 0xa3, 0xcb, 0xf4, 0x31, 0x29,
+	0xc1, 0x40, 0xe1, 0xde, 0xda, 0xbe, 0x61, 0x97, 0x5a, 0xb5, 0xbf, 0xa7, 0x55, 0x3b, 0xb7, 0xf4,
+	0x38, 0x99, 0xc0, 0x90, 0xa3, 0xf4, 0x07, 0xdc, 0x03, 0x47, 0x60, 0xe8, 0xd6, 0x71, 0x12, 0x0b,
+	0x60, 0xdd, 0x81, 0xc2, 0x8e, 0x56, 0x5a, 0x87, 0x64, 0xa7, 0xa5, 0x57, 0xd3, 0x9d, 0x2f, 0x6d,
+	0x41, 0x79, 0x90, 0xa3, 0xdc, 0x70, 0xcb, 0x17, 0x06, 0xcf, 0x6b, 0xd2, 0x19, 0x6a, 0x64, 0x37,
+	0xf7, 0xb2, 0x30, 0xf1, 0xf9, 0x2c, 0x29, 0xb8, 0xfb, 0x65, 0x9d, 0x6c, 0xa4, 0xed, 0x4f, 0xe7,
+	0x51, 0xa2, 0x1f, 0x0c, 0xb2, 0x79, 0x28, 0x30, 0xe7, 0x40, 0x6f, 0x5f, 0x38, 0x34, 0x43, 0x7c,
+	0x3b, 0x12, 0x80, 0xe6, 0xdd, 0x95, 0x4c, 0xd9, 0xd9, 0x16, 0x7b, 0xff, 0xf3, 0xf7, 0xe7, 0x35,
+	0x9b, 0xde, 0x77, 0xb2, 0x1c, 0xe8, 0xe4, 0x66, 0x69, 0x70, 0x74, 0x50, 0xc0, 0x39, 0xd1, 0xbf,
+	0x3d, 0xd9, 0x7f, 0x47, 0x3f, 0x19, 0x64, 0x7b, 0x99, 0xa3, 0x0b, 0xd3, 0xcb, 0x50, 0x1e, 0xac,
+	0x42, 0xc9, 0x6d, 0xc2, 0x72, 0x35, 0x4d, 0x8d, 0x3e, 0x5c, 0x41, 0x53, 0x07, 0x98, 0xe6, 0x89,
+	0x4e, 0xc8, 0xce, 0x0b, 0x09, 0x58, 0x48, 0x14, 0xdd, 0x65, 0xe9, 0x85, 0x60, 0x67, 0x17, 0x82,
+	0xb5, 0xe7, 0x17, 0xc2, 0xb4, 0x2f, 0xc9, 0xe8, 0x22, 0xdb, 0x96, 0xa5, 0x61, 0xca, 0xd4, 0xfc,
+	0x2f, 0x4c, 0x38, 0xef, 0x6d, 0x7d, 0x34, 0xbe, 0xcd, 0x2a, 0xc6, 0x8f, 0x59, 0xc5, 0xf8, 0x35,
+	0xab, 0x18, 0x64, 0x47, 0x25, 0x41, 0xd1, 0xbf, 0x75, 0x3d, 0xf7, 0x1d, 0x8f, 0xe6, 0x30, 0x47,
+	0xc6, 0xab, 0xda, 0xaa, 0x14, 0x6a, 0x35, 0x8f, 0x25, 0x64, 0x07, 0x7f, 0x5d, 0xdb, 0x6a, 0x9f,
+	0x79, 0xb6, 0xb5, 0xe7, 0xf7, 0xf3, 0x37, 0xc7, 0x6d, 0x0c, 0x8f, 0xc7, 0x0d, 0xef, 0x8a, 0x9e,
+	0xb3, 0xf9, 0x2f, 0x00, 0x00, 0xff, 0xff, 0x8d, 0xc6, 0x8c, 0x0d, 0x89, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -237,6 +336,7 @@ const _ = grpc.SupportPackageIsVersion4
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type BeaconDebugClient interface {
 	GetBeaconState(ctx context.Context, in *StateRequest, opts ...grpc.CallOption) (*BeaconStateResponse, error)
+	GetBeaconStateSsz(ctx context.Context, in *StateRequest, opts ...grpc.CallOption) (*BeaconStateSszResponse, error)
 	ListForkChoiceHeads(ctx context.Context, in *types.Empty, opts ...grpc.CallOption) (*ForkChoiceHeadsResponse, error)
 }
 
@@ -257,6 +357,15 @@ func (c *beaconDebugClient) GetBeaconState(ctx context.Context, in *StateRequest
 	return out, nil
 }
 
+func (c *beaconDebugClient) GetBeaconStateSsz(ctx context.Context, in *StateRequest, opts ...grpc.CallOption) (*BeaconStateSszResponse, error) {
+	out := new(BeaconStateSszResponse)
+	err := c.cc.Invoke(ctx, "/ethereum.eth.v1.BeaconDebug/GetBeaconStateSsz", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *beaconDebugClient) ListForkChoiceHeads(ctx context.Context, in *types.Empty, opts ...grpc.CallOption) (*ForkChoiceHeadsResponse, error) {
 	out := new(ForkChoiceHeadsResponse)
 	err := c.cc.Invoke(ctx, "/ethereum.eth.v1.BeaconDebug/ListForkChoiceHeads", in, out, opts...)
@@ -269,6 +378,7 @@ func (c *beaconDebugClient) ListForkChoiceHeads(ctx context.Context, in *types.E
 // BeaconDebugServer is the server API for BeaconDebug service.
 type BeaconDebugServer interface {
 	GetBeaconState(context.Context, *StateRequest) (*BeaconStateResponse, error)
+	GetBeaconStateSsz(context.Context, *StateRequest) (*BeaconStateSszResponse, error)
 	ListForkChoiceHeads(context.Context, *types.Empty) (*ForkChoiceHeadsResponse, error)
 }
 
@@ -278,6 +388,9 @@ type UnimplementedBeaconDebugServer struct {
 
 func (*UnimplementedBeaconDebugServer) GetBeaconState(ctx context.Context, req *StateRequest) (*BeaconStateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBeaconState not implemented")
+}
+func (*UnimplementedBeaconDebugServer) GetBeaconStateSsz(ctx context.Context, req *StateRequest) (*BeaconStateSszResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetBeaconStateSsz not implemented")
 }
 func (*UnimplementedBeaconDebugServer) ListForkChoiceHeads(ctx context.Context, req *types.Empty) (*ForkChoiceHeadsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListForkChoiceHeads not implemented")
@@ -301,6 +414,24 @@ func _BeaconDebug_GetBeaconState_Handler(srv interface{}, ctx context.Context, d
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(BeaconDebugServer).GetBeaconState(ctx, req.(*StateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _BeaconDebug_GetBeaconStateSsz_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BeaconDebugServer).GetBeaconStateSsz(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ethereum.eth.v1.BeaconDebug/GetBeaconStateSsz",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BeaconDebugServer).GetBeaconStateSsz(ctx, req.(*StateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -330,6 +461,10 @@ var _BeaconDebug_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetBeaconState",
 			Handler:    _BeaconDebug_GetBeaconState_Handler,
+		},
+		{
+			MethodName: "GetBeaconStateSsz",
+			Handler:    _BeaconDebug_GetBeaconStateSsz_Handler,
 		},
 		{
 			MethodName: "ListForkChoiceHeads",
@@ -377,6 +512,40 @@ func (m *ForkChoiceHeadsResponse) MarshalToSizedBuffer(dAtA []byte) (int, error)
 			i--
 			dAtA[i] = 0xa
 		}
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *ForkChoiceHeadsSszResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ForkChoiceHeadsSszResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *ForkChoiceHeadsSszResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Data) > 0 {
+		i -= len(m.Data)
+		copy(dAtA[i:], m.Data)
+		i = encodeVarintBeaconDebugService(dAtA, i, uint64(len(m.Data)))
+		i--
+		dAtA[i] = 0xa
 	}
 	return len(dAtA) - i, nil
 }
@@ -459,6 +628,40 @@ func (m *BeaconStateResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *BeaconStateSszResponse) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *BeaconStateSszResponse) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *BeaconStateSszResponse) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Root) > 0 {
+		i -= len(m.Root)
+		copy(dAtA[i:], m.Root)
+		i = encodeVarintBeaconDebugService(dAtA, i, uint64(len(m.Root)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func encodeVarintBeaconDebugService(dAtA []byte, offset int, v uint64) int {
 	offset -= sovBeaconDebugService(v)
 	base := offset
@@ -481,6 +684,22 @@ func (m *ForkChoiceHeadsResponse) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovBeaconDebugService(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *ForkChoiceHeadsSszResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Data)
+	if l > 0 {
+		n += 1 + l + sovBeaconDebugService(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -515,6 +734,22 @@ func (m *BeaconStateResponse) Size() (n int) {
 	_ = l
 	if m.Data != nil {
 		l = m.Data.Size()
+		n += 1 + l + sovBeaconDebugService(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *BeaconStateSszResponse) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.Root)
+	if l > 0 {
 		n += 1 + l + sovBeaconDebugService(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
@@ -590,6 +825,94 @@ func (m *ForkChoiceHeadsResponse) Unmarshal(dAtA []byte) error {
 			m.Data = append(m.Data, &ForkChoiceHead{})
 			if err := m.Data[len(m.Data)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBeaconDebugService(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthBeaconDebugService
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthBeaconDebugService
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ForkChoiceHeadsSszResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBeaconDebugService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ForkChoiceHeadsSszResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ForkChoiceHeadsSszResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Data", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconDebugService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthBeaconDebugService
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconDebugService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Data = append(m.Data[:0], dAtA[iNdEx:postIndex]...)
+			if m.Data == nil {
+				m.Data = []byte{}
 			}
 			iNdEx = postIndex
 		default:
@@ -787,6 +1110,94 @@ func (m *BeaconStateResponse) Unmarshal(dAtA []byte) error {
 			}
 			if err := m.Data.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBeaconDebugService(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthBeaconDebugService
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthBeaconDebugService
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *BeaconStateSszResponse) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBeaconDebugService
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: BeaconStateSszResponse: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: BeaconStateSszResponse: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Root", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconDebugService
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthBeaconDebugService
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconDebugService
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Root = append(m.Root[:0], dAtA[iNdEx:postIndex]...)
+			if m.Root == nil {
+				m.Root = []byte{}
 			}
 			iNdEx = postIndex
 		default:
