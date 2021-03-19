@@ -12,6 +12,7 @@ import (
 	_ "github.com/gogo/protobuf/gogoproto"
 	proto "github.com/gogo/protobuf/proto"
 	github_com_prysmaticlabs_eth2_types "github.com/prysmaticlabs/eth2-types"
+	github_com_prysmaticlabs_go_bitfield "github.com/prysmaticlabs/go-bitfield"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -104,6 +105,85 @@ func (m *BeaconBlock) GetBody() *BeaconBlockBody {
 	return nil
 }
 
+type BeaconBlockV1 struct {
+	Slot                 github_com_prysmaticlabs_eth2_types.Slot           `protobuf:"varint,1,opt,name=slot,proto3,casttype=github.com/prysmaticlabs/eth2-types.Slot" json:"slot,omitempty"`
+	ProposerIndex        github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,2,opt,name=proposer_index,json=proposerIndex,proto3,casttype=github.com/prysmaticlabs/eth2-types.ValidatorIndex" json:"proposer_index,omitempty"`
+	ParentRoot           []byte                                             `protobuf:"bytes,3,opt,name=parent_root,json=parentRoot,proto3" json:"parent_root,omitempty" ssz-size:"32"`
+	StateRoot            []byte                                             `protobuf:"bytes,4,opt,name=state_root,json=stateRoot,proto3" json:"state_root,omitempty" ssz-size:"32"`
+	Body                 *BeaconBlockBodyV1                                 `protobuf:"bytes,5,opt,name=body,proto3" json:"body,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                                           `json:"-"`
+	XXX_unrecognized     []byte                                             `json:"-"`
+	XXX_sizecache        int32                                              `json:"-"`
+}
+
+func (m *BeaconBlockV1) Reset()         { *m = BeaconBlockV1{} }
+func (m *BeaconBlockV1) String() string { return proto.CompactTextString(m) }
+func (*BeaconBlockV1) ProtoMessage()    {}
+func (*BeaconBlockV1) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b82dda2838684da4, []int{1}
+}
+func (m *BeaconBlockV1) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *BeaconBlockV1) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_BeaconBlockV1.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *BeaconBlockV1) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BeaconBlockV1.Merge(m, src)
+}
+func (m *BeaconBlockV1) XXX_Size() int {
+	return m.Size()
+}
+func (m *BeaconBlockV1) XXX_DiscardUnknown() {
+	xxx_messageInfo_BeaconBlockV1.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_BeaconBlockV1 proto.InternalMessageInfo
+
+func (m *BeaconBlockV1) GetSlot() github_com_prysmaticlabs_eth2_types.Slot {
+	if m != nil {
+		return m.Slot
+	}
+	return 0
+}
+
+func (m *BeaconBlockV1) GetProposerIndex() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+	if m != nil {
+		return m.ProposerIndex
+	}
+	return 0
+}
+
+func (m *BeaconBlockV1) GetParentRoot() []byte {
+	if m != nil {
+		return m.ParentRoot
+	}
+	return nil
+}
+
+func (m *BeaconBlockV1) GetStateRoot() []byte {
+	if m != nil {
+		return m.StateRoot
+	}
+	return nil
+}
+
+func (m *BeaconBlockV1) GetBody() *BeaconBlockBodyV1 {
+	if m != nil {
+		return m.Body
+	}
+	return nil
+}
+
 type SignedBeaconBlock struct {
 	Block                *BeaconBlock `protobuf:"bytes,1,opt,name=block,proto3" json:"block,omitempty"`
 	Signature            []byte       `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
@@ -116,7 +196,7 @@ func (m *SignedBeaconBlock) Reset()         { *m = SignedBeaconBlock{} }
 func (m *SignedBeaconBlock) String() string { return proto.CompactTextString(m) }
 func (*SignedBeaconBlock) ProtoMessage()    {}
 func (*SignedBeaconBlock) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b82dda2838684da4, []int{1}
+	return fileDescriptor_b82dda2838684da4, []int{2}
 }
 func (m *SignedBeaconBlock) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -159,6 +239,61 @@ func (m *SignedBeaconBlock) GetSignature() []byte {
 	return nil
 }
 
+type SignedBeaconBlockV1 struct {
+	Block                *BeaconBlockV1 `protobuf:"bytes,1,opt,name=block,proto3" json:"block,omitempty"`
+	Signature            []byte         `protobuf:"bytes,2,opt,name=signature,proto3" json:"signature,omitempty" ssz-size:"96"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
+}
+
+func (m *SignedBeaconBlockV1) Reset()         { *m = SignedBeaconBlockV1{} }
+func (m *SignedBeaconBlockV1) String() string { return proto.CompactTextString(m) }
+func (*SignedBeaconBlockV1) ProtoMessage()    {}
+func (*SignedBeaconBlockV1) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b82dda2838684da4, []int{3}
+}
+func (m *SignedBeaconBlockV1) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *SignedBeaconBlockV1) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_SignedBeaconBlockV1.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *SignedBeaconBlockV1) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_SignedBeaconBlockV1.Merge(m, src)
+}
+func (m *SignedBeaconBlockV1) XXX_Size() int {
+	return m.Size()
+}
+func (m *SignedBeaconBlockV1) XXX_DiscardUnknown() {
+	xxx_messageInfo_SignedBeaconBlockV1.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_SignedBeaconBlockV1 proto.InternalMessageInfo
+
+func (m *SignedBeaconBlockV1) GetBlock() *BeaconBlockV1 {
+	if m != nil {
+		return m.Block
+	}
+	return nil
+}
+
+func (m *SignedBeaconBlockV1) GetSignature() []byte {
+	if m != nil {
+		return m.Signature
+	}
+	return nil
+}
+
 type BeaconBlockBody struct {
 	RandaoReveal         []byte                 `protobuf:"bytes,1,opt,name=randao_reveal,json=randaoReveal,proto3" json:"randao_reveal,omitempty" ssz-size:"96"`
 	Eth1Data             *Eth1Data              `protobuf:"bytes,2,opt,name=eth1_data,json=eth1Data,proto3" json:"eth1_data,omitempty"`
@@ -177,7 +312,7 @@ func (m *BeaconBlockBody) Reset()         { *m = BeaconBlockBody{} }
 func (m *BeaconBlockBody) String() string { return proto.CompactTextString(m) }
 func (*BeaconBlockBody) ProtoMessage()    {}
 func (*BeaconBlockBody) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b82dda2838684da4, []int{2}
+	return fileDescriptor_b82dda2838684da4, []int{4}
 }
 func (m *BeaconBlockBody) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -262,6 +397,125 @@ func (m *BeaconBlockBody) GetVoluntaryExits() []*SignedVoluntaryExit {
 	return nil
 }
 
+type BeaconBlockBodyV1 struct {
+	RandaoReveal           []byte                                             `protobuf:"bytes,1,opt,name=randao_reveal,json=randaoReveal,proto3" json:"randao_reveal,omitempty" ssz-size:"96"`
+	Eth1Data               *Eth1Data                                          `protobuf:"bytes,2,opt,name=eth1_data,json=eth1Data,proto3" json:"eth1_data,omitempty"`
+	Graffiti               []byte                                             `protobuf:"bytes,3,opt,name=graffiti,proto3" json:"graffiti,omitempty" ssz-size:"32"`
+	ProposerSlashings      []*ProposerSlashing                                `protobuf:"bytes,4,rep,name=proposer_slashings,json=proposerSlashings,proto3" json:"proposer_slashings,omitempty" ssz-max:"16"`
+	AttesterSlashings      []*AttesterSlashing                                `protobuf:"bytes,5,rep,name=attester_slashings,json=attesterSlashings,proto3" json:"attester_slashings,omitempty" ssz-max:"2"`
+	Attestations           []*Attestation                                     `protobuf:"bytes,6,rep,name=attestations,proto3" json:"attestations,omitempty" ssz-max:"128"`
+	Deposits               []*Deposit                                         `protobuf:"bytes,7,rep,name=deposits,proto3" json:"deposits,omitempty" ssz-max:"16"`
+	VoluntaryExits         []*SignedVoluntaryExit                             `protobuf:"bytes,8,rep,name=voluntary_exits,json=voluntaryExits,proto3" json:"voluntary_exits,omitempty" ssz-max:"16"`
+	SyncCommitteeBits      github_com_prysmaticlabs_go_bitfield.Bitvector1024 `protobuf:"bytes,10,opt,name=sync_committee_bits,json=syncCommitteeBits,proto3,casttype=github.com/prysmaticlabs/go-bitfield.Bitvector1024" json:"sync_committee_bits,omitempty" ssz-size:"1"`
+	SyncCommitteeSignature []byte                                             `protobuf:"bytes,11,opt,name=sync_committee_signature,json=syncCommitteeSignature,proto3" json:"sync_committee_signature,omitempty" ssz-size:"96"`
+	XXX_NoUnkeyedLiteral   struct{}                                           `json:"-"`
+	XXX_unrecognized       []byte                                             `json:"-"`
+	XXX_sizecache          int32                                              `json:"-"`
+}
+
+func (m *BeaconBlockBodyV1) Reset()         { *m = BeaconBlockBodyV1{} }
+func (m *BeaconBlockBodyV1) String() string { return proto.CompactTextString(m) }
+func (*BeaconBlockBodyV1) ProtoMessage()    {}
+func (*BeaconBlockBodyV1) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b82dda2838684da4, []int{5}
+}
+func (m *BeaconBlockBodyV1) XXX_Unmarshal(b []byte) error {
+	return m.Unmarshal(b)
+}
+func (m *BeaconBlockBodyV1) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	if deterministic {
+		return xxx_messageInfo_BeaconBlockBodyV1.Marshal(b, m, deterministic)
+	} else {
+		b = b[:cap(b)]
+		n, err := m.MarshalToSizedBuffer(b)
+		if err != nil {
+			return nil, err
+		}
+		return b[:n], nil
+	}
+}
+func (m *BeaconBlockBodyV1) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_BeaconBlockBodyV1.Merge(m, src)
+}
+func (m *BeaconBlockBodyV1) XXX_Size() int {
+	return m.Size()
+}
+func (m *BeaconBlockBodyV1) XXX_DiscardUnknown() {
+	xxx_messageInfo_BeaconBlockBodyV1.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_BeaconBlockBodyV1 proto.InternalMessageInfo
+
+func (m *BeaconBlockBodyV1) GetRandaoReveal() []byte {
+	if m != nil {
+		return m.RandaoReveal
+	}
+	return nil
+}
+
+func (m *BeaconBlockBodyV1) GetEth1Data() *Eth1Data {
+	if m != nil {
+		return m.Eth1Data
+	}
+	return nil
+}
+
+func (m *BeaconBlockBodyV1) GetGraffiti() []byte {
+	if m != nil {
+		return m.Graffiti
+	}
+	return nil
+}
+
+func (m *BeaconBlockBodyV1) GetProposerSlashings() []*ProposerSlashing {
+	if m != nil {
+		return m.ProposerSlashings
+	}
+	return nil
+}
+
+func (m *BeaconBlockBodyV1) GetAttesterSlashings() []*AttesterSlashing {
+	if m != nil {
+		return m.AttesterSlashings
+	}
+	return nil
+}
+
+func (m *BeaconBlockBodyV1) GetAttestations() []*Attestation {
+	if m != nil {
+		return m.Attestations
+	}
+	return nil
+}
+
+func (m *BeaconBlockBodyV1) GetDeposits() []*Deposit {
+	if m != nil {
+		return m.Deposits
+	}
+	return nil
+}
+
+func (m *BeaconBlockBodyV1) GetVoluntaryExits() []*SignedVoluntaryExit {
+	if m != nil {
+		return m.VoluntaryExits
+	}
+	return nil
+}
+
+func (m *BeaconBlockBodyV1) GetSyncCommitteeBits() github_com_prysmaticlabs_go_bitfield.Bitvector1024 {
+	if m != nil {
+		return m.SyncCommitteeBits
+	}
+	return nil
+}
+
+func (m *BeaconBlockBodyV1) GetSyncCommitteeSignature() []byte {
+	if m != nil {
+		return m.SyncCommitteeSignature
+	}
+	return nil
+}
+
 type ProposerSlashing struct {
 	Header_1             *SignedBeaconBlockHeader `protobuf:"bytes,2,opt,name=header_1,json=header1,proto3" json:"header_1,omitempty"`
 	Header_2             *SignedBeaconBlockHeader `protobuf:"bytes,3,opt,name=header_2,json=header2,proto3" json:"header_2,omitempty"`
@@ -274,7 +528,7 @@ func (m *ProposerSlashing) Reset()         { *m = ProposerSlashing{} }
 func (m *ProposerSlashing) String() string { return proto.CompactTextString(m) }
 func (*ProposerSlashing) ProtoMessage()    {}
 func (*ProposerSlashing) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b82dda2838684da4, []int{3}
+	return fileDescriptor_b82dda2838684da4, []int{6}
 }
 func (m *ProposerSlashing) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -329,7 +583,7 @@ func (m *AttesterSlashing) Reset()         { *m = AttesterSlashing{} }
 func (m *AttesterSlashing) String() string { return proto.CompactTextString(m) }
 func (*AttesterSlashing) ProtoMessage()    {}
 func (*AttesterSlashing) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b82dda2838684da4, []int{4}
+	return fileDescriptor_b82dda2838684da4, []int{7}
 }
 func (m *AttesterSlashing) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -384,7 +638,7 @@ func (m *Deposit) Reset()         { *m = Deposit{} }
 func (m *Deposit) String() string { return proto.CompactTextString(m) }
 func (*Deposit) ProtoMessage()    {}
 func (*Deposit) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b82dda2838684da4, []int{5}
+	return fileDescriptor_b82dda2838684da4, []int{8}
 }
 func (m *Deposit) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -441,7 +695,7 @@ func (m *Deposit_Data) Reset()         { *m = Deposit_Data{} }
 func (m *Deposit_Data) String() string { return proto.CompactTextString(m) }
 func (*Deposit_Data) ProtoMessage()    {}
 func (*Deposit_Data) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b82dda2838684da4, []int{5, 0}
+	return fileDescriptor_b82dda2838684da4, []int{8, 0}
 }
 func (m *Deposit_Data) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -510,7 +764,7 @@ func (m *VoluntaryExit) Reset()         { *m = VoluntaryExit{} }
 func (m *VoluntaryExit) String() string { return proto.CompactTextString(m) }
 func (*VoluntaryExit) ProtoMessage()    {}
 func (*VoluntaryExit) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b82dda2838684da4, []int{6}
+	return fileDescriptor_b82dda2838684da4, []int{9}
 }
 func (m *VoluntaryExit) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -565,7 +819,7 @@ func (m *SignedVoluntaryExit) Reset()         { *m = SignedVoluntaryExit{} }
 func (m *SignedVoluntaryExit) String() string { return proto.CompactTextString(m) }
 func (*SignedVoluntaryExit) ProtoMessage()    {}
 func (*SignedVoluntaryExit) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b82dda2838684da4, []int{7}
+	return fileDescriptor_b82dda2838684da4, []int{10}
 }
 func (m *SignedVoluntaryExit) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -621,7 +875,7 @@ func (m *Eth1Data) Reset()         { *m = Eth1Data{} }
 func (m *Eth1Data) String() string { return proto.CompactTextString(m) }
 func (*Eth1Data) ProtoMessage()    {}
 func (*Eth1Data) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b82dda2838684da4, []int{8}
+	return fileDescriptor_b82dda2838684da4, []int{11}
 }
 func (m *Eth1Data) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -686,7 +940,7 @@ func (m *BeaconBlockHeader) Reset()         { *m = BeaconBlockHeader{} }
 func (m *BeaconBlockHeader) String() string { return proto.CompactTextString(m) }
 func (*BeaconBlockHeader) ProtoMessage()    {}
 func (*BeaconBlockHeader) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b82dda2838684da4, []int{9}
+	return fileDescriptor_b82dda2838684da4, []int{12}
 }
 func (m *BeaconBlockHeader) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -762,7 +1016,7 @@ func (m *SignedBeaconBlockHeader) Reset()         { *m = SignedBeaconBlockHeader
 func (m *SignedBeaconBlockHeader) String() string { return proto.CompactTextString(m) }
 func (*SignedBeaconBlockHeader) ProtoMessage()    {}
 func (*SignedBeaconBlockHeader) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b82dda2838684da4, []int{10}
+	return fileDescriptor_b82dda2838684da4, []int{13}
 }
 func (m *SignedBeaconBlockHeader) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -818,7 +1072,7 @@ func (m *IndexedAttestation) Reset()         { *m = IndexedAttestation{} }
 func (m *IndexedAttestation) String() string { return proto.CompactTextString(m) }
 func (*IndexedAttestation) ProtoMessage()    {}
 func (*IndexedAttestation) Descriptor() ([]byte, []int) {
-	return fileDescriptor_b82dda2838684da4, []int{11}
+	return fileDescriptor_b82dda2838684da4, []int{14}
 }
 func (m *IndexedAttestation) XXX_Unmarshal(b []byte) error {
 	return m.Unmarshal(b)
@@ -870,8 +1124,11 @@ func (m *IndexedAttestation) GetSignature() []byte {
 
 func init() {
 	proto.RegisterType((*BeaconBlock)(nil), "ethereum.eth.v1.BeaconBlock")
+	proto.RegisterType((*BeaconBlockV1)(nil), "ethereum.eth.v1.BeaconBlockV1")
 	proto.RegisterType((*SignedBeaconBlock)(nil), "ethereum.eth.v1.SignedBeaconBlock")
+	proto.RegisterType((*SignedBeaconBlockV1)(nil), "ethereum.eth.v1.SignedBeaconBlockV1")
 	proto.RegisterType((*BeaconBlockBody)(nil), "ethereum.eth.v1.BeaconBlockBody")
+	proto.RegisterType((*BeaconBlockBodyV1)(nil), "ethereum.eth.v1.BeaconBlockBodyV1")
 	proto.RegisterType((*ProposerSlashing)(nil), "ethereum.eth.v1.ProposerSlashing")
 	proto.RegisterType((*AttesterSlashing)(nil), "ethereum.eth.v1.AttesterSlashing")
 	proto.RegisterType((*Deposit)(nil), "ethereum.eth.v1.Deposit")
@@ -887,77 +1144,86 @@ func init() {
 func init() { proto.RegisterFile("eth/v1/beacon_block.proto", fileDescriptor_b82dda2838684da4) }
 
 var fileDescriptor_b82dda2838684da4 = []byte{
-	// 1117 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x56, 0x4f, 0x6f, 0xe2, 0xc6,
-	0x1b, 0x96, 0x13, 0x93, 0xc0, 0x0b, 0x24, 0x64, 0xf6, 0xf7, 0xdb, 0xb2, 0xd1, 0x36, 0x50, 0xef,
-	0x1e, 0x68, 0x15, 0x20, 0x76, 0xa2, 0x28, 0xcd, 0xa5, 0x2d, 0x59, 0xaa, 0xac, 0x7a, 0x89, 0x1c,
-	0x69, 0x0f, 0xd5, 0x56, 0xd6, 0x80, 0x27, 0xd8, 0x8a, 0xf1, 0x58, 0x9e, 0x81, 0x0d, 0xf9, 0x00,
-	0xed, 0x47, 0xe8, 0xa5, 0xe7, 0x1e, 0x7a, 0xef, 0xad, 0x1f, 0xa0, 0xdd, 0x53, 0x3f, 0x01, 0xaa,
-	0xf2, 0x11, 0x90, 0x7a, 0xc9, 0xa9, 0xf2, 0x8c, 0x01, 0x03, 0x21, 0x4d, 0xaa, 0x1e, 0x7b, 0x63,
-	0x92, 0xe7, 0x79, 0xde, 0xd7, 0xef, 0x7f, 0x78, 0x46, 0xb8, 0x53, 0xef, 0xeb, 0xf5, 0x16, 0xc1,
-	0x6d, 0xea, 0x5b, 0x2d, 0x8f, 0xb6, 0x2f, 0x6b, 0x41, 0x48, 0x39, 0x45, 0x9b, 0x84, 0x3b, 0x24,
-	0x24, 0xbd, 0x6e, 0x8d, 0x70, 0xa7, 0xd6, 0xd7, 0xb7, 0xab, 0x1d, 0x97, 0x3b, 0xbd, 0x56, 0xad,
-	0x4d, 0xbb, 0xf5, 0x0e, 0xed, 0xd0, 0xba, 0xc0, 0xb5, 0x7a, 0x17, 0xe2, 0x25, 0x1e, 0xe2, 0x97,
-	0xe4, 0x6f, 0x17, 0x63, 0x69, 0xcc, 0x39, 0x61, 0x1c, 0x73, 0x97, 0xfa, 0xf2, 0x3f, 0xda, 0xfb,
-	0x15, 0xc8, 0x36, 0x84, 0xc1, 0x46, 0x64, 0x0f, 0x7d, 0x0e, 0x2a, 0xf3, 0x28, 0x2f, 0x2a, 0x65,
-	0xa5, 0xa2, 0x36, 0x76, 0x6f, 0x87, 0xa5, 0x4a, 0xc2, 0x54, 0x10, 0x0e, 0x58, 0x17, 0x73, 0xb7,
-	0xed, 0xe1, 0x16, 0xab, 0x13, 0xee, 0x18, 0x55, 0x3e, 0x08, 0x08, 0xab, 0x9d, 0x7b, 0x94, 0x9b,
-	0x82, 0x89, 0xbe, 0x81, 0x8d, 0x20, 0xa4, 0x01, 0x65, 0x24, 0xb4, 0x5c, 0xdf, 0x26, 0x57, 0xc5,
-	0x15, 0xa1, 0x75, 0x78, 0x3b, 0x2c, 0x19, 0x0f, 0xd1, 0x7a, 0x83, 0x3d, 0xd7, 0xc6, 0x9c, 0x86,
-	0xaf, 0x23, 0xb6, 0x99, 0x1f, 0xab, 0x89, 0x27, 0x32, 0x20, 0x1b, 0xe0, 0x90, 0xf8, 0xdc, 0x0a,
-	0x29, 0xe5, 0xc5, 0xd5, 0xb2, 0x52, 0xc9, 0x35, 0xb6, 0x46, 0xc3, 0x52, 0x9e, 0xb1, 0xeb, 0x2a,
-	0x73, 0xaf, 0xc9, 0xb1, 0xb6, 0x6f, 0x68, 0x26, 0x48, 0x94, 0x49, 0x29, 0x47, 0x7b, 0x00, 0xd1,
-	0x57, 0x13, 0x49, 0x51, 0x97, 0x51, 0x32, 0x02, 0x24, 0x18, 0x07, 0xa0, 0xb6, 0xa8, 0x3d, 0x28,
-	0xa6, 0xca, 0x4a, 0x25, 0x6b, 0x94, 0x6b, 0x73, 0xf1, 0xaf, 0x25, 0x42, 0xd6, 0xa0, 0xf6, 0xc0,
-	0x14, 0x68, 0xed, 0x0a, 0xb6, 0xce, 0xdd, 0x8e, 0x4f, 0xec, 0x64, 0x44, 0x0d, 0x48, 0x89, 0x54,
-	0x8a, 0x90, 0x66, 0x8d, 0xe7, 0xf7, 0x69, 0x99, 0x12, 0x8a, 0xea, 0x90, 0x61, 0x6e, 0xc7, 0xc7,
-	0xbc, 0x17, 0x12, 0x11, 0xbe, 0x05, 0x7f, 0x3f, 0x3d, 0x8c, 0xfc, 0x1d, 0x63, 0xb4, 0x3f, 0x55,
-	0xd8, 0x9c, 0xf3, 0x09, 0x1d, 0x42, 0x3e, 0xc4, 0xbe, 0x8d, 0xa9, 0x15, 0x92, 0x3e, 0xc1, 0x9e,
-	0x70, 0xe0, 0x4e, 0xa1, 0x9c, 0xc4, 0x99, 0x02, 0x86, 0x0e, 0x21, 0x43, 0xb8, 0xa3, 0x5b, 0x36,
-	0xe6, 0x58, 0x18, 0xcf, 0x1a, 0xcf, 0x16, 0x9c, 0x6e, 0x72, 0x47, 0x7f, 0x85, 0x39, 0x36, 0xd3,
-	0x24, 0xfe, 0x85, 0xaa, 0x90, 0xee, 0x84, 0xf8, 0xe2, 0xc2, 0xe5, 0xee, 0xf2, 0xb4, 0x4c, 0x20,
-	0xa8, 0x05, 0x68, 0x52, 0x27, 0xcc, 0xc3, 0xcc, 0x71, 0xfd, 0x0e, 0x2b, 0xaa, 0xe5, 0xd5, 0x4a,
-	0xd6, 0xf8, 0x68, 0xc1, 0xde, 0x59, 0x0c, 0x3d, 0x8f, 0x91, 0x8d, 0xc2, 0x68, 0x58, 0xca, 0x45,
-	0xda, 0x5d, 0x7c, 0x75, 0xac, 0xe9, 0x87, 0x9a, 0xb9, 0x15, 0xcc, 0x61, 0x18, 0xc2, 0x80, 0x64,
-	0xc9, 0xcf, 0xd8, 0x48, 0x2d, 0xb1, 0xf1, 0x45, 0x0c, 0x9d, 0xd8, 0xd8, 0x1c, 0x0d, 0x4b, 0xd9,
-	0x89, 0x0d, 0x43, 0x33, 0xb7, 0xf0, 0x1c, 0x84, 0xa1, 0x73, 0xc8, 0x25, 0xba, 0x8a, 0x15, 0xd7,
-	0x84, 0xf8, 0xf3, 0x25, 0xe2, 0x02, 0x34, 0x8d, 0x8b, 0xf4, 0xdd, 0x38, 0xd2, 0xcc, 0x19, 0x11,
-	0xf4, 0x25, 0xa4, 0x6d, 0x12, 0x50, 0xe6, 0x72, 0x56, 0x5c, 0x17, 0x82, 0xc5, 0x05, 0xc1, 0x57,
-	0x12, 0x70, 0x47, 0x20, 0x26, 0x5c, 0x64, 0xc1, 0x66, 0x9f, 0x7a, 0x3d, 0x9f, 0xe3, 0x70, 0x60,
-	0x91, 0xab, 0x48, 0x2e, 0x2d, 0xe4, 0x5e, 0x2e, 0xc8, 0xc9, 0xc2, 0x7d, 0x33, 0x46, 0x37, 0xaf,
-	0xee, 0x94, 0xde, 0xe8, 0x27, 0x01, 0x4c, 0xfb, 0x41, 0x81, 0xc2, 0x7c, 0x6a, 0xd0, 0x09, 0xa4,
-	0x1d, 0x82, 0x6d, 0x12, 0x5a, 0x7a, 0x5c, 0x3f, 0x95, 0x25, 0xe6, 0x12, 0x25, 0x7b, 0x2a, 0x18,
-	0xe6, 0xba, 0x64, 0xea, 0x09, 0x11, 0x43, 0x54, 0xd3, 0x3f, 0x10, 0x31, 0xb4, 0x1f, 0x15, 0x28,
-	0xcc, 0x67, 0x15, 0x9d, 0x42, 0x3e, 0x11, 0x6c, 0x4b, 0x8f, 0x1b, 0xf3, 0xc5, 0x82, 0xbc, 0x18,
-	0x38, 0xc4, 0x4e, 0x64, 0x6e, 0x26, 0x4d, 0xfa, 0xbc, 0x92, 0x11, 0x7f, 0xed, 0xa3, 0x95, 0x0c,
-	0xed, 0xb7, 0x15, 0x58, 0x8f, 0x13, 0x8a, 0x3e, 0x81, 0x54, 0x10, 0x52, 0x7a, 0x51, 0x54, 0xca,
-	0xab, 0x95, 0x5c, 0xe3, 0x7f, 0xa3, 0x61, 0xa9, 0x90, 0x68, 0xa2, 0xfd, 0xdd, 0xa8, 0x8f, 0x24,
-	0x04, 0xe9, 0xa0, 0x26, 0xda, 0xf4, 0xc3, 0x65, 0x45, 0x52, 0x13, 0xad, 0x2a, 0xa0, 0xdb, 0x43,
-	0x05, 0x54, 0xd1, 0xaf, 0x27, 0x00, 0x41, 0xaf, 0xe5, 0xb9, 0x6d, 0xeb, 0x92, 0x0c, 0xe2, 0xe1,
-	0xf0, 0x72, 0x34, 0x2c, 0x95, 0xa7, 0xc6, 0x0e, 0x8e, 0xb4, 0x32, 0x0b, 0x48, 0xbb, 0xea, 0xe3,
-	0x2e, 0x39, 0xd6, 0x82, 0x5e, 0xeb, 0x92, 0x0c, 0x34, 0x33, 0x23, 0x79, 0x5f, 0x91, 0x01, 0x3a,
-	0x85, 0xa7, 0xef, 0x5c, 0xee, 0xd8, 0x21, 0x7e, 0x87, 0x3d, 0xab, 0x1d, 0x12, 0x9b, 0xf8, 0xdc,
-	0xc5, 0x1e, 0xbb, 0x7b, 0x6c, 0x45, 0xae, 0xff, 0x7f, 0x4a, 0x38, 0x99, 0xe2, 0xd1, 0x53, 0x58,
-	0xc3, 0x5d, 0xda, 0xf3, 0xe5, 0x4c, 0x57, 0xcd, 0xf8, 0x35, 0x3b, 0x0b, 0xd5, 0x07, 0xcc, 0xc2,
-	0x9f, 0x15, 0xc8, 0xcf, 0xd4, 0x31, 0x3a, 0x81, 0x14, 0x09, 0x68, 0xdb, 0x89, 0xb7, 0x5a, 0xf5,
-	0x76, 0x58, 0xfa, 0xf8, 0x21, 0x9b, 0xa8, 0x19, 0x91, 0x4c, 0xc9, 0x15, 0xbd, 0x34, 0xde, 0x4c,
-	0xff, 0xca, 0x62, 0xdb, 0xe8, 0xcf, 0xbc, 0xb5, 0x6b, 0x78, 0x72, 0x47, 0x13, 0x22, 0x03, 0xd4,
-	0xa8, 0x73, 0xe3, 0x2a, 0xdd, 0x59, 0x48, 0xf1, 0x0c, 0xda, 0x14, 0xd8, 0xc7, 0xef, 0x8f, 0xef,
-	0x15, 0x48, 0x8f, 0x47, 0x3a, 0x3a, 0x80, 0x5c, 0x3c, 0x41, 0xe4, 0xc2, 0x54, 0x96, 0x65, 0x32,
-	0x1b, 0xc3, 0xc4, 0xca, 0x7c, 0x01, 0xf9, 0x31, 0xab, 0x2d, 0xd2, 0x28, 0xa2, 0x63, 0x8e, 0xa5,
-	0x4e, 0x44, 0x32, 0xf7, 0x00, 0xc4, 0x86, 0xb3, 0x1c, 0xcc, 0x9c, 0xe5, 0x5b, 0x22, 0x23, 0x40,
-	0xa7, 0x98, 0x39, 0xd1, 0x81, 0xb2, 0xb5, 0xd0, 0xe1, 0xff, 0x9d, 0x29, 0xf2, 0x4c, 0xa9, 0x41,
-	0x26, 0x3a, 0x3c, 0x24, 0x21, 0xb5, 0x74, 0xe7, 0x46, 0x98, 0x08, 0xaf, 0x7d, 0xab, 0xc0, 0x07,
-	0x4b, 0x86, 0x26, 0x3a, 0x86, 0x35, 0x39, 0x36, 0xe3, 0x4a, 0xd3, 0xee, 0x3b, 0x54, 0xe2, 0x41,
-	0x1b, 0x33, 0x1e, 0x5f, 0x6f, 0xbf, 0x28, 0x80, 0x16, 0x87, 0x22, 0xfa, 0x0c, 0xe2, 0x0d, 0xeb,
-	0xfa, 0x9d, 0x28, 0x2b, 0x6e, 0x9b, 0x30, 0x31, 0x06, 0xd5, 0x06, 0x1a, 0x0d, 0x4b, 0x1b, 0xd3,
-	0x5d, 0xbc, 0x77, 0x70, 0xa4, 0x99, 0x85, 0x09, 0xf8, 0xb5, 0xc4, 0x46, 0x77, 0x5b, 0x62, 0x1e,
-	0x96, 0xef, 0xdb, 0xc2, 0xd3, 0x91, 0x38, 0xeb, 0xfe, 0xea, 0xdf, 0xbb, 0xdf, 0xf8, 0x4e, 0xf9,
-	0xf5, 0x66, 0x47, 0xf9, 0xfd, 0x66, 0x47, 0xf9, 0xe3, 0x66, 0x47, 0x81, 0x27, 0x34, 0xec, 0xcc,
-	0x9b, 0x6a, 0x14, 0x12, 0xe1, 0x3a, 0x8b, 0x6e, 0xed, 0x33, 0xe5, 0xeb, 0xdd, 0xfb, 0x0a, 0x4b,
-	0xb0, 0x71, 0xe0, 0x8a, 0x47, 0xbd, 0xaf, 0xff, 0xb4, 0xb2, 0xd9, 0x1c, 0x6b, 0x36, 0x85, 0xe6,
-	0xfb, 0xe9, 0x5f, 0xde, 0x36, 0xb9, 0xf3, 0xb6, 0xaf, 0xb7, 0xd6, 0xc4, 0x19, 0xbf, 0xff, 0x57,
-	0x00, 0x00, 0x00, 0xff, 0xff, 0x74, 0xb7, 0xd2, 0x0c, 0x3d, 0x0c, 0x00, 0x00,
+	// 1253 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xec, 0x58, 0x31, 0x6f, 0xdb, 0x46,
+	0x14, 0x06, 0x6d, 0xda, 0xb1, 0x9f, 0x2c, 0xdb, 0xba, 0xb4, 0xa9, 0x12, 0xa4, 0x96, 0xca, 0x64,
+	0x50, 0x8b, 0x48, 0x32, 0x19, 0xc3, 0x48, 0xbd, 0xb4, 0xa5, 0xe3, 0xc0, 0x41, 0x96, 0x80, 0x06,
+	0x3c, 0x14, 0x29, 0x88, 0x23, 0x79, 0x16, 0x89, 0x50, 0x3c, 0x82, 0x77, 0x52, 0xac, 0xa0, 0x73,
+	0xfb, 0x13, 0xba, 0x74, 0xee, 0xd0, 0xbd, 0x5b, 0x7e, 0x40, 0x9b, 0xa1, 0xe8, 0x2f, 0x10, 0x8a,
+	0xfc, 0x04, 0x01, 0x5d, 0x32, 0x15, 0x3c, 0x52, 0x12, 0x29, 0x99, 0x4a, 0x1c, 0xb4, 0x9b, 0x37,
+	0x9d, 0xf5, 0xbd, 0xef, 0x7b, 0x7a, 0xf7, 0xee, 0xbb, 0x77, 0x86, 0x9b, 0x84, 0xbb, 0xed, 0xbe,
+	0xda, 0xb6, 0x08, 0xb6, 0x69, 0x60, 0x5a, 0x3e, 0xb5, 0x9f, 0xb7, 0xc2, 0x88, 0x72, 0x8a, 0xb6,
+	0x08, 0x77, 0x49, 0x44, 0x7a, 0xdd, 0x16, 0xe1, 0x6e, 0xab, 0xaf, 0xde, 0x6a, 0x76, 0x3c, 0xee,
+	0xf6, 0xac, 0x96, 0x4d, 0xbb, 0xed, 0x0e, 0xed, 0xd0, 0xb6, 0xc0, 0x59, 0xbd, 0x33, 0xb1, 0x12,
+	0x0b, 0xf1, 0x29, 0x89, 0xbf, 0x55, 0x4d, 0xa9, 0x31, 0xe7, 0x84, 0x71, 0xcc, 0x3d, 0x1a, 0x24,
+	0xdf, 0x28, 0xaf, 0x97, 0xa0, 0xa4, 0x0b, 0x41, 0x3d, 0xd6, 0x43, 0x5f, 0x83, 0xcc, 0x7c, 0xca,
+	0xab, 0x52, 0x5d, 0x6a, 0xc8, 0xfa, 0xbd, 0xb7, 0xc3, 0x5a, 0x23, 0x23, 0x15, 0x46, 0x03, 0xd6,
+	0xc5, 0xdc, 0xb3, 0x7d, 0x6c, 0xb1, 0x36, 0xe1, 0xae, 0xd6, 0xe4, 0x83, 0x90, 0xb0, 0xd6, 0x89,
+	0x4f, 0xb9, 0x21, 0x22, 0xd1, 0x77, 0xb0, 0x19, 0x46, 0x34, 0xa4, 0x8c, 0x44, 0xa6, 0x17, 0x38,
+	0xe4, 0xbc, 0xba, 0x24, 0xb8, 0xf6, 0xdf, 0x0e, 0x6b, 0xda, 0xfb, 0x70, 0x9d, 0x62, 0xdf, 0x73,
+	0x30, 0xa7, 0xd1, 0xe3, 0x38, 0xda, 0x28, 0x8f, 0xd9, 0xc4, 0x12, 0x69, 0x50, 0x0a, 0x71, 0x44,
+	0x02, 0x6e, 0x46, 0x94, 0xf2, 0xea, 0x72, 0x5d, 0x6a, 0x6c, 0xe8, 0x95, 0xd1, 0xb0, 0x56, 0x66,
+	0xec, 0x65, 0x93, 0x79, 0x2f, 0xc9, 0x81, 0x72, 0x5f, 0x53, 0x0c, 0x48, 0x50, 0x06, 0xa5, 0x1c,
+	0xed, 0x02, 0xc4, 0xbf, 0x9a, 0x24, 0x21, 0x72, 0x51, 0xc8, 0xba, 0x00, 0x89, 0x88, 0x3d, 0x90,
+	0x2d, 0xea, 0x0c, 0xaa, 0x2b, 0x75, 0xa9, 0x51, 0xd2, 0xea, 0xad, 0x99, 0xfa, 0xb7, 0x32, 0x25,
+	0xd3, 0xa9, 0x33, 0x30, 0x04, 0x5a, 0xf9, 0x73, 0x09, 0xca, 0x99, 0x6f, 0x4e, 0xd5, 0xab, 0x72,
+	0x26, 0xe5, 0xdc, 0xcf, 0x95, 0x53, 0x79, 0x57, 0x39, 0x4f, 0xd5, 0xb4, 0xa0, 0xe7, 0x50, 0x39,
+	0xf1, 0x3a, 0x01, 0x71, 0xb2, 0x2d, 0xaa, 0xc1, 0x8a, 0x38, 0x1b, 0xa2, 0xa8, 0x25, 0xed, 0xf6,
+	0x22, 0x36, 0x23, 0x81, 0xa2, 0x36, 0xac, 0x33, 0xaf, 0x13, 0x60, 0xde, 0x8b, 0x88, 0x28, 0xe0,
+	0x5c, 0xc6, 0x5f, 0xee, 0xc7, 0x19, 0x8f, 0x31, 0xca, 0xf7, 0x70, 0x7d, 0x4e, 0xf9, 0x54, 0x45,
+	0x7b, 0x79, 0xed, 0x9d, 0x45, 0xda, 0xa7, 0xea, 0x07, 0xab, 0xff, 0x23, 0xc3, 0xd6, 0x4c, 0x4d,
+	0xd0, 0x3e, 0x94, 0x23, 0x1c, 0x38, 0x98, 0x9a, 0x11, 0xe9, 0x13, 0xec, 0x8b, 0x14, 0x2e, 0x24,
+	0xda, 0x48, 0x70, 0x86, 0x80, 0xa1, 0x7d, 0x58, 0x27, 0xdc, 0x55, 0x4d, 0x07, 0x73, 0x2c, 0xc4,
+	0x4b, 0xda, 0xcd, 0xb9, 0xb4, 0x8f, 0xb8, 0xab, 0x3e, 0xc4, 0x1c, 0x1b, 0x6b, 0x24, 0xfd, 0x84,
+	0x9a, 0xb0, 0xd6, 0x89, 0xf0, 0xd9, 0x99, 0xc7, 0xbd, 0xe2, 0xb6, 0x98, 0x40, 0x90, 0x05, 0x68,
+	0xd2, 0xa7, 0xcc, 0xc7, 0xcc, 0xf5, 0x82, 0x0e, 0xab, 0xca, 0xf5, 0xe5, 0x46, 0x49, 0xfb, 0x6c,
+	0x4e, 0xef, 0x69, 0x0a, 0x3d, 0x49, 0x91, 0xfa, 0xf6, 0x68, 0x58, 0xdb, 0x88, 0xb9, 0xbb, 0xf8,
+	0xfc, 0x40, 0x51, 0xf7, 0x15, 0xa3, 0x12, 0xce, 0x60, 0x18, 0xc2, 0x80, 0x12, 0x07, 0xcb, 0x69,
+	0xac, 0x14, 0x68, 0x7c, 0x93, 0x42, 0x27, 0x1a, 0x5b, 0xa3, 0x61, 0xad, 0x34, 0xd1, 0xd0, 0x14,
+	0xa3, 0x82, 0x67, 0x20, 0x0c, 0x9d, 0xc0, 0x46, 0xc6, 0x24, 0x59, 0x75, 0x55, 0x90, 0xdf, 0x2e,
+	0x20, 0x17, 0xa0, 0x69, 0x5d, 0x92, 0xdc, 0xb5, 0x07, 0x8a, 0x91, 0x23, 0x41, 0x8f, 0x60, 0xcd,
+	0x21, 0x21, 0x65, 0x1e, 0x67, 0xd5, 0x6b, 0x82, 0xb0, 0x3a, 0x47, 0xf8, 0x30, 0x01, 0x5c, 0x50,
+	0x88, 0x49, 0x2c, 0x32, 0x61, 0xab, 0x4f, 0xfd, 0x5e, 0xc0, 0x71, 0x34, 0x30, 0xc9, 0x79, 0x4c,
+	0xb7, 0x26, 0xe8, 0xee, 0xce, 0xd1, 0x25, 0xcd, 0x7b, 0x3a, 0x46, 0x1f, 0x9d, 0x5f, 0x48, 0xbd,
+	0xd9, 0xcf, 0x02, 0x98, 0xf2, 0x6a, 0x15, 0x2a, 0x73, 0x67, 0xf1, 0xaa, 0xf3, 0xae, 0x3a, 0xef,
+	0xff, 0xee, 0x3c, 0xd4, 0x87, 0xeb, 0x6c, 0x10, 0xd8, 0xa6, 0x4d, 0xbb, 0x5d, 0x8f, 0x73, 0x42,
+	0x4c, 0x2b, 0x16, 0x01, 0xb1, 0xfd, 0x8f, 0xc6, 0xe1, 0xc9, 0xf6, 0xab, 0xca, 0xc2, 0xbb, 0xaf,
+	0x43, 0x9b, 0x96, 0xc7, 0xcf, 0x3c, 0xe2, 0x3b, 0x2d, 0xdd, 0xe3, 0x7d, 0x62, 0x73, 0x1a, 0xa9,
+	0xbb, 0xda, 0x9e, 0x51, 0x89, 0x25, 0x0e, 0xc7, 0x0a, 0x7a, 0xac, 0xfb, 0x04, 0xaa, 0x33, 0xba,
+	0x53, 0xa7, 0x2e, 0x15, 0xb5, 0xf9, 0x8d, 0x1c, 0xcf, 0xc9, 0xc4, 0xb6, 0x7f, 0x96, 0x60, 0x7b,
+	0xb6, 0xbf, 0xd0, 0x21, 0xac, 0xb9, 0x04, 0x3b, 0x24, 0x32, 0xd5, 0xf4, 0x10, 0x34, 0x0a, 0x6a,
+	0x96, 0x39, 0x79, 0xc7, 0x22, 0xc2, 0xb8, 0x96, 0x44, 0xaa, 0x19, 0x12, 0x4d, 0x1c, 0x89, 0x0f,
+	0x20, 0xd1, 0x94, 0x5f, 0x24, 0xd8, 0x9e, 0x6d, 0x4d, 0x74, 0x0c, 0xe5, 0x4c, 0xc7, 0x98, 0x6a,
+	0x7a, 0xb3, 0xdd, 0x99, 0xa3, 0x17, 0xf3, 0x02, 0x71, 0x32, 0xed, 0x97, 0xeb, 0x35, 0x75, 0x96,
+	0x49, 0x4b, 0x7f, 0xed, 0xa5, 0x99, 0x34, 0xe5, 0x8f, 0x25, 0xb8, 0x96, 0x76, 0x25, 0xfa, 0x02,
+	0x56, 0xc2, 0x88, 0xd2, 0xb3, 0xaa, 0x54, 0x5f, 0x6e, 0x6c, 0xe8, 0x1f, 0x8d, 0x86, 0xb5, 0xed,
+	0x8c, 0x13, 0xdc, 0xbf, 0x17, 0x9b, 0x41, 0x02, 0x41, 0x2a, 0xc8, 0x19, 0xaf, 0xf9, 0xb4, 0xa8,
+	0xd3, 0x5b, 0xc2, 0x6f, 0x04, 0xf4, 0xd6, 0x50, 0x02, 0x59, 0x98, 0xce, 0x21, 0x40, 0xd8, 0xb3,
+	0x7c, 0xcf, 0x36, 0x9f, 0x93, 0x41, 0xea, 0x70, 0x77, 0x47, 0xc3, 0x5a, 0x7d, 0x2a, 0xb6, 0xf7,
+	0x40, 0xa9, 0xb3, 0x90, 0xd8, 0xcd, 0x00, 0x77, 0xc9, 0x81, 0x12, 0xf6, 0xac, 0xe7, 0x64, 0xa0,
+	0x18, 0xeb, 0x49, 0xdc, 0x13, 0x32, 0x40, 0xc7, 0x70, 0xe3, 0x85, 0xc7, 0x5d, 0x27, 0xc2, 0x2f,
+	0xb0, 0x6f, 0xda, 0x11, 0x71, 0x48, 0xc0, 0x3d, 0xec, 0xb3, 0x8b, 0x6f, 0xfd, 0x38, 0xf5, 0x8f,
+	0xa7, 0x01, 0x87, 0x53, 0x3c, 0xba, 0x01, 0xab, 0xb8, 0x4b, 0x7b, 0x41, 0x32, 0x92, 0xc9, 0x46,
+	0xba, 0xca, 0x8f, 0x12, 0xf2, 0x7b, 0x8c, 0x12, 0xbf, 0x49, 0x50, 0xce, 0x1d, 0x46, 0x74, 0x08,
+	0x2b, 0x24, 0xa4, 0xb6, 0x9b, 0x0e, 0xa5, 0xcd, 0xb7, 0xc3, 0xda, 0xe7, 0xef, 0x33, 0x48, 0x1e,
+	0xc5, 0x41, 0x46, 0x12, 0x2b, 0x0c, 0x61, 0x3c, 0x58, 0xfe, 0x27, 0x73, 0xe9, 0x66, 0x3f, 0xb7,
+	0x56, 0x5e, 0x8e, 0x07, 0xb0, 0x7c, 0xf2, 0x1a, 0xc8, 0xb1, 0xfd, 0x14, 0xce, 0x5f, 0x39, 0xb4,
+	0x21, 0xb0, 0x97, 0x1f, 0xbf, 0x7e, 0x92, 0x60, 0x6d, 0x7c, 0x2f, 0xa1, 0x3d, 0xd8, 0x48, 0x6d,
+	0x30, 0x99, 0x77, 0xa5, 0xa2, 0x9d, 0x2c, 0xa5, 0x30, 0x31, 0xf1, 0xde, 0x81, 0xf2, 0x38, 0xca,
+	0x16, 0xdb, 0x28, 0xaa, 0x63, 0x8c, 0xa9, 0x0e, 0xc5, 0x66, 0xee, 0x02, 0x88, 0x01, 0xd1, 0x74,
+	0x31, 0x73, 0x8b, 0xaf, 0xba, 0x75, 0x01, 0x3a, 0xc6, 0xcc, 0x8d, 0x9f, 0x6b, 0x95, 0xb9, 0x13,
+	0x7e, 0xf5, 0xca, 0x48, 0x5e, 0x19, 0x2d, 0x58, 0x8f, 0x5f, 0x0d, 0x49, 0xc0, 0x4a, 0xe1, 0xe0,
+	0x10, 0x63, 0x62, 0xbc, 0xf2, 0x83, 0x04, 0x9f, 0x14, 0x98, 0x26, 0x3a, 0x80, 0xd5, 0xc4, 0x36,
+	0xd3, 0x4e, 0x5b, 0xf8, 0x66, 0x49, 0x8d, 0x36, 0x8d, 0xb8, 0x7c, 0xbf, 0xbd, 0x92, 0x00, 0xcd,
+	0x9b, 0x22, 0xfa, 0x0a, 0xd2, 0x31, 0xc1, 0x0b, 0x3a, 0xf1, 0xae, 0x78, 0x36, 0x61, 0xc2, 0x06,
+	0x65, 0x1d, 0x8d, 0x86, 0xb5, 0xcd, 0xe9, 0x40, 0xb1, 0xbb, 0xf7, 0x40, 0x31, 0xb6, 0x27, 0xe0,
+	0xc7, 0x09, 0x36, 0x7e, 0xc5, 0x66, 0xfc, 0xb0, 0xbe, 0x68, 0x94, 0x98, 0x5a, 0x62, 0x3e, 0xfd,
+	0xe5, 0x77, 0xa7, 0xaf, 0xff, 0x28, 0xfd, 0xfe, 0x66, 0x47, 0xfa, 0xeb, 0xcd, 0x8e, 0xf4, 0xf7,
+	0x9b, 0x1d, 0x09, 0xae, 0xd3, 0xa8, 0x33, 0x2b, 0xa5, 0x6f, 0x67, 0xca, 0xf5, 0x34, 0xa2, 0x9c,
+	0x3e, 0x95, 0xbe, 0xbd, 0xb7, 0xa8, 0xb1, 0x44, 0x34, 0x0e, 0x3d, 0xb1, 0x68, 0xf7, 0xd5, 0x5f,
+	0x97, 0xb6, 0x8e, 0xc6, 0x9c, 0x47, 0x82, 0xf3, 0xf5, 0xf4, 0x2f, 0xcf, 0x8e, 0xb8, 0xfb, 0xac,
+	0xaf, 0x5a, 0xab, 0xe2, 0x9f, 0x1a, 0xf7, 0xff, 0x0d, 0x00, 0x00, 0xff, 0xff, 0xb6, 0x85, 0x2c,
+	0xd2, 0x4b, 0x11, 0x00, 0x00,
 }
 
 func (m *BeaconBlock) Marshal() (dAtA []byte, err error) {
@@ -976,6 +1242,69 @@ func (m *BeaconBlock) MarshalTo(dAtA []byte) (int, error) {
 }
 
 func (m *BeaconBlock) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if m.Body != nil {
+		{
+			size, err := m.Body.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x2a
+	}
+	if len(m.StateRoot) > 0 {
+		i -= len(m.StateRoot)
+		copy(dAtA[i:], m.StateRoot)
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.StateRoot)))
+		i--
+		dAtA[i] = 0x22
+	}
+	if len(m.ParentRoot) > 0 {
+		i -= len(m.ParentRoot)
+		copy(dAtA[i:], m.ParentRoot)
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.ParentRoot)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.ProposerIndex != 0 {
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.ProposerIndex))
+		i--
+		dAtA[i] = 0x10
+	}
+	if m.Slot != 0 {
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(m.Slot))
+		i--
+		dAtA[i] = 0x8
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *BeaconBlockV1) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *BeaconBlockV1) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *BeaconBlockV1) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	i := len(dAtA)
 	_ = i
 	var l int
@@ -1069,6 +1398,52 @@ func (m *SignedBeaconBlock) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	return len(dAtA) - i, nil
 }
 
+func (m *SignedBeaconBlockV1) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *SignedBeaconBlockV1) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *SignedBeaconBlockV1) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.Signature) > 0 {
+		i -= len(m.Signature)
+		copy(dAtA[i:], m.Signature)
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.Signature)))
+		i--
+		dAtA[i] = 0x12
+	}
+	if m.Block != nil {
+		{
+			size, err := m.Block.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
 func (m *BeaconBlockBody) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
 	dAtA = make([]byte, size)
@@ -1092,6 +1467,143 @@ func (m *BeaconBlockBody) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 	if m.XXX_unrecognized != nil {
 		i -= len(m.XXX_unrecognized)
 		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.VoluntaryExits) > 0 {
+		for iNdEx := len(m.VoluntaryExits) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.VoluntaryExits[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x42
+		}
+	}
+	if len(m.Deposits) > 0 {
+		for iNdEx := len(m.Deposits) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Deposits[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x3a
+		}
+	}
+	if len(m.Attestations) > 0 {
+		for iNdEx := len(m.Attestations) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.Attestations[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x32
+		}
+	}
+	if len(m.AttesterSlashings) > 0 {
+		for iNdEx := len(m.AttesterSlashings) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.AttesterSlashings[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x2a
+		}
+	}
+	if len(m.ProposerSlashings) > 0 {
+		for iNdEx := len(m.ProposerSlashings) - 1; iNdEx >= 0; iNdEx-- {
+			{
+				size, err := m.ProposerSlashings[iNdEx].MarshalToSizedBuffer(dAtA[:i])
+				if err != nil {
+					return 0, err
+				}
+				i -= size
+				i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+			}
+			i--
+			dAtA[i] = 0x22
+		}
+	}
+	if len(m.Graffiti) > 0 {
+		i -= len(m.Graffiti)
+		copy(dAtA[i:], m.Graffiti)
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.Graffiti)))
+		i--
+		dAtA[i] = 0x1a
+	}
+	if m.Eth1Data != nil {
+		{
+			size, err := m.Eth1Data.MarshalToSizedBuffer(dAtA[:i])
+			if err != nil {
+				return 0, err
+			}
+			i -= size
+			i = encodeVarintBeaconBlock(dAtA, i, uint64(size))
+		}
+		i--
+		dAtA[i] = 0x12
+	}
+	if len(m.RandaoReveal) > 0 {
+		i -= len(m.RandaoReveal)
+		copy(dAtA[i:], m.RandaoReveal)
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.RandaoReveal)))
+		i--
+		dAtA[i] = 0xa
+	}
+	return len(dAtA) - i, nil
+}
+
+func (m *BeaconBlockBodyV1) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalToSizedBuffer(dAtA[:size])
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *BeaconBlockBodyV1) MarshalTo(dAtA []byte) (int, error) {
+	size := m.Size()
+	return m.MarshalToSizedBuffer(dAtA[:size])
+}
+
+func (m *BeaconBlockBodyV1) MarshalToSizedBuffer(dAtA []byte) (int, error) {
+	i := len(dAtA)
+	_ = i
+	var l int
+	_ = l
+	if m.XXX_unrecognized != nil {
+		i -= len(m.XXX_unrecognized)
+		copy(dAtA[i:], m.XXX_unrecognized)
+	}
+	if len(m.SyncCommitteeSignature) > 0 {
+		i -= len(m.SyncCommitteeSignature)
+		copy(dAtA[i:], m.SyncCommitteeSignature)
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.SyncCommitteeSignature)))
+		i--
+		dAtA[i] = 0x5a
+	}
+	if len(m.SyncCommitteeBits) > 0 {
+		i -= len(m.SyncCommitteeBits)
+		copy(dAtA[i:], m.SyncCommitteeBits)
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(len(m.SyncCommitteeBits)))
+		i--
+		dAtA[i] = 0x52
 	}
 	if len(m.VoluntaryExits) > 0 {
 		for iNdEx := len(m.VoluntaryExits) - 1; iNdEx >= 0; iNdEx-- {
@@ -1672,20 +2184,20 @@ func (m *IndexedAttestation) MarshalToSizedBuffer(dAtA []byte) (int, error) {
 		dAtA[i] = 0x12
 	}
 	if len(m.AttestingIndices) > 0 {
-		dAtA13 := make([]byte, len(m.AttestingIndices)*10)
-		var j12 int
+		dAtA16 := make([]byte, len(m.AttestingIndices)*10)
+		var j15 int
 		for _, num := range m.AttestingIndices {
 			for num >= 1<<7 {
-				dAtA13[j12] = uint8(uint64(num)&0x7f | 0x80)
+				dAtA16[j15] = uint8(uint64(num)&0x7f | 0x80)
 				num >>= 7
-				j12++
+				j15++
 			}
-			dAtA13[j12] = uint8(num)
-			j12++
+			dAtA16[j15] = uint8(num)
+			j15++
 		}
-		i -= j12
-		copy(dAtA[i:], dAtA13[:j12])
-		i = encodeVarintBeaconBlock(dAtA, i, uint64(j12))
+		i -= j15
+		copy(dAtA[i:], dAtA16[:j15])
+		i = encodeVarintBeaconBlock(dAtA, i, uint64(j15))
 		i--
 		dAtA[i] = 0xa
 	}
@@ -1733,7 +2245,57 @@ func (m *BeaconBlock) Size() (n int) {
 	return n
 }
 
+func (m *BeaconBlockV1) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Slot != 0 {
+		n += 1 + sovBeaconBlock(uint64(m.Slot))
+	}
+	if m.ProposerIndex != 0 {
+		n += 1 + sovBeaconBlock(uint64(m.ProposerIndex))
+	}
+	l = len(m.ParentRoot)
+	if l > 0 {
+		n += 1 + l + sovBeaconBlock(uint64(l))
+	}
+	l = len(m.StateRoot)
+	if l > 0 {
+		n += 1 + l + sovBeaconBlock(uint64(l))
+	}
+	if m.Body != nil {
+		l = m.Body.Size()
+		n += 1 + l + sovBeaconBlock(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
 func (m *SignedBeaconBlock) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	if m.Block != nil {
+		l = m.Block.Size()
+		n += 1 + l + sovBeaconBlock(uint64(l))
+	}
+	l = len(m.Signature)
+	if l > 0 {
+		n += 1 + l + sovBeaconBlock(uint64(l))
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *SignedBeaconBlockV1) Size() (n int) {
 	if m == nil {
 		return 0
 	}
@@ -1800,6 +2362,68 @@ func (m *BeaconBlockBody) Size() (n int) {
 			l = e.Size()
 			n += 1 + l + sovBeaconBlock(uint64(l))
 		}
+	}
+	if m.XXX_unrecognized != nil {
+		n += len(m.XXX_unrecognized)
+	}
+	return n
+}
+
+func (m *BeaconBlockBodyV1) Size() (n int) {
+	if m == nil {
+		return 0
+	}
+	var l int
+	_ = l
+	l = len(m.RandaoReveal)
+	if l > 0 {
+		n += 1 + l + sovBeaconBlock(uint64(l))
+	}
+	if m.Eth1Data != nil {
+		l = m.Eth1Data.Size()
+		n += 1 + l + sovBeaconBlock(uint64(l))
+	}
+	l = len(m.Graffiti)
+	if l > 0 {
+		n += 1 + l + sovBeaconBlock(uint64(l))
+	}
+	if len(m.ProposerSlashings) > 0 {
+		for _, e := range m.ProposerSlashings {
+			l = e.Size()
+			n += 1 + l + sovBeaconBlock(uint64(l))
+		}
+	}
+	if len(m.AttesterSlashings) > 0 {
+		for _, e := range m.AttesterSlashings {
+			l = e.Size()
+			n += 1 + l + sovBeaconBlock(uint64(l))
+		}
+	}
+	if len(m.Attestations) > 0 {
+		for _, e := range m.Attestations {
+			l = e.Size()
+			n += 1 + l + sovBeaconBlock(uint64(l))
+		}
+	}
+	if len(m.Deposits) > 0 {
+		for _, e := range m.Deposits {
+			l = e.Size()
+			n += 1 + l + sovBeaconBlock(uint64(l))
+		}
+	}
+	if len(m.VoluntaryExits) > 0 {
+		for _, e := range m.VoluntaryExits {
+			l = e.Size()
+			n += 1 + l + sovBeaconBlock(uint64(l))
+		}
+	}
+	l = len(m.SyncCommitteeBits)
+	if l > 0 {
+		n += 1 + l + sovBeaconBlock(uint64(l))
+	}
+	l = len(m.SyncCommitteeSignature)
+	if l > 0 {
+		n += 1 + l + sovBeaconBlock(uint64(l))
 	}
 	if m.XXX_unrecognized != nil {
 		n += len(m.XXX_unrecognized)
@@ -2236,6 +2860,202 @@ func (m *BeaconBlock) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *BeaconBlockV1) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBeaconBlock
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: BeaconBlockV1: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: BeaconBlockV1: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Slot", wireType)
+			}
+			m.Slot = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.Slot |= github_com_prysmaticlabs_eth2_types.Slot(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 2:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ProposerIndex", wireType)
+			}
+			m.ProposerIndex = 0
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				m.ProposerIndex |= github_com_prysmaticlabs_eth2_types.ValidatorIndex(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ParentRoot", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ParentRoot = append(m.ParentRoot[:0], dAtA[iNdEx:postIndex]...)
+			if m.ParentRoot == nil {
+				m.ParentRoot = []byte{}
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StateRoot", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.StateRoot = append(m.StateRoot[:0], dAtA[iNdEx:postIndex]...)
+			if m.StateRoot == nil {
+				m.StateRoot = []byte{}
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Body", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Body == nil {
+				m.Body = &BeaconBlockBodyV1{}
+			}
+			if err := m.Body.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBeaconBlock(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func (m *SignedBeaconBlock) Unmarshal(dAtA []byte) error {
 	l := len(dAtA)
 	iNdEx := 0
@@ -2296,6 +3116,130 @@ func (m *SignedBeaconBlock) Unmarshal(dAtA []byte) error {
 			}
 			if m.Block == nil {
 				m.Block = &BeaconBlock{}
+			}
+			if err := m.Block.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Signature", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Signature = append(m.Signature[:0], dAtA[iNdEx:postIndex]...)
+			if m.Signature == nil {
+				m.Signature = []byte{}
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBeaconBlock(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *SignedBeaconBlockV1) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBeaconBlock
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: SignedBeaconBlockV1: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: SignedBeaconBlockV1: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Block", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Block == nil {
+				m.Block = &BeaconBlockV1{}
 			}
 			if err := m.Block.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
@@ -2661,6 +3605,402 @@ func (m *BeaconBlockBody) Unmarshal(dAtA []byte) error {
 			m.VoluntaryExits = append(m.VoluntaryExits, &SignedVoluntaryExit{})
 			if err := m.VoluntaryExits[len(m.VoluntaryExits)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
 				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipBeaconBlock(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if (iNdEx + skippy) < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.XXX_unrecognized = append(m.XXX_unrecognized, dAtA[iNdEx:iNdEx+skippy]...)
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *BeaconBlockBodyV1) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowBeaconBlock
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= uint64(b&0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: BeaconBlockBodyV1: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: BeaconBlockBodyV1: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field RandaoReveal", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.RandaoReveal = append(m.RandaoReveal[:0], dAtA[iNdEx:postIndex]...)
+			if m.RandaoReveal == nil {
+				m.RandaoReveal = []byte{}
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Eth1Data", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Eth1Data == nil {
+				m.Eth1Data = &Eth1Data{}
+			}
+			if err := m.Eth1Data.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Graffiti", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Graffiti = append(m.Graffiti[:0], dAtA[iNdEx:postIndex]...)
+			if m.Graffiti == nil {
+				m.Graffiti = []byte{}
+			}
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ProposerSlashings", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ProposerSlashings = append(m.ProposerSlashings, &ProposerSlashing{})
+			if err := m.ProposerSlashings[len(m.ProposerSlashings)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AttesterSlashings", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AttesterSlashings = append(m.AttesterSlashings, &AttesterSlashing{})
+			if err := m.AttesterSlashings[len(m.AttesterSlashings)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Attestations", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Attestations = append(m.Attestations, &Attestation{})
+			if err := m.Attestations[len(m.Attestations)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Deposits", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Deposits = append(m.Deposits, &Deposit{})
+			if err := m.Deposits[len(m.Deposits)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field VoluntaryExits", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			postIndex := iNdEx + msglen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.VoluntaryExits = append(m.VoluntaryExits, &SignedVoluntaryExit{})
+			if err := m.VoluntaryExits[len(m.VoluntaryExits)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 10:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SyncCommitteeBits", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SyncCommitteeBits = append(m.SyncCommitteeBits[:0], dAtA[iNdEx:postIndex]...)
+			if m.SyncCommitteeBits == nil {
+				m.SyncCommitteeBits = []byte{}
+			}
+			iNdEx = postIndex
+		case 11:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SyncCommitteeSignature", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowBeaconBlock
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= int(b&0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex < 0 {
+				return ErrInvalidLengthBeaconBlock
+			}
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SyncCommitteeSignature = append(m.SyncCommitteeSignature[:0], dAtA[iNdEx:postIndex]...)
+			if m.SyncCommitteeSignature == nil {
+				m.SyncCommitteeSignature = []byte{}
 			}
 			iNdEx = postIndex
 		default:
