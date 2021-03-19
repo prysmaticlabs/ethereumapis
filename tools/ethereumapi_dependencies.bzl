@@ -323,8 +323,8 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_prysmaticlabs_go_bitfield",
         importpath = "github.com/prysmaticlabs/go-bitfield",
-        sum = "h1:cX6YRZnZ9sgMqM5U14llxUiXVNJ3u07Res1IIjTOgtI=",
-        version = "v0.0.0-20200322041314-62c2aee71669",
+        sum = "h1:18+Qqobq3HAUY0hgIhPGSqmLFnaLLocemmU7+Sj2aYQ=",
+        version = "v0.0.0-20210202205921-7fcea7c45dc8",
     )
     go_repository(
         name = "in_gopkg_yaml_v2",

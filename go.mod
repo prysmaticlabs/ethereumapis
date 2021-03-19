@@ -8,7 +8,7 @@ require (
 	github.com/golang/protobuf v1.4.2
 	github.com/grpc-ecosystem/grpc-gateway v1.13.0
 	github.com/prysmaticlabs/eth2-types v0.0.0-20210127031309-22cbe426eba6
-	github.com/prysmaticlabs/go-bitfield v0.0.0-20200322041314-62c2aee71669
+	github.com/prysmaticlabs/go-bitfield v0.0.0-20210202205921-7fcea7c45dc8
 	google.golang.org/genproto v0.0.0-20200528191852-705c0b31589b
 	google.golang.org/grpc v1.29.1
 	google.golang.org/protobuf v1.24.0
