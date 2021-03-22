@@ -53,7 +53,7 @@ message BeaconBlockAltair {
   // 32 byte root of the resulting state after processing this block.
   bytes state_root = 4 [(gogoproto.moretags) = "ssz-size:\"32\""];
 
-  // The Hard Fork 1 block body itself.
+  // The Altair beacon block body.
   BeaconBlockBodyAltair body = 5;
 }
 
