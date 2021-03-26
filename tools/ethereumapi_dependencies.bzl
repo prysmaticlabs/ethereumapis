@@ -204,6 +204,13 @@ def ethereumapi_deps():
     )
 
     go_repository(
+        name = "com_github_prysmaticlabs_grpc_gateway_v2",
+        importpath = "github.com/prysmaticlabs/grpc-gateway/v2",
+        sum = "h1:gXIEtPjq8Pu1zbmWZrIAqlYL7B1WpD0tX3hRBOeKKKs=",
+        version = "v2.0.1",
+    )
+
+    go_repository(
         name = "com_github_hashicorp_golang_lru",
         importpath = "github.com/hashicorp/golang-lru",
         sum = "h1:0hERBMJE1eitiLkihrMvRVBYAkpHzc/J3QdDN+dAcgU=",
