@@ -49,7 +49,7 @@ message Transaction {
   bytes value = 5 [(gogoproto.moretags) = "ssz-size:\"32\""]; // uint256
   // The data suppose to be ByteList[MAX_BYTES_PER_TRANSACTION_PAYLOAD]. For
   // simplicity, let's treat it as repeated bytes for now.
-  bytes data = 6 [(gogoproto.moretags) = "ssz-size:\"?,8\" ssz-max:\"1048576\""];
+  repeated bytes data = 6 [(gogoproto.moretags) = "ssz-size:\"?,8\" ssz-max:\"1048576\""];
   bytes v = 7 [(gogoproto.moretags) = "ssz-size:\"32\""]; // uint256
   bytes r = 8 [(gogoproto.moretags) = "ssz-size:\"32\""]; // uint256
   bytes s = 9 [(gogoproto.moretags) = "ssz-size:\"32\""]; // uint256
