@@ -3323,7 +3323,7 @@ func (t *Transaction) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 
 	// Offset (5) 'Data'
 	dst = ssz.WriteOffset(dst, offset)
-	offset += len(t.Data)
+	offset += len(t.Data) * 8
 
 	// Field (6) 'V'
 	if len(t.V) != 32 {
@@ -3348,10 +3348,16 @@ func (t *Transaction) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 
 	// Field (5) 'Data'
 	if len(t.Data) > 1048576 {
-		err = ssz.ErrBytesLength
+		err = ssz.ErrListTooBig
 		return
 	}
-	dst = append(dst, t.Data...)
+	for ii := 0; ii < len(t.Data); ii++ {
+		if len(t.Data[ii]) != 8 {
+			err = ssz.ErrBytesLength
+			return
+		}
+		dst = append(dst, t.Data[ii]...)
+	}
 
 	return
 }
@@ -3417,13 +3423,17 @@ func (t *Transaction) UnmarshalSSZ(buf []byte) error {
 	// Field (5) 'Data'
 	{
 		buf = tail[o5:]
-		if len(buf) > 1048576 {
-			return ssz.ErrBytesLength
+		num, err := ssz.DivideInt2(len(buf), 8, 1048576)
+		if err != nil {
+			return err
 		}
-		if cap(t.Data) == 0 {
-			t.Data = make([]byte, 0, len(buf))
+		t.Data = make([][]byte, num)
+		for ii := 0; ii < num; ii++ {
+			if cap(t.Data[ii]) == 0 {
+				t.Data[ii] = make([]byte, 0, len(buf[ii*8:(ii+1)*8]))
+			}
+			t.Data[ii] = append(t.Data[ii], buf[ii*8:(ii+1)*8]...)
 		}
-		t.Data = append(t.Data, buf...)
 	}
 	return err
 }
@@ -3433,7 +3443,7 @@ func (t *Transaction) SizeSSZ() (size int) {
 	size = 200
 
 	// Field (5) 'Data'
-	size += len(t.Data)
+	size += len(t.Data) * 8
 
 	return
 }
@@ -3475,11 +3485,22 @@ func (t *Transaction) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	hh.PutBytes(t.Value)
 
 	// Field (5) 'Data'
-	if len(t.Data) > 1048576 {
-		err = ssz.ErrBytesLength
-		return
+	{
+		if len(t.Data) > 1048576 {
+			err = ssz.ErrListTooBig
+			return
+		}
+		subIndx := hh.Index()
+		for _, i := range t.Data {
+			if len(i) != 8 {
+				err = ssz.ErrBytesLength
+				return
+			}
+			hh.Append(i)
+		}
+		numItems := uint64(len(t.Data))
+		hh.MerkleizeWithMixin(subIndx, numItems, ssz.CalculateLimit(1048576, numItems, 32))
 	}
-	hh.PutBytes(t.Data)
 
 	// Field (6) 'V'
 	if len(t.V) != 32 {
