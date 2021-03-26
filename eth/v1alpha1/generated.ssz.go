@@ -799,7 +799,7 @@ func (b *BeaconBlockBody) MarshalSSZ() ([]byte, error) {
 // MarshalSSZTo ssz marshals the BeaconBlockBody object to a target array
 func (b *BeaconBlockBody) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
-	offset := int(220)
+	offset := int(224)
 
 	// Field (0) 'RandaoReveal'
 	if len(b.RandaoReveal) != 96 {
@@ -848,6 +848,13 @@ func (b *BeaconBlockBody) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	// Offset (7) 'VoluntaryExits'
 	dst = ssz.WriteOffset(dst, offset)
 	offset += len(b.VoluntaryExits) * 112
+
+	// Offset (8) 'ApplicationPayload'
+	dst = ssz.WriteOffset(dst, offset)
+	if b.ApplicationPayload == nil {
+		b.ApplicationPayload = new(ApplicationPayload)
+	}
+	offset += b.ApplicationPayload.SizeSSZ()
 
 	// Field (3) 'ProposerSlashings'
 	if len(b.ProposerSlashings) > 16 {
@@ -918,6 +925,11 @@ func (b *BeaconBlockBody) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 		}
 	}
 
+	// Field (8) 'ApplicationPayload'
+	if dst, err = b.ApplicationPayload.MarshalSSZTo(dst); err != nil {
+		return
+	}
+
 	return
 }
 
@@ -925,12 +937,12 @@ func (b *BeaconBlockBody) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 func (b *BeaconBlockBody) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
-	if size < 220 {
+	if size < 224 {
 		return ssz.ErrSize
 	}
 
 	tail := buf
-	var o3, o4, o5, o6, o7 uint64
+	var o3, o4, o5, o6, o7, o8 uint64
 
 	// Field (0) 'RandaoReveal'
 	if cap(b.RandaoReveal) == 0 {
@@ -974,6 +986,11 @@ func (b *BeaconBlockBody) UnmarshalSSZ(buf []byte) error {
 
 	// Offset (7) 'VoluntaryExits'
 	if o7 = ssz.ReadOffset(buf[216:220]); o7 > size || o6 > o7 {
+		return ssz.ErrOffset
+	}
+
+	// Offset (8) 'ApplicationPayload'
+	if o8 = ssz.ReadOffset(buf[220:224]); o8 > size || o7 > o8 {
 		return ssz.ErrOffset
 	}
 
@@ -1059,7 +1076,7 @@ func (b *BeaconBlockBody) UnmarshalSSZ(buf []byte) error {
 
 	// Field (7) 'VoluntaryExits'
 	{
-		buf = tail[o7:]
+		buf = tail[o7:o8]
 		num, err := ssz.DivideInt2(len(buf), 112, 16)
 		if err != nil {
 			return err
@@ -1074,12 +1091,23 @@ func (b *BeaconBlockBody) UnmarshalSSZ(buf []byte) error {
 			}
 		}
 	}
+
+	// Field (8) 'ApplicationPayload'
+	{
+		buf = tail[o8:]
+		if b.ApplicationPayload == nil {
+			b.ApplicationPayload = new(ApplicationPayload)
+		}
+		if err = b.ApplicationPayload.UnmarshalSSZ(buf); err != nil {
+			return err
+		}
+	}
 	return err
 }
 
 // SizeSSZ returns the ssz encoded size in bytes for the BeaconBlockBody object
 func (b *BeaconBlockBody) SizeSSZ() (size int) {
-	size = 220
+	size = 224
 
 	// Field (3) 'ProposerSlashings'
 	size += len(b.ProposerSlashings) * 416
@@ -1101,6 +1129,12 @@ func (b *BeaconBlockBody) SizeSSZ() (size int) {
 
 	// Field (7) 'VoluntaryExits'
 	size += len(b.VoluntaryExits) * 112
+
+	// Field (8) 'ApplicationPayload'
+	if b.ApplicationPayload == nil {
+		b.ApplicationPayload = new(ApplicationPayload)
+	}
+	size += b.ApplicationPayload.SizeSSZ()
 
 	return
 }
@@ -1211,6 +1245,11 @@ func (b *BeaconBlockBody) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 			}
 		}
 		hh.MerkleizeWithMixin(subIndx, num, 16)
+	}
+
+	// Field (8) 'ApplicationPayload'
+	if err = b.ApplicationPayload.HashTreeRootWith(hh); err != nil {
+		return
 	}
 
 	hh.Merkleize(indx)
@@ -2983,6 +3022,466 @@ func (s *SyncAggregate) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 		return
 	}
 	hh.PutBytes(s.SyncCommitteeSignature)
+
+	hh.Merkleize(indx)
+	return
+}
+
+// MarshalSSZ ssz marshals the ApplicationPayload object
+func (a *ApplicationPayload) MarshalSSZ() ([]byte, error) {
+	return ssz.MarshalSSZ(a)
+}
+
+// MarshalSSZTo ssz marshals the ApplicationPayload object to a target array
+func (a *ApplicationPayload) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+	dst = buf
+	offset := int(392)
+
+	// Field (0) 'BlockHash'
+	if len(a.BlockHash) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, a.BlockHash...)
+
+	// Field (1) 'Coinbase'
+	if len(a.Coinbase) != 20 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, a.Coinbase...)
+
+	// Field (2) 'StateRoot'
+	if len(a.StateRoot) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, a.StateRoot...)
+
+	// Field (3) 'GasLimit'
+	dst = ssz.MarshalUint64(dst, a.GasLimit)
+
+	// Field (4) 'GasUsed'
+	dst = ssz.MarshalUint64(dst, a.GasUsed)
+
+	// Field (5) 'ReceiptRoot'
+	if len(a.ReceiptRoot) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, a.ReceiptRoot...)
+
+	// Field (6) 'LogsBloom'
+	if len(a.LogsBloom) != 256 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, a.LogsBloom...)
+
+	// Offset (7) 'Transactions'
+	dst = ssz.WriteOffset(dst, offset)
+	for ii := 0; ii < len(a.Transactions); ii++ {
+		offset += 4
+		offset += a.Transactions[ii].SizeSSZ()
+	}
+
+	// Field (7) 'Transactions'
+	if len(a.Transactions) > 16384 {
+		err = ssz.ErrListTooBig
+		return
+	}
+	{
+		offset = 4 * len(a.Transactions)
+		for ii := 0; ii < len(a.Transactions); ii++ {
+			dst = ssz.WriteOffset(dst, offset)
+			offset += a.Transactions[ii].SizeSSZ()
+		}
+	}
+	for ii := 0; ii < len(a.Transactions); ii++ {
+		if dst, err = a.Transactions[ii].MarshalSSZTo(dst); err != nil {
+			return
+		}
+	}
+
+	return
+}
+
+// UnmarshalSSZ ssz unmarshals the ApplicationPayload object
+func (a *ApplicationPayload) UnmarshalSSZ(buf []byte) error {
+	var err error
+	size := uint64(len(buf))
+	if size < 392 {
+		return ssz.ErrSize
+	}
+
+	tail := buf
+	var o7 uint64
+
+	// Field (0) 'BlockHash'
+	if cap(a.BlockHash) == 0 {
+		a.BlockHash = make([]byte, 0, len(buf[0:32]))
+	}
+	a.BlockHash = append(a.BlockHash, buf[0:32]...)
+
+	// Field (1) 'Coinbase'
+	if cap(a.Coinbase) == 0 {
+		a.Coinbase = make([]byte, 0, len(buf[32:52]))
+	}
+	a.Coinbase = append(a.Coinbase, buf[32:52]...)
+
+	// Field (2) 'StateRoot'
+	if cap(a.StateRoot) == 0 {
+		a.StateRoot = make([]byte, 0, len(buf[52:84]))
+	}
+	a.StateRoot = append(a.StateRoot, buf[52:84]...)
+
+	// Field (3) 'GasLimit'
+	a.GasLimit = ssz.UnmarshallUint64(buf[84:92])
+
+	// Field (4) 'GasUsed'
+	a.GasUsed = ssz.UnmarshallUint64(buf[92:100])
+
+	// Field (5) 'ReceiptRoot'
+	if cap(a.ReceiptRoot) == 0 {
+		a.ReceiptRoot = make([]byte, 0, len(buf[100:132]))
+	}
+	a.ReceiptRoot = append(a.ReceiptRoot, buf[100:132]...)
+
+	// Field (6) 'LogsBloom'
+	if cap(a.LogsBloom) == 0 {
+		a.LogsBloom = make([]byte, 0, len(buf[132:388]))
+	}
+	a.LogsBloom = append(a.LogsBloom, buf[132:388]...)
+
+	// Offset (7) 'Transactions'
+	if o7 = ssz.ReadOffset(buf[388:392]); o7 > size {
+		return ssz.ErrOffset
+	}
+
+	// Field (7) 'Transactions'
+	{
+		buf = tail[o7:]
+		num, err := ssz.DecodeDynamicLength(buf, 16384)
+		if err != nil {
+			return err
+		}
+		a.Transactions = make([]*Transaction, num)
+		err = ssz.UnmarshalDynamic(buf, num, func(indx int, buf []byte) (err error) {
+			if a.Transactions[indx] == nil {
+				a.Transactions[indx] = new(Transaction)
+			}
+			if err = a.Transactions[indx].UnmarshalSSZ(buf); err != nil {
+				return err
+			}
+			return nil
+		})
+		if err != nil {
+			return err
+		}
+	}
+	return err
+}
+
+// SizeSSZ returns the ssz encoded size in bytes for the ApplicationPayload object
+func (a *ApplicationPayload) SizeSSZ() (size int) {
+	size = 392
+
+	// Field (7) 'Transactions'
+	for ii := 0; ii < len(a.Transactions); ii++ {
+		size += 4
+		size += a.Transactions[ii].SizeSSZ()
+	}
+
+	return
+}
+
+// HashTreeRoot ssz hashes the ApplicationPayload object
+func (a *ApplicationPayload) HashTreeRoot() ([32]byte, error) {
+	return ssz.HashWithDefaultHasher(a)
+}
+
+// HashTreeRootWith ssz hashes the ApplicationPayload object with a hasher
+func (a *ApplicationPayload) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+	indx := hh.Index()
+
+	// Field (0) 'BlockHash'
+	if len(a.BlockHash) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(a.BlockHash)
+
+	// Field (1) 'Coinbase'
+	if len(a.Coinbase) != 20 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(a.Coinbase)
+
+	// Field (2) 'StateRoot'
+	if len(a.StateRoot) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(a.StateRoot)
+
+	// Field (3) 'GasLimit'
+	hh.PutUint64(a.GasLimit)
+
+	// Field (4) 'GasUsed'
+	hh.PutUint64(a.GasUsed)
+
+	// Field (5) 'ReceiptRoot'
+	if len(a.ReceiptRoot) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(a.ReceiptRoot)
+
+	// Field (6) 'LogsBloom'
+	if len(a.LogsBloom) != 256 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(a.LogsBloom)
+
+	// Field (7) 'Transactions'
+	{
+		subIndx := hh.Index()
+		num := uint64(len(a.Transactions))
+		if num > 16384 {
+			err = ssz.ErrIncorrectListSize
+			return
+		}
+		for i := uint64(0); i < num; i++ {
+			if err = a.Transactions[i].HashTreeRootWith(hh); err != nil {
+				return
+			}
+		}
+		hh.MerkleizeWithMixin(subIndx, num, 16384)
+	}
+
+	hh.Merkleize(indx)
+	return
+}
+
+// MarshalSSZ ssz marshals the Transaction object
+func (t *Transaction) MarshalSSZ() ([]byte, error) {
+	return ssz.MarshalSSZ(t)
+}
+
+// MarshalSSZTo ssz marshals the Transaction object to a target array
+func (t *Transaction) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+	dst = buf
+	offset := int(200)
+
+	// Field (0) 'Nounce'
+	dst = ssz.MarshalUint64(dst, t.Nounce)
+
+	// Field (1) 'GasPrice'
+	if len(t.GasPrice) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, t.GasPrice...)
+
+	// Field (2) 'GasLimit'
+	dst = ssz.MarshalUint64(dst, t.GasLimit)
+
+	// Field (3) 'Recipient'
+	if len(t.Recipient) != 20 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, t.Recipient...)
+
+	// Field (4) 'Value'
+	if len(t.Value) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, t.Value...)
+
+	// Offset (5) 'Data'
+	dst = ssz.WriteOffset(dst, offset)
+	offset += len(t.Data)
+
+	// Field (6) 'V'
+	if len(t.V) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, t.V...)
+
+	// Field (7) 'R'
+	if len(t.R) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, t.R...)
+
+	// Field (8) 'S'
+	if len(t.S) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, t.S...)
+
+	// Field (5) 'Data'
+	if len(t.Data) > 1048576 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, t.Data...)
+
+	return
+}
+
+// UnmarshalSSZ ssz unmarshals the Transaction object
+func (t *Transaction) UnmarshalSSZ(buf []byte) error {
+	var err error
+	size := uint64(len(buf))
+	if size < 200 {
+		return ssz.ErrSize
+	}
+
+	tail := buf
+	var o5 uint64
+
+	// Field (0) 'Nounce'
+	t.Nounce = ssz.UnmarshallUint64(buf[0:8])
+
+	// Field (1) 'GasPrice'
+	if cap(t.GasPrice) == 0 {
+		t.GasPrice = make([]byte, 0, len(buf[8:40]))
+	}
+	t.GasPrice = append(t.GasPrice, buf[8:40]...)
+
+	// Field (2) 'GasLimit'
+	t.GasLimit = ssz.UnmarshallUint64(buf[40:48])
+
+	// Field (3) 'Recipient'
+	if cap(t.Recipient) == 0 {
+		t.Recipient = make([]byte, 0, len(buf[48:68]))
+	}
+	t.Recipient = append(t.Recipient, buf[48:68]...)
+
+	// Field (4) 'Value'
+	if cap(t.Value) == 0 {
+		t.Value = make([]byte, 0, len(buf[68:100]))
+	}
+	t.Value = append(t.Value, buf[68:100]...)
+
+	// Offset (5) 'Data'
+	if o5 = ssz.ReadOffset(buf[100:104]); o5 > size {
+		return ssz.ErrOffset
+	}
+
+	// Field (6) 'V'
+	if cap(t.V) == 0 {
+		t.V = make([]byte, 0, len(buf[104:136]))
+	}
+	t.V = append(t.V, buf[104:136]...)
+
+	// Field (7) 'R'
+	if cap(t.R) == 0 {
+		t.R = make([]byte, 0, len(buf[136:168]))
+	}
+	t.R = append(t.R, buf[136:168]...)
+
+	// Field (8) 'S'
+	if cap(t.S) == 0 {
+		t.S = make([]byte, 0, len(buf[168:200]))
+	}
+	t.S = append(t.S, buf[168:200]...)
+
+	// Field (5) 'Data'
+	{
+		buf = tail[o5:]
+		if len(buf) > 1048576 {
+			return ssz.ErrBytesLength
+		}
+		if cap(t.Data) == 0 {
+			t.Data = make([]byte, 0, len(buf))
+		}
+		t.Data = append(t.Data, buf...)
+	}
+	return err
+}
+
+// SizeSSZ returns the ssz encoded size in bytes for the Transaction object
+func (t *Transaction) SizeSSZ() (size int) {
+	size = 200
+
+	// Field (5) 'Data'
+	size += len(t.Data)
+
+	return
+}
+
+// HashTreeRoot ssz hashes the Transaction object
+func (t *Transaction) HashTreeRoot() ([32]byte, error) {
+	return ssz.HashWithDefaultHasher(t)
+}
+
+// HashTreeRootWith ssz hashes the Transaction object with a hasher
+func (t *Transaction) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+	indx := hh.Index()
+
+	// Field (0) 'Nounce'
+	hh.PutUint64(t.Nounce)
+
+	// Field (1) 'GasPrice'
+	if len(t.GasPrice) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(t.GasPrice)
+
+	// Field (2) 'GasLimit'
+	hh.PutUint64(t.GasLimit)
+
+	// Field (3) 'Recipient'
+	if len(t.Recipient) != 20 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(t.Recipient)
+
+	// Field (4) 'Value'
+	if len(t.Value) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(t.Value)
+
+	// Field (5) 'Data'
+	if len(t.Data) > 1048576 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(t.Data)
+
+	// Field (6) 'V'
+	if len(t.V) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(t.V)
+
+	// Field (7) 'R'
+	if len(t.R) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(t.R)
+
+	// Field (8) 'S'
+	if len(t.S) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(t.S)
 
 	hh.Merkleize(indx)
 	return

@@ -22,6 +22,7 @@ proto_library(
     name = "proto",
     srcs = [
         "attestation.proto",
+        "eth1_application.proto",
         "beacon_block.proto",
         "beacon_block_altair.proto",
         "beacon_chain.proto",
@@ -78,6 +79,8 @@ ssz_gen_marshal(
         "SignedVoluntaryExit",
         "Validator",
         "VoluntaryExit",
+        "ApplicationPayload",
+        "Transaction",
     ],
 )
 

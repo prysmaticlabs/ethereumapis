@@ -1,0 +1,56 @@
+// Copyright 2021 Prysmatic Labs.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+syntax = "proto3";
+
+package ethereum.eth.v1alpha1;
+
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+option csharp_namespace = "Ethereum.Eth.v1alpha1";
+option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1;eth";
+option java_multiple_files = true;
+option java_outer_classname = "BeaconBlockMergeProto";
+option java_package = "org.ethereum.eth.v1alpha1";
+option php_namespace = "Ethereum\\Eth\\v1alpha1";
+
+
+// The application payload included in a BeaconBlockBody.
+message ApplicationPayload {
+  // Hash of the application block.
+  bytes block_hash = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
+  bytes coinbase = 2 [(gogoproto.moretags) = "ssz-size:\"20\""];
+  bytes state_root = 3 [(gogoproto.moretags) = "ssz-size:\"32\""];
+  uint64 gas_limit = 4;
+  uint64 gas_used = 5;
+  bytes receipt_root = 6 [(gogoproto.moretags) = "ssz-size:\"32\""];
+  // The logs_bloom suppose to be ByteVector[BYTES_PER_LOGS_BLOOM]. For
+  // simplicity, let's treat it as repeated bytes for now.
+  bytes logs_bloom = 7 [(gogoproto.moretags) = "ssz-size:\"256\""];
+  repeated Transaction transactions = 8 [(gogoproto.moretags) = "ssz-max:\"16384\""];
+}
+
+// The transaction that is included in ApplicationPayLoad
+message Transaction {
+  uint64 nounce = 1;
+  bytes gas_price = 2 [(gogoproto.moretags) = "ssz-size:\"32\""]; // uint256
+  uint64 gas_limit = 3;
+  bytes recipient = 4 [(gogoproto.moretags) = "ssz-size:\"20\""];
+  bytes value = 5 [(gogoproto.moretags) = "ssz-size:\"32\""]; // uint256
+  // The data suppose to be ByteList[MAX_BYTES_PER_TRANSACTION_PAYLOAD]. For
+  // simplicity, let's treat it as repeated bytes for now.
+  bytes data = 6 [(gogoproto.moretags) = "ssz-max:\"1048576\""];
+  bytes v = 7 [(gogoproto.moretags) = "ssz-size:\"32\""]; // uint256
+  bytes r = 8 [(gogoproto.moretags) = "ssz-size:\"32\""]; // uint256
+  bytes s = 9 [(gogoproto.moretags) = "ssz-size:\"32\""]; // uint256
+}
