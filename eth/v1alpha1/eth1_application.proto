@@ -36,7 +36,7 @@ message ApplicationPayload {
   bytes receipt_root = 6 [(gogoproto.moretags) = "ssz-size:\"32\""];
   // The logs_bloom suppose to be ByteVector[BYTES_PER_LOGS_BLOOM]. For
   // simplicity, let's treat it as repeated bytes for now.
-  bytes logs_bloom = 7 [(gogoproto.moretags) = "ssz-size:\"256\""];
+  bytes logs_bloom = 7 [(gogoproto.moretags) = "ssz-max:\"256\""];
   repeated Transaction transactions = 8 [(gogoproto.moretags) = "ssz-max:\"16384\""];
 }
 

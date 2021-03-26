@@ -3035,7 +3035,7 @@ func (a *ApplicationPayload) MarshalSSZ() ([]byte, error) {
 // MarshalSSZTo ssz marshals the ApplicationPayload object to a target array
 func (a *ApplicationPayload) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
-	offset := int(392)
+	offset := int(140)
 
 	// Field (0) 'BlockHash'
 	if len(a.BlockHash) != 32 {
@@ -3071,12 +3071,9 @@ func (a *ApplicationPayload) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	}
 	dst = append(dst, a.ReceiptRoot...)
 
-	// Field (6) 'LogsBloom'
-	if len(a.LogsBloom) != 256 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	dst = append(dst, a.LogsBloom...)
+	// Offset (6) 'LogsBloom'
+	dst = ssz.WriteOffset(dst, offset)
+	offset += len(a.LogsBloom)
 
 	// Offset (7) 'Transactions'
 	dst = ssz.WriteOffset(dst, offset)
@@ -3084,6 +3081,13 @@ func (a *ApplicationPayload) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 		offset += 4
 		offset += a.Transactions[ii].SizeSSZ()
 	}
+
+	// Field (6) 'LogsBloom'
+	if len(a.LogsBloom) > 256 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, a.LogsBloom...)
 
 	// Field (7) 'Transactions'
 	if len(a.Transactions) > 16384 {
@@ -3110,12 +3114,12 @@ func (a *ApplicationPayload) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 func (a *ApplicationPayload) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
-	if size < 392 {
+	if size < 140 {
 		return ssz.ErrSize
 	}
 
 	tail := buf
-	var o7 uint64
+	var o6, o7 uint64
 
 	// Field (0) 'BlockHash'
 	if cap(a.BlockHash) == 0 {
@@ -3147,15 +3151,26 @@ func (a *ApplicationPayload) UnmarshalSSZ(buf []byte) error {
 	}
 	a.ReceiptRoot = append(a.ReceiptRoot, buf[100:132]...)
 
-	// Field (6) 'LogsBloom'
-	if cap(a.LogsBloom) == 0 {
-		a.LogsBloom = make([]byte, 0, len(buf[132:388]))
+	// Offset (6) 'LogsBloom'
+	if o6 = ssz.ReadOffset(buf[132:136]); o6 > size {
+		return ssz.ErrOffset
 	}
-	a.LogsBloom = append(a.LogsBloom, buf[132:388]...)
 
 	// Offset (7) 'Transactions'
-	if o7 = ssz.ReadOffset(buf[388:392]); o7 > size {
+	if o7 = ssz.ReadOffset(buf[136:140]); o7 > size || o6 > o7 {
 		return ssz.ErrOffset
+	}
+
+	// Field (6) 'LogsBloom'
+	{
+		buf = tail[o6:o7]
+		if len(buf) > 256 {
+			return ssz.ErrBytesLength
+		}
+		if cap(a.LogsBloom) == 0 {
+			a.LogsBloom = make([]byte, 0, len(buf))
+		}
+		a.LogsBloom = append(a.LogsBloom, buf...)
 	}
 
 	// Field (7) 'Transactions'
@@ -3184,7 +3199,10 @@ func (a *ApplicationPayload) UnmarshalSSZ(buf []byte) error {
 
 // SizeSSZ returns the ssz encoded size in bytes for the ApplicationPayload object
 func (a *ApplicationPayload) SizeSSZ() (size int) {
-	size = 392
+	size = 140
+
+	// Field (6) 'LogsBloom'
+	size += len(a.LogsBloom)
 
 	// Field (7) 'Transactions'
 	for ii := 0; ii < len(a.Transactions); ii++ {
@@ -3239,7 +3257,7 @@ func (a *ApplicationPayload) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	hh.PutBytes(a.ReceiptRoot)
 
 	// Field (6) 'LogsBloom'
-	if len(a.LogsBloom) != 256 {
+	if len(a.LogsBloom) > 256 {
 		err = ssz.ErrBytesLength
 		return
 	}
