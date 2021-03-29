@@ -3072,17 +3072,11 @@ func (a *ApplicationPayload) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = append(dst, a.ReceiptRoot...)
 
 	// Field (6) 'LogsBloom'
-	if len(a.LogsBloom) != 8 {
-		err = ssz.ErrVectorLength
+	if len(a.LogsBloom) != 256 {
+		err = ssz.ErrBytesLength
 		return
 	}
-	for ii := 0; ii < 8; ii++ {
-		if len(a.LogsBloom[ii]) != 32 {
-			err = ssz.ErrBytesLength
-			return
-		}
-		dst = append(dst, a.LogsBloom[ii]...)
-	}
+	dst = append(dst, a.LogsBloom...)
 
 	// Offset (7) 'Transactions'
 	dst = ssz.WriteOffset(dst, offset)
@@ -3154,13 +3148,10 @@ func (a *ApplicationPayload) UnmarshalSSZ(buf []byte) error {
 	a.ReceiptRoot = append(a.ReceiptRoot, buf[100:132]...)
 
 	// Field (6) 'LogsBloom'
-	a.LogsBloom = make([][]byte, 8)
-	for ii := 0; ii < 8; ii++ {
-		if cap(a.LogsBloom[ii]) == 0 {
-			a.LogsBloom[ii] = make([]byte, 0, len(buf[132:388][ii*32:(ii+1)*32]))
-		}
-		a.LogsBloom[ii] = append(a.LogsBloom[ii], buf[132:388][ii*32:(ii+1)*32]...)
+	if cap(a.LogsBloom) == 0 {
+		a.LogsBloom = make([]byte, 0, len(buf[132:388]))
 	}
+	a.LogsBloom = append(a.LogsBloom, buf[132:388]...)
 
 	// Offset (7) 'Transactions'
 	if o7 = ssz.ReadOffset(buf[388:392]); o7 > size {
@@ -3174,10 +3165,10 @@ func (a *ApplicationPayload) UnmarshalSSZ(buf []byte) error {
 		if err != nil {
 			return err
 		}
-		a.Transactions = make([]*Transaction, num)
+		a.Transactions = make([]*OpaqueTransaction, num)
 		err = ssz.UnmarshalDynamic(buf, num, func(indx int, buf []byte) (err error) {
 			if a.Transactions[indx] == nil {
-				a.Transactions[indx] = new(Transaction)
+				a.Transactions[indx] = new(OpaqueTransaction)
 			}
 			if err = a.Transactions[indx].UnmarshalSSZ(buf); err != nil {
 				return err
@@ -3248,21 +3239,11 @@ func (a *ApplicationPayload) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	hh.PutBytes(a.ReceiptRoot)
 
 	// Field (6) 'LogsBloom'
-	{
-		if len(a.LogsBloom) != 8 {
-			err = ssz.ErrVectorLength
-			return
-		}
-		subIndx := hh.Index()
-		for _, i := range a.LogsBloom {
-			if len(i) != 32 {
-				err = ssz.ErrBytesLength
-				return
-			}
-			hh.Append(i)
-		}
-		hh.Merkleize(subIndx)
+	if len(a.LogsBloom) != 256 {
+		err = ssz.ErrBytesLength
+		return
 	}
+	hh.PutBytes(a.LogsBloom)
 
 	// Field (7) 'Transactions'
 	{
@@ -3284,244 +3265,85 @@ func (a *ApplicationPayload) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	return
 }
 
-// MarshalSSZ ssz marshals the Transaction object
-func (t *Transaction) MarshalSSZ() ([]byte, error) {
-	return ssz.MarshalSSZ(t)
+// MarshalSSZ ssz marshals the OpaqueTransaction object
+func (o *OpaqueTransaction) MarshalSSZ() ([]byte, error) {
+	return ssz.MarshalSSZ(o)
 }
 
-// MarshalSSZTo ssz marshals the Transaction object to a target array
-func (t *Transaction) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+// MarshalSSZTo ssz marshals the OpaqueTransaction object to a target array
+func (o *OpaqueTransaction) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
-	offset := int(200)
+	offset := int(4)
 
-	// Field (0) 'Nounce'
-	dst = ssz.MarshalUint64(dst, t.Nounce)
-
-	// Field (1) 'GasPrice'
-	if len(t.GasPrice) != 32 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	dst = append(dst, t.GasPrice...)
-
-	// Field (2) 'GasLimit'
-	dst = ssz.MarshalUint64(dst, t.GasLimit)
-
-	// Field (3) 'Recipient'
-	if len(t.Recipient) != 20 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	dst = append(dst, t.Recipient...)
-
-	// Field (4) 'Value'
-	if len(t.Value) != 32 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	dst = append(dst, t.Value...)
-
-	// Offset (5) 'Data'
+	// Offset (0) 'Data'
 	dst = ssz.WriteOffset(dst, offset)
-	offset += len(t.Data) * 8
+	offset += len(o.Data)
 
-	// Field (6) 'V'
-	if len(t.V) != 32 {
+	// Field (0) 'Data'
+	if len(o.Data) > 1048576 {
 		err = ssz.ErrBytesLength
 		return
 	}
-	dst = append(dst, t.V...)
-
-	// Field (7) 'R'
-	if len(t.R) != 32 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	dst = append(dst, t.R...)
-
-	// Field (8) 'S'
-	if len(t.S) != 32 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	dst = append(dst, t.S...)
-
-	// Field (5) 'Data'
-	if len(t.Data) > 1048576 {
-		err = ssz.ErrListTooBig
-		return
-	}
-	for ii := 0; ii < len(t.Data); ii++ {
-		if len(t.Data[ii]) != 8 {
-			err = ssz.ErrBytesLength
-			return
-		}
-		dst = append(dst, t.Data[ii]...)
-	}
+	dst = append(dst, o.Data...)
 
 	return
 }
 
-// UnmarshalSSZ ssz unmarshals the Transaction object
-func (t *Transaction) UnmarshalSSZ(buf []byte) error {
+// UnmarshalSSZ ssz unmarshals the OpaqueTransaction object
+func (o *OpaqueTransaction) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
-	if size < 200 {
+	if size < 4 {
 		return ssz.ErrSize
 	}
 
 	tail := buf
-	var o5 uint64
+	var o0 uint64
 
-	// Field (0) 'Nounce'
-	t.Nounce = ssz.UnmarshallUint64(buf[0:8])
-
-	// Field (1) 'GasPrice'
-	if cap(t.GasPrice) == 0 {
-		t.GasPrice = make([]byte, 0, len(buf[8:40]))
-	}
-	t.GasPrice = append(t.GasPrice, buf[8:40]...)
-
-	// Field (2) 'GasLimit'
-	t.GasLimit = ssz.UnmarshallUint64(buf[40:48])
-
-	// Field (3) 'Recipient'
-	if cap(t.Recipient) == 0 {
-		t.Recipient = make([]byte, 0, len(buf[48:68]))
-	}
-	t.Recipient = append(t.Recipient, buf[48:68]...)
-
-	// Field (4) 'Value'
-	if cap(t.Value) == 0 {
-		t.Value = make([]byte, 0, len(buf[68:100]))
-	}
-	t.Value = append(t.Value, buf[68:100]...)
-
-	// Offset (5) 'Data'
-	if o5 = ssz.ReadOffset(buf[100:104]); o5 > size {
+	// Offset (0) 'Data'
+	if o0 = ssz.ReadOffset(buf[0:4]); o0 > size {
 		return ssz.ErrOffset
 	}
 
-	// Field (6) 'V'
-	if cap(t.V) == 0 {
-		t.V = make([]byte, 0, len(buf[104:136]))
-	}
-	t.V = append(t.V, buf[104:136]...)
-
-	// Field (7) 'R'
-	if cap(t.R) == 0 {
-		t.R = make([]byte, 0, len(buf[136:168]))
-	}
-	t.R = append(t.R, buf[136:168]...)
-
-	// Field (8) 'S'
-	if cap(t.S) == 0 {
-		t.S = make([]byte, 0, len(buf[168:200]))
-	}
-	t.S = append(t.S, buf[168:200]...)
-
-	// Field (5) 'Data'
+	// Field (0) 'Data'
 	{
-		buf = tail[o5:]
-		num, err := ssz.DivideInt2(len(buf), 8, 1048576)
-		if err != nil {
-			return err
+		buf = tail[o0:]
+		if len(buf) > 1048576 {
+			return ssz.ErrBytesLength
 		}
-		t.Data = make([][]byte, num)
-		for ii := 0; ii < num; ii++ {
-			if cap(t.Data[ii]) == 0 {
-				t.Data[ii] = make([]byte, 0, len(buf[ii*8:(ii+1)*8]))
-			}
-			t.Data[ii] = append(t.Data[ii], buf[ii*8:(ii+1)*8]...)
+		if cap(o.Data) == 0 {
+			o.Data = make([]byte, 0, len(buf))
 		}
+		o.Data = append(o.Data, buf...)
 	}
 	return err
 }
 
-// SizeSSZ returns the ssz encoded size in bytes for the Transaction object
-func (t *Transaction) SizeSSZ() (size int) {
-	size = 200
+// SizeSSZ returns the ssz encoded size in bytes for the OpaqueTransaction object
+func (o *OpaqueTransaction) SizeSSZ() (size int) {
+	size = 4
 
-	// Field (5) 'Data'
-	size += len(t.Data) * 8
+	// Field (0) 'Data'
+	size += len(o.Data)
 
 	return
 }
 
-// HashTreeRoot ssz hashes the Transaction object
-func (t *Transaction) HashTreeRoot() ([32]byte, error) {
-	return ssz.HashWithDefaultHasher(t)
+// HashTreeRoot ssz hashes the OpaqueTransaction object
+func (o *OpaqueTransaction) HashTreeRoot() ([32]byte, error) {
+	return ssz.HashWithDefaultHasher(o)
 }
 
-// HashTreeRootWith ssz hashes the Transaction object with a hasher
-func (t *Transaction) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+// HashTreeRootWith ssz hashes the OpaqueTransaction object with a hasher
+func (o *OpaqueTransaction) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
-	// Field (0) 'Nounce'
-	hh.PutUint64(t.Nounce)
-
-	// Field (1) 'GasPrice'
-	if len(t.GasPrice) != 32 {
+	// Field (0) 'Data'
+	if len(o.Data) > 1048576 {
 		err = ssz.ErrBytesLength
 		return
 	}
-	hh.PutBytes(t.GasPrice)
-
-	// Field (2) 'GasLimit'
-	hh.PutUint64(t.GasLimit)
-
-	// Field (3) 'Recipient'
-	if len(t.Recipient) != 20 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	hh.PutBytes(t.Recipient)
-
-	// Field (4) 'Value'
-	if len(t.Value) != 32 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	hh.PutBytes(t.Value)
-
-	// Field (5) 'Data'
-	{
-		if len(t.Data) > 1048576 {
-			err = ssz.ErrListTooBig
-			return
-		}
-		subIndx := hh.Index()
-		for _, i := range t.Data {
-			if len(i) != 8 {
-				err = ssz.ErrBytesLength
-				return
-			}
-			hh.Append(i)
-		}
-		numItems := uint64(len(t.Data))
-		hh.MerkleizeWithMixin(subIndx, numItems, ssz.CalculateLimit(1048576, numItems, 32))
-	}
-
-	// Field (6) 'V'
-	if len(t.V) != 32 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	hh.PutBytes(t.V)
-
-	// Field (7) 'R'
-	if len(t.R) != 32 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	hh.PutBytes(t.R)
-
-	// Field (8) 'S'
-	if len(t.S) != 32 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	hh.PutBytes(t.S)
+	hh.PutBytes(o.Data)
 
 	hh.Merkleize(indx)
 	return

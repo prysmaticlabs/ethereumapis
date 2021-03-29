@@ -80,7 +80,6 @@ ssz_gen_marshal(
         "Validator",
         "VoluntaryExit",
         "ApplicationPayload",
-        "Transaction",
     ],
 )
 
