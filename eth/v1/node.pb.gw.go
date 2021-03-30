@@ -10,18 +10,19 @@ package v1
 
 import (
 	"context"
-	"io"
-	"net/http"
-
 	"github.com/golang/protobuf/ptypes/empty"
+	emptypb "github.com/golang/protobuf/ptypes/empty"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
+	github_com_prysmaticlabs_eth2_types "github.com/prysmaticlabs/eth2-types"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/grpclog"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/proto"
+	"io"
+	"net/http"
 )
 
 // Suppress "imported and not used" errors
@@ -31,9 +32,12 @@ var _ status.Status
 var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
+var _ = github_com_prysmaticlabs_eth2_types.Epoch(0)
+var _ = emptypb.Empty{}
+var _ = empty.Empty{}
 
 func request_BeaconNode_GetIdentity_0(ctx context.Context, marshaler runtime.Marshaler, client BeaconNodeClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	msg, err := client.GetIdentity(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -42,7 +46,7 @@ func request_BeaconNode_GetIdentity_0(ctx context.Context, marshaler runtime.Mar
 }
 
 func local_request_BeaconNode_GetIdentity_0(ctx context.Context, marshaler runtime.Marshaler, server BeaconNodeServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	msg, err := server.GetIdentity(ctx, &protoReq)
@@ -66,10 +70,11 @@ func request_BeaconNode_GetPeer_0(ctx context.Context, marshaler runtime.Marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "peer_id")
 	}
 
-	protoReq.PeerId, err = runtime.String(val)
+	peer_id, err := runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "peer_id", err)
 	}
+	protoReq.PeerId = (peer_id)
 
 	msg, err := client.GetPeer(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -92,10 +97,11 @@ func local_request_BeaconNode_GetPeer_0(ctx context.Context, marshaler runtime.M
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "peer_id")
 	}
 
-	protoReq.PeerId, err = runtime.String(val)
+	peer_id, err := runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "peer_id", err)
 	}
+	protoReq.PeerId = (peer_id)
 
 	msg, err := server.GetPeer(ctx, &protoReq)
 	return msg, metadata, err
@@ -139,7 +145,7 @@ func local_request_BeaconNode_ListPeers_0(ctx context.Context, marshaler runtime
 }
 
 func request_BeaconNode_PeerCount_0(ctx context.Context, marshaler runtime.Marshaler, client BeaconNodeClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	msg, err := client.PeerCount(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -148,7 +154,7 @@ func request_BeaconNode_PeerCount_0(ctx context.Context, marshaler runtime.Marsh
 }
 
 func local_request_BeaconNode_PeerCount_0(ctx context.Context, marshaler runtime.Marshaler, server BeaconNodeServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	msg, err := server.PeerCount(ctx, &protoReq)
@@ -157,7 +163,7 @@ func local_request_BeaconNode_PeerCount_0(ctx context.Context, marshaler runtime
 }
 
 func request_BeaconNode_GetVersion_0(ctx context.Context, marshaler runtime.Marshaler, client BeaconNodeClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	msg, err := client.GetVersion(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -166,7 +172,7 @@ func request_BeaconNode_GetVersion_0(ctx context.Context, marshaler runtime.Mars
 }
 
 func local_request_BeaconNode_GetVersion_0(ctx context.Context, marshaler runtime.Marshaler, server BeaconNodeServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	msg, err := server.GetVersion(ctx, &protoReq)
@@ -175,7 +181,7 @@ func local_request_BeaconNode_GetVersion_0(ctx context.Context, marshaler runtim
 }
 
 func request_BeaconNode_GetSyncStatus_0(ctx context.Context, marshaler runtime.Marshaler, client BeaconNodeClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	msg, err := client.GetSyncStatus(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -184,7 +190,7 @@ func request_BeaconNode_GetSyncStatus_0(ctx context.Context, marshaler runtime.M
 }
 
 func local_request_BeaconNode_GetSyncStatus_0(ctx context.Context, marshaler runtime.Marshaler, server BeaconNodeServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	msg, err := server.GetSyncStatus(ctx, &protoReq)
@@ -193,7 +199,7 @@ func local_request_BeaconNode_GetSyncStatus_0(ctx context.Context, marshaler run
 }
 
 func request_BeaconNode_GetHealth_0(ctx context.Context, marshaler runtime.Marshaler, client BeaconNodeClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	msg, err := client.GetHealth(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -202,7 +208,7 @@ func request_BeaconNode_GetHealth_0(ctx context.Context, marshaler runtime.Marsh
 }
 
 func local_request_BeaconNode_GetHealth_0(ctx context.Context, marshaler runtime.Marshaler, server BeaconNodeServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq empty.Empty
+	var protoReq emptypb.Empty
 	var metadata runtime.ServerMetadata
 
 	msg, err := server.GetHealth(ctx, &protoReq)

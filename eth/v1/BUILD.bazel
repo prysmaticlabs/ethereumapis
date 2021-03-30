@@ -82,13 +82,15 @@ go_proto_library(
         "@go_googleapis//google/api:annotations_go_proto",
         "@org_golang_google_protobuf//reflect/protoreflect:go_default_library",
         "@org_golang_google_protobuf//runtime/protoimpl:go_default_library",
+        "@org_golang_google_protobuf//types/descriptorpb:go_default_library",
+        "@org_golang_google_protobuf//types/known/timestamppb:go_default_library",
     ],
 )
 
 go_proto_library(
     name = "go_grpc_gateway_library",
     compilers = [
-        "@com_github_prysmaticlabs_grpc_gateway_v2//protoc-gen-grpc-gateway:go_gen_grpc_gateway",
+        "@com_github_grpc_ecosystem_grpc_gateway_v2//protoc-gen-grpc-gateway:go_gen_grpc_gateway",
     ],
     embed = [":go_proto"],
     importpath = "github.com/prysmaticlabs/ethereumapis/eth/v1",

@@ -76,7 +76,7 @@ func (x *BeaconBlock) GetSlot() github_com_prysmaticlabs_eth2_types.Slot {
 	if x != nil {
 		return x.Slot
 	}
-	return 0
+	return github_com_prysmaticlabs_eth2_types.Slot(0)
 }
 
 func (x *BeaconBlock) GetProposerIndex() uint64 {
@@ -546,7 +546,7 @@ func (x *VoluntaryExit) GetEpoch() github_com_prysmaticlabs_eth2_types.Epoch {
 	if x != nil {
 		return x.Epoch
 	}
-	return 0
+	return github_com_prysmaticlabs_eth2_types.Epoch(0)
 }
 
 func (x *VoluntaryExit) GetValidatorIndex() uint64 {
@@ -722,7 +722,7 @@ func (x *BeaconBlockHeader) GetSlot() github_com_prysmaticlabs_eth2_types.Slot {
 	if x != nil {
 		return x.Slot
 	}
-	return 0
+	return github_com_prysmaticlabs_eth2_types.Slot(0)
 }
 
 func (x *BeaconBlockHeader) GetProposerIndex() uint64 {
