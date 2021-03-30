@@ -1,5 +1,7 @@
 #!/bin/bash
 . $(dirname "$0")/common.sh
+which bazel
+bazel --version
 
 # Script to copy pb.go files from bazel build folder to appropriate location.
 # Bazel builds to bazel-bin/... folder, script copies them back to original folder where .proto is.
