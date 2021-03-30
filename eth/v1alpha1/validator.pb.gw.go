@@ -30,6 +30,10 @@ var _ io.Reader
 var _ status.Status
 var _ = runtime.String
 var _ = utilities.NewDoubleArray
+<<<<<<< HEAD:eth/v1alpha1/validator.pb.gw.go
+=======
+var _ = descriptor.ForMessage
+>>>>>>> 26f696aa0cbc82f3d3e1e75bc9b36975a6d0a994:eth/v1alpha1_gateway/validator.pb.gw.go
 var _ = metadata.Join
 
 var (

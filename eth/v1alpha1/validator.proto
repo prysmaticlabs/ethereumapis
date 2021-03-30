@@ -250,7 +250,7 @@ message ValidatorActivationResponse {
         ValidatorStatusResponse status = 2;
 
         // The validators index in the beacon state.
-        uint64 index = 3;
+        uint64 index = 3 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
     }
     // A list of validator statuses mapped 1-to-1 with the public keys
     // in the request.
@@ -283,7 +283,7 @@ message ValidatorIndexRequest {
 
 message ValidatorIndexResponse {
     // The validator's index in the beacon chain state's validator registry.
-    uint64 index = 1;
+    uint64 index = 1  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 }
 
 message ValidatorStatusRequest {
@@ -336,7 +336,7 @@ message MultipleValidatorStatusResponse {
     // A list of ValidatorStatusResponses mapped 1-to-1 with the public keys.
     repeated ValidatorStatusResponse statuses = 2;
     // A list of validator indices.
-    repeated uint64 indices = 3;
+    repeated uint64 indices = 3  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 }
 
 message DutiesRequest {
@@ -356,7 +356,7 @@ message DutiesResponse {
 
     message Duty {
         // The committee a validator is assigned to.
-        repeated uint64 committee = 1;
+        repeated uint64 committee = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 
         // The index into the committee where the validator belongs in.
         uint64 committee_index = 2  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
@@ -374,7 +374,7 @@ message DutiesResponse {
         ValidatorStatus status = 6;
 
         // The index of the validator in the beacon state.
-        uint64 validator_index = 7;
+        uint64 validator_index = 7  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
     }
 }
 
@@ -444,7 +444,7 @@ message CommitteeSubnetsSubscribeRequest {
     // A list of intended slots to subscribe.
     repeated uint64 slots = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
     // A list of intended committee ids to subscribe. It is mapped 1-to-1 with the slots
-    repeated uint64 committee_ids = 2;
+    repeated uint64 committee_ids = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
     // Whether to subscribe as an aggregator or by default attester.
     // It is mapped 1-to-1 with the slots and committee ids.
     // Subscribe as an aggregator means to join the subnet.
@@ -524,7 +524,7 @@ message ValidatorInfo {
     bytes public_key = 1;
 
     // The validator's index in the beacon state.
-    uint64 index = 2;
+    uint64 index = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 
     // The epoch for which the information pertains.
     uint64 epoch = 3 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Epoch"];

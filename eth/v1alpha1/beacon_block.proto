@@ -31,7 +31,7 @@ message BeaconBlock {
     uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
     // Validator index of the validator that proposed the block header.
-    uint64 proposer_index = 2;
+    uint64 proposer_index = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 
     // 32 byte root of the parent block.
     bytes parent_root = 3 [(ethereum.eth.ext.ssz_size) = "32"];
@@ -134,7 +134,7 @@ message VoluntaryExit {
     uint64 epoch = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Epoch"];
 
     // Index of the exiting validator.
-    uint64 validator_index = 2;
+    uint64 validator_index = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 }
 
 // The signed version of voluntary exit.
@@ -170,7 +170,7 @@ message BeaconBlockHeader {
     uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
     // Validator index of the validator that proposed the block header.
-    uint64 proposer_index = 2;
+    uint64 proposer_index = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 
     // 32 byte merkle tree root of the parent ssz encoded block.
     bytes parent_root = 3 [(ethereum.eth.ext.ssz_size) = "32"];

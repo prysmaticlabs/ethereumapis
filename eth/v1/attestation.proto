@@ -38,7 +38,7 @@ message Attestation {
 
 message AggregateAttestationAndProof {
     // The aggregator index that submitted this aggregated attestation and proof.
-    uint64 aggregator_index = 1;
+    uint64 aggregator_index = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 
     // The aggregated attestation that was submitted.
     Attestation aggregate = 3;

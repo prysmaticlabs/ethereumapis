@@ -420,6 +420,7 @@ def ethereumapi_deps():
         sum = "h1:Ovs26xHkKqVztRpIrF/92BcuyuQ/YW4NSIpoGtfXNho=",
         version = "v1.2.0",
     )
+
     go_repository(
         name = "com_github_grpc_ecosystem_grpc_gateway",
         importpath = "github.com/grpc-ecosystem/grpc-gateway",
@@ -856,8 +857,8 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_prysmaticlabs_eth2_types",
         importpath = "github.com/prysmaticlabs/eth2-types",
-        sum = "h1:1dN7YAqMN3oAJ0LceWcyv/U4jHLh+5urnSnr4br6zg4=",
-        version = "v0.0.0-20210303084904-c9735a06829d",
+        sum = "h1:n/ZI+/bZfkMoGoV2Rult3YvS5LT4dvpAFOuISq+I+GY=",
+        version = "v0.0.0-20210127031309-22cbe426eba6",
     )
 
     go_repository(
@@ -1284,7 +1285,6 @@ def ethereumapi_deps():
         sum = "h1:go1bK/D/BFZV2I8cIQd1NKEZ+0owSTG1fDTci4IqFcE=",
         version = "v0.0.0-20200804184101-5ec99f83aff1",
     )
-
     go_repository(
         name = "org_uber_go_atomic",
         importpath = "go.uber.org/atomic",
@@ -1303,6 +1303,7 @@ def ethereumapi_deps():
         sum = "h1:0mgffUl7nfd+FpvXMVz4IDEaUSmT1ysygQC7qYo7sG4=",
         version = "v0.0.0-20190618225709-2cfd321de3ee",
     )
+
     go_repository(
         name = "org_uber_go_zap",
         importpath = "go.uber.org/zap",

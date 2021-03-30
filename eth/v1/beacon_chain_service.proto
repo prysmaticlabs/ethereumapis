@@ -127,9 +127,9 @@ service BeaconChain {
     option (google.api.http) = {get: "/eth/v1/beacon/pool/attestations"};
   }
 
-  // SubmitAttestation submits Attestation object to node. If attestation passes all validation
+  // SubmitAttestations submits Attestation objects to node. If attestation passes all validation
   // constraints, node MUST publish attestation on appropriate subnet.
-  rpc SubmitAttestation(Attestation) returns (google.protobuf.Empty) {
+  rpc SubmitAttestations(SubmitAttestationsRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {post: "/eth/v1/beacon/pool/attestations"};
   }
 
@@ -384,6 +384,10 @@ message BeaconBlockContainer {
 message AttestationsPoolRequest {
   uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
   uint64 committee_index = 2  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
+}
+
+message SubmitAttestationsRequest {
+  repeated Attestation data = 1;
 }
 
 message AttestationsPoolResponse {

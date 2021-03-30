@@ -466,7 +466,7 @@ message ListCommitteesRequest {
 message BeaconCommittees {
     message CommitteeItem {
         // A committee is a list of validator indices participating in consensus at a slot.
-        repeated uint64 validator_indices = 1;
+        repeated uint64 validator_indices = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
     }
 
     message CommitteesList {
@@ -497,7 +497,7 @@ message ListValidatorBalancesRequest {
     // epoch.
     repeated bytes public_keys = 3 [(ethereum.eth.ext.ssz_size) = "?,48"];
     // Validator indices to filter validators for the given epoch.
-    repeated uint64 indices = 4;
+    repeated uint64 indices = 4 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 
     // The maximum number of Validators to return in the response.
     // This field is optional.
@@ -518,7 +518,7 @@ message ValidatorBalances {
         bytes public_key = 1 [(ethereum.eth.ext.ssz_size) = "48"];
 
         // Validator's index in the validator set.
-        uint64 index = 2;
+        uint64 index = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 
         // Validator's balance in gwei.
         uint64 balance = 3;
@@ -566,13 +566,13 @@ message ListValidatorsRequest {
 
     // Specify which validators you would like to retrieve by their indices.
     // This field is optional.
-    repeated uint64 indices = 7;
+    repeated uint64 indices = 7 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 }
 
 message GetValidatorRequest {
     oneof query_filter {
         // Validator index in the registry.
-        uint64 index = 1;
+        uint64 index = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 
         // 48 byte validator public key.
         bytes public_key = 2 [(ethereum.eth.ext.ssz_size) = "48"];
@@ -586,7 +586,7 @@ message Validators {
     uint64 epoch = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Epoch"];
 
     message ValidatorContainer {
-        uint64 index = 1;
+        uint64 index = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
         Validator validator = 2;
     }
 
@@ -620,32 +620,32 @@ message ActiveSetChanges {
     repeated bytes activated_public_keys = 2 [(ethereum.eth.ext.ssz_size) = "?,48"];
 
     // Indices of validators activated in the given epoch.
-    repeated uint64 activated_indices = 3;
+    repeated uint64 activated_indices = 3 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 
     // 48 byte validator public keys that have been voluntarily exited in the given epoch.
     repeated bytes exited_public_keys = 4 [(ethereum.eth.ext.ssz_size) = "?,48"];
 
     // Indices of validators exited in the given epoch.
-    repeated uint64 exited_indices = 5;
+    repeated uint64 exited_indices = 5 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 
     // 48 byte validator public keys that have been slashed in the given epoch.
     repeated bytes slashed_public_keys = 6 [(ethereum.eth.ext.ssz_size) = "?,48"];
 
     // Indices of validators slashed in the given epoch.
-    repeated uint64 slashed_indices = 7;
+    repeated uint64 slashed_indices = 7 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 
     // 48 byte validator public keys that have been involuntarily ejected in this epoch.
     repeated bytes ejected_public_keys = 8 [(ethereum.eth.ext.ssz_size) = "?,48"];
 
     // Indices of validators ejected in the given epoch.
-    repeated uint64 ejected_indices = 9;
+    repeated uint64 ejected_indices = 9 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 }
 
 message ValidatorPerformanceRequest {
     // A list of 48 byte validator public keys.
     repeated bytes public_keys = 1 [deprecated = true];
     // A list of validator indices to retrieve performance by their indices.
-    repeated uint64 indices = 2;
+    repeated uint64 indices = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 }
 
 message ValidatorPerformanceResponse {
@@ -697,11 +697,11 @@ message ValidatorQueue {
 
     // Ordered list of validator indices awaiting activation. 0th item in the list is the
     // next validator index to be processed.
-    repeated uint64 activation_validator_indices = 4;
+    repeated uint64 activation_validator_indices = 4 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 
     // Ordered list of validator indices awaiting exit. 0th item in the list is the
     // next validator index to be processed.
-    repeated uint64 exit_validator_indices = 5;
+    repeated uint64 exit_validator_indices = 5 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 }
 
 message ListValidatorAssignmentsRequest {
@@ -715,7 +715,7 @@ message ListValidatorAssignmentsRequest {
     // 48 byte validator public keys to filter assignments for the given epoch.
     repeated bytes public_keys = 3 [(ethereum.eth.ext.ssz_size) = "?,48"];
     // Validator indicies to filter assignments for the given epoch.
-    repeated uint64 indices = 4;
+    repeated uint64 indices = 4 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 
     // The maximum number of ValidatorAssignments to return in the response.
     // This field is optional.
@@ -733,7 +733,7 @@ message ValidatorAssignments {
         // they also attest and produce beacon chain blocks. This is a list of validator indices that
         // are in the same committee as requested validator, everyone in the committee is assigned to the
         // same slot and same committee.
-        repeated uint64 beacon_committees = 1;
+        repeated uint64 beacon_committees = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 
         // Committee index represents the committee of validator that's in.
         uint64 committee_index = 2  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
@@ -750,7 +750,7 @@ message ValidatorAssignments {
         bytes public_key = 5 [(ethereum.eth.ext.ssz_size) = "48", deprecated = true];
 
         // Validator index in the beacon state.
-        uint64 validator_index = 6;
+        uint64 validator_index = 6 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
     }
 
     // The epoch for which this set of validator assignments is valid.
@@ -821,7 +821,7 @@ message BeaconConfig {
 message SubmitSlashingResponse {
     // Indices of the validators to be slashed by the submitted
     // proposer/attester slashing object.
-    repeated uint64 slashed_indices = 1;
+    repeated uint64 slashed_indices = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 }
 
 message IndividualVotesRequest {
@@ -830,7 +830,7 @@ message IndividualVotesRequest {
     // Validator 48 byte BLS public keys to filter validators for the given epoch.
     repeated bytes public_keys = 2;
     // Validator indices to filter validators for the given epoch.
-    repeated uint64 indices = 3;
+    repeated uint64 indices = 3 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 }
 
 message IndividualVotesRespond {
@@ -840,7 +840,7 @@ message IndividualVotesRespond {
         // The public key of the vote status request.
         bytes public_key = 2;
         // The validator index of the request.
-        uint64 validator_index = 3;
+        uint64 validator_index = 3 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
         // Has the validator been slashed.
         bool is_slashed = 4;
         // Is the validator withdrawable.

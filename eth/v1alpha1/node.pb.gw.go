@@ -30,6 +30,10 @@ var _ io.Reader
 var _ status.Status
 var _ = runtime.String
 var _ = utilities.NewDoubleArray
+<<<<<<< HEAD:eth/v1alpha1/node.pb.gw.go
+=======
+var _ = descriptor.ForMessage
+>>>>>>> 26f696aa0cbc82f3d3e1e75bc9b36975a6d0a994:eth/v1alpha1_gateway/node.pb.gw.go
 var _ = metadata.Join
 
 func request_Node_GetSyncStatus_0(ctx context.Context, marshaler runtime.Marshaler, client NodeClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
