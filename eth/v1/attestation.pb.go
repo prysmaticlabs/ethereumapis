@@ -7,15 +7,16 @@
 package v1
 
 import (
+	reflect "reflect"
+	sync "sync"
+
 	proto "github.com/golang/protobuf/proto"
-	_ "github.com/prysmaticlabs/ethereumapis/eth/ext"
 	github_com_prysmaticlabs_eth2_types "github.com/prysmaticlabs/eth2-types"
+	_ "github.com/prysmaticlabs/ethereumapis/eth/ext"
 	github_com_prysmaticlabs_go_bitfield "github.com/prysmaticlabs/go-bitfield"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	_ "google.golang.org/protobuf/types/descriptorpb"
-	reflect "reflect"
-	sync "sync"
 )
 
 const (

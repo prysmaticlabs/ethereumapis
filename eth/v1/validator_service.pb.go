@@ -8,10 +8,13 @@ package v1
 
 import (
 	context "context"
+	reflect "reflect"
+	sync "sync"
+
 	proto "github.com/golang/protobuf/proto"
 	empty "github.com/golang/protobuf/ptypes/empty"
-	_ "github.com/prysmaticlabs/ethereumapis/eth/ext"
 	github_com_prysmaticlabs_eth2_types "github.com/prysmaticlabs/eth2-types"
+	_ "github.com/prysmaticlabs/ethereumapis/eth/ext"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
@@ -19,8 +22,6 @@ import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	_ "google.golang.org/protobuf/types/descriptorpb"
-	reflect "reflect"
-	sync "sync"
 )
 
 const (
