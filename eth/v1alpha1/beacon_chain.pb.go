@@ -1039,11 +1039,11 @@ type ListValidatorBalancesRequest struct {
 	// Types that are assignable to QueryFilter:
 	//	*ListValidatorBalancesRequest_Epoch
 	//	*ListValidatorBalancesRequest_Genesis
-	QueryFilter isListValidatorBalancesRequest_QueryFilter         `protobuf_oneof:"query_filter"`
-	PublicKeys  [][]byte                                           `protobuf:"bytes,3,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
-	Indices     github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,4,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
-	PageSize    int32                                              `protobuf:"varint,5,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
-	PageToken   string                                             `protobuf:"bytes,6,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	QueryFilter isListValidatorBalancesRequest_QueryFilter           `protobuf_oneof:"query_filter"`
+	PublicKeys  [][]byte                                             `protobuf:"bytes,3,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	Indices     []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,4,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	PageSize    int32                                                `protobuf:"varint,5,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	PageToken   string                                               `protobuf:"bytes,6,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 }
 
 func (x *ListValidatorBalancesRequest) Reset() {
@@ -1106,11 +1106,11 @@ func (x *ListValidatorBalancesRequest) GetPublicKeys() [][]byte {
 	return nil
 }
 
-func (x *ListValidatorBalancesRequest) GetIndices() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+func (x *ListValidatorBalancesRequest) GetIndices() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.Indices
 	}
-	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
 func (x *ListValidatorBalancesRequest) GetPageSize() int32 {
@@ -1222,12 +1222,12 @@ type ListValidatorsRequest struct {
 	// Types that are assignable to QueryFilter:
 	//	*ListValidatorsRequest_Epoch
 	//	*ListValidatorsRequest_Genesis
-	QueryFilter isListValidatorsRequest_QueryFilter                `protobuf_oneof:"query_filter"`
-	Active      bool                                               `protobuf:"varint,3,opt,name=active,proto3" json:"active,omitempty"`
-	PageSize    int32                                              `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
-	PageToken   string                                             `protobuf:"bytes,5,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
-	PublicKeys  [][]byte                                           `protobuf:"bytes,6,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
-	Indices     github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,7,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	QueryFilter isListValidatorsRequest_QueryFilter                  `protobuf_oneof:"query_filter"`
+	Active      bool                                                 `protobuf:"varint,3,opt,name=active,proto3" json:"active,omitempty"`
+	PageSize    int32                                                `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	PageToken   string                                               `protobuf:"bytes,5,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	PublicKeys  [][]byte                                             `protobuf:"bytes,6,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	Indices     []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,7,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 }
 
 func (x *ListValidatorsRequest) Reset() {
@@ -1311,11 +1311,11 @@ func (x *ListValidatorsRequest) GetPublicKeys() [][]byte {
 	return nil
 }
 
-func (x *ListValidatorsRequest) GetIndices() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+func (x *ListValidatorsRequest) GetIndices() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.Indices
 	}
-	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
 type isListValidatorsRequest_QueryFilter interface {
@@ -1572,15 +1572,15 @@ type ActiveSetChanges struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Epoch               github_com_prysmaticlabs_eth2_types.Epoch          `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Epoch"`
-	ActivatedPublicKeys [][]byte                                           `protobuf:"bytes,2,rep,name=activated_public_keys,json=activatedPublicKeys,proto3" json:"activated_public_keys,omitempty" ssz-size:"?,48"`
-	ActivatedIndices    github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,3,rep,packed,name=activated_indices,json=activatedIndices,proto3" json:"activated_indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
-	ExitedPublicKeys    [][]byte                                           `protobuf:"bytes,4,rep,name=exited_public_keys,json=exitedPublicKeys,proto3" json:"exited_public_keys,omitempty" ssz-size:"?,48"`
-	ExitedIndices       github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,5,rep,packed,name=exited_indices,json=exitedIndices,proto3" json:"exited_indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
-	SlashedPublicKeys   [][]byte                                           `protobuf:"bytes,6,rep,name=slashed_public_keys,json=slashedPublicKeys,proto3" json:"slashed_public_keys,omitempty" ssz-size:"?,48"`
-	SlashedIndices      github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,7,rep,packed,name=slashed_indices,json=slashedIndices,proto3" json:"slashed_indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
-	EjectedPublicKeys   [][]byte                                           `protobuf:"bytes,8,rep,name=ejected_public_keys,json=ejectedPublicKeys,proto3" json:"ejected_public_keys,omitempty" ssz-size:"?,48"`
-	EjectedIndices      github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,9,rep,packed,name=ejected_indices,json=ejectedIndices,proto3" json:"ejected_indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	Epoch               github_com_prysmaticlabs_eth2_types.Epoch            `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Epoch"`
+	ActivatedPublicKeys [][]byte                                             `protobuf:"bytes,2,rep,name=activated_public_keys,json=activatedPublicKeys,proto3" json:"activated_public_keys,omitempty" ssz-size:"?,48"`
+	ActivatedIndices    []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,3,rep,packed,name=activated_indices,json=activatedIndices,proto3" json:"activated_indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	ExitedPublicKeys    [][]byte                                             `protobuf:"bytes,4,rep,name=exited_public_keys,json=exitedPublicKeys,proto3" json:"exited_public_keys,omitempty" ssz-size:"?,48"`
+	ExitedIndices       []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,5,rep,packed,name=exited_indices,json=exitedIndices,proto3" json:"exited_indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	SlashedPublicKeys   [][]byte                                             `protobuf:"bytes,6,rep,name=slashed_public_keys,json=slashedPublicKeys,proto3" json:"slashed_public_keys,omitempty" ssz-size:"?,48"`
+	SlashedIndices      []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,7,rep,packed,name=slashed_indices,json=slashedIndices,proto3" json:"slashed_indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	EjectedPublicKeys   [][]byte                                             `protobuf:"bytes,8,rep,name=ejected_public_keys,json=ejectedPublicKeys,proto3" json:"ejected_public_keys,omitempty" ssz-size:"?,48"`
+	EjectedIndices      []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,9,rep,packed,name=ejected_indices,json=ejectedIndices,proto3" json:"ejected_indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 }
 
 func (x *ActiveSetChanges) Reset() {
@@ -1629,11 +1629,11 @@ func (x *ActiveSetChanges) GetActivatedPublicKeys() [][]byte {
 	return nil
 }
 
-func (x *ActiveSetChanges) GetActivatedIndices() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+func (x *ActiveSetChanges) GetActivatedIndices() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.ActivatedIndices
 	}
-	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
 func (x *ActiveSetChanges) GetExitedPublicKeys() [][]byte {
@@ -1643,11 +1643,11 @@ func (x *ActiveSetChanges) GetExitedPublicKeys() [][]byte {
 	return nil
 }
 
-func (x *ActiveSetChanges) GetExitedIndices() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+func (x *ActiveSetChanges) GetExitedIndices() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.ExitedIndices
 	}
-	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
 func (x *ActiveSetChanges) GetSlashedPublicKeys() [][]byte {
@@ -1657,11 +1657,11 @@ func (x *ActiveSetChanges) GetSlashedPublicKeys() [][]byte {
 	return nil
 }
 
-func (x *ActiveSetChanges) GetSlashedIndices() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+func (x *ActiveSetChanges) GetSlashedIndices() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.SlashedIndices
 	}
-	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
 func (x *ActiveSetChanges) GetEjectedPublicKeys() [][]byte {
@@ -1671,11 +1671,11 @@ func (x *ActiveSetChanges) GetEjectedPublicKeys() [][]byte {
 	return nil
 }
 
-func (x *ActiveSetChanges) GetEjectedIndices() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+func (x *ActiveSetChanges) GetEjectedIndices() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.EjectedIndices
 	}
-	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
 type ValidatorPerformanceRequest struct {
@@ -1684,8 +1684,8 @@ type ValidatorPerformanceRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// Deprecated: Do not use.
-	PublicKeys [][]byte                                           `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
-	Indices    github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,2,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	PublicKeys [][]byte                                             `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	Indices    []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,2,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 }
 
 func (x *ValidatorPerformanceRequest) Reset() {
@@ -1728,11 +1728,11 @@ func (x *ValidatorPerformanceRequest) GetPublicKeys() [][]byte {
 	return nil
 }
 
-func (x *ValidatorPerformanceRequest) GetIndices() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+func (x *ValidatorPerformanceRequest) GetIndices() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.Indices
 	}
-	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
 type ValidatorPerformanceResponse struct {
@@ -1740,17 +1740,17 @@ type ValidatorPerformanceResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	CurrentEffectiveBalances      []uint64                                 `protobuf:"varint,1,rep,packed,name=current_effective_balances,json=currentEffectiveBalances,proto3" json:"current_effective_balances,omitempty"`
-	InclusionSlots                github_com_prysmaticlabs_eth2_types.Slot `protobuf:"varint,2,rep,packed,name=inclusion_slots,json=inclusionSlots,proto3" json:"inclusion_slots,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Slot"`
-	InclusionDistances            github_com_prysmaticlabs_eth2_types.Slot `protobuf:"varint,3,rep,packed,name=inclusion_distances,json=inclusionDistances,proto3" json:"inclusion_distances,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Slot"`
-	CorrectlyVotedSource          []bool                                   `protobuf:"varint,4,rep,packed,name=correctly_voted_source,json=correctlyVotedSource,proto3" json:"correctly_voted_source,omitempty"`
-	CorrectlyVotedTarget          []bool                                   `protobuf:"varint,5,rep,packed,name=correctly_voted_target,json=correctlyVotedTarget,proto3" json:"correctly_voted_target,omitempty"`
-	CorrectlyVotedHead            []bool                                   `protobuf:"varint,6,rep,packed,name=correctly_voted_head,json=correctlyVotedHead,proto3" json:"correctly_voted_head,omitempty"`
-	BalancesBeforeEpochTransition []uint64                                 `protobuf:"varint,7,rep,packed,name=balances_before_epoch_transition,json=balancesBeforeEpochTransition,proto3" json:"balances_before_epoch_transition,omitempty"`
-	BalancesAfterEpochTransition  []uint64                                 `protobuf:"varint,8,rep,packed,name=balances_after_epoch_transition,json=balancesAfterEpochTransition,proto3" json:"balances_after_epoch_transition,omitempty"`
-	MissingValidators             [][]byte                                 `protobuf:"bytes,9,rep,name=missing_validators,json=missingValidators,proto3" json:"missing_validators,omitempty"`
-	AverageActiveValidatorBalance float32                                  `protobuf:"fixed32,10,opt,name=average_active_validator_balance,json=averageActiveValidatorBalance,proto3" json:"average_active_validator_balance,omitempty"`
-	PublicKeys                    [][]byte                                 `protobuf:"bytes,11,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	CurrentEffectiveBalances      []uint64                                   `protobuf:"varint,1,rep,packed,name=current_effective_balances,json=currentEffectiveBalances,proto3" json:"current_effective_balances,omitempty"`
+	InclusionSlots                []github_com_prysmaticlabs_eth2_types.Slot `protobuf:"varint,2,rep,packed,name=inclusion_slots,json=inclusionSlots,proto3" json:"inclusion_slots,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Slot"`
+	InclusionDistances            []github_com_prysmaticlabs_eth2_types.Slot `protobuf:"varint,3,rep,packed,name=inclusion_distances,json=inclusionDistances,proto3" json:"inclusion_distances,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Slot"`
+	CorrectlyVotedSource          []bool                                     `protobuf:"varint,4,rep,packed,name=correctly_voted_source,json=correctlyVotedSource,proto3" json:"correctly_voted_source,omitempty"`
+	CorrectlyVotedTarget          []bool                                     `protobuf:"varint,5,rep,packed,name=correctly_voted_target,json=correctlyVotedTarget,proto3" json:"correctly_voted_target,omitempty"`
+	CorrectlyVotedHead            []bool                                     `protobuf:"varint,6,rep,packed,name=correctly_voted_head,json=correctlyVotedHead,proto3" json:"correctly_voted_head,omitempty"`
+	BalancesBeforeEpochTransition []uint64                                   `protobuf:"varint,7,rep,packed,name=balances_before_epoch_transition,json=balancesBeforeEpochTransition,proto3" json:"balances_before_epoch_transition,omitempty"`
+	BalancesAfterEpochTransition  []uint64                                   `protobuf:"varint,8,rep,packed,name=balances_after_epoch_transition,json=balancesAfterEpochTransition,proto3" json:"balances_after_epoch_transition,omitempty"`
+	MissingValidators             [][]byte                                   `protobuf:"bytes,9,rep,name=missing_validators,json=missingValidators,proto3" json:"missing_validators,omitempty"`
+	AverageActiveValidatorBalance float32                                    `protobuf:"fixed32,10,opt,name=average_active_validator_balance,json=averageActiveValidatorBalance,proto3" json:"average_active_validator_balance,omitempty"`
+	PublicKeys                    [][]byte                                   `protobuf:"bytes,11,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
 }
 
 func (x *ValidatorPerformanceResponse) Reset() {
@@ -1792,18 +1792,18 @@ func (x *ValidatorPerformanceResponse) GetCurrentEffectiveBalances() []uint64 {
 	return nil
 }
 
-func (x *ValidatorPerformanceResponse) GetInclusionSlots() github_com_prysmaticlabs_eth2_types.Slot {
+func (x *ValidatorPerformanceResponse) GetInclusionSlots() []github_com_prysmaticlabs_eth2_types.Slot {
 	if x != nil {
 		return x.InclusionSlots
 	}
-	return github_com_prysmaticlabs_eth2_types.Slot(0)
+	return []github_com_prysmaticlabs_eth2_types.Slot(nil)
 }
 
-func (x *ValidatorPerformanceResponse) GetInclusionDistances() github_com_prysmaticlabs_eth2_types.Slot {
+func (x *ValidatorPerformanceResponse) GetInclusionDistances() []github_com_prysmaticlabs_eth2_types.Slot {
 	if x != nil {
 		return x.InclusionDistances
 	}
-	return github_com_prysmaticlabs_eth2_types.Slot(0)
+	return []github_com_prysmaticlabs_eth2_types.Slot(nil)
 }
 
 func (x *ValidatorPerformanceResponse) GetCorrectlyVotedSource() []bool {
@@ -1871,9 +1871,9 @@ type ValidatorQueue struct {
 	// Deprecated: Do not use.
 	ActivationPublicKeys [][]byte `protobuf:"bytes,2,rep,name=activation_public_keys,json=activationPublicKeys,proto3" json:"activation_public_keys,omitempty" ssz-size:"?,48"`
 	// Deprecated: Do not use.
-	ExitPublicKeys             [][]byte                                           `protobuf:"bytes,3,rep,name=exit_public_keys,json=exitPublicKeys,proto3" json:"exit_public_keys,omitempty" ssz-size:"?,48"`
-	ActivationValidatorIndices github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,4,rep,packed,name=activation_validator_indices,json=activationValidatorIndices,proto3" json:"activation_validator_indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
-	ExitValidatorIndices       github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,5,rep,packed,name=exit_validator_indices,json=exitValidatorIndices,proto3" json:"exit_validator_indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	ExitPublicKeys             [][]byte                                             `protobuf:"bytes,3,rep,name=exit_public_keys,json=exitPublicKeys,proto3" json:"exit_public_keys,omitempty" ssz-size:"?,48"`
+	ActivationValidatorIndices []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,4,rep,packed,name=activation_validator_indices,json=activationValidatorIndices,proto3" json:"activation_validator_indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	ExitValidatorIndices       []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,5,rep,packed,name=exit_validator_indices,json=exitValidatorIndices,proto3" json:"exit_validator_indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 }
 
 func (x *ValidatorQueue) Reset() {
@@ -1931,18 +1931,18 @@ func (x *ValidatorQueue) GetExitPublicKeys() [][]byte {
 	return nil
 }
 
-func (x *ValidatorQueue) GetActivationValidatorIndices() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+func (x *ValidatorQueue) GetActivationValidatorIndices() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.ActivationValidatorIndices
 	}
-	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
-func (x *ValidatorQueue) GetExitValidatorIndices() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+func (x *ValidatorQueue) GetExitValidatorIndices() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.ExitValidatorIndices
 	}
-	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
 type ListValidatorAssignmentsRequest struct {
@@ -1953,11 +1953,11 @@ type ListValidatorAssignmentsRequest struct {
 	// Types that are assignable to QueryFilter:
 	//	*ListValidatorAssignmentsRequest_Epoch
 	//	*ListValidatorAssignmentsRequest_Genesis
-	QueryFilter isListValidatorAssignmentsRequest_QueryFilter      `protobuf_oneof:"query_filter"`
-	PublicKeys  [][]byte                                           `protobuf:"bytes,3,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
-	Indices     github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,4,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
-	PageSize    int32                                              `protobuf:"varint,5,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
-	PageToken   string                                             `protobuf:"bytes,6,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
+	QueryFilter isListValidatorAssignmentsRequest_QueryFilter        `protobuf_oneof:"query_filter"`
+	PublicKeys  [][]byte                                             `protobuf:"bytes,3,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	Indices     []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,4,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	PageSize    int32                                                `protobuf:"varint,5,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
+	PageToken   string                                               `protobuf:"bytes,6,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
 }
 
 func (x *ListValidatorAssignmentsRequest) Reset() {
@@ -2020,11 +2020,11 @@ func (x *ListValidatorAssignmentsRequest) GetPublicKeys() [][]byte {
 	return nil
 }
 
-func (x *ListValidatorAssignmentsRequest) GetIndices() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+func (x *ListValidatorAssignmentsRequest) GetIndices() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.Indices
 	}
-	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
 func (x *ListValidatorAssignmentsRequest) GetPageSize() int32 {
@@ -2441,7 +2441,7 @@ type SubmitSlashingResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	SlashedIndices github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,1,rep,packed,name=slashed_indices,json=slashedIndices,proto3" json:"slashed_indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	SlashedIndices []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,1,rep,packed,name=slashed_indices,json=slashedIndices,proto3" json:"slashed_indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 }
 
 func (x *SubmitSlashingResponse) Reset() {
@@ -2476,11 +2476,11 @@ func (*SubmitSlashingResponse) Descriptor() ([]byte, []int) {
 	return file_eth_v1alpha1_beacon_chain_proto_rawDescGZIP(), []int{29}
 }
 
-func (x *SubmitSlashingResponse) GetSlashedIndices() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+func (x *SubmitSlashingResponse) GetSlashedIndices() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.SlashedIndices
 	}
-	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
 type IndividualVotesRequest struct {
@@ -2488,9 +2488,9 @@ type IndividualVotesRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Epoch      github_com_prysmaticlabs_eth2_types.Epoch          `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Epoch"`
-	PublicKeys [][]byte                                           `protobuf:"bytes,2,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
-	Indices    github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,3,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	Epoch      github_com_prysmaticlabs_eth2_types.Epoch            `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Epoch"`
+	PublicKeys [][]byte                                             `protobuf:"bytes,2,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	Indices    []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,3,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 }
 
 func (x *IndividualVotesRequest) Reset() {
@@ -2539,11 +2539,11 @@ func (x *IndividualVotesRequest) GetPublicKeys() [][]byte {
 	return nil
 }
 
-func (x *IndividualVotesRequest) GetIndices() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+func (x *IndividualVotesRequest) GetIndices() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.Indices
 	}
-	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
 type IndividualVotesRespond struct {

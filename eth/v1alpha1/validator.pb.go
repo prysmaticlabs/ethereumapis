@@ -640,8 +640,8 @@ type MultipleValidatorStatusRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKeys [][]byte                                           `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
-	Indices    github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,2,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	PublicKeys [][]byte                                             `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	Indices    []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,2,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 }
 
 func (x *MultipleValidatorStatusRequest) Reset() {
@@ -683,11 +683,11 @@ func (x *MultipleValidatorStatusRequest) GetPublicKeys() [][]byte {
 	return nil
 }
 
-func (x *MultipleValidatorStatusRequest) GetIndices() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+func (x *MultipleValidatorStatusRequest) GetIndices() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.Indices
 	}
-	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
 type MultipleValidatorStatusResponse struct {
@@ -695,9 +695,9 @@ type MultipleValidatorStatusResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKeys [][]byte                                           `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
-	Statuses   []*ValidatorStatusResponse                         `protobuf:"bytes,2,rep,name=statuses,proto3" json:"statuses,omitempty"`
-	Indices    github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,3,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	PublicKeys [][]byte                                             `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	Statuses   []*ValidatorStatusResponse                           `protobuf:"bytes,2,rep,name=statuses,proto3" json:"statuses,omitempty"`
+	Indices    []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,3,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 }
 
 func (x *MultipleValidatorStatusResponse) Reset() {
@@ -746,11 +746,11 @@ func (x *MultipleValidatorStatusResponse) GetStatuses() []*ValidatorStatusRespon
 	return nil
 }
 
-func (x *MultipleValidatorStatusResponse) GetIndices() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+func (x *MultipleValidatorStatusResponse) GetIndices() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.Indices
 	}
-	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
 type DutiesRequest struct {
@@ -1349,9 +1349,9 @@ type CommitteeSubnetsSubscribeRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Slots        github_com_prysmaticlabs_eth2_types.Slot           `protobuf:"varint,1,rep,packed,name=slots,proto3" json:"slots,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Slot"`
-	CommitteeIds github_com_prysmaticlabs_eth2_types.CommitteeIndex `protobuf:"varint,2,rep,packed,name=committee_ids,json=committeeIds,proto3" json:"committee_ids,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.CommitteeIndex"`
-	IsAggregator []bool                                             `protobuf:"varint,3,rep,packed,name=is_aggregator,json=isAggregator,proto3" json:"is_aggregator,omitempty"`
+	Slots        []github_com_prysmaticlabs_eth2_types.Slot           `protobuf:"varint,1,rep,packed,name=slots,proto3" json:"slots,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Slot"`
+	CommitteeIds []github_com_prysmaticlabs_eth2_types.CommitteeIndex `protobuf:"varint,2,rep,packed,name=committee_ids,json=committeeIds,proto3" json:"committee_ids,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.CommitteeIndex"`
+	IsAggregator []bool                                               `protobuf:"varint,3,rep,packed,name=is_aggregator,json=isAggregator,proto3" json:"is_aggregator,omitempty"`
 }
 
 func (x *CommitteeSubnetsSubscribeRequest) Reset() {
@@ -1386,18 +1386,18 @@ func (*CommitteeSubnetsSubscribeRequest) Descriptor() ([]byte, []int) {
 	return file_eth_v1alpha1_validator_proto_rawDescGZIP(), []int{23}
 }
 
-func (x *CommitteeSubnetsSubscribeRequest) GetSlots() github_com_prysmaticlabs_eth2_types.Slot {
+func (x *CommitteeSubnetsSubscribeRequest) GetSlots() []github_com_prysmaticlabs_eth2_types.Slot {
 	if x != nil {
 		return x.Slots
 	}
-	return github_com_prysmaticlabs_eth2_types.Slot(0)
+	return []github_com_prysmaticlabs_eth2_types.Slot(nil)
 }
 
-func (x *CommitteeSubnetsSubscribeRequest) GetCommitteeIds() github_com_prysmaticlabs_eth2_types.CommitteeIndex {
+func (x *CommitteeSubnetsSubscribeRequest) GetCommitteeIds() []github_com_prysmaticlabs_eth2_types.CommitteeIndex {
 	if x != nil {
 		return x.CommitteeIds
 	}
-	return github_com_prysmaticlabs_eth2_types.CommitteeIndex(0)
+	return []github_com_prysmaticlabs_eth2_types.CommitteeIndex(nil)
 }
 
 func (x *CommitteeSubnetsSubscribeRequest) GetIsAggregator() []bool {

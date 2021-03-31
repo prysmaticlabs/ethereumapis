@@ -326,8 +326,8 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_golang_protobuf",
         importpath = "github.com/golang/protobuf",
-        sum = "h1:jAbXjIeW2ZSW2AwFxlGTDoc2CjI2XujLkV3ArsZFCvc=",
-        version = "v1.5.1",
+        sum = "h1:ROPKBNFfQgOUMifHyP+KYbvpjbdoFNs+aK7DXlji0Tw=",
+        version = "v1.5.2",
     )
     go_repository(
         name = "com_github_google_btree",
@@ -857,8 +857,8 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_prysmaticlabs_eth2_types",
         importpath = "github.com/prysmaticlabs/eth2-types",
-        sum = "h1:n/ZI+/bZfkMoGoV2Rult3YvS5LT4dvpAFOuISq+I+GY=",
-        version = "v0.0.0-20210127031309-22cbe426eba6",
+        sum = "h1:1dN7YAqMN3oAJ0LceWcyv/U4jHLh+5urnSnr4br6zg4=",
+        version = "v0.0.0-20210303084904-c9735a06829d",
     )
 
     go_repository(
@@ -876,8 +876,8 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_prysmaticlabs_protoc_gen_go_cast",
         importpath = "github.com/prysmaticlabs/protoc-gen-go-cast",
-        sum = "h1:KTxdFfGQspvluy+c6pvurjYH7wHJrjAAi/wTo8r6+po=",
-        version = "v0.0.0-20210326191636-dbd8bd594bbc",
+        sum = "h1:VGW6gU39txf47WXz3lUQPb3tpwIPWqNRAAjiOYN+18I=",
+        version = "v0.0.0-20210331180400-9bcfa8a53194",
     )
 
     go_repository(

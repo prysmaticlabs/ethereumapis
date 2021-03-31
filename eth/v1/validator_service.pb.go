@@ -40,8 +40,8 @@ type AttesterDutiesRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Epoch github_com_prysmaticlabs_eth2_types.Epoch          `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Epoch"`
-	Index github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,2,rep,packed,name=index,proto3" json:"index,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	Epoch github_com_prysmaticlabs_eth2_types.Epoch            `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Epoch"`
+	Index []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,2,rep,packed,name=index,proto3" json:"index,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 }
 
 func (x *AttesterDutiesRequest) Reset() {
@@ -83,11 +83,11 @@ func (x *AttesterDutiesRequest) GetEpoch() github_com_prysmaticlabs_eth2_types.E
 	return github_com_prysmaticlabs_eth2_types.Epoch(0)
 }
 
-func (x *AttesterDutiesRequest) GetIndex() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+func (x *AttesterDutiesRequest) GetIndex() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.Index
 	}
-	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
 type AttesterDutiesResponse struct {
