@@ -13,6 +13,7 @@ import (
 
 	proto "github.com/golang/protobuf/proto"
 	empty "github.com/golang/protobuf/ptypes/empty"
+	timestamp "github.com/golang/protobuf/ptypes/timestamp"
 	_ "github.com/prysmaticlabs/ethereumapis/eth/ext"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	grpc "google.golang.org/grpc"
@@ -20,7 +21,6 @@ import (
 	status "google.golang.org/grpc/status"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 )
 
 const (
@@ -187,9 +187,9 @@ type Genesis struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	GenesisTime            *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
-	DepositContractAddress []byte                 `protobuf:"bytes,2,opt,name=deposit_contract_address,json=depositContractAddress,proto3" json:"deposit_contract_address,omitempty"`
-	GenesisValidatorsRoot  []byte                 `protobuf:"bytes,3,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
+	GenesisTime            *timestamp.Timestamp `protobuf:"bytes,1,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
+	DepositContractAddress []byte               `protobuf:"bytes,2,opt,name=deposit_contract_address,json=depositContractAddress,proto3" json:"deposit_contract_address,omitempty"`
+	GenesisValidatorsRoot  []byte               `protobuf:"bytes,3,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
 }
 
 func (x *Genesis) Reset() {
@@ -224,7 +224,7 @@ func (*Genesis) Descriptor() ([]byte, []int) {
 	return file_eth_v1alpha1_node_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *Genesis) GetGenesisTime() *timestamppb.Timestamp {
+func (x *Genesis) GetGenesisTime() *timestamp.Timestamp {
 	if x != nil {
 		return x.GenesisTime
 	}
@@ -729,18 +729,18 @@ func file_eth_v1alpha1_node_proto_rawDescGZIP() []byte {
 var file_eth_v1alpha1_node_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
 var file_eth_v1alpha1_node_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_eth_v1alpha1_node_proto_goTypes = []interface{}{
-	(PeerDirection)(0),            // 0: ethereum.eth.v1alpha1.PeerDirection
-	(ConnectionState)(0),          // 1: ethereum.eth.v1alpha1.ConnectionState
-	(*SyncStatus)(nil),            // 2: ethereum.eth.v1alpha1.SyncStatus
-	(*Genesis)(nil),               // 3: ethereum.eth.v1alpha1.Genesis
-	(*Version)(nil),               // 4: ethereum.eth.v1alpha1.Version
-	(*ImplementedServices)(nil),   // 5: ethereum.eth.v1alpha1.ImplementedServices
-	(*PeerRequest)(nil),           // 6: ethereum.eth.v1alpha1.PeerRequest
-	(*Peers)(nil),                 // 7: ethereum.eth.v1alpha1.Peers
-	(*Peer)(nil),                  // 8: ethereum.eth.v1alpha1.Peer
-	(*HostData)(nil),              // 9: ethereum.eth.v1alpha1.HostData
-	(*timestamppb.Timestamp)(nil), // 10: google.protobuf.Timestamp
-	(*empty.Empty)(nil),           // 11: google.protobuf.Empty
+	(PeerDirection)(0),          // 0: ethereum.eth.v1alpha1.PeerDirection
+	(ConnectionState)(0),        // 1: ethereum.eth.v1alpha1.ConnectionState
+	(*SyncStatus)(nil),          // 2: ethereum.eth.v1alpha1.SyncStatus
+	(*Genesis)(nil),             // 3: ethereum.eth.v1alpha1.Genesis
+	(*Version)(nil),             // 4: ethereum.eth.v1alpha1.Version
+	(*ImplementedServices)(nil), // 5: ethereum.eth.v1alpha1.ImplementedServices
+	(*PeerRequest)(nil),         // 6: ethereum.eth.v1alpha1.PeerRequest
+	(*Peers)(nil),               // 7: ethereum.eth.v1alpha1.Peers
+	(*Peer)(nil),                // 8: ethereum.eth.v1alpha1.Peer
+	(*HostData)(nil),            // 9: ethereum.eth.v1alpha1.HostData
+	(*timestamp.Timestamp)(nil), // 10: google.protobuf.Timestamp
+	(*empty.Empty)(nil),         // 11: google.protobuf.Empty
 }
 var file_eth_v1alpha1_node_proto_depIdxs = []int32{
 	10, // 0: ethereum.eth.v1alpha1.Genesis.genesis_time:type_name -> google.protobuf.Timestamp

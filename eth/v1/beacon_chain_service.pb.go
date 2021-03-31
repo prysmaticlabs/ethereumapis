@@ -12,7 +12,9 @@ import (
 	sync "sync"
 
 	proto "github.com/golang/protobuf/proto"
+	_ "github.com/golang/protobuf/protoc-gen-go/descriptor"
 	empty "github.com/golang/protobuf/ptypes/empty"
+	timestamp "github.com/golang/protobuf/ptypes/timestamp"
 	github_com_prysmaticlabs_eth2_types "github.com/prysmaticlabs/eth2-types"
 	_ "github.com/prysmaticlabs/ethereumapis/eth/ext"
 	_ "google.golang.org/genproto/googleapis/api/annotations"
@@ -21,8 +23,6 @@ import (
 	status "google.golang.org/grpc/status"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	_ "google.golang.org/protobuf/types/descriptorpb"
-	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 )
 
 const (
@@ -88,9 +88,9 @@ type Genesis struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	GenesisTime           *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
-	GenesisValidatorsRoot []byte                 `protobuf:"bytes,2,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
-	GenesisForkVersion    []byte                 `protobuf:"bytes,3,opt,name=genesis_fork_version,json=genesisForkVersion,proto3" json:"genesis_fork_version,omitempty" ssz-size:"4"`
+	GenesisTime           *timestamp.Timestamp `protobuf:"bytes,1,opt,name=genesis_time,json=genesisTime,proto3" json:"genesis_time,omitempty"`
+	GenesisValidatorsRoot []byte               `protobuf:"bytes,2,opt,name=genesis_validators_root,json=genesisValidatorsRoot,proto3" json:"genesis_validators_root,omitempty" ssz-size:"32"`
+	GenesisForkVersion    []byte               `protobuf:"bytes,3,opt,name=genesis_fork_version,json=genesisForkVersion,proto3" json:"genesis_fork_version,omitempty" ssz-size:"4"`
 }
 
 func (x *Genesis) Reset() {
@@ -125,7 +125,7 @@ func (*Genesis) Descriptor() ([]byte, []int) {
 	return file_eth_v1_beacon_chain_service_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *Genesis) GetGenesisTime() *timestamppb.Timestamp {
+func (x *Genesis) GetGenesisTime() *timestamp.Timestamp {
 	if x != nil {
 		return x.GenesisTime
 	}
@@ -2505,7 +2505,7 @@ var file_eth_v1_beacon_chain_service_proto_goTypes = []interface{}{
 	(*DepositContractResponse)(nil),         // 36: ethereum.eth.v1.DepositContractResponse
 	(*DepositContract)(nil),                 // 37: ethereum.eth.v1.DepositContract
 	nil,                                     // 38: ethereum.eth.v1.SpecResponse.DataEntry
-	(*timestamppb.Timestamp)(nil),           // 39: google.protobuf.Timestamp
+	(*timestamp.Timestamp)(nil),             // 39: google.protobuf.Timestamp
 	(*Fork)(nil),                            // 40: ethereum.eth.v1.Fork
 	(*Checkpoint)(nil),                      // 41: ethereum.eth.v1.Checkpoint
 	(*ValidatorContainer)(nil),              // 42: ethereum.eth.v1.ValidatorContainer
