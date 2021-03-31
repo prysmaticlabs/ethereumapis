@@ -92,7 +92,7 @@ go_proto_library(
     visibility = ["//visibility:public"],
     deps = [
         "//eth/ext:go_default_library",
-        "@com_github_golang_protobuf//descriptor:go_default_library",
+        "@io_bazel_rules_go//proto/wkt:descriptor_go_proto",
         "@com_github_golang_protobuf//proto:go_default_library",
         "@com_github_golang_protobuf//protoc-gen-go/descriptor:go_default_library",
         "@com_github_golang_protobuf//ptypes/empty:go_default_library",
@@ -124,7 +124,7 @@ go_proto_library(
         "@com_github_prysmaticlabs_go_bitfield//:go_default_library",
         "@go_googleapis//google/api:annotations_go_proto",
         "@com_github_golang_protobuf//ptypes/timestamp:go_default_library",
-        "@com_github_golang_protobuf//descriptor:go_default_library",
+        "@io_bazel_rules_go//proto/wkt:descriptor_go_proto",
     ],
 )
 
@@ -148,7 +148,7 @@ go_library(
         "@org_golang_google_grpc//grpclog:go_default_library",
         "@org_golang_google_grpc//metadata:go_default_library",
         "@org_golang_google_grpc//status:go_default_library",
-        "@com_github_golang_protobuf//descriptor:go_default_library",
+        "@io_bazel_rules_go//proto/wkt:descriptor_go_proto",
         "@com_github_golang_protobuf//proto:go_default_library",
         "@com_github_golang_protobuf//protoc-gen-go/descriptor:go_default_library",
         "@com_github_golang_protobuf//ptypes/empty:go_default_library",
