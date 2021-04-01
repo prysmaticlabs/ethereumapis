@@ -374,7 +374,7 @@ message DutiesResponse {
         ValidatorStatus status = 6;
 
         // The index of the validator in the beacon state.
-        uint64 validator_index = 7  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
+        uint64 validatorr_index = 7  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
     }
 }
 
