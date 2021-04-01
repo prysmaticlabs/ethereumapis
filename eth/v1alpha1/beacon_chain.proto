@@ -269,6 +269,13 @@ service BeaconChain {
             get: "/eth/v1alpha1/beacon/individual_votes"
         };
     }
+
+    // Retrieve the proposer list for next epoch (curEpoch + 1).
+    rpc NextEpochProposerList(google.protobuf.Empty) returns (ValidatorAssignments) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validators/assignments"
+        };
+    }
 }
 
 // SetAction defines the type of action that should be applied to the keys in a validator change set.
