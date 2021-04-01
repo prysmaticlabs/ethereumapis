@@ -2661,7 +2661,7 @@ type BeaconCommittees_CommitteeItem struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ValidatorIndices []uint64 `protobuf:"varint,1,rep,packed,name=validator_indices,json=validatorIndices,proto3" json:"validator_indices,omitempty"`
+	ValidatorIndices []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,1,rep,packed,name=validator_indices,json=validatorIndices,proto3" json:"validator_indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 }
 
 func (x *BeaconCommittees_CommitteeItem) Reset() {
@@ -2696,11 +2696,11 @@ func (*BeaconCommittees_CommitteeItem) Descriptor() ([]byte, []int) {
 	return file_eth_v1alpha1_beacon_chain_proto_rawDescGZIP(), []int{11, 0}
 }
 
-func (x *BeaconCommittees_CommitteeItem) GetValidatorIndices() []uint64 {
+func (x *BeaconCommittees_CommitteeItem) GetValidatorIndices() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.ValidatorIndices
 	}
-	return nil
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
 type BeaconCommittees_CommitteesList struct {
@@ -2881,13 +2881,13 @@ type ValidatorAssignments_CommitteeAssignment struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	BeaconCommittees []uint64 `protobuf:"varint,1,rep,packed,name=beacon_committees,json=beaconCommittees,proto3" json:"beacon_committees,omitempty"`
-	CommitteeIndex   uint64   `protobuf:"varint,2,opt,name=committee_index,json=committeeIndex,proto3" json:"committee_index,omitempty"`
-	AttesterSlot     uint64   `protobuf:"varint,3,opt,name=attester_slot,json=attesterSlot,proto3" json:"attester_slot,omitempty"`
-	ProposerSlots    []uint64 `protobuf:"varint,4,rep,packed,name=proposer_slots,json=proposerSlots,proto3" json:"proposer_slots,omitempty"`
+	BeaconCommittees []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,1,rep,packed,name=beacon_committees,json=beaconCommittees,proto3" json:"beacon_committees,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	CommitteeIndex   github_com_prysmaticlabs_eth2_types.CommitteeIndex   `protobuf:"varint,2,opt,name=committee_index,json=committeeIndex,proto3" json:"committee_index,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.CommitteeIndex"`
+	AttesterSlot     github_com_prysmaticlabs_eth2_types.Slot             `protobuf:"varint,3,opt,name=attester_slot,json=attesterSlot,proto3" json:"attester_slot,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Slot"`
+	ProposerSlots    []github_com_prysmaticlabs_eth2_types.Slot           `protobuf:"varint,4,rep,packed,name=proposer_slots,json=proposerSlots,proto3" json:"proposer_slots,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Slot"`
 	// Deprecated: Do not use.
-	PublicKey      []byte `protobuf:"bytes,5,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48"`
-	ValidatorIndex uint64 `protobuf:"varint,6,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty"`
+	PublicKey      []byte                                             `protobuf:"bytes,5,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48"`
+	ValidatorIndex github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,6,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 }
 
 func (x *ValidatorAssignments_CommitteeAssignment) Reset() {
@@ -2922,32 +2922,32 @@ func (*ValidatorAssignments_CommitteeAssignment) Descriptor() ([]byte, []int) {
 	return file_eth_v1alpha1_beacon_chain_proto_rawDescGZIP(), []int{23, 0}
 }
 
-func (x *ValidatorAssignments_CommitteeAssignment) GetBeaconCommittees() []uint64 {
+func (x *ValidatorAssignments_CommitteeAssignment) GetBeaconCommittees() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.BeaconCommittees
 	}
-	return nil
+	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
 }
 
-func (x *ValidatorAssignments_CommitteeAssignment) GetCommitteeIndex() uint64 {
+func (x *ValidatorAssignments_CommitteeAssignment) GetCommitteeIndex() github_com_prysmaticlabs_eth2_types.CommitteeIndex {
 	if x != nil {
 		return x.CommitteeIndex
 	}
-	return 0
+	return github_com_prysmaticlabs_eth2_types.CommitteeIndex(0)
 }
 
-func (x *ValidatorAssignments_CommitteeAssignment) GetAttesterSlot() uint64 {
+func (x *ValidatorAssignments_CommitteeAssignment) GetAttesterSlot() github_com_prysmaticlabs_eth2_types.Slot {
 	if x != nil {
 		return x.AttesterSlot
 	}
-	return 0
+	return github_com_prysmaticlabs_eth2_types.Slot(0)
 }
 
-func (x *ValidatorAssignments_CommitteeAssignment) GetProposerSlots() []uint64 {
+func (x *ValidatorAssignments_CommitteeAssignment) GetProposerSlots() []github_com_prysmaticlabs_eth2_types.Slot {
 	if x != nil {
 		return x.ProposerSlots
 	}
-	return nil
+	return []github_com_prysmaticlabs_eth2_types.Slot(nil)
 }
 
 // Deprecated: Do not use.
@@ -2958,11 +2958,11 @@ func (x *ValidatorAssignments_CommitteeAssignment) GetPublicKey() []byte {
 	return nil
 }
 
-func (x *ValidatorAssignments_CommitteeAssignment) GetValidatorIndex() uint64 {
+func (x *ValidatorAssignments_CommitteeAssignment) GetValidatorIndex() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.ValidatorIndex
 	}
-	return 0
+	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
 }
 
 type IndividualVotesRespond_IndividualVote struct {
@@ -2970,21 +2970,21 @@ type IndividualVotesRespond_IndividualVote struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Epoch                            github_com_prysmaticlabs_eth2_types.Epoch `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Epoch"`
-	PublicKey                        []byte                                    `protobuf:"bytes,2,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48"`
-	ValidatorIndex                   uint64                                    `protobuf:"varint,3,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty"`
-	IsSlashed                        bool                                      `protobuf:"varint,4,opt,name=is_slashed,json=isSlashed,proto3" json:"is_slashed,omitempty"`
-	IsWithdrawableInCurrentEpoch     bool                                      `protobuf:"varint,5,opt,name=is_withdrawable_in_current_epoch,json=isWithdrawableInCurrentEpoch,proto3" json:"is_withdrawable_in_current_epoch,omitempty"`
-	IsActiveInCurrentEpoch           bool                                      `protobuf:"varint,6,opt,name=is_active_in_current_epoch,json=isActiveInCurrentEpoch,proto3" json:"is_active_in_current_epoch,omitempty"`
-	IsActiveInPreviousEpoch          bool                                      `protobuf:"varint,7,opt,name=is_active_in_previous_epoch,json=isActiveInPreviousEpoch,proto3" json:"is_active_in_previous_epoch,omitempty"`
-	IsCurrentEpochAttester           bool                                      `protobuf:"varint,8,opt,name=is_current_epoch_attester,json=isCurrentEpochAttester,proto3" json:"is_current_epoch_attester,omitempty"`
-	IsCurrentEpochTargetAttester     bool                                      `protobuf:"varint,9,opt,name=is_current_epoch_target_attester,json=isCurrentEpochTargetAttester,proto3" json:"is_current_epoch_target_attester,omitempty"`
-	IsPreviousEpochAttester          bool                                      `protobuf:"varint,10,opt,name=is_previous_epoch_attester,json=isPreviousEpochAttester,proto3" json:"is_previous_epoch_attester,omitempty"`
-	IsPreviousEpochTargetAttester    bool                                      `protobuf:"varint,11,opt,name=is_previous_epoch_target_attester,json=isPreviousEpochTargetAttester,proto3" json:"is_previous_epoch_target_attester,omitempty"`
-	IsPreviousEpochHeadAttester      bool                                      `protobuf:"varint,12,opt,name=is_previous_epoch_head_attester,json=isPreviousEpochHeadAttester,proto3" json:"is_previous_epoch_head_attester,omitempty"`
-	CurrentEpochEffectiveBalanceGwei uint64                                    `protobuf:"varint,13,opt,name=current_epoch_effective_balance_gwei,json=currentEpochEffectiveBalanceGwei,proto3" json:"current_epoch_effective_balance_gwei,omitempty"`
-	InclusionSlot                    uint64                                    `protobuf:"varint,14,opt,name=inclusion_slot,json=inclusionSlot,proto3" json:"inclusion_slot,omitempty"`
-	InclusionDistance                uint64                                    `protobuf:"varint,15,opt,name=inclusion_distance,json=inclusionDistance,proto3" json:"inclusion_distance,omitempty"`
+	Epoch                            github_com_prysmaticlabs_eth2_types.Epoch          `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Epoch"`
+	PublicKey                        []byte                                             `protobuf:"bytes,2,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48"`
+	ValidatorIndex                   github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,3,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	IsSlashed                        bool                                               `protobuf:"varint,4,opt,name=is_slashed,json=isSlashed,proto3" json:"is_slashed,omitempty"`
+	IsWithdrawableInCurrentEpoch     bool                                               `protobuf:"varint,5,opt,name=is_withdrawable_in_current_epoch,json=isWithdrawableInCurrentEpoch,proto3" json:"is_withdrawable_in_current_epoch,omitempty"`
+	IsActiveInCurrentEpoch           bool                                               `protobuf:"varint,6,opt,name=is_active_in_current_epoch,json=isActiveInCurrentEpoch,proto3" json:"is_active_in_current_epoch,omitempty"`
+	IsActiveInPreviousEpoch          bool                                               `protobuf:"varint,7,opt,name=is_active_in_previous_epoch,json=isActiveInPreviousEpoch,proto3" json:"is_active_in_previous_epoch,omitempty"`
+	IsCurrentEpochAttester           bool                                               `protobuf:"varint,8,opt,name=is_current_epoch_attester,json=isCurrentEpochAttester,proto3" json:"is_current_epoch_attester,omitempty"`
+	IsCurrentEpochTargetAttester     bool                                               `protobuf:"varint,9,opt,name=is_current_epoch_target_attester,json=isCurrentEpochTargetAttester,proto3" json:"is_current_epoch_target_attester,omitempty"`
+	IsPreviousEpochAttester          bool                                               `protobuf:"varint,10,opt,name=is_previous_epoch_attester,json=isPreviousEpochAttester,proto3" json:"is_previous_epoch_attester,omitempty"`
+	IsPreviousEpochTargetAttester    bool                                               `protobuf:"varint,11,opt,name=is_previous_epoch_target_attester,json=isPreviousEpochTargetAttester,proto3" json:"is_previous_epoch_target_attester,omitempty"`
+	IsPreviousEpochHeadAttester      bool                                               `protobuf:"varint,12,opt,name=is_previous_epoch_head_attester,json=isPreviousEpochHeadAttester,proto3" json:"is_previous_epoch_head_attester,omitempty"`
+	CurrentEpochEffectiveBalanceGwei uint64                                             `protobuf:"varint,13,opt,name=current_epoch_effective_balance_gwei,json=currentEpochEffectiveBalanceGwei,proto3" json:"current_epoch_effective_balance_gwei,omitempty"`
+	InclusionSlot                    github_com_prysmaticlabs_eth2_types.Slot           `protobuf:"varint,14,opt,name=inclusion_slot,json=inclusionSlot,proto3" json:"inclusion_slot,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Slot"`
+	InclusionDistance                github_com_prysmaticlabs_eth2_types.Slot           `protobuf:"varint,15,opt,name=inclusion_distance,json=inclusionDistance,proto3" json:"inclusion_distance,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Slot"`
 }
 
 func (x *IndividualVotesRespond_IndividualVote) Reset() {
@@ -3033,11 +3033,11 @@ func (x *IndividualVotesRespond_IndividualVote) GetPublicKey() []byte {
 	return nil
 }
 
-func (x *IndividualVotesRespond_IndividualVote) GetValidatorIndex() uint64 {
+func (x *IndividualVotesRespond_IndividualVote) GetValidatorIndex() github_com_prysmaticlabs_eth2_types.ValidatorIndex {
 	if x != nil {
 		return x.ValidatorIndex
 	}
-	return 0
+	return github_com_prysmaticlabs_eth2_types.ValidatorIndex(0)
 }
 
 func (x *IndividualVotesRespond_IndividualVote) GetIsSlashed() bool {
@@ -3110,18 +3110,18 @@ func (x *IndividualVotesRespond_IndividualVote) GetCurrentEpochEffectiveBalanceG
 	return 0
 }
 
-func (x *IndividualVotesRespond_IndividualVote) GetInclusionSlot() uint64 {
+func (x *IndividualVotesRespond_IndividualVote) GetInclusionSlot() github_com_prysmaticlabs_eth2_types.Slot {
 	if x != nil {
 		return x.InclusionSlot
 	}
-	return 0
+	return github_com_prysmaticlabs_eth2_types.Slot(0)
 }
 
-func (x *IndividualVotesRespond_IndividualVote) GetInclusionDistance() uint64 {
+func (x *IndividualVotesRespond_IndividualVote) GetInclusionDistance() github_com_prysmaticlabs_eth2_types.Slot {
 	if x != nil {
 		return x.InclusionDistance
 	}
-	return 0
+	return github_com_prysmaticlabs_eth2_types.Slot(0)
 }
 
 var File_eth_v1alpha1_beacon_chain_proto protoreflect.FileDescriptor
