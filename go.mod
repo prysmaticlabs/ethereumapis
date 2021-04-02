@@ -9,7 +9,7 @@ require (
 	github.com/mitchellh/mapstructure v1.4.0 // indirect
 	github.com/prysmaticlabs/eth2-types v0.0.0-20210303084904-c9735a06829d
 	github.com/prysmaticlabs/go-bitfield v0.0.0-20210202205921-7fcea7c45dc8
-	github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20210402012710-095d2ebc6bcd // indirect
+	github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20210402021330-b4f820ca0bcc // indirect
 	google.golang.org/genproto v0.0.0-20210325141258-5636347f2b14
 	google.golang.org/grpc v1.36.0
 	google.golang.org/protobuf v1.26.0

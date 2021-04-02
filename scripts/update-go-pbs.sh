@@ -1,12 +1,10 @@
 #!/bin/bash
 . $(dirname "$0")/common.sh
-which bazel
-bazel --version
 
 # Script to copy pb.go files from bazel build folder to appropriate location.
 # Bazel builds to bazel-bin/... folder, script copies them back to original folder where .proto is.
 
-bazel query 'kind(go_library, //...) union kind(go_proto_library, //...)' | xargs bazel build  -s --verbose_explanations --explain=/tmp/explain.txt
+bazel query 'kind(go_library, //...) union kind(go_proto_library, //...)' | xargs bazel build
 
 # Get locations of pb.go files.
 

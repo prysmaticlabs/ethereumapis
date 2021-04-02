@@ -194,15 +194,15 @@ service BeaconChain {
 
 message GenesisResponse {
   Genesis data = 1;
-}
 
-message Genesis {
-  // UTC time specified in the chain start event in the deposit contract.
-  google.protobuf.Timestamp genesis_time = 1;
-  // 32 byte hash tree root of the genesis validator set.
-  bytes genesis_validators_root = 2 [(ethereum.eth.ext.ssz_size) = "32"];
-  // 4 byte genesis fork version.
-  bytes genesis_fork_version = 3 [(ethereum.eth.ext.ssz_size) = "4"];
+  message Genesis {
+    // UTC time specified in the chain start event in the deposit contract.
+    google.protobuf.Timestamp genesis_time = 1;
+    // 32 byte hash tree root of the genesis validator set.
+    bytes genesis_validators_root = 2 [(ethereum.eth.ext.ssz_size) = "32"];
+    // 4 byte genesis fork version.
+    bytes genesis_fork_version = 3 [(ethereum.eth.ext.ssz_size) = "4"];
+  }
 }
 
 message StateRequest {
@@ -214,11 +214,11 @@ message StateRequest {
 
 message StateRootResponse {
   StateRoot data = 1;
-}
 
-message StateRoot {
-  // SSZ encoded state root for the requested state.
-  bytes state_root = 1 [(ethereum.eth.ext.ssz_size) = "32"];
+  message StateRoot {
+    // SSZ encoded state root for the requested state.
+    bytes state_root = 1 [(ethereum.eth.ext.ssz_size) = "32"];
+  }
 }
 
 message StateForkResponse {
@@ -227,12 +227,12 @@ message StateForkResponse {
 
 message StateFinalityCheckpointResponse {
   StateFinalityCheckpoint data = 1;
-}
 
-message StateFinalityCheckpoint {
-  Checkpoint previous_justified = 1;
-  Checkpoint current_justified = 2;
-  Checkpoint finalized = 3;
+  message StateFinalityCheckpoint {
+    Checkpoint previous_justified = 1;
+    Checkpoint current_justified = 2;
+    Checkpoint finalized = 3;
+  }
 }
 
 message StateValidatorsRequest {
