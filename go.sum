@@ -256,6 +256,10 @@ github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20210401200943-717a56ade5fe h
 github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20210401200943-717a56ade5fe/go.mod h1:VF2m4ZvSpE1gvUcGaamwUYF7BbjEKQE0UlofJM9R0wE=
 github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20210401203017-e5049b268be2 h1:YSp7NCCDMdW4AIsdmef1Ica8CV+e5onmkPcws0+NWPQ=
 github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20210401203017-e5049b268be2/go.mod h1:VF2m4ZvSpE1gvUcGaamwUYF7BbjEKQE0UlofJM9R0wE=
+github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20210402012236-80fa822af91e h1:9rY7AXtWkTefhu47EZeEpoSny+AVe4tUIFmjxqahzlQ=
+github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20210402012236-80fa822af91e/go.mod h1:VF2m4ZvSpE1gvUcGaamwUYF7BbjEKQE0UlofJM9R0wE=
+github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20210402012710-095d2ebc6bcd h1:he7zIQt18zCCuHwL7By22BUk8vhCAIy/BQ+Ad2K8Z3k=
+github.com/prysmaticlabs/protoc-gen-go-cast v0.0.0-20210402012710-095d2ebc6bcd/go.mod h1:VF2m4ZvSpE1gvUcGaamwUYF7BbjEKQE0UlofJM9R0wE=
 github.com/rogpeppe/fastuuid v0.0.0-20150106093220-6724a57986af/go.mod h1:XWv6SoW27p1b0cqNHllgS5HIMJraePCO15w5zCzIWYg=
 github.com/rogpeppe/fastuuid v1.2.0/go.mod h1:jVj6XXZzXRy/MSR5jhDC/2q6DgLz+nrA6LYCDYWNEvQ=
 github.com/rogpeppe/go-internal v1.3.0/go.mod h1:M8bDsm7K2OlrFYOpmOWEs/qY81heoFRclV5y23lUDJ4=

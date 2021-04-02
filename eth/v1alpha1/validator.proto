@@ -107,17 +107,17 @@ service BeaconNodeValidator {
         };
     }
 
-	// ValidatorStatus returns a validator's status based on the current epoch.
-	// The request can specify either a validator's public key or validator index.
-	//
-	// The status response can be one of the following:
-	//	DEPOSITED - validator's deposit has been recognized by Ethereum 1, not yet recognized by Ethereum 2.
-	//	PENDING - validator is in Ethereum 2's activation queue.
-	//	ACTIVE - validator is active.
-	//	EXITING - validator has initiated an an exit request, or has dropped below the ejection balance and is being kicked out.
-	//	EXITED - validator is no longer validating.
-	//	SLASHING - validator has been kicked out due to meeting a slashing condition.
-	//	UNKNOWN_STATUS - validator does not have a known status in the network.
+    // ValidatorStatus returns a validator's status based on the current epoch.
+    // The request can specify either a validator's public key or validator index.
+    //
+    // The status response can be one of the following:
+    //	DEPOSITED - validator's deposit has been recognized by Ethereum 1, not yet recognized by Ethereum 2.
+    //	PENDING - validator is in Ethereum 2's activation queue.
+    //	ACTIVE - validator is active.
+    //	EXITING - validator has initiated an an exit request, or has dropped below the ejection balance and is being kicked out.
+    //	EXITED - validator is no longer validating.
+    //	SLASHING - validator has been kicked out due to meeting a slashing condition.
+    //	UNKNOWN_STATUS - validator does not have a known status in the network.
     rpc ValidatorStatus(ValidatorStatusRequest) returns (ValidatorStatusResponse) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/validator/status"
@@ -292,15 +292,15 @@ message ValidatorStatusRequest {
 }
 
 enum ValidatorStatus {
-  UNKNOWN_STATUS = 0;
-  DEPOSITED = 1;
-  PENDING = 2;
-  ACTIVE = 3;
-  EXITING = 4;
-  SLASHING = 5;
-  EXITED = 6;
-  INVALID = 7;
-  PARTIALLY_DEPOSITED = 8;
+    UNKNOWN_STATUS = 0;
+    DEPOSITED = 1;
+    PENDING = 2;
+    ACTIVE = 3;
+    EXITING = 4;
+    SLASHING = 5;
+    EXITED = 6;
+    INVALID = 7;
+    PARTIALLY_DEPOSITED = 8;
 }
 
 message ValidatorStatusResponse {
@@ -308,7 +308,7 @@ message ValidatorStatusResponse {
     ValidatorStatus status = 1;
 
     // The block number of the Ethereum proof-of-work chain
-	// where the deposit for the validator was included.
+    // where the deposit for the validator was included.
     uint64 eth1_deposit_block_number = 2;
 
     // The slot in the beacon chain in which the validator's
@@ -374,7 +374,7 @@ message DutiesResponse {
         ValidatorStatus status = 6;
 
         // The index of the validator in the beacon state.
-        uint64 validatorr_index = 7  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
+        uint64 validator_index = 7  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
     }
 }
 
