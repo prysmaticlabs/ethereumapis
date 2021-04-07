@@ -876,10 +876,9 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_prysmaticlabs_protoc_gen_go_cast",
         importpath = "github.com/prysmaticlabs/protoc-gen-go-cast",
-        sum = "h1:LzPb2CHeoV7fybZtr5Vp4cIYzTEChNlstFpCoZRQFcE=",
-        version = "v0.0.0-20210407211137-f1d930727d91",
+        sum = "h1:CLw+xkm22H0MzV3Rx16uGuszCSg75XJIhWud22uIL/A=",
+        version = "v0.0.0-20210407211545-ae968d924584",
     )
-
     go_repository(
         name = "com_github_rogpeppe_fastuuid",
         importpath = "github.com/rogpeppe/fastuuid",
