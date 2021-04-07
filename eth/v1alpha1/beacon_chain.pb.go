@@ -89,7 +89,7 @@ type ValidatorChangeSet struct {
 	unknownFields protoimpl.UnknownFields
 
 	Action     SetAction `protobuf:"varint,1,opt,name=action,proto3,enum=ethereum.eth.v1alpha1.SetAction" json:"action,omitempty"`
-	PublicKeys [][]byte  `protobuf:"bytes,2,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	PublicKeys [][]byte  `protobuf:"bytes,2,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
 }
 
 func (x *ValidatorChangeSet) Reset() {
@@ -1226,7 +1226,7 @@ type ListValidatorsRequest struct {
 	Active      bool                                                 `protobuf:"varint,3,opt,name=active,proto3" json:"active,omitempty"`
 	PageSize    int32                                                `protobuf:"varint,4,opt,name=page_size,json=pageSize,proto3" json:"page_size,omitempty"`
 	PageToken   string                                               `protobuf:"bytes,5,opt,name=page_token,json=pageToken,proto3" json:"page_token,omitempty"`
-	PublicKeys  [][]byte                                             `protobuf:"bytes,6,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	PublicKeys  [][]byte                                             `protobuf:"bytes,6,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
 	Indices     []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,7,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 }
 
@@ -1684,7 +1684,7 @@ type ValidatorPerformanceRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	// Deprecated: Do not use.
-	PublicKeys [][]byte                                             `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	PublicKeys [][]byte                                             `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
 	Indices    []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,2,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 }
 
@@ -2489,7 +2489,7 @@ type IndividualVotesRequest struct {
 	unknownFields protoimpl.UnknownFields
 
 	Epoch      github_com_prysmaticlabs_eth2_types.Epoch            `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Epoch"`
-	PublicKeys [][]byte                                             `protobuf:"bytes,2,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	PublicKeys [][]byte                                             `protobuf:"bytes,2,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty"`
 	Indices    []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,3,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 }
 
@@ -2971,7 +2971,7 @@ type IndividualVotesRespond_IndividualVote struct {
 	unknownFields protoimpl.UnknownFields
 
 	Epoch                            github_com_prysmaticlabs_eth2_types.Epoch          `protobuf:"varint,1,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Epoch"`
-	PublicKey                        []byte                                             `protobuf:"bytes,2,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48"`
+	PublicKey                        []byte                                             `protobuf:"bytes,2,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
 	ValidatorIndex                   github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,3,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 	IsSlashed                        bool                                               `protobuf:"varint,4,opt,name=is_slashed,json=isSlashed,proto3" json:"is_slashed,omitempty"`
 	IsWithdrawableInCurrentEpoch     bool                                               `protobuf:"varint,5,opt,name=is_withdrawable_in_current_epoch,json=isWithdrawableInCurrentEpoch,proto3" json:"is_withdrawable_in_current_epoch,omitempty"`

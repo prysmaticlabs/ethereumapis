@@ -315,7 +315,7 @@ type Committee struct {
 
 	Index      uint64                                   `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty"`
 	Slot       github_com_prysmaticlabs_eth2_types.Slot `protobuf:"varint,2,opt,name=slot,proto3" json:"slot,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Slot"`
-	Validators []uint64                                 `protobuf:"varint,3,rep,packed,name=validators,proto3" json:"validators,omitempty" ssz-max:"1099511627776"`
+	Validators []uint64                                 `protobuf:"varint,3,rep,packed,name=validators,proto3" json:"validators,omitempty"`
 }
 
 func (x *Committee) Reset() {

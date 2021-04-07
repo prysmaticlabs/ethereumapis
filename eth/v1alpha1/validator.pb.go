@@ -420,7 +420,7 @@ type ValidatorIndexRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48"`
 }
 
 func (x *ValidatorIndexRequest) Reset() {
@@ -514,7 +514,7 @@ type ValidatorStatusRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey []byte `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48"`
 }
 
 func (x *ValidatorStatusRequest) Reset() {
@@ -640,8 +640,8 @@ type MultipleValidatorStatusRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKeys [][]byte                                             `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
-	Indices    []github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,2,rep,packed,name=indices,proto3" json:"indices,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
+	PublicKeys [][]byte `protobuf:"bytes,1,rep,name=public_keys,json=publicKeys,proto3" json:"public_keys,omitempty" ssz-size:"?,48"`
+	Indices    []int64  `protobuf:"varint,2,rep,packed,name=indices,proto3" json:"indices,omitempty"`
 }
 
 func (x *MultipleValidatorStatusRequest) Reset() {
@@ -683,11 +683,11 @@ func (x *MultipleValidatorStatusRequest) GetPublicKeys() [][]byte {
 	return nil
 }
 
-func (x *MultipleValidatorStatusRequest) GetIndices() []github_com_prysmaticlabs_eth2_types.ValidatorIndex {
+func (x *MultipleValidatorStatusRequest) GetIndices() []int64 {
 	if x != nil {
 		return x.Indices
 	}
-	return []github_com_prysmaticlabs_eth2_types.ValidatorIndex(nil)
+	return nil
 }
 
 type MultipleValidatorStatusResponse struct {
@@ -1640,7 +1640,7 @@ type ValidatorInfo struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKey           []byte                                             `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey           []byte                                             `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
 	Index               github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,2,opt,name=index,proto3" json:"index,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 	Epoch               github_com_prysmaticlabs_eth2_types.Epoch          `protobuf:"varint,3,opt,name=epoch,proto3" json:"epoch,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Epoch"`
 	Status              ValidatorStatus                                    `protobuf:"varint,4,opt,name=status,proto3,enum=ethereum.eth.v1alpha1.ValidatorStatus" json:"status,omitempty"`
@@ -1735,7 +1735,7 @@ type ValidatorActivationResponse_Status struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PublicKey []byte                                             `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey []byte                                             `protobuf:"bytes,1,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty"`
 	Status    *ValidatorStatusResponse                           `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
 	Index     github_com_prysmaticlabs_eth2_types.ValidatorIndex `protobuf:"varint,3,opt,name=index,proto3" json:"index,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 }
@@ -1802,7 +1802,7 @@ type DutiesResponse_Duty struct {
 	CommitteeIndex github_com_prysmaticlabs_eth2_types.CommitteeIndex   `protobuf:"varint,2,opt,name=committee_index,json=committeeIndex,proto3" json:"committee_index,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.CommitteeIndex"`
 	AttesterSlot   github_com_prysmaticlabs_eth2_types.Slot             `protobuf:"varint,3,opt,name=attester_slot,json=attesterSlot,proto3" json:"attester_slot,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Slot"`
 	ProposerSlots  []github_com_prysmaticlabs_eth2_types.Slot           `protobuf:"varint,4,rep,packed,name=proposer_slots,json=proposerSlots,proto3" json:"proposer_slots,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.Slot"`
-	PublicKey      []byte                                               `protobuf:"bytes,5,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" spec-name:"pubkey" ssz-size:"48"`
+	PublicKey      []byte                                               `protobuf:"bytes,5,opt,name=public_key,json=publicKey,proto3" json:"public_key,omitempty" ssz-size:"48"`
 	Status         ValidatorStatus                                      `protobuf:"varint,6,opt,name=status,proto3,enum=ethereum.eth.v1alpha1.ValidatorStatus" json:"status,omitempty"`
 	ValidatorIndex github_com_prysmaticlabs_eth2_types.ValidatorIndex   `protobuf:"varint,7,opt,name=validator_index,json=validatorIndex,proto3" json:"validator_index,omitempty" cast-type:"github.com/prysmaticlabs/eth2-types.ValidatorIndex"`
 }
