@@ -92,7 +92,7 @@ message BeaconBlockBodyAltair {
 // support light client infra.
 message SyncAggregate {
   // Sync committee bits as Bitvector to track votes.
-  bytes sync_committee_bits = 1 [(gogoproto.moretags) = "ssz-size:\"1\"", (gogoproto.casttype) = "github.com/prysmaticlabs/go-bitfield.Bitvector1024"];
+  bytes sync_committee_bits = 1 [(gogoproto.moretags) = "ssz-size:\"128\"", (gogoproto.casttype) = "github.com/prysmaticlabs/go-bitfield.Bitvector1024"];
 
   // BLS aggregated signature of the sync committee for the ones that voted.
   bytes sync_committee_signature = 2 [(gogoproto.moretags) = "ssz-size:\"96\""];
