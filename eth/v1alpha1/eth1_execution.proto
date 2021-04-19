@@ -26,20 +26,6 @@ option php_namespace = "Ethereum\\Eth\\v1alpha1";
 
 
 // The execution payload included in a BeaconBlockBody.
-//
-// Spec definition:
-// class ExecutionPayload(Container):
-//    block_hash: Hash32  # Hash of execution block
-//    parent_hash: Hash32
-//    coinbase: Bytes20
-//    state_root: Bytes32
-//    number: uint64
-//    gas_limit: uint64
-//    gas_used: uint64
-//    timestamp: uint64
-//    receipt_root: Bytes32
-//    logs_bloom: ByteVector[BYTES_PER_LOGS_BLOOM]
-//    transactions: List[OpaqueTransaction, c]
 message ExecutionPayload {
   // Hash of the application block.
   bytes block_hash = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
