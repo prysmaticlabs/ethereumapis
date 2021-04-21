@@ -308,11 +308,18 @@ def ethereumapi_deps():
         sum = "h1:VsBPFP1AI068pPrMxtb/S8Zkgf9xEmTLJjfM+P5UIEo=",
         version = "v2.2.0+incompatible",
     )
+    # Note: It is required to define com_github_ethereum_go_ethereum like this for some reason...
+    # Note: The keep directives help gazelle leave this alone.
     go_repository(
         name = "com_github_ferranbt_fastssz",
-        importpath = "github.com/ferranbt/fastssz",
-        sum = "h1:9VDpsWq096+oGMDTT/SgBD/VgZYf4pTF+KTPmZ+OaKM=",
-        version = "v0.0.0-20210120143747-11b9eff30ea9",
+        importpath = "github.com/ferranbt/fastssz", # keep
+        commit = "c75bf16447505dffe1e966cb63a085259a817898",  # keep
+        remote = "https://github.com/rauljordan/fastssz",  # keep
+        nofuzz = True,
+        replace = None,  # keep
+        sum = None,  # keep
+        vcs = "git",  # keep
+        version = None,  # keep
     )
     go_repository(
         name = "com_github_ghodss_yaml",

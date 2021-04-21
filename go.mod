@@ -13,3 +13,5 @@ require (
 	google.golang.org/grpc v1.33.1
 	google.golang.org/protobuf v1.24.0
 )
+
+replace github.com/ferranbt/fastssz => github.com/rauljordan/fastssz v0.0.0-20210421164006-c75bf1644750
