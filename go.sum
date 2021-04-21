@@ -63,6 +63,8 @@ github.com/prysmaticlabs/go-bitfield v0.0.0-20210202205921-7fcea7c45dc8 h1:18+Qq
 github.com/prysmaticlabs/go-bitfield v0.0.0-20210202205921-7fcea7c45dc8/go.mod h1:hCwmef+4qXWjv0jLDbQdWnL0Ol7cS7/lCSS26WR+u6s=
 github.com/rauljordan/fastssz v0.0.0-20210421164006-c75bf1644750 h1:s2MZsstiV4zpeyz2ziRkdmDanwfgrt0gIEhU6oy0gzI=
 github.com/rauljordan/fastssz v0.0.0-20210421164006-c75bf1644750/go.mod h1:DyEu2iuLBnb/T51BlsiO3yLYdJC6UbGMrIkqK1KmQxM=
+github.com/rauljordan/fastssz v0.0.0-20210421200750-22c27c78354a h1:+FWEEflOPDJyrBwX+9Aac/7CtcyAW3U77QdQuc/XDn0=
+github.com/rauljordan/fastssz v0.0.0-20210421200750-22c27c78354a/go.mod h1:DyEu2iuLBnb/T51BlsiO3yLYdJC6UbGMrIkqK1KmQxM=
 github.com/rogpeppe/fastuuid v1.2.0 h1:Ppwyp6VYCF1nvBTXL3trRso7mXMlRrw9ooo375wvi2s=
 github.com/rogpeppe/fastuuid v1.2.0/go.mod h1:jVj6XXZzXRy/MSR5jhDC/2q6DgLz+nrA6LYCDYWNEvQ=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=

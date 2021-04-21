@@ -3095,7 +3095,7 @@ func (e *ExecutionPayload) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = ssz.WriteOffset(dst, offset)
 	for ii := 0; ii < len(e.Transactions); ii++ {
 		offset += 4
-		offset += e.Transactions[ii].SizeSSZ()
+		offset += len(e.Transactions[ii])
 	}
 
 	// Field (10) 'Transactions'
@@ -3107,13 +3107,15 @@ func (e *ExecutionPayload) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 		offset = 4 * len(e.Transactions)
 		for ii := 0; ii < len(e.Transactions); ii++ {
 			dst = ssz.WriteOffset(dst, offset)
-			offset += e.Transactions[ii].SizeSSZ()
+			offset += len(e.Transactions[ii])
 		}
 	}
 	for ii := 0; ii < len(e.Transactions); ii++ {
-		if dst, err = e.Transactions[ii].MarshalSSZTo(dst); err != nil {
+		if len(e.Transactions[ii]) > 1048576 {
+			err = ssz.ErrBytesLength
 			return
 		}
+		dst = append(dst, e.Transactions[ii]...)
 	}
 
 	return
@@ -3190,14 +3192,15 @@ func (e *ExecutionPayload) UnmarshalSSZ(buf []byte) error {
 		if err != nil {
 			return err
 		}
-		e.Transactions = make([]*OpaqueTransaction, num)
+		e.Transactions = make([][]byte, num)
 		err = ssz.UnmarshalDynamic(buf, num, func(indx int, buf []byte) (err error) {
-			if e.Transactions[indx] == nil {
-				e.Transactions[indx] = new(OpaqueTransaction)
+			if len(buf) > 1048576 {
+				return ssz.ErrBytesLength
 			}
-			if err = e.Transactions[indx].UnmarshalSSZ(buf); err != nil {
-				return err
+			if cap(e.Transactions[indx]) == 0 {
+				e.Transactions[indx] = make([]byte, 0, len(buf))
 			}
+			e.Transactions[indx] = append(e.Transactions[indx], buf...)
 			return nil
 		})
 		if err != nil {
@@ -3214,7 +3217,7 @@ func (e *ExecutionPayload) SizeSSZ() (size int) {
 	// Field (10) 'Transactions'
 	for ii := 0; ii < len(e.Transactions); ii++ {
 		size += 4
-		size += e.Transactions[ii].SizeSSZ()
+		size += len(e.Transactions[ii])
 	}
 
 	return
@@ -3287,101 +3290,15 @@ func (e *ExecutionPayload) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	{
 		subIndx := hh.Index()
 		num := uint64(len(e.Transactions))
-		if num > 16384 {
+		if num > 0 {
 			err = ssz.ErrIncorrectListSize
 			return
 		}
 		for i := uint64(0); i < num; i++ {
-			if err = e.Transactions[i].HashTreeRootWith(hh); err != nil {
-				return
-			}
+			hh.PutBytes(e.Transactions[i])
 		}
-		hh.MerkleizeWithMixin(subIndx, num, 16384)
+		hh.MerkleizeWithMixin(subIndx, num, 0)
 	}
-
-	hh.Merkleize(indx)
-	return
-}
-
-// MarshalSSZ ssz marshals the OpaqueTransaction object
-func (o *OpaqueTransaction) MarshalSSZ() ([]byte, error) {
-	return ssz.MarshalSSZ(o)
-}
-
-// MarshalSSZTo ssz marshals the OpaqueTransaction object to a target array
-func (o *OpaqueTransaction) MarshalSSZTo(buf []byte) (dst []byte, err error) {
-	dst = buf
-	offset := int(4)
-
-	// Offset (0) 'Data'
-	dst = ssz.WriteOffset(dst, offset)
-	offset += len(o.Data)
-
-	// Field (0) 'Data'
-	if len(o.Data) > 1048576 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	dst = append(dst, o.Data...)
-
-	return
-}
-
-// UnmarshalSSZ ssz unmarshals the OpaqueTransaction object
-func (o *OpaqueTransaction) UnmarshalSSZ(buf []byte) error {
-	var err error
-	size := uint64(len(buf))
-	if size < 4 {
-		return ssz.ErrSize
-	}
-
-	tail := buf
-	var o0 uint64
-
-	// Offset (0) 'Data'
-	if o0 = ssz.ReadOffset(buf[0:4]); o0 > size {
-		return ssz.ErrOffset
-	}
-
-	// Field (0) 'Data'
-	{
-		buf = tail[o0:]
-		if len(buf) > 1048576 {
-			return ssz.ErrBytesLength
-		}
-		if cap(o.Data) == 0 {
-			o.Data = make([]byte, 0, len(buf))
-		}
-		o.Data = append(o.Data, buf...)
-	}
-	return err
-}
-
-// SizeSSZ returns the ssz encoded size in bytes for the OpaqueTransaction object
-func (o *OpaqueTransaction) SizeSSZ() (size int) {
-	size = 4
-
-	// Field (0) 'Data'
-	size += len(o.Data)
-
-	return
-}
-
-// HashTreeRoot ssz hashes the OpaqueTransaction object
-func (o *OpaqueTransaction) HashTreeRoot() ([32]byte, error) {
-	return ssz.HashWithDefaultHasher(o)
-}
-
-// HashTreeRootWith ssz hashes the OpaqueTransaction object with a hasher
-func (o *OpaqueTransaction) HashTreeRootWith(hh *ssz.Hasher) (err error) {
-	indx := hh.Index()
-
-	// Field (0) 'Data'
-	if len(o.Data) > 1048576 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	hh.PutBytes(o.Data)
 
 	hh.Merkleize(indx)
 	return
