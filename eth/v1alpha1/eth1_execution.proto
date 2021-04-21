@@ -39,9 +39,5 @@ message ExecutionPayload {
   uint64 timestamp = 8;
   bytes receipt_root = 9 [(gogoproto.moretags) = "ssz-size:\"32\""];
   bytes logs_bloom = 10 [(gogoproto.moretags) = "ssz-size:\"256\""];
-  repeated OpaqueTransaction transactions = 11 [(gogoproto.moretags) = "ssz-max:\"16384\""];
-}
-
-message OpaqueTransaction {
-  bytes data = 1 [(gogoproto.moretags) = "ssz-max:\"1048576\""];
+  repeated bytes transactions = 11  [(gogoproto.moretags) = "ssz-size:\"?,?\" ssz-max:\"16384,1048576\""];
 }
