@@ -44,8 +44,8 @@ github.com/prysmaticlabs/eth2-types v0.0.0-20210127031309-22cbe426eba6 h1:n/ZI+/
 github.com/prysmaticlabs/eth2-types v0.0.0-20210127031309-22cbe426eba6/go.mod h1:kOmQ/zdobQf7HUohDTifDNFEZfNaSCIY5fkONPL+dWU=
 github.com/prysmaticlabs/go-bitfield v0.0.0-20210202205921-7fcea7c45dc8 h1:18+Qqobq3HAUY0hgIhPGSqmLFnaLLocemmU7+Sj2aYQ=
 github.com/prysmaticlabs/go-bitfield v0.0.0-20210202205921-7fcea7c45dc8/go.mod h1:hCwmef+4qXWjv0jLDbQdWnL0Ol7cS7/lCSS26WR+u6s=
-github.com/rauljordan/fastssz v0.0.0-20210428182026-f2d835d53496 h1:WNil3FipLD0CWM+x0e023IUOSjpntWcFNTVbHdi4B64=
-github.com/rauljordan/fastssz v0.0.0-20210428182026-f2d835d53496/go.mod h1:DyEu2iuLBnb/T51BlsiO3yLYdJC6UbGMrIkqK1KmQxM=
+github.com/rauljordan/fastssz v0.0.0-20210428230234-6a43aceedddf h1:Qr/GFm9W7Ozjo3BeIucz3IuTPJDsGMnhw8yOrZbNMQQ=
+github.com/rauljordan/fastssz v0.0.0-20210428230234-6a43aceedddf/go.mod h1:DyEu2iuLBnb/T51BlsiO3yLYdJC6UbGMrIkqK1KmQxM=
 github.com/rogpeppe/fastuuid v1.2.0/go.mod h1:jVj6XXZzXRy/MSR5jhDC/2q6DgLz+nrA6LYCDYWNEvQ=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9/go.mod h1:LzIPMQfyMNhhGPhUkYOs5KpL4U8rLKemX1yGLhDgUto=
