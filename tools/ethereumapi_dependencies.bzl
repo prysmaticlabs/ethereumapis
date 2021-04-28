@@ -313,7 +313,7 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_ferranbt_fastssz",
         importpath = "github.com/ferranbt/fastssz", # keep
-        commit = "22c27c78354a0ba27cc1acb5e5d133a8a491ce02",  # keep
+        commit = "f2d835d534963c2a9cfd9878ed1591dc229f5ff8",  # keep
         remote = "https://github.com/rauljordan/fastssz",  # keep
         replace = None,  # keep
         sum = None,  # keep

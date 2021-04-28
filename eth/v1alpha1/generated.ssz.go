@@ -3290,14 +3290,15 @@ func (e *ExecutionPayload) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	{
 		subIndx := hh.Index()
 		num := uint64(len(e.Transactions))
-		if num > 0 {
+		if num > 16384 {
 			err = ssz.ErrIncorrectListSize
 			return
 		}
 		for i := uint64(0); i < num; i++ {
 			hh.PutBytes(e.Transactions[i])
+			hh.MerkleizeWithMixin(subIndx, num, 1048576)
 		}
-		hh.MerkleizeWithMixin(subIndx, num, 0)
+		hh.MerkleizeWithMixin(subIndx, num, 16384)
 	}
 
 	hh.Merkleize(indx)
