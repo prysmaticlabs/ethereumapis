@@ -49,50 +49,68 @@ service BeaconChain {
 
   // GetStateRoot calculates HashTreeRoot for state with given 'stateId'. If stateId is root, same value will be returned.
   rpc GetStateRoot(StateRequest) returns (StateRootResponse) {
-    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/root" };
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/states/{state_id}/root"
+    };
   }
 
   // GetStateFork returns Fork object for state with given 'stateId'.
   rpc GetStateFork(StateRequest) returns (StateForkResponse) {
-    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/fork" };
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/states/{state_id}/fork"
+    };
   }
 
   // GetFinalityCheckpoints returns finality checkpoints for state with given 'stateId'. In case finality is
   // not yet achieved, checkpoint should return epoch 0 and ZERO_HASH as root.
   rpc GetFinalityCheckpoints(StateRequest) returns (StateFinalityCheckpointResponse) {
-    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/finality_checkpoints" };
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/states/{state_id}/finality_checkpoints"
+    };
   }
 
   // GetValidator returns a validator specified by state and id or public key along with status and balance.
   rpc GetValidator(StateValidatorRequest) returns (StateValidatorResponse) {
-    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validators/{validator_id}" };
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/states/{state_id}/validators/{validator_id}"
+    };
   }
 
   // ListValidators returns a filterable list of validators with their balance, status and index.
   rpc ListValidators(StateValidatorsRequest) returns (StateValidatorsResponse) {
-    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validators" };
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/states/{state_id}/validators"
+    };
   }
 
   // ListValidators returns a filterable list of validator balances.
   rpc ListValidatorBalances(ValidatorBalancesRequest) returns (ValidatorBalancesResponse) {
-    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/validator_balances" };
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/states/{state_id}/validator_balances"
+    };
   }
 
   // ListCommittees retrieves the committees for the given state at the given epoch.
   rpc ListCommittees(StateCommitteesRequest) returns (StateCommitteesResponse) {
-    option (google.api.http) = { get: "/eth/v1/beacon/states/{state_id}/committees/{epoch}" };
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/states/{state_id}/committees/{epoch}"
+    };
   }
 
   // Beacon blocks API related endpoints.
 
   // GetBlockHeader retrieves block header for given block id.
   rpc GetBlockHeader(BlockRequest) returns (BlockHeaderResponse) {
-    option (google.api.http) = { get: "/eth/v1/beacon/headers/{block_id}" };
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/headers/{block_id}"
+    };
   }
 
   // ListBlockHeaders retrieves block headers matching given query. By default it will fetch current head slot blocks.
   rpc ListBlockHeaders(BlockHeadersRequest) returns (BlockHeadersResponse) {
-    option (google.api.http) = { get: "/eth/v1/beacon/headers" };
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/headers"
+    };
   }
 
   // SubmitBlock instructs the beacon node to broadcast a newly signed beacon block to the beacon network, to be
@@ -101,22 +119,31 @@ service BeaconChain {
   // new block into its state, and therefore validate the block internally, however blocks which fail the validation are
   // still broadcast but a different status code is returned (202).
   rpc SubmitBlock(BeaconBlockContainer) returns (google.protobuf.Empty) {
-    option (google.api.http) = { post: "/eth/v1/beacon/blocks" };
+    option (google.api.http) = {
+      post: "/eth/v1/beacon/blocks"
+      body: "*"
+    };
   }
 
   // GetBlock retrieves block details for given block id.
   rpc GetBlock(BlockRequest) returns (BlockResponse) {
-    option (google.api.http) = { get: "/eth/v1/beacon/blocks/{block_id}" };
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/blocks/{block_id}"
+    };
   }
 
   // GetBlockRoot retrieves hashTreeRoot of BeaconBlock/BeaconBlockHeader.
   rpc GetBlockRoot(BlockRequest) returns (BlockRootResponse) {
-    option (google.api.http) = { get: "/eth/v1/beacon/blocks/{block_id}/root" };
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/blocks/{block_id}/root"
+    };
   }
 
   // ListBlockAttestations retrieves attestation included in requested block.
   rpc ListBlockAttestations(BlockRequest) returns (BlockAttestationsResponse) {
-    option (google.api.http) = { get: "/eth/v1/beacon/blocks/{block_id}/attestations" };
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/blocks/{block_id}/attestations"
+    };
   }
 
   // Beacon pools API related endpoints.
@@ -124,13 +151,17 @@ service BeaconChain {
   // ListPoolAttestations retrieves attestations known by the node but
   // not necessarily incorporated into any block.
   rpc ListPoolAttestations(AttestationsPoolRequest) returns (AttestationsPoolResponse) {
-    option (google.api.http) = {get: "/eth/v1/beacon/pool/attestations"};
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/pool/attestations"
+    };
   }
 
   // SubmitAttestations submits Attestation objects to node. If attestation passes all validation
   // constraints, node MUST publish attestation on appropriate subnet.
   rpc SubmitAttestations(SubmitAttestationsRequest) returns (google.protobuf.Empty) {
-    option (google.api.http) = {post: "/eth/v1/beacon/pool/attestations"};
+    option (google.api.http) = {
+      post: "/eth/v1/beacon/pool/attestations"
+    };
   }
 
   // ListPoolAttesterSlashings retrieves attester slashings known by the node but
@@ -142,7 +173,9 @@ service BeaconChain {
   // SubmitAttesterSlashing submits AttesterSlashing object to node's pool and
   // if passes validation node MUST broadcast it to network.
   rpc SubmitAttesterSlashing(AttesterSlashing) returns (google.protobuf.Empty) {
-    option (google.api.http) = {post: "/eth/v1/beacon/pool/attester_slashings"};
+    option (google.api.http) = {
+      post: "/eth/v1/beacon/pool/attester_slashings"
+    };
   }
 
   // ListPoolProposerSlashings retrieves proposer slashings known by the node
@@ -154,7 +187,9 @@ service BeaconChain {
   // SubmitProposerSlashing submits AttesterSlashing object to node's pool and if
   // passes validation node MUST broadcast it to network.
   rpc SubmitProposerSlashing(ProposerSlashing) returns (google.protobuf.Empty) {
-    option (google.api.http) = {post: "/eth/v1/beacon/pool/proposer_slashings"};
+    option (google.api.http) = {
+      post: "/eth/v1/beacon/pool/proposer_slashings"
+    };
   }
 
   // ListPoolVoluntaryExits retrieves voluntary exits known by the node but
@@ -166,7 +201,10 @@ service BeaconChain {
   // SubmitVoluntaryExit submits SignedVoluntaryExit object to node's pool
   // and if passes validation node MUST broadcast it to network.
   rpc SubmitVoluntaryExit(SignedVoluntaryExit) returns (google.protobuf.Empty) {
-    option (google.api.http) = {post: "/eth/v1/beacon/pool/voluntary_exits"};
+    option (google.api.http) = {
+      post: "/eth/v1/beacon/pool/voluntary_exits"
+      body: "*"
+    };
   }
 
   // Beacon config API related endpoints.
