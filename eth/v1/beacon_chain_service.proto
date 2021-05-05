@@ -161,6 +161,7 @@ service BeaconChain {
   rpc SubmitAttestations(SubmitAttestationsRequest) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       post: "/eth/v1/beacon/pool/attestations"
+      body: "*"
     };
   }
 
@@ -428,8 +429,8 @@ message BeaconBlockContainer {
 // Beacon Pool related API service.
 
 message AttestationsPoolRequest {
-  optional uint64 slot = 1;
-  optional uint64 committee_index = 2;
+  uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
+  uint64 committee_index = 2  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
 }
 
 message SubmitAttestationsRequest {
