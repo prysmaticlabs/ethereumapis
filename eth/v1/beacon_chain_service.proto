@@ -294,7 +294,7 @@ message StateValidatorsRequest {
   // The status to query validators for, can be one of: pending_initialized, pending_queued, active_ongoing,
   // active_exiting, active_slashed, exited_unslashed, exited_slashed, withdrawal_possible,
   // withdrawal_done, active, pending, exited, withdrawal
-  string status = 3; // TODO: Enum.
+  repeated string status = 3; // TODO: Enum.
 }
 
 message ValidatorBalancesRequest {
@@ -429,8 +429,8 @@ message BeaconBlockContainer {
 // Beacon Pool related API service.
 
 message AttestationsPoolRequest {
-  uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
-  uint64 committee_index = 2  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
+  optional uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
+  optional uint64 committee_index = 2  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
 }
 
 message SubmitAttestationsRequest {
