@@ -10,18 +10,19 @@ package v1
 
 import (
 	"context"
-	"io"
-	"net/http"
-
 	"github.com/golang/protobuf/ptypes/empty"
+	emptypb "github.com/golang/protobuf/ptypes/empty"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
+	github_com_prysmaticlabs_eth2_types "github.com/prysmaticlabs/eth2-types"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/grpclog"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/proto"
+	"io"
+	"net/http"
 )
 
 // Suppress "imported and not used" errors
@@ -31,6 +32,9 @@ var _ status.Status
 var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
+var _ = github_com_prysmaticlabs_eth2_types.Epoch(0)
+var _ = emptypb.Empty{}
+var _ = empty.Empty{}
 
 func request_BeaconChain_GetGenesis_0(ctx context.Context, marshaler runtime.Marshaler, client BeaconChainClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq emptypb.Empty
@@ -55,14 +59,22 @@ func request_BeaconChain_GetStateRoot_0(ctx context.Context, marshaler runtime.M
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+
+	val, ok = pathParams["state_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state_id")
 	}
+
+	state_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state_id", err)
+	}
+	protoReq.StateId = (state_id)
 
 	msg, err := client.GetStateRoot(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -74,15 +86,22 @@ func local_request_BeaconChain_GetStateRoot_0(ctx context.Context, marshaler run
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
 
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+	val, ok = pathParams["state_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state_id")
 	}
+
+	state_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state_id", err)
+	}
+	protoReq.StateId = (state_id)
 
 	msg, err := server.GetStateRoot(ctx, &protoReq)
 	return msg, metadata, err
@@ -94,14 +113,22 @@ func request_BeaconChain_GetStateFork_0(ctx context.Context, marshaler runtime.M
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+
+	val, ok = pathParams["state_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state_id")
 	}
+
+	state_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state_id", err)
+	}
+	protoReq.StateId = (state_id)
 
 	msg, err := client.GetStateFork(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -113,15 +140,22 @@ func local_request_BeaconChain_GetStateFork_0(ctx context.Context, marshaler run
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
 
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+	val, ok = pathParams["state_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state_id")
 	}
+
+	state_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state_id", err)
+	}
+	protoReq.StateId = (state_id)
 
 	msg, err := server.GetStateFork(ctx, &protoReq)
 	return msg, metadata, err
@@ -133,14 +167,22 @@ func request_BeaconChain_GetFinalityCheckpoints_0(ctx context.Context, marshaler
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+
+	val, ok = pathParams["state_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state_id")
 	}
+
+	state_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state_id", err)
+	}
+	protoReq.StateId = (state_id)
 
 	msg, err := client.GetFinalityCheckpoints(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -152,15 +194,22 @@ func local_request_BeaconChain_GetFinalityCheckpoints_0(ctx context.Context, mar
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
 
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+	val, ok = pathParams["state_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state_id")
 	}
+
+	state_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state_id", err)
+	}
+	protoReq.StateId = (state_id)
 
 	msg, err := server.GetFinalityCheckpoints(ctx, &protoReq)
 	return msg, metadata, err
@@ -172,14 +221,33 @@ func request_BeaconChain_GetValidator_0(ctx context.Context, marshaler runtime.M
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+
+	val, ok = pathParams["state_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state_id")
 	}
+
+	state_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state_id", err)
+	}
+	protoReq.StateId = (state_id)
+
+	val, ok = pathParams["validator_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "validator_id")
+	}
+
+	validator_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "validator_id", err)
+	}
+	protoReq.ValidatorId = (validator_id)
 
 	msg, err := client.GetValidator(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -191,15 +259,33 @@ func local_request_BeaconChain_GetValidator_0(ctx context.Context, marshaler run
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
 
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+	val, ok = pathParams["state_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state_id")
 	}
+
+	state_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state_id", err)
+	}
+	protoReq.StateId = (state_id)
+
+	val, ok = pathParams["validator_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "validator_id")
+	}
+
+	validator_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "validator_id", err)
+	}
+	protoReq.ValidatorId = (validator_id)
 
 	msg, err := server.GetValidator(ctx, &protoReq)
 	return msg, metadata, err
@@ -215,14 +301,22 @@ func request_BeaconChain_ListValidators_0(ctx context.Context, marshaler runtime
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+
+	val, ok = pathParams["state_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state_id")
 	}
+
+	state_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state_id", err)
+	}
+	protoReq.StateId = (state_id)
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -241,15 +335,22 @@ func local_request_BeaconChain_ListValidators_0(ctx context.Context, marshaler r
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
 
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+	val, ok = pathParams["state_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state_id")
 	}
+
+	state_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state_id", err)
+	}
+	protoReq.StateId = (state_id)
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -272,14 +373,22 @@ func request_BeaconChain_ListValidatorBalances_0(ctx context.Context, marshaler 
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+
+	val, ok = pathParams["state_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state_id")
 	}
+
+	state_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state_id", err)
+	}
+	protoReq.StateId = (state_id)
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -298,15 +407,22 @@ func local_request_BeaconChain_ListValidatorBalances_0(ctx context.Context, mars
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
 
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+	val, ok = pathParams["state_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state_id")
 	}
+
+	state_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state_id", err)
+	}
+	protoReq.StateId = (state_id)
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -321,7 +437,7 @@ func local_request_BeaconChain_ListValidatorBalances_0(ctx context.Context, mars
 }
 
 var (
-	filter_BeaconChain_ListCommittees_0 = &utilities.DoubleArray{Encoding: map[string]int{"state_id": 0, "epoch": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+	filter_BeaconChain_ListCommittees_0 = &utilities.DoubleArray{Encoding: map[string]int{"state_id": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 )
 
 func request_BeaconChain_ListCommittees_0(ctx context.Context, marshaler runtime.Marshaler, client BeaconChainClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -329,14 +445,22 @@ func request_BeaconChain_ListCommittees_0(ctx context.Context, marshaler runtime
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+
+	val, ok = pathParams["state_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state_id")
 	}
+
+	state_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state_id", err)
+	}
+	protoReq.StateId = (state_id)
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -355,15 +479,22 @@ func local_request_BeaconChain_ListCommittees_0(ctx context.Context, marshaler r
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
 
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+	val, ok = pathParams["state_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state_id")
 	}
+
+	state_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state_id", err)
+	}
+	protoReq.StateId = (state_id)
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -382,14 +513,22 @@ func request_BeaconChain_GetBlockHeader_0(ctx context.Context, marshaler runtime
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+
+	val, ok = pathParams["block_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "block_id")
 	}
+
+	block_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "block_id", err)
+	}
+	protoReq.BlockId = (block_id)
 
 	msg, err := client.GetBlockHeader(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -401,15 +540,22 @@ func local_request_BeaconChain_GetBlockHeader_0(ctx context.Context, marshaler r
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
 
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+	val, ok = pathParams["block_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "block_id")
 	}
+
+	block_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "block_id", err)
+	}
+	protoReq.BlockId = (block_id)
 
 	msg, err := server.GetBlockHeader(ctx, &protoReq)
 	return msg, metadata, err
@@ -491,14 +637,22 @@ func request_BeaconChain_GetBlock_0(ctx context.Context, marshaler runtime.Marsh
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+
+	val, ok = pathParams["block_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "block_id")
 	}
+
+	block_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "block_id", err)
+	}
+	protoReq.BlockId = (block_id)
 
 	msg, err := client.GetBlock(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -510,15 +664,22 @@ func local_request_BeaconChain_GetBlock_0(ctx context.Context, marshaler runtime
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
 
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+	val, ok = pathParams["block_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "block_id")
 	}
+
+	block_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "block_id", err)
+	}
+	protoReq.BlockId = (block_id)
 
 	msg, err := server.GetBlock(ctx, &protoReq)
 	return msg, metadata, err
@@ -530,14 +691,22 @@ func request_BeaconChain_GetBlockRoot_0(ctx context.Context, marshaler runtime.M
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+
+	val, ok = pathParams["block_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "block_id")
 	}
+
+	block_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "block_id", err)
+	}
+	protoReq.BlockId = (block_id)
 
 	msg, err := client.GetBlockRoot(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -549,15 +718,22 @@ func local_request_BeaconChain_GetBlockRoot_0(ctx context.Context, marshaler run
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
 
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+	val, ok = pathParams["block_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "block_id")
 	}
+
+	block_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "block_id", err)
+	}
+	protoReq.BlockId = (block_id)
 
 	msg, err := server.GetBlockRoot(ctx, &protoReq)
 	return msg, metadata, err
@@ -569,14 +745,22 @@ func request_BeaconChain_ListBlockAttestations_0(ctx context.Context, marshaler 
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+
+	val, ok = pathParams["block_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "block_id")
 	}
+
+	block_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "block_id", err)
+	}
+	protoReq.BlockId = (block_id)
 
 	msg, err := client.ListBlockAttestations(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -588,15 +772,22 @@ func local_request_BeaconChain_ListBlockAttestations_0(ctx context.Context, mars
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
 
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+	val, ok = pathParams["block_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "block_id")
 	}
+
+	block_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "block_id", err)
+	}
+	protoReq.BlockId = (block_id)
 
 	msg, err := server.ListBlockAttestations(ctx, &protoReq)
 	return msg, metadata, err
@@ -2029,7 +2220,7 @@ var (
 
 	pattern_BeaconChain_ListValidatorBalances_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"eth", "v1", "beacon", "states", "state_id", "validator_balances"}, ""))
 
-	pattern_BeaconChain_ListCommittees_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 1, 0, 4, 1, 5, 6}, []string{"eth", "v1", "beacon", "states", "state_id", "committees", "epoch"}, ""))
+	pattern_BeaconChain_ListCommittees_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"eth", "v1", "beacon", "states", "state_id", "committees"}, ""))
 
 	pattern_BeaconChain_GetBlockHeader_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"eth", "v1", "beacon", "headers", "block_id"}, ""))
 

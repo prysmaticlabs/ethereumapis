@@ -10,17 +10,19 @@ package v1
 
 import (
 	"context"
-	"io"
-	"net/http"
-
+	"github.com/golang/protobuf/ptypes/empty"
+	emptypb "github.com/golang/protobuf/ptypes/empty"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
+	github_com_prysmaticlabs_eth2_types "github.com/prysmaticlabs/eth2-types"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/grpclog"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/proto"
+	"io"
+	"net/http"
 )
 
 // Suppress "imported and not used" errors
@@ -30,6 +32,9 @@ var _ status.Status
 var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
+var _ = github_com_prysmaticlabs_eth2_types.Epoch(0)
+var _ = emptypb.Empty{}
+var _ = empty.Empty{}
 
 var (
 	filter_BeaconValidator_GetAttesterDuties_0 = &utilities.DoubleArray{Encoding: map[string]int{"epoch": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
@@ -40,14 +45,22 @@ func request_BeaconValidator_GetAttesterDuties_0(ctx context.Context, marshaler 
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+
+	val, ok = pathParams["epoch"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "epoch")
 	}
+
+	epoch, err := runtime.Uint64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "epoch", err)
+	}
+	protoReq.Epoch = github_com_prysmaticlabs_eth2_types.Epoch(epoch)
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -66,15 +79,22 @@ func local_request_BeaconValidator_GetAttesterDuties_0(ctx context.Context, mars
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
 
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+	val, ok = pathParams["epoch"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "epoch")
 	}
+
+	epoch, err := runtime.Uint64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "epoch", err)
+	}
+	protoReq.Epoch = github_com_prysmaticlabs_eth2_types.Epoch(epoch)
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -93,14 +113,22 @@ func request_BeaconValidator_GetProposerDuties_0(ctx context.Context, marshaler 
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+
+	val, ok = pathParams["epoch"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "epoch")
 	}
+
+	epoch, err := runtime.Uint64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "epoch", err)
+	}
+	protoReq.Epoch = github_com_prysmaticlabs_eth2_types.Epoch(epoch)
 
 	msg, err := client.GetProposerDuties(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -112,15 +140,22 @@ func local_request_BeaconValidator_GetProposerDuties_0(ctx context.Context, mars
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
 
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+	val, ok = pathParams["epoch"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "epoch")
 	}
+
+	epoch, err := runtime.Uint64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "epoch", err)
+	}
+	protoReq.Epoch = github_com_prysmaticlabs_eth2_types.Epoch(epoch)
 
 	msg, err := server.GetProposerDuties(ctx, &protoReq)
 	return msg, metadata, err
@@ -136,14 +171,22 @@ func request_BeaconValidator_GetBlock_0(ctx context.Context, marshaler runtime.M
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+
+	val, ok = pathParams["slot"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "slot")
 	}
+
+	slot, err := runtime.Uint64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "slot", err)
+	}
+	protoReq.Slot = github_com_prysmaticlabs_eth2_types.Slot(slot)
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -162,15 +205,22 @@ func local_request_BeaconValidator_GetBlock_0(ctx context.Context, marshaler run
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
 
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+	val, ok = pathParams["slot"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "slot")
 	}
+
+	slot, err := runtime.Uint64(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "slot", err)
+	}
+	protoReq.Slot = github_com_prysmaticlabs_eth2_types.Slot(slot)
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)

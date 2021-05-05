@@ -10,18 +10,19 @@ package v1
 
 import (
 	"context"
-	"io"
-	"net/http"
-
 	"github.com/golang/protobuf/ptypes/empty"
+	emptypb "github.com/golang/protobuf/ptypes/empty"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
+	github_com_prysmaticlabs_eth2_types "github.com/prysmaticlabs/eth2-types"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/grpclog"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/proto"
+	"io"
+	"net/http"
 )
 
 // Suppress "imported and not used" errors
@@ -31,20 +32,31 @@ var _ status.Status
 var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
+var _ = github_com_prysmaticlabs_eth2_types.Epoch(0)
+var _ = emptypb.Empty{}
+var _ = empty.Empty{}
 
 func request_BeaconDebug_GetBeaconState_0(ctx context.Context, marshaler runtime.Marshaler, client BeaconDebugClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq StateRequest
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+
+	val, ok = pathParams["state_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state_id")
 	}
+
+	state_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state_id", err)
+	}
+	protoReq.StateId = (state_id)
 
 	msg, err := client.GetBeaconState(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -56,15 +68,22 @@ func local_request_BeaconDebug_GetBeaconState_0(ctx context.Context, marshaler r
 	var metadata runtime.ServerMetadata
 
 	var (
-		val     string
-		ok      bool
-		err     error
-		_, _, _ = val, ok, err
+		val string
+		ok  bool
+		err error
+		_   = err
 	)
 
-	if err := runtime.PopulatePathParameters(&protoReq, pathParams); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "failed to populate path parameters: %v", err)
+	val, ok = pathParams["state_id"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "state_id")
 	}
+
+	state_id, err := runtime.Bytes(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "state_id", err)
+	}
+	protoReq.StateId = (state_id)
 
 	msg, err := server.GetBeaconState(ctx, &protoReq)
 	return msg, metadata, err
