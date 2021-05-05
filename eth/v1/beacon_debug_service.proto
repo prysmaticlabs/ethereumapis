@@ -38,12 +38,16 @@ option php_namespace = "Ethereum\\Eth\\v1";
 service BeaconDebug {
   // GetBeaconState returns full BeaconState object for given stateId.
   rpc GetBeaconState(StateRequest) returns (BeaconStateResponse) {
-    option (google.api.http) = {get: "/eth/v1/debug/beacon/states/{state_id}"};
+    option (google.api.http) = {
+      get: "/eth/v1/debug/beacon/states/{state_id}"
+    };
   }
 
   // ListForkChoiceHeads retrieves all possible chain heads (leaves of fork choice tree).
   rpc ListForkChoiceHeads(google.protobuf.Empty) returns (ForkChoiceHeadsResponse) {
-    option (google.api.http) = {get: "/eth/v1/debug/beacon/heads"};
+    option (google.api.http) = {
+      get: "/eth/v1/debug/beacon/heads"
+    };
   }
 }
 

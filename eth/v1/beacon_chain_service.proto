@@ -69,17 +69,17 @@ service BeaconChain {
     };
   }
 
-  // GetValidator returns a validator specified by state and id or public key along with status and balance.
-  rpc GetValidator(StateValidatorRequest) returns (StateValidatorResponse) {
-    option (google.api.http) = {
-      get: "/eth/v1/beacon/states/{state_id}/validators/{validator_id}"
-    };
-  }
-
   // ListValidators returns a filterable list of validators with their balance, status and index.
   rpc ListValidators(StateValidatorsRequest) returns (StateValidatorsResponse) {
     option (google.api.http) = {
       get: "/eth/v1/beacon/states/{state_id}/validators"
+    };
+  }
+
+  // GetValidator returns a validator specified by state and id or public key along with status and balance.
+  rpc GetValidator(StateValidatorRequest) returns (StateValidatorResponse) {
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/states/{state_id}/validators/{validator_id}"
     };
   }
 
@@ -99,17 +99,17 @@ service BeaconChain {
 
   // Beacon blocks API related endpoints.
 
-  // GetBlockHeader retrieves block header for given block id.
-  rpc GetBlockHeader(BlockRequest) returns (BlockHeaderResponse) {
-    option (google.api.http) = {
-      get: "/eth/v1/beacon/headers/{block_id}"
-    };
-  }
-
   // ListBlockHeaders retrieves block headers matching given query. By default it will fetch current head slot blocks.
   rpc ListBlockHeaders(BlockHeadersRequest) returns (BlockHeadersResponse) {
     option (google.api.http) = {
       get: "/eth/v1/beacon/headers"
+    };
+  }
+
+  // GetBlockHeader retrieves block header for given block id.
+  rpc GetBlockHeader(BlockRequest) returns (BlockHeaderResponse) {
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/headers/{block_id}"
     };
   }
 
@@ -167,7 +167,9 @@ service BeaconChain {
   // ListPoolAttesterSlashings retrieves attester slashings known by the node but
   // not necessarily incorporated into any block.
   rpc ListPoolAttesterSlashings(google.protobuf.Empty) returns (AttesterSlashingsPoolResponse) {
-    option (google.api.http) = {get: "/eth/v1/beacon/pool/attester_slashings"};
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/pool/attester_slashings"
+    };
   }
 
   // SubmitAttesterSlashing submits AttesterSlashing object to node's pool and
@@ -175,13 +177,16 @@ service BeaconChain {
   rpc SubmitAttesterSlashing(AttesterSlashing) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       post: "/eth/v1/beacon/pool/attester_slashings"
+      body: "*"
     };
   }
 
   // ListPoolProposerSlashings retrieves proposer slashings known by the node
   // but not necessarily incorporated into any block.
   rpc ListPoolProposerSlashings(google.protobuf.Empty) returns (ProposerSlashingPoolResponse) {
-    option (google.api.http) = {get: "/eth/v1/beacon/pool/proposer_slashings"};
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/pool/proposer_slashings"
+    };
   }
 
   // SubmitProposerSlashing submits AttesterSlashing object to node's pool and if
@@ -189,13 +194,16 @@ service BeaconChain {
   rpc SubmitProposerSlashing(ProposerSlashing) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       post: "/eth/v1/beacon/pool/proposer_slashings"
+      body: "*"
     };
   }
 
   // ListPoolVoluntaryExits retrieves voluntary exits known by the node but
   // not necessarily incorporated into any block.
   rpc ListPoolVoluntaryExits(google.protobuf.Empty) returns (VoluntaryExitsPoolResponse) {
-    option (google.api.http) = {get: "/eth/v1/beacon/pool/voluntary_exits"};
+    option (google.api.http) = {
+      get: "/eth/v1/beacon/pool/voluntary_exits"
+    };
   }
 
   // SubmitVoluntaryExit submits SignedVoluntaryExit object to node's pool
