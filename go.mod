@@ -14,4 +14,4 @@ require (
 	google.golang.org/protobuf v1.24.0
 )
 
-replace github.com/ferranbt/fastssz => github.com/rauljordan/fastssz v0.0.0-20210428230234-6a43aceedddf
+replace github.com/ferranbt/fastssz => github.com/rauljordan/fastssz v0.0.0-20210504221047-befa755eeb42
