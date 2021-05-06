@@ -27,7 +27,7 @@ option java_package = "org.ethereum.eth.v1";
 option php_namespace = "Ethereum\\Eth\\v1";
 
 message ValidatorContainer {
-    uint64 index = 1;
+    uint64 index = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];;
     uint64 balance = 2;
     string status = 3;
     Validator validator = 4;
