@@ -304,7 +304,7 @@ message ValidatorBalancesRequest {
   bytes state_id = 1; // TODO: Duck type handling.
 
   // An array of either hex encoded public keys (with 0x prefix) or validator indexes.
-  repeated string id = 2; // TODO: Duck type handling.
+  repeated bytes id = 2; // TODO: Duck type handling.
 }
 
 message StateValidatorsResponse {
@@ -317,7 +317,7 @@ message ValidatorBalancesResponse {
 
 message ValidatorBalance {
   // The index of the validator the retrieved balance is for.
-  uint64 index = 1;
+  uint64 index = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 
   // The balance of the requested validator.
   uint64 balance = 2;
@@ -430,7 +430,7 @@ message BeaconBlockContainer {
 
 message AttestationsPoolRequest {
   optional uint64 slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
-  optional uint64 committee_index = 2  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
+  optional uint64 committee_index = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
 }
 
 message SubmitAttestationsRequest {
