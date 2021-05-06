@@ -81,9 +81,9 @@ message PendingAttestation {
 }
 
 message Committee {
-  uint64 index = 1;
+  uint64 index = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
   uint64 slot = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
-  repeated uint64 validators = 3;
+  repeated uint64 validators = 3 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
 }
 
 // Fork structure used for indicating beacon chain versioning and forks.
