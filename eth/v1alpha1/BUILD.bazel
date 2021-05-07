@@ -25,6 +25,7 @@ proto_library(
         "beacon_block.proto",
         "beacon_block_altair.proto",
         "beacon_chain.proto",
+        "sync_committee.proto",
         "node.proto",
         "validator.proto",
         ":generated_swagger_proto",
@@ -78,6 +79,10 @@ ssz_gen_marshal(
         "SignedVoluntaryExit",
         "Validator",
         "VoluntaryExit",
+        "SyncCommitteeSignature",
+        "SyncCommitteeContribution",
+        "ContributionAndProof",
+        "SignedContributionAndProof",
     ],
 )
 
