@@ -24,6 +24,13 @@ option java_outer_classname = "BeaconBlockMergeProto";
 option java_package = "org.ethereum.eth.v1alpha1";
 option php_namespace = "Ethereum\\Eth\\v1alpha1";
 
+// PowBlock minimal required representation.
+message PowBlock {
+  bytes block_hash = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
+  bool is_processed = 2;
+  bool is_valid = 3;
+  uint64 total_difficulty = 4;
+}
 
 // The execution payload included in a BeaconBlockBody.
 message ExecutionPayload {
