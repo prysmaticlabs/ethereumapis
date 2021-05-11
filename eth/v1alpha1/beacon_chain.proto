@@ -278,7 +278,7 @@ service BeaconChain {
     }
     // Server-side stream of all unconfirmed blocks as they are received by
     // the beacon chain node.
-    rpc StreamNewPendingBlocks(StreamPendingBlocksRequest) returns (stream BeaconBlock) {
+    rpc StreamNewPendingBlocks(google.protobuf.Empty) returns (stream BeaconBlock) {
         option (google.api.http) = {
             get: "/eth/v1alpha1/beacon/blocks/stream"
         };
@@ -413,14 +413,6 @@ message ListBlocksResponse {
 // Request to only return blocks that is verified by the beacon node.
 message StreamBlocksRequest {
     bool verified_only = 1;
-}
-
-// Request to only return blocks that is verified by the beacon node.
-message StreamPendingBlocksRequest {
-    oneof query_filter {
-        // Slot to request for unconfirmed block.
-        uint64 from_slot = 1 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Slot"];
-    }
 }
 
 // A container that contains both the beacon block
