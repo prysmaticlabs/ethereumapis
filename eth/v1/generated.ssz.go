@@ -2241,117 +2241,6 @@ func (d *Deposit) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	return
 }
 
-// MarshalSSZ ssz marshals the Deposit_Data object
-func (d *Deposit_Data) MarshalSSZ() ([]byte, error) {
-	return ssz.MarshalSSZ(d)
-}
-
-// MarshalSSZTo ssz marshals the Deposit_Data object to a target array
-func (d *Deposit_Data) MarshalSSZTo(buf []byte) (dst []byte, err error) {
-	dst = buf
-
-	// Field (0) 'PublicKey'
-	if len(d.PublicKey) != 48 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	dst = append(dst, d.PublicKey...)
-
-	// Field (1) 'WithdrawalCredentials'
-	if len(d.WithdrawalCredentials) != 32 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	dst = append(dst, d.WithdrawalCredentials...)
-
-	// Field (2) 'Amount'
-	dst = ssz.MarshalUint64(dst, d.Amount)
-
-	// Field (3) 'Signature'
-	if len(d.Signature) != 96 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	dst = append(dst, d.Signature...)
-
-	return
-}
-
-// UnmarshalSSZ ssz unmarshals the Deposit_Data object
-func (d *Deposit_Data) UnmarshalSSZ(buf []byte) error {
-	var err error
-	size := uint64(len(buf))
-	if size != 184 {
-		return ssz.ErrSize
-	}
-
-	// Field (0) 'PublicKey'
-	if cap(d.PublicKey) == 0 {
-		d.PublicKey = make([]byte, 0, len(buf[0:48]))
-	}
-	d.PublicKey = append(d.PublicKey, buf[0:48]...)
-
-	// Field (1) 'WithdrawalCredentials'
-	if cap(d.WithdrawalCredentials) == 0 {
-		d.WithdrawalCredentials = make([]byte, 0, len(buf[48:80]))
-	}
-	d.WithdrawalCredentials = append(d.WithdrawalCredentials, buf[48:80]...)
-
-	// Field (2) 'Amount'
-	d.Amount = ssz.UnmarshallUint64(buf[80:88])
-
-	// Field (3) 'Signature'
-	if cap(d.Signature) == 0 {
-		d.Signature = make([]byte, 0, len(buf[88:184]))
-	}
-	d.Signature = append(d.Signature, buf[88:184]...)
-
-	return err
-}
-
-// SizeSSZ returns the ssz encoded size in bytes for the Deposit_Data object
-func (d *Deposit_Data) SizeSSZ() (size int) {
-	size = 184
-	return
-}
-
-// HashTreeRoot ssz hashes the Deposit_Data object
-func (d *Deposit_Data) HashTreeRoot() ([32]byte, error) {
-	return ssz.HashWithDefaultHasher(d)
-}
-
-// HashTreeRootWith ssz hashes the Deposit_Data object with a hasher
-func (d *Deposit_Data) HashTreeRootWith(hh *ssz.Hasher) (err error) {
-	indx := hh.Index()
-
-	// Field (0) 'PublicKey'
-	if len(d.PublicKey) != 48 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	hh.PutBytes(d.PublicKey)
-
-	// Field (1) 'WithdrawalCredentials'
-	if len(d.WithdrawalCredentials) != 32 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	hh.PutBytes(d.WithdrawalCredentials)
-
-	// Field (2) 'Amount'
-	hh.PutUint64(d.Amount)
-
-	// Field (3) 'Signature'
-	if len(d.Signature) != 96 {
-		err = ssz.ErrBytesLength
-		return
-	}
-	hh.PutBytes(d.Signature)
-
-	hh.Merkleize(indx)
-	return
-}
-
 // MarshalSSZ ssz marshals the VoluntaryExit object
 func (v *VoluntaryExit) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(v)
@@ -2920,6 +2809,117 @@ func (i *IndexedAttestation) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 		return
 	}
 	hh.PutBytes(i.Signature)
+
+	hh.Merkleize(indx)
+	return
+}
+
+// MarshalSSZ ssz marshals the Deposit_Data object
+func (d *Deposit_Data) MarshalSSZ() ([]byte, error) {
+	return ssz.MarshalSSZ(d)
+}
+
+// MarshalSSZTo ssz marshals the Deposit_Data object to a target array
+func (d *Deposit_Data) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+	dst = buf
+
+	// Field (0) 'PublicKey'
+	if len(d.PublicKey) != 48 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, d.PublicKey...)
+
+	// Field (1) 'WithdrawalCredentials'
+	if len(d.WithdrawalCredentials) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, d.WithdrawalCredentials...)
+
+	// Field (2) 'Amount'
+	dst = ssz.MarshalUint64(dst, d.Amount)
+
+	// Field (3) 'Signature'
+	if len(d.Signature) != 96 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, d.Signature...)
+
+	return
+}
+
+// UnmarshalSSZ ssz unmarshals the Deposit_Data object
+func (d *Deposit_Data) UnmarshalSSZ(buf []byte) error {
+	var err error
+	size := uint64(len(buf))
+	if size != 184 {
+		return ssz.ErrSize
+	}
+
+	// Field (0) 'PublicKey'
+	if cap(d.PublicKey) == 0 {
+		d.PublicKey = make([]byte, 0, len(buf[0:48]))
+	}
+	d.PublicKey = append(d.PublicKey, buf[0:48]...)
+
+	// Field (1) 'WithdrawalCredentials'
+	if cap(d.WithdrawalCredentials) == 0 {
+		d.WithdrawalCredentials = make([]byte, 0, len(buf[48:80]))
+	}
+	d.WithdrawalCredentials = append(d.WithdrawalCredentials, buf[48:80]...)
+
+	// Field (2) 'Amount'
+	d.Amount = ssz.UnmarshallUint64(buf[80:88])
+
+	// Field (3) 'Signature'
+	if cap(d.Signature) == 0 {
+		d.Signature = make([]byte, 0, len(buf[88:184]))
+	}
+	d.Signature = append(d.Signature, buf[88:184]...)
+
+	return err
+}
+
+// SizeSSZ returns the ssz encoded size in bytes for the Deposit_Data object
+func (d *Deposit_Data) SizeSSZ() (size int) {
+	size = 184
+	return
+}
+
+// HashTreeRoot ssz hashes the Deposit_Data object
+func (d *Deposit_Data) HashTreeRoot() ([32]byte, error) {
+	return ssz.HashWithDefaultHasher(d)
+}
+
+// HashTreeRootWith ssz hashes the Deposit_Data object with a hasher
+func (d *Deposit_Data) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+	indx := hh.Index()
+
+	// Field (0) 'PublicKey'
+	if len(d.PublicKey) != 48 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(d.PublicKey)
+
+	// Field (1) 'WithdrawalCredentials'
+	if len(d.WithdrawalCredentials) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(d.WithdrawalCredentials)
+
+	// Field (2) 'Amount'
+	hh.PutUint64(d.Amount)
+
+	// Field (3) 'Signature'
+	if len(d.Signature) != 96 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(d.Signature)
 
 	hh.Merkleize(indx)
 	return

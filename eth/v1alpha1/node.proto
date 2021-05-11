@@ -18,7 +18,8 @@ package ethereum.eth.v1alpha1;
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
-import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+import "eth/ext/options.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1alpha1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1;eth";
@@ -102,7 +103,7 @@ message Genesis {
 
     // Root of the genesis validators deposits; used for domain separation
     // when signing data structures for this chain.
-    bytes genesis_validators_root = 3 [(gogoproto.moretags) = "ssz-size:\"32\""];
+    bytes genesis_validators_root = 3 [(ethereum.eth.ext.ssz_size) = "32"];
 }
 
 // Information about the node version.
