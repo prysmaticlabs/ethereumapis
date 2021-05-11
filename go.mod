@@ -16,4 +16,5 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
 
+// See: https://github.com/prysmaticlabs/grpc-gateway/issues/2
 replace github.com/grpc-ecosystem/grpc-gateway/v2 => github.com/prysmaticlabs/grpc-gateway/v2 v2.3.1-0.20210405183733-d2d58057c645
