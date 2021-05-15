@@ -3,6 +3,7 @@
 load(
     "@bazel_gazelle//:deps.bzl",
     "gazelle_dependencies",
+    "go_repository",
     _go_repository = "go_repository",
 )
 
@@ -189,24 +190,12 @@ def ethereumapi_deps():
         sum = "h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=",
         version = "v1.1.1",
     )
-    go_repository(
-        name = "com_github_dgraph_io_ristretto",
-        importpath = "github.com/dgraph-io/ristretto",
-        sum = "h1:cJwdnj42uV8Jg4+KLrYovLiCgIfz9wtWm6E6KA+1tLs=",
-        version = "v0.0.1",
-    )
 
     go_repository(
         name = "com_github_dgrijalva_jwt_go",
         importpath = "github.com/dgrijalva/jwt-go",
         sum = "h1:7qlOGliEKZXTDg6OTjfoBKDXWrumCAMpl/TFQ4/5kLM=",
         version = "v3.2.0+incompatible",
-    )
-    go_repository(
-        name = "com_github_dgryski_go_farm",
-        importpath = "github.com/dgryski/go-farm",
-        sum = "h1:tdlZCpZ/P9DhczCTSixgIKmwPv6+wP5DGjqLYw5SUiA=",
-        version = "v0.0.0-20190423205320-6a90982ecee2",
     )
 
     go_repository(
@@ -342,12 +331,7 @@ def ethereumapi_deps():
         sum = "h1:Khx7svrCpmxxtHBq5j2mp/xVjsi8hQMfNLvJFAlrGgU=",
         version = "v0.5.5",
     )
-    go_repository(
-        name = "com_github_google_gofuzz",
-        importpath = "github.com/google/gofuzz",
-        sum = "h1:Hsa8mG0dQ46ij8Sl2AYJDUv1oA9/d6Vk+3LG99Oe02g=",
-        version = "v1.1.0",
-    )
+
     go_repository(
         name = "com_github_google_martian",
         importpath = "github.com/google/martian",
@@ -431,8 +415,8 @@ def ethereumapi_deps():
         name = "com_github_grpc_ecosystem_grpc_gateway_v2",
         importpath = "github.com/grpc-ecosystem/grpc-gateway/v2",
         replace = "github.com/prysmaticlabs/grpc-gateway/v2",
-        sum = "h1:p8RXjbUOOEGWnleirv5ctE/KBQe0BY/ME2iea1sD0RY=",
-        version = "v2.3.1-0.20210429070457-714fa3339bc9",
+        sum = "h1:dyspW8MEfrfRxiTsOx0ekSQakjHXQY/InYlikXrH/x4=",
+        version = "v2.3.1-0.20210405183733-d2d58057c645",
     )
 
     go_repository(
@@ -690,12 +674,7 @@ def ethereumapi_deps():
         sum = "h1:9jZdLNd/P4+SfEJ0TNyxYpsK8N4GtfylBLqtbYN1sbA=",
         version = "v1.0.14",
     )
-    go_repository(
-        name = "com_github_minio_highwayhash",
-        importpath = "github.com/minio/highwayhash",
-        sum = "h1:iMSDhgUILCr0TNm8LWlSjF8N0ZIj2qbO8WHp6Q/J2BA=",
-        version = "v1.0.0",
-    )
+
     go_repository(
         name = "com_github_minio_sha256_simd",
         importpath = "github.com/minio/sha256-simd",
@@ -847,12 +826,6 @@ def ethereumapi_deps():
         sum = "h1:YZcsG11NqnK4czYLrWd9mpEuAJIHVQLwdrleYfszMAA=",
         version = "v0.7.1",
     )
-    go_repository(
-        name = "com_github_protolambda_zssz",
-        importpath = "github.com/protolambda/zssz",
-        sum = "h1:WL25qizRrzcmaHz62CiWA/oHX+cXDELV/UT0kpbi64Y=",
-        version = "v0.1.3",
-    )
 
     go_repository(
         name = "com_github_prysmaticlabs_eth2_types",
@@ -864,15 +837,10 @@ def ethereumapi_deps():
     go_repository(
         name = "com_github_prysmaticlabs_go_bitfield",
         importpath = "github.com/prysmaticlabs/go-bitfield",
-        sum = "h1:18+Qqobq3HAUY0hgIhPGSqmLFnaLLocemmU7+Sj2aYQ=",
-        version = "v0.0.0-20210202205921-7fcea7c45dc8",
+        sum = "h1:n1fCZPIMlcNQ3iCN5w4vxmFFNWhEdEz3ICTerxjUFvA=",
+        version = "v0.0.0-20210515192923-def021850363",
     )
-    go_repository(
-        name = "com_github_prysmaticlabs_go_ssz",
-        importpath = "github.com/prysmaticlabs/go-ssz",
-        sum = "h1:Th5ufPIaL5s/7i3gXHTgiTwfsUhWDP/PwFRiI6qV6v0=",
-        version = "v0.0.0-20200101200214-e24db4d9e963",
-    )
+
     go_repository(
         name = "com_github_prysmaticlabs_protoc_gen_go_cast",
         importpath = "github.com/prysmaticlabs/protoc-gen-go-cast",
@@ -1308,10 +1276,4 @@ def ethereumapi_deps():
         importpath = "go.uber.org/zap",
         sum = "h1:uFRZXykJGK9lLY4HtgSw44DnIcAM+kRBP7x5m+NpAOM=",
         version = "v1.16.0",
-    )
-    go_repository(
-        name = "tools_gotest",
-        importpath = "gotest.tools",
-        sum = "h1:VsBPFP1AI068pPrMxtb/S8Zkgf9xEmTLJjfM+P5UIEo=",
-        version = "v2.2.0+incompatible",
     )
