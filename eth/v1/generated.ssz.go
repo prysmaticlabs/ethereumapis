@@ -1473,7 +1473,7 @@ func (b *BeaconBlockBodyV1) MarshalSSZ() ([]byte, error) {
 // MarshalSSZTo ssz marshals the BeaconBlockBodyV1 object to a target array
 func (b *BeaconBlockBodyV1) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
-	offset := int(317)
+	offset := int(380)
 
 	// Field (0) 'RandaoReveal'
 	if len(b.RandaoReveal) != 96 {
@@ -1524,7 +1524,7 @@ func (b *BeaconBlockBodyV1) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	offset += len(b.VoluntaryExits) * 112
 
 	// Field (8) 'SyncCommitteeBits'
-	if len(b.SyncCommitteeBits) != 1 {
+	if len(b.SyncCommitteeBits) != 64 {
 		err = ssz.ErrBytesLength
 		return
 	}
@@ -1613,7 +1613,7 @@ func (b *BeaconBlockBodyV1) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 func (b *BeaconBlockBodyV1) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
-	if size < 317 {
+	if size < 380 {
 		return ssz.ErrSize
 	}
 
@@ -1667,15 +1667,15 @@ func (b *BeaconBlockBodyV1) UnmarshalSSZ(buf []byte) error {
 
 	// Field (8) 'SyncCommitteeBits'
 	if cap(b.SyncCommitteeBits) == 0 {
-		b.SyncCommitteeBits = make([]byte, 0, len(buf[220:221]))
+		b.SyncCommitteeBits = make([]byte, 0, len(buf[220:284]))
 	}
-	b.SyncCommitteeBits = append(b.SyncCommitteeBits, buf[220:221]...)
+	b.SyncCommitteeBits = append(b.SyncCommitteeBits, buf[220:284]...)
 
 	// Field (9) 'SyncCommitteeSignature'
 	if cap(b.SyncCommitteeSignature) == 0 {
-		b.SyncCommitteeSignature = make([]byte, 0, len(buf[221:317]))
+		b.SyncCommitteeSignature = make([]byte, 0, len(buf[284:380]))
 	}
-	b.SyncCommitteeSignature = append(b.SyncCommitteeSignature, buf[221:317]...)
+	b.SyncCommitteeSignature = append(b.SyncCommitteeSignature, buf[284:380]...)
 
 	// Field (3) 'ProposerSlashings'
 	{
@@ -1779,7 +1779,7 @@ func (b *BeaconBlockBodyV1) UnmarshalSSZ(buf []byte) error {
 
 // SizeSSZ returns the ssz encoded size in bytes for the BeaconBlockBodyV1 object
 func (b *BeaconBlockBodyV1) SizeSSZ() (size int) {
-	size = 317
+	size = 380
 
 	// Field (3) 'ProposerSlashings'
 	size += len(b.ProposerSlashings) * 416
@@ -1914,7 +1914,7 @@ func (b *BeaconBlockBodyV1) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	}
 
 	// Field (8) 'SyncCommitteeBits'
-	if len(b.SyncCommitteeBits) != 1 {
+	if len(b.SyncCommitteeBits) != 64 {
 		err = ssz.ErrBytesLength
 		return
 	}
