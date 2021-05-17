@@ -832,6 +832,12 @@ def ethereumapi_deps():
         sum = "h1:n1fCZPIMlcNQ3iCN5w4vxmFFNWhEdEz3ICTerxjUFvA=",
         version = "v0.0.0-20210515192923-def021850363",
     )
+    go_repository(
+        name = "com_github_prysmaticlabs_go_ssz",
+        importpath = "github.com/prysmaticlabs/go-ssz",
+        sum = "h1:Th5ufPIaL5s/7i3gXHTgiTwfsUhWDP/PwFRiI6qV6v0=",
+        version = "v0.0.0-20200101200214-e24db4d9e963",
+    )
 
     go_repository(
         name = "com_github_prysmaticlabs_protoc_gen_go_cast",
