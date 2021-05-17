@@ -2467,7 +2467,7 @@ func (b *BeaconBlockBodyAltair) MarshalSSZ() ([]byte, error) {
 // MarshalSSZTo ssz marshals the BeaconBlockBodyAltair object to a target array
 func (b *BeaconBlockBodyAltair) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
-	offset := int(317)
+	offset := int(380)
 
 	// Field (0) 'RandaoReveal'
 	if len(b.RandaoReveal) != 96 {
@@ -2601,7 +2601,7 @@ func (b *BeaconBlockBodyAltair) MarshalSSZTo(buf []byte) (dst []byte, err error)
 func (b *BeaconBlockBodyAltair) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
-	if size < 317 {
+	if size < 380 {
 		return ssz.ErrSize
 	}
 
@@ -2657,7 +2657,7 @@ func (b *BeaconBlockBodyAltair) UnmarshalSSZ(buf []byte) error {
 	if b.SyncAggregate == nil {
 		b.SyncAggregate = new(SyncAggregate)
 	}
-	if err = b.SyncAggregate.UnmarshalSSZ(buf[220:317]); err != nil {
+	if err = b.SyncAggregate.UnmarshalSSZ(buf[220:380]); err != nil {
 		return err
 	}
 
@@ -2763,7 +2763,7 @@ func (b *BeaconBlockBodyAltair) UnmarshalSSZ(buf []byte) error {
 
 // SizeSSZ returns the ssz encoded size in bytes for the BeaconBlockBodyAltair object
 func (b *BeaconBlockBodyAltair) SizeSSZ() (size int) {
-	size = 317
+	size = 380
 
 	// Field (3) 'ProposerSlashings'
 	size += len(b.ProposerSlashings) * 416
@@ -2916,7 +2916,7 @@ func (s *SyncAggregate) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 
 	// Field (0) 'SyncCommitteeBits'
-	if len(s.SyncCommitteeBits) != 1 {
+	if len(s.SyncCommitteeBits) != 64 {
 		err = ssz.ErrBytesLength
 		return
 	}
@@ -2936,28 +2936,28 @@ func (s *SyncAggregate) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 func (s *SyncAggregate) UnmarshalSSZ(buf []byte) error {
 	var err error
 	size := uint64(len(buf))
-	if size != 97 {
+	if size != 160 {
 		return ssz.ErrSize
 	}
 
 	// Field (0) 'SyncCommitteeBits'
 	if cap(s.SyncCommitteeBits) == 0 {
-		s.SyncCommitteeBits = make([]byte, 0, len(buf[0:1]))
+		s.SyncCommitteeBits = make([]byte, 0, len(buf[0:64]))
 	}
-	s.SyncCommitteeBits = append(s.SyncCommitteeBits, buf[0:1]...)
+	s.SyncCommitteeBits = append(s.SyncCommitteeBits, buf[0:64]...)
 
 	// Field (1) 'SyncCommitteeSignature'
 	if cap(s.SyncCommitteeSignature) == 0 {
-		s.SyncCommitteeSignature = make([]byte, 0, len(buf[1:97]))
+		s.SyncCommitteeSignature = make([]byte, 0, len(buf[64:160]))
 	}
-	s.SyncCommitteeSignature = append(s.SyncCommitteeSignature, buf[1:97]...)
+	s.SyncCommitteeSignature = append(s.SyncCommitteeSignature, buf[64:160]...)
 
 	return err
 }
 
 // SizeSSZ returns the ssz encoded size in bytes for the SyncAggregate object
 func (s *SyncAggregate) SizeSSZ() (size int) {
-	size = 97
+	size = 160
 	return
 }
 
@@ -2971,7 +2971,7 @@ func (s *SyncAggregate) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
 	// Field (0) 'SyncCommitteeBits'
-	if len(s.SyncCommitteeBits) != 1 {
+	if len(s.SyncCommitteeBits) != 64 {
 		err = ssz.ErrBytesLength
 		return
 	}
