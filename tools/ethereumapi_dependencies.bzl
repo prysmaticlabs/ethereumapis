@@ -3,16 +3,8 @@
 load(
     "@bazel_gazelle//:deps.bzl",
     "gazelle_dependencies",
-    "go_repository",
-    _go_repository = "go_repository",
 )
-
-def _maybe(repo_rule, name, **kwargs):
-    if name not in native.existing_rules():
-        repo_rule(name = name, **kwargs)
-
-def go_repository(name, **kwargs):
-    _maybe(_go_repository, name, **kwargs)
+load("@com_github_prysmaticlabs_ethereumapis//tools:def.bzl", "go_repository")
 
 def ethereumapi_deps():
     go_repository(

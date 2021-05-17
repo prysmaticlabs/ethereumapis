@@ -4,6 +4,7 @@
 [![Discord](https://user-images.githubusercontent.com/7288322/34471967-1df7808a-efbb-11e7-9088-ed0b04151291.png)](https://discord.gg/KSA7rPr)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/prysmaticlabs/geth-sharding?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![ETH2.0_Spec_Version 0.12.0](https://img.shields.io/badge/ETH2.0%20Spec%20Version-v0.12.0-blue.svg)](https://github.com/ethereum/eth2.0-specs/releases/tag/v0.12.0)
+[![PyPI](https://img.shields.io/pypi/v/ethereumapis.svg)](https://pypi.org/project/ethereumapis/)
 
 
 This repository hosts [Prysm](https://github.com/prysmaticlabs/prysm/)'s service interface definitions for the Ethereum 2.0 API. These [protocol buffer](https://developers.google.com/protocol-buffers/) service definitions support [gRPC](https://grpc.io/) as well as JSON over HTTP.
@@ -21,9 +22,13 @@ More indepth descriptions of each service are available in [this section](https:
 
 ## Contributing
 
-Thanks for wanting to contribute to our eth2 API! Go libraries may be generated from the [ethereumapis repository](https://github.com/prysmaticlabs/ethereumapis) using [Bazel](https://bazel.build), making it easy to make changes to the schemas needed and generate Go files from them. Here's what you need to get started:
+Thanks for wanting to contribute to our eth2 API! Go libraries may be generated from the [ethereumapis repository](https://github.com/prysmaticlabs/ethereumapis) using [Bazel](https://bazel.build), making it easy to make changes to the schemas needed and generate Go files from them.
+
+Python libraries can be generated using [`scripts/build-py-package.py`](https://github.com/prysmaticlabs/ethereumapis/blob/master/scripts/build-py-package.py); we regularly publish these libraries to PyPI as [ethereumapis](https://pypi.org/project/ethereumapis/).
 
 ### Dependencies
+
+Here's what you need to get started:
 
 - A modern, UNIX operating system
 - The latest release of [Bazel](https://docs.bazel.build/versions/master/install.html) installed
