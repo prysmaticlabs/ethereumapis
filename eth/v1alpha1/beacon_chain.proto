@@ -277,6 +277,13 @@ service BeaconChain {
             get: "/eth/v1alpha1/beacon/minimalconsensusinfo/stream"
         };
     }
+    // Server-side stream of all unconfirmed blocks as they are received by
+    // the beacon chain node.
+    rpc StreamNewPendingBlocks(google.protobuf.Empty) returns (stream BeaconBlock) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/beacon/blocks/stream"
+        };
+    }
 }
 
 // SetAction defines the type of action that should be applied to the keys in a validator change set.
