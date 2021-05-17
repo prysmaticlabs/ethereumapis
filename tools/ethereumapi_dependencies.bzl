@@ -3,15 +3,8 @@
 load(
     "@bazel_gazelle//:deps.bzl",
     "gazelle_dependencies",
-    _go_repository = "go_repository",
 )
-
-def _maybe(repo_rule, name, **kwargs):
-    if name not in native.existing_rules():
-        repo_rule(name = name, **kwargs)
-
-def go_repository(name, **kwargs):
-    _maybe(_go_repository, name, **kwargs)
+load("@com_github_prysmaticlabs_ethereumapis//tools:def.bzl", "go_repository")
 
 def ethereumapi_deps():
     go_repository(
@@ -431,8 +424,8 @@ def ethereumapi_deps():
         name = "com_github_grpc_ecosystem_grpc_gateway_v2",
         importpath = "github.com/grpc-ecosystem/grpc-gateway/v2",
         replace = "github.com/prysmaticlabs/grpc-gateway/v2",
-        sum = "h1:p8RXjbUOOEGWnleirv5ctE/KBQe0BY/ME2iea1sD0RY=",
-        version = "v2.3.1-0.20210429070457-714fa3339bc9",
+        sum = "h1:dyspW8MEfrfRxiTsOx0ekSQakjHXQY/InYlikXrH/x4=",
+        version = "v2.3.1-0.20210405183733-d2d58057c645",
     )
 
     go_repository(
