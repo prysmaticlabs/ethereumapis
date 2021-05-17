@@ -4,7 +4,6 @@ go 1.13
 
 require (
 	github.com/ferranbt/fastssz v0.0.0-20210120143747-11b9eff30ea9
-	github.com/gogo/protobuf v1.2.1
 	github.com/golang/protobuf v1.5.2
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.0.1
 	github.com/mitchellh/mapstructure v1.4.0 // indirect
