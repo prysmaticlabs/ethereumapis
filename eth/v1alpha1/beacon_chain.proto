@@ -761,9 +761,6 @@ message ValidatorAssignments {
         // Beacon chain slots in which the validator must perform its assigned
         // duty as a proposer.
         repeated uint64 proposer_slots = 4 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Slot"];
-        message ValidatorList {
-            repeated string Validator = 1;
-        }
 
         // 48 byte BLS public key.
         bytes public_key = 5 [(gogoproto.moretags) = "ssz-size:\"48\"", deprecated = true];
