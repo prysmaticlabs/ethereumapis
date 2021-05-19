@@ -142,7 +142,7 @@ message BeaconBlockBodyV1 {
     repeated SignedVoluntaryExit voluntary_exits = 8 [(ethereum.eth.ext.ssz_max) = "16"];
 
     // Bitvector used to track sync committee voting bits.
-    bytes sync_committee_bits = 10 [(ethereum.eth.ext.ssz_size) = "1", (ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/go-bitfield.Bitvector1024"];
+    bytes sync_committee_bits = 10 [(ethereum.eth.ext.ssz_size) = "64", (ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/go-bitfield.Bitvector512"];
 
     // BLS aggregated signature of the sync committee for the ones that voted.
     bytes sync_committee_signature = 11 [(ethereum.eth.ext.ssz_size) = "96"];

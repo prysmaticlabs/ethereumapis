@@ -406,16 +406,16 @@ type BeaconBlockBodyV1 struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	RandaoReveal           []byte                                             `protobuf:"bytes,1,opt,name=randao_reveal,json=randaoReveal,proto3" json:"randao_reveal,omitempty" ssz-size:"96"`
-	Eth1Data               *Eth1Data                                          `protobuf:"bytes,2,opt,name=eth1_data,json=eth1Data,proto3" json:"eth1_data,omitempty"`
-	Graffiti               []byte                                             `protobuf:"bytes,3,opt,name=graffiti,proto3" json:"graffiti,omitempty" ssz-size:"32"`
-	ProposerSlashings      []*ProposerSlashing                                `protobuf:"bytes,4,rep,name=proposer_slashings,json=proposerSlashings,proto3" json:"proposer_slashings,omitempty" ssz-max:"16"`
-	AttesterSlashings      []*AttesterSlashing                                `protobuf:"bytes,5,rep,name=attester_slashings,json=attesterSlashings,proto3" json:"attester_slashings,omitempty" ssz-max:"2"`
-	Attestations           []*Attestation                                     `protobuf:"bytes,6,rep,name=attestations,proto3" json:"attestations,omitempty" ssz-max:"128"`
-	Deposits               []*Deposit                                         `protobuf:"bytes,7,rep,name=deposits,proto3" json:"deposits,omitempty" ssz-max:"16"`
-	VoluntaryExits         []*SignedVoluntaryExit                             `protobuf:"bytes,8,rep,name=voluntary_exits,json=voluntaryExits,proto3" json:"voluntary_exits,omitempty" ssz-max:"16"`
-	SyncCommitteeBits      github_com_prysmaticlabs_go_bitfield.Bitvector1024 `protobuf:"bytes,10,opt,name=sync_committee_bits,json=syncCommitteeBits,proto3" json:"sync_committee_bits,omitempty" cast-type:"github.com/prysmaticlabs/go-bitfield.Bitvector1024" ssz-size:"1"`
-	SyncCommitteeSignature []byte                                             `protobuf:"bytes,11,opt,name=sync_committee_signature,json=syncCommitteeSignature,proto3" json:"sync_committee_signature,omitempty" ssz-size:"96"`
+	RandaoReveal           []byte                                            `protobuf:"bytes,1,opt,name=randao_reveal,json=randaoReveal,proto3" json:"randao_reveal,omitempty" ssz-size:"96"`
+	Eth1Data               *Eth1Data                                         `protobuf:"bytes,2,opt,name=eth1_data,json=eth1Data,proto3" json:"eth1_data,omitempty"`
+	Graffiti               []byte                                            `protobuf:"bytes,3,opt,name=graffiti,proto3" json:"graffiti,omitempty" ssz-size:"32"`
+	ProposerSlashings      []*ProposerSlashing                               `protobuf:"bytes,4,rep,name=proposer_slashings,json=proposerSlashings,proto3" json:"proposer_slashings,omitempty" ssz-max:"16"`
+	AttesterSlashings      []*AttesterSlashing                               `protobuf:"bytes,5,rep,name=attester_slashings,json=attesterSlashings,proto3" json:"attester_slashings,omitempty" ssz-max:"2"`
+	Attestations           []*Attestation                                    `protobuf:"bytes,6,rep,name=attestations,proto3" json:"attestations,omitempty" ssz-max:"128"`
+	Deposits               []*Deposit                                        `protobuf:"bytes,7,rep,name=deposits,proto3" json:"deposits,omitempty" ssz-max:"16"`
+	VoluntaryExits         []*SignedVoluntaryExit                            `protobuf:"bytes,8,rep,name=voluntary_exits,json=voluntaryExits,proto3" json:"voluntary_exits,omitempty" ssz-max:"16"`
+	SyncCommitteeBits      github_com_prysmaticlabs_go_bitfield.Bitvector512 `protobuf:"bytes,10,opt,name=sync_committee_bits,json=syncCommitteeBits,proto3" json:"sync_committee_bits,omitempty" cast-type:"github.com/prysmaticlabs/go-bitfield.Bitvector512" ssz-size:"64"`
+	SyncCommitteeSignature []byte                                            `protobuf:"bytes,11,opt,name=sync_committee_signature,json=syncCommitteeSignature,proto3" json:"sync_committee_signature,omitempty" ssz-size:"96"`
 }
 
 func (x *BeaconBlockBodyV1) Reset() {
@@ -506,11 +506,11 @@ func (x *BeaconBlockBodyV1) GetVoluntaryExits() []*SignedVoluntaryExit {
 	return nil
 }
 
-func (x *BeaconBlockBodyV1) GetSyncCommitteeBits() github_com_prysmaticlabs_go_bitfield.Bitvector1024 {
+func (x *BeaconBlockBodyV1) GetSyncCommitteeBits() github_com_prysmaticlabs_go_bitfield.Bitvector512 {
 	if x != nil {
 		return x.SyncCommitteeBits
 	}
-	return github_com_prysmaticlabs_go_bitfield.Bitvector1024(nil)
+	return github_com_prysmaticlabs_go_bitfield.Bitvector512(nil)
 }
 
 func (x *BeaconBlockBodyV1) GetSyncCommitteeSignature() []byte {
@@ -1262,10 +1262,10 @@ var file_eth_v1_beacon_block_proto_rawDesc = []byte{
 	0xb5, 0x18, 0x02, 0x31, 0x36, 0x52, 0x0e, 0x76, 0x6f, 0x6c, 0x75, 0x6e, 0x74, 0x61, 0x72, 0x79,
 	0x45, 0x78, 0x69, 0x74, 0x73, 0x12, 0x6b, 0x0a, 0x13, 0x73, 0x79, 0x6e, 0x63, 0x5f, 0x63, 0x6f,
 	0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x5f, 0x62, 0x69, 0x74, 0x73, 0x18, 0x0a, 0x20, 0x01,
-	0x28, 0x0c, 0x42, 0x3b, 0x8a, 0xb5, 0x18, 0x01, 0x31, 0x82, 0xb5, 0x18, 0x32, 0x67, 0x69, 0x74,
-	0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x70, 0x72, 0x79, 0x73, 0x6d, 0x61, 0x74, 0x69,
-	0x63, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x67, 0x6f, 0x2d, 0x62, 0x69, 0x74, 0x66, 0x69, 0x65, 0x6c,
-	0x64, 0x2e, 0x42, 0x69, 0x74, 0x76, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x31, 0x30, 0x32, 0x34, 0x52,
+	0x28, 0x0c, 0x42, 0x3b, 0x8a, 0xb5, 0x18, 0x02, 0x36, 0x34, 0x82, 0xb5, 0x18, 0x31, 0x67, 0x69,
+	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x70, 0x72, 0x79, 0x73, 0x6d, 0x61, 0x74,
+	0x69, 0x63, 0x6c, 0x61, 0x62, 0x73, 0x2f, 0x67, 0x6f, 0x2d, 0x62, 0x69, 0x74, 0x66, 0x69, 0x65,
+	0x6c, 0x64, 0x2e, 0x42, 0x69, 0x74, 0x76, 0x65, 0x63, 0x74, 0x6f, 0x72, 0x35, 0x31, 0x32, 0x52,
 	0x11, 0x73, 0x79, 0x6e, 0x63, 0x43, 0x6f, 0x6d, 0x6d, 0x69, 0x74, 0x74, 0x65, 0x65, 0x42, 0x69,
 	0x74, 0x73, 0x12, 0x40, 0x0a, 0x18, 0x73, 0x79, 0x6e, 0x63, 0x5f, 0x63, 0x6f, 0x6d, 0x6d, 0x69,
 	0x74, 0x74, 0x65, 0x65, 0x5f, 0x73, 0x69, 0x67, 0x6e, 0x61, 0x74, 0x75, 0x72, 0x65, 0x18, 0x0b,
