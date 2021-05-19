@@ -114,7 +114,8 @@ message AttesterDutiesRequest {
 }
 
 message AttesterDutiesResponse {
-  repeated AttesterDuty data = 1;
+  bytes dependent_root = 1 [(ethereum.eth.ext.ssz_size) = "32"];
+  repeated AttesterDuty data = 2;
 }
 
 message AttesterDuty {
@@ -146,7 +147,8 @@ message ProposerDutiesRequest {
 }
 
 message ProposerDutiesResponse {
-  repeated ProposerDuty data = 1;
+  bytes dependent_root = 1 [(ethereum.eth.ext.ssz_size) = "32"];
+  repeated ProposerDuty data = 2;
 }
 
 message ProposerDuty {
@@ -201,7 +203,7 @@ message AttestationResponse {
 }
 
 message AggregateAndProofsSubmit {
-  repeated AggregateAttestationAndProof data = 1;
+  repeated SignedAggregateAttestationAndProof data = 1;
 }
 
 message BeaconCommitteeSubscribeSubmit {
@@ -209,15 +211,18 @@ message BeaconCommitteeSubscribeSubmit {
 }
 
 message BeaconCommitteeSubscribe {
+  // The validator index to subscribe for.
+  uint64 validator_index = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.ValidatorIndex"];
+
   // The committee index to be subscribed to.
-  uint64 committee_index = 1  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
+  uint64 committee_index = 2  [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.CommitteeIndex"];
 
   // The total amount of committees for the given slot.
-  uint64 committees_at_slot = 2;
+  uint64 committees_at_slot = 3;
 
   // The slot to be subscribed to.
-  uint64 slot = 3 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
+  uint64 slot = 4 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
   // If subscribing for aggregator, the beacon node will aggregate all attestations received.
-  bool is_aggregator = 4;
+  bool is_aggregator = 5;
 }
