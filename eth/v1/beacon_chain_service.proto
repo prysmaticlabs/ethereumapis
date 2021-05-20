@@ -264,7 +264,7 @@ message StateRootResponse {
 
   message StateRoot {
     // SSZ encoded state root for the requested state.
-    bytes state_root = 1 [(ethereum.eth.ext.ssz_size) = "32"];
+    bytes root = 1 [(ethereum.eth.ext.ssz_size) = "32"];
   }
 }
 

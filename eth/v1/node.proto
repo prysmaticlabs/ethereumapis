@@ -192,6 +192,6 @@ message SyncInfo {
   // A uint64 indicating how many slots are left for the beacon node sync to complete.
   uint64 sync_distance = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 
-  // A bool indicating whether th enode is currently syncing or not.
+  // A bool indicating whether the node is currently syncing or not.
   bool is_syncing = 3;
 }

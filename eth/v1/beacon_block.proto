@@ -153,10 +153,10 @@ message BeaconBlockBodyV1 {
 // proposing two conflicting blocks from the same validator.
 message ProposerSlashing {
     // First conflicting signed block header.
-    SignedBeaconBlockHeader header_1 = 2;
+    SignedBeaconBlockHeader signed_header_1 = 2;
 
     // Second conflicting signed block header.
-    SignedBeaconBlockHeader header_2 = 3;
+    SignedBeaconBlockHeader signed_header_2 = 3;
 }
 
 // Attestor slashings are proofs that a slashable offense has been committed by
@@ -173,7 +173,7 @@ message AttesterSlashing {
 message Deposit {
     message Data {
         // 48 byte BLS public key of the validator.
-        bytes public_key = 1 [(ethereum.eth.ext.ssz_size) = "48", (ethereum.eth.ext.spec_name) = "pubkey"];
+        bytes pubkey = 1 [(ethereum.eth.ext.ssz_size) = "48", (ethereum.eth.ext.spec_name) = "pubkey"];
 
         // A 32 byte hash of the withdrawal address public key.
         bytes withdrawal_credentials = 2 [(ethereum.eth.ext.ssz_size) = "32"];
@@ -206,7 +206,7 @@ message VoluntaryExit {
 // The signed version of voluntary exit.
 message SignedVoluntaryExit {
     // The unsigned voluntary exit itself.
-    VoluntaryExit exit = 1;
+    VoluntaryExit message = 1;
 
     // Validator's 96 byte signature
     bytes signature = 2 [(ethereum.eth.ext.ssz_size) = "96"];
@@ -250,7 +250,7 @@ message BeaconBlockHeader {
 
 message SignedBeaconBlockHeader {
     // The unsigned beacon block header itself.
-    BeaconBlockHeader header = 1;
+    BeaconBlockHeader message = 1;
 
     // 96 byte BLS signature from the validator that produced this block header.
     bytes signature = 2 [(ethereum.eth.ext.ssz_size) = "96"];
