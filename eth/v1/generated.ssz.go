@@ -2934,12 +2934,12 @@ func (v *Validator) MarshalSSZ() ([]byte, error) {
 func (v *Validator) MarshalSSZTo(buf []byte) (dst []byte, err error) {
 	dst = buf
 
-	// Field (0) 'PublicKey'
-	if len(v.PublicKey) != 48 {
+	// Field (0) 'Pubkey'
+	if len(v.Pubkey) != 48 {
 		err = ssz.ErrBytesLength
 		return
 	}
-	dst = append(dst, v.PublicKey...)
+	dst = append(dst, v.Pubkey...)
 
 	// Field (1) 'WithdrawalCredentials'
 	if len(v.WithdrawalCredentials) != 32 {
@@ -2977,11 +2977,11 @@ func (v *Validator) UnmarshalSSZ(buf []byte) error {
 		return ssz.ErrSize
 	}
 
-	// Field (0) 'PublicKey'
-	if cap(v.PublicKey) == 0 {
-		v.PublicKey = make([]byte, 0, len(buf[0:48]))
+	// Field (0) 'Pubkey'
+	if cap(v.Pubkey) == 0 {
+		v.Pubkey = make([]byte, 0, len(buf[0:48]))
 	}
-	v.PublicKey = append(v.PublicKey, buf[0:48]...)
+	v.Pubkey = append(v.Pubkey, buf[0:48]...)
 
 	// Field (1) 'WithdrawalCredentials'
 	if cap(v.WithdrawalCredentials) == 0 {
@@ -3025,12 +3025,12 @@ func (v *Validator) HashTreeRoot() ([32]byte, error) {
 func (v *Validator) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	indx := hh.Index()
 
-	// Field (0) 'PublicKey'
-	if len(v.PublicKey) != 48 {
+	// Field (0) 'Pubkey'
+	if len(v.Pubkey) != 48 {
 		err = ssz.ErrBytesLength
 		return
 	}
-	hh.PutBytes(v.PublicKey)
+	hh.PutBytes(v.Pubkey)
 
 	// Field (1) 'WithdrawalCredentials'
 	if len(v.WithdrawalCredentials) != 32 {
