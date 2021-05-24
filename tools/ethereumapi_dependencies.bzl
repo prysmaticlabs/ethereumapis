@@ -418,8 +418,8 @@ def ethereumapi_deps():
         name = "com_github_grpc_ecosystem_grpc_gateway_v2",
         importpath = "github.com/grpc-ecosystem/grpc-gateway/v2",
         replace = "github.com/prysmaticlabs/grpc-gateway/v2",
-        sum = "h1:en0UrFPfUfLzj8AtJnSeBqCrQomwaEEfUFRZfteEKIo=",
-        version = "v2.3.1-0.20210524195328-26d7983cfbba",
+        sum = "h1:jltdKmCI4DoEyVZrJR5/2j4PeTHYim08dSEIzgjZNac=",
+        version = "v2.3.1-0.20210524202756-cefc26c3f2bf",
     )
 
     go_repository(

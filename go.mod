@@ -16,4 +16,4 @@ require (
 )
 
 // See: https://github.com/prysmaticlabs/grpc-gateway/issues/2
-replace github.com/grpc-ecosystem/grpc-gateway/v2 => github.com/prysmaticlabs/grpc-gateway/v2 v2.3.1-0.20210524195328-26d7983cfbba
+replace github.com/grpc-ecosystem/grpc-gateway/v2 => github.com/prysmaticlabs/grpc-gateway/v2 v2.3.1-0.20210524202756-cefc26c3f2bf

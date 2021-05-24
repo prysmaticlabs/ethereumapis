@@ -372,6 +372,8 @@ github.com/prysmaticlabs/grpc-gateway/v2 v2.3.1-0.20210524193753-e527cc7ee3ac h1
 github.com/prysmaticlabs/grpc-gateway/v2 v2.3.1-0.20210524193753-e527cc7ee3ac/go.mod h1:IOyTYjcIO0rkmnGBfJTL0NJ11exy/Tc2QEuv7hCXp24=
 github.com/prysmaticlabs/grpc-gateway/v2 v2.3.1-0.20210524195328-26d7983cfbba h1:en0UrFPfUfLzj8AtJnSeBqCrQomwaEEfUFRZfteEKIo=
 github.com/prysmaticlabs/grpc-gateway/v2 v2.3.1-0.20210524195328-26d7983cfbba/go.mod h1:IOyTYjcIO0rkmnGBfJTL0NJ11exy/Tc2QEuv7hCXp24=
+github.com/prysmaticlabs/grpc-gateway/v2 v2.3.1-0.20210524202756-cefc26c3f2bf h1:jltdKmCI4DoEyVZrJR5/2j4PeTHYim08dSEIzgjZNac=
+github.com/prysmaticlabs/grpc-gateway/v2 v2.3.1-0.20210524202756-cefc26c3f2bf/go.mod h1:IOyTYjcIO0rkmnGBfJTL0NJ11exy/Tc2QEuv7hCXp24=
 github.com/rogpeppe/fastuuid v0.0.0-20150106093220-6724a57986af/go.mod h1:XWv6SoW27p1b0cqNHllgS5HIMJraePCO15w5zCzIWYg=
 github.com/rogpeppe/fastuuid v1.2.0 h1:Ppwyp6VYCF1nvBTXL3trRso7mXMlRrw9ooo375wvi2s=
 github.com/rogpeppe/fastuuid v1.2.0/go.mod h1:jVj6XXZzXRy/MSR5jhDC/2q6DgLz+nrA6LYCDYWNEvQ=
