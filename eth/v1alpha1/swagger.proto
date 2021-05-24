@@ -13,16 +13,16 @@
 // limitations under the License.
 
 // This is an optional proto that provides some gRPC gateway metadata for
-// generating the OpenAPI(swagger) header.
+// generating the OpenAPIv2(swagger) header.
 syntax = "proto3";
 
 package ethereum.eth.v1alpha1;
 
-import "protoc-gen-swagger/options/annotations.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
 
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1;eth";
 
-option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
+option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
     info: {
         title: "Ethereum Serenity APIs";
         version: "v1alpha1";
@@ -34,7 +34,7 @@ option (grpc.gateway.protoc_gen_swagger.options.openapiv2_swagger) = {
     };
     external_docs: {
         url: "https://github.com/ethereum/eth2.0-specs";
-        description : "Ethereum 2.0 Specification on Github";
+        description: "Ethereum 2.0 Specification on Github";
     };
     host: "api.prylabs.net",
     schemes: HTTPS;

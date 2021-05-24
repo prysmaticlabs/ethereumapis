@@ -15,9 +15,11 @@ syntax = "proto3";
 
 package ethereum.eth.v1;
 
-import "github.com/gogo/protobuf/gogoproto/gogo.proto";
-import "google/protobuf/empty.proto";
 import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+import "google/protobuf/empty.proto";
+
+import "eth/ext/options.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
@@ -35,14 +37,14 @@ service BeaconNode {
     option (google.api.http) = {get: "/eth/v1/node/identity"};
   }
 
-  // GetPeer retrieves data about the given peer.
-  rpc GetPeer(PeerRequest) returns (PeerResponse) {
-    option (google.api.http) = {get: "/eth/v1/node/peers/{peer_id}"};
-  }
-
   // ListPeers retrieves data about the node's network peers.
   rpc ListPeers(PeersRequest) returns (PeersResponse) {
     option (google.api.http) = {get: "/eth/v1/node/peers"};
+  }
+
+  // GetPeer retrieves data about the given peer.
+  rpc GetPeer(PeerRequest) returns (PeerResponse) {
+    option (google.api.http) = {get: "/eth/v1/node/peers/{peer_id}"};
   }
 
   // PeerCount retrieves number of known peers.
@@ -50,16 +52,16 @@ service BeaconNode {
     option (google.api.http) = {get: "/eth/v1/node/peer_count"};
   }
 
-  // GetVersion requests that the beacon node identify information about its implementation in a
-  // format similar to a HTTP User-Agent field.
-  rpc GetVersion(google.protobuf.Empty) returns (VersionResponse) {
-    option (google.api.http) = {get: "/eth/v1/node/version"};
-  }
-
   // GetSyncStatus requests the beacon node to describe if it's currently syncing or not, and
   // if it is, what block it is up to.
   rpc GetSyncStatus(google.protobuf.Empty) returns (SyncingResponse) {
     option (google.api.http) = {get: "/eth/v1/node/syncing"};
+  }
+
+  // GetVersion requests that the beacon node identify information about its implementation in a
+  // format similar to a HTTP User-Agent field.
+  rpc GetVersion(google.protobuf.Empty) returns (VersionResponse) {
+    option (google.api.http) = {get: "/eth/v1/node/version"};
   }
 
   // GetHealth returns node health status in http status codes. Useful for load balancers.
@@ -97,7 +99,7 @@ message Metadata {
   // the node MUST increment seq_number by 1.
   uint64 seq_number = 1;
   // Attnets is a bitvector representing the node's persistent attestation subnet subscriptions.
-  bytes attnets = 2 [(gogoproto.moretags) = "ssz-size:\"8\"", (gogoproto.casttype) = "github.com/prysmaticlabs/go-bitfield.Bitvector64"];
+  bytes attnets = 2 [(ethereum.eth.ext.ssz_size) = "8", (ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/go-bitfield.Bitvector64"];
 }
 
 message PeerRequest {
@@ -109,11 +111,16 @@ message PeersRequest {
   // Requested peer states (available values: disconnected, connecting, connected, disconnecting).
   repeated string state = 1;
   // Requested peer directions (available values: inbound, outbound).
-  repeated string direction=2;
+  repeated string direction = 2;
 }
 
 message PeerResponse {
   Peer data = 1;
+  Meta meta = 2;
+
+  message Meta {
+    uint64 count = 1;
+  }
 }
 
 message PeersResponse {
@@ -143,7 +150,7 @@ message Peer {
   string enr = 2;
   // The address of the peer, as a full multiaddr, for example:
   // /ip4/37.221.192.134/tcp/13000/p2p/16Uiu2HAm8maLMjag1TAUM52zPfmLbVMGFdwUAWgoHu1HDQLR6e17
-  string address = 3;
+  string last_seen_p2p_address = 3;
   // The connection state of the peer at the moment of the request. (e.g. Connecting)
   ConnectionState state = 4;
   // The direction of the connection (inbound/outbound).
@@ -152,17 +159,16 @@ message Peer {
 
 // PeerDirection states the direction of the connection to a peer.
 enum PeerDirection {
-  UNKNOWN = 0;
-  INBOUND = 1;
-  OUTBOUND = 2;
+  INBOUND = 0;
+  OUTBOUND = 1;
 }
 
 // ConnectionState states the current status of the peer.
 enum ConnectionState {
   DISCONNECTED = 0;
-  DISCONNECTING = 1;
+  CONNECTING = 1;
   CONNECTED = 2;
-  CONNECTING = 3;
+  DISCONNECTING = 3;
 }
 
 message VersionResponse {
@@ -181,7 +187,11 @@ message SyncingResponse {
 
 message SyncInfo {
   // A uint64 states the latest head slot of the current node.
-  uint64 head_slot = 1 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Slot"];
+  uint64 head_slot = 1 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
+
   // A uint64 indicating how many slots are left for the beacon node sync to complete.
-  uint64 sync_distance = 2 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Slot"];
+  uint64 sync_distance = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
+
+  // A bool indicating whether the node is currently syncing or not.
+  bool is_syncing = 3;
 }

@@ -15,19 +15,20 @@ syntax = "proto3";
 
 package ethereum.eth.v1;
 
+import "google/api/annotations.proto";
+import "google/protobuf/descriptor.proto";
+import "google/protobuf/empty.proto";
+
+import "eth/ext/options.proto";
+import "eth/v1/beacon_state.proto";
+import "eth/v1/beacon_chain_service.proto";
+
 option csharp_namespace = "Ethereum.Eth.v1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
 option java_multiple_files = true;
 option java_outer_classname = "BeaconDebugProto";
 option java_package = "org.ethereum.eth.v1";
 option php_namespace = "Ethereum\\Eth\\v1";
-
-import "github.com/gogo/protobuf/gogoproto/gogo.proto";
-import "google/api/annotations.proto";
-import "google/protobuf/empty.proto";
-
-import "eth/v1/beacon_state.proto";
-import "eth/v1/beacon_chain_service.proto";
 
 // Beacon chain debug API
 //
@@ -37,12 +38,23 @@ import "eth/v1/beacon_chain_service.proto";
 service BeaconDebug {
   // GetBeaconState returns full BeaconState object for given stateId.
   rpc GetBeaconState(StateRequest) returns (BeaconStateResponse) {
-    option (google.api.http) = {get: "/eth/v1/debug/beacon/states/{state_id}"};
+    option (google.api.http) = {
+      get: "/eth/v1/debug/beacon/states/{state_id}"
+    };
+  }
+
+  // GetBeaconStateSsz returns the SSZ-serialized version of the full BeaconState object for given stateId.
+  rpc GetBeaconStateSsz(StateRequest) returns (BeaconStateSszResponse) {
+    option (google.api.http) = {
+      get: "/eth/v1/debug/beacon/states/{state_id}/ssz"
+    };
   }
 
   // ListForkChoiceHeads retrieves all possible chain heads (leaves of fork choice tree).
   rpc ListForkChoiceHeads(google.protobuf.Empty) returns (ForkChoiceHeadsResponse) {
-    option (google.api.http) = {get: "/eth/v1/debug/beacon/heads"};
+    option (google.api.http) = {
+      get: "/eth/v1/debug/beacon/heads"
+    };
   }
 }
 
@@ -51,10 +63,14 @@ message ForkChoiceHeadsResponse {
 }
 
 message ForkChoiceHead {
-  bytes root = 1 [(gogoproto.moretags) = "ssz-size:\"32\""];
-  uint64 slot = 2 [(gogoproto.casttype) = "github.com/prysmaticlabs/eth2-types.Slot"];
+  bytes root = 1 [(ethereum.eth.ext.ssz_size) = "32"];
+  uint64 slot = 2 [(ethereum.eth.ext.cast_type) = "github.com/prysmaticlabs/eth2-types.Slot"];
 }
 
 message BeaconStateResponse {
   BeaconState data = 1;
+}
+
+message BeaconStateSszResponse {
+  bytes data = 1;
 }

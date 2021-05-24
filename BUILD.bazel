@@ -1,4 +1,5 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
 # gazelle:prefix github.com/prysmaticlabs/ethereumapis
+# gazelle:map_kind go_repository go_repository @com_github_prysmaticlabs_ethereumapis//tools:def.bzl
 gazelle(name = "gazelle")
