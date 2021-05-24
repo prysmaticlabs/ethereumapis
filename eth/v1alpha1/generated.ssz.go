@@ -78,7 +78,7 @@ func (a *Attestation) UnmarshalSSZ(buf []byte) error {
 
 	// Field (0) 'AggregationBits'
 	{
-		if o0 < 229 {
+		if o0 < 228 {
 			return ssz.ErrInvalidVariableOffset
 		}
 		buf = tail[o0:]
@@ -197,7 +197,7 @@ func (a *AggregateAttestationAndProof) UnmarshalSSZ(buf []byte) error {
 
 	// Field (1) 'Aggregate'
 	{
-		if o1 < 109 {
+		if o1 < 108 {
 			return ssz.ErrInvalidVariableOffset
 		}
 		buf = tail[o1:]
@@ -308,7 +308,7 @@ func (s *SignedAggregateAttestationAndProof) UnmarshalSSZ(buf []byte) error {
 
 	// Field (0) 'Message'
 	{
-		if o0 < 101 {
+		if o0 < 100 {
 			return ssz.ErrInvalidVariableOffset
 		}
 		buf = tail[o0:]
@@ -634,7 +634,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 
 	// Field (4) 'Body'
 	{
-		if o4 < 85 {
+		if o4 < 84 {
 			return ssz.ErrInvalidVariableOffset
 		}
 		buf = tail[o4:]
@@ -755,7 +755,7 @@ func (s *SignedBeaconBlock) UnmarshalSSZ(buf []byte) error {
 
 	// Field (0) 'Block'
 	{
-		if o0 < 101 {
+		if o0 < 100 {
 			return ssz.ErrInvalidVariableOffset
 		}
 		buf = tail[o0:]
@@ -995,7 +995,7 @@ func (b *BeaconBlockBody) UnmarshalSSZ(buf []byte) error {
 
 	// Field (3) 'ProposerSlashings'
 	{
-		if o3 < 221 {
+		if o3 < 220 {
 			return ssz.ErrInvalidVariableOffset
 		}
 		buf = tail[o3:o4]
@@ -1380,7 +1380,7 @@ func (a *AttesterSlashing) UnmarshalSSZ(buf []byte) error {
 
 	// Field (0) 'Attestation_1'
 	{
-		if o0 < 9 {
+		if o0 < 8 {
 			return ssz.ErrInvalidVariableOffset
 		}
 		buf = tail[o0:o1]
@@ -2059,7 +2059,7 @@ func (i *IndexedAttestation) UnmarshalSSZ(buf []byte) error {
 
 	// Field (0) 'AttestingIndices'
 	{
-		if o0 < 229 {
+		if o0 < 228 {
 			return ssz.ErrInvalidVariableOffset
 		}
 		buf = tail[o0:]
@@ -2292,7 +2292,7 @@ func (s *SignedBeaconBlockAltair) UnmarshalSSZ(buf []byte) error {
 
 	// Field (0) 'Block'
 	{
-		if o0 < 101 {
+		if o0 < 100 {
 			return ssz.ErrInvalidVariableOffset
 		}
 		buf = tail[o0:]
@@ -2425,7 +2425,7 @@ func (b *BeaconBlockAltair) UnmarshalSSZ(buf []byte) error {
 
 	// Field (4) 'Body'
 	{
-		if o4 < 85 {
+		if o4 < 84 {
 			return ssz.ErrInvalidVariableOffset
 		}
 		buf = tail[o4:]
@@ -2694,7 +2694,7 @@ func (b *BeaconBlockBodyAltair) UnmarshalSSZ(buf []byte) error {
 
 	// Field (3) 'ProposerSlashings'
 	{
-		if o3 < 381 {
+		if o3 < 380 {
 			return ssz.ErrInvalidVariableOffset
 		}
 		buf = tail[o3:o4]
