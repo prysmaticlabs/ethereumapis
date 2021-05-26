@@ -3033,6 +3033,401 @@ func (s *SyncAggregate) HashTreeRootWith(hh *ssz.Hasher) (err error) {
 	return
 }
 
+// MarshalSSZ ssz marshals the SyncCommitteeSignature object
+func (s *SyncCommitteeSignature) MarshalSSZ() ([]byte, error) {
+	return ssz.MarshalSSZ(s)
+}
+
+// MarshalSSZTo ssz marshals the SyncCommitteeSignature object to a target array
+func (s *SyncCommitteeSignature) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+	dst = buf
+
+	// Field (0) 'Slot'
+	dst = ssz.MarshalUint64(dst, uint64(s.Slot))
+
+	// Field (1) 'BlockRoot'
+	if len(s.BlockRoot) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, s.BlockRoot...)
+
+	// Field (2) 'ValidatorIndex'
+	dst = ssz.MarshalUint64(dst, uint64(s.ValidatorIndex))
+
+	// Field (3) 'Signature'
+	if len(s.Signature) != 96 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, s.Signature...)
+
+	return
+}
+
+// UnmarshalSSZ ssz unmarshals the SyncCommitteeSignature object
+func (s *SyncCommitteeSignature) UnmarshalSSZ(buf []byte) error {
+	var err error
+	size := uint64(len(buf))
+	if size != 144 {
+		return ssz.ErrSize
+	}
+
+	// Field (0) 'Slot'
+	s.Slot = github_com_prysmaticlabs_eth2_types.Slot(ssz.UnmarshallUint64(buf[0:8]))
+
+	// Field (1) 'BlockRoot'
+	if cap(s.BlockRoot) == 0 {
+		s.BlockRoot = make([]byte, 0, len(buf[8:40]))
+	}
+	s.BlockRoot = append(s.BlockRoot, buf[8:40]...)
+
+	// Field (2) 'ValidatorIndex'
+	s.ValidatorIndex = github_com_prysmaticlabs_eth2_types.ValidatorIndex(ssz.UnmarshallUint64(buf[40:48]))
+
+	// Field (3) 'Signature'
+	if cap(s.Signature) == 0 {
+		s.Signature = make([]byte, 0, len(buf[48:144]))
+	}
+	s.Signature = append(s.Signature, buf[48:144]...)
+
+	return err
+}
+
+// SizeSSZ returns the ssz encoded size in bytes for the SyncCommitteeSignature object
+func (s *SyncCommitteeSignature) SizeSSZ() (size int) {
+	size = 144
+	return
+}
+
+// HashTreeRoot ssz hashes the SyncCommitteeSignature object
+func (s *SyncCommitteeSignature) HashTreeRoot() ([32]byte, error) {
+	return ssz.HashWithDefaultHasher(s)
+}
+
+// HashTreeRootWith ssz hashes the SyncCommitteeSignature object with a hasher
+func (s *SyncCommitteeSignature) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+	indx := hh.Index()
+
+	// Field (0) 'Slot'
+	hh.PutUint64(uint64(s.Slot))
+
+	// Field (1) 'BlockRoot'
+	if len(s.BlockRoot) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(s.BlockRoot)
+
+	// Field (2) 'ValidatorIndex'
+	hh.PutUint64(uint64(s.ValidatorIndex))
+
+	// Field (3) 'Signature'
+	if len(s.Signature) != 96 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(s.Signature)
+
+	hh.Merkleize(indx)
+	return
+}
+
+// MarshalSSZ ssz marshals the SyncCommitteeContribution object
+func (s *SyncCommitteeContribution) MarshalSSZ() ([]byte, error) {
+	return ssz.MarshalSSZ(s)
+}
+
+// MarshalSSZTo ssz marshals the SyncCommitteeContribution object to a target array
+func (s *SyncCommitteeContribution) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+	dst = buf
+
+	// Field (0) 'Slot'
+	dst = ssz.MarshalUint64(dst, uint64(s.Slot))
+
+	// Field (1) 'BlockRoot'
+	if len(s.BlockRoot) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, s.BlockRoot...)
+
+	// Field (2) 'SubcommitteeIndex'
+	dst = ssz.MarshalUint64(dst, s.SubcommitteeIndex)
+
+	// Field (3) 'AggregationBits'
+	if len(s.AggregationBits) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, s.AggregationBits...)
+
+	// Field (4) 'Signature'
+	if len(s.Signature) != 96 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, s.Signature...)
+
+	return
+}
+
+// UnmarshalSSZ ssz unmarshals the SyncCommitteeContribution object
+func (s *SyncCommitteeContribution) UnmarshalSSZ(buf []byte) error {
+	var err error
+	size := uint64(len(buf))
+	if size != 176 {
+		return ssz.ErrSize
+	}
+
+	// Field (0) 'Slot'
+	s.Slot = github_com_prysmaticlabs_eth2_types.Slot(ssz.UnmarshallUint64(buf[0:8]))
+
+	// Field (1) 'BlockRoot'
+	if cap(s.BlockRoot) == 0 {
+		s.BlockRoot = make([]byte, 0, len(buf[8:40]))
+	}
+	s.BlockRoot = append(s.BlockRoot, buf[8:40]...)
+
+	// Field (2) 'SubcommitteeIndex'
+	s.SubcommitteeIndex = ssz.UnmarshallUint64(buf[40:48])
+
+	// Field (3) 'AggregationBits'
+	if cap(s.AggregationBits) == 0 {
+		s.AggregationBits = make([]byte, 0, len(buf[48:80]))
+	}
+	s.AggregationBits = append(s.AggregationBits, buf[48:80]...)
+
+	// Field (4) 'Signature'
+	if cap(s.Signature) == 0 {
+		s.Signature = make([]byte, 0, len(buf[80:176]))
+	}
+	s.Signature = append(s.Signature, buf[80:176]...)
+
+	return err
+}
+
+// SizeSSZ returns the ssz encoded size in bytes for the SyncCommitteeContribution object
+func (s *SyncCommitteeContribution) SizeSSZ() (size int) {
+	size = 176
+	return
+}
+
+// HashTreeRoot ssz hashes the SyncCommitteeContribution object
+func (s *SyncCommitteeContribution) HashTreeRoot() ([32]byte, error) {
+	return ssz.HashWithDefaultHasher(s)
+}
+
+// HashTreeRootWith ssz hashes the SyncCommitteeContribution object with a hasher
+func (s *SyncCommitteeContribution) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+	indx := hh.Index()
+
+	// Field (0) 'Slot'
+	hh.PutUint64(uint64(s.Slot))
+
+	// Field (1) 'BlockRoot'
+	if len(s.BlockRoot) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(s.BlockRoot)
+
+	// Field (2) 'SubcommitteeIndex'
+	hh.PutUint64(s.SubcommitteeIndex)
+
+	// Field (3) 'AggregationBits'
+	if len(s.AggregationBits) != 32 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(s.AggregationBits)
+
+	// Field (4) 'Signature'
+	if len(s.Signature) != 96 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(s.Signature)
+
+	hh.Merkleize(indx)
+	return
+}
+
+// MarshalSSZ ssz marshals the ContributionAndProof object
+func (c *ContributionAndProof) MarshalSSZ() ([]byte, error) {
+	return ssz.MarshalSSZ(c)
+}
+
+// MarshalSSZTo ssz marshals the ContributionAndProof object to a target array
+func (c *ContributionAndProof) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+	dst = buf
+
+	// Field (0) 'AggregatorIndex'
+	dst = ssz.MarshalUint64(dst, uint64(c.AggregatorIndex))
+
+	// Field (1) 'Contribution'
+	if c.Contribution == nil {
+		c.Contribution = new(SyncCommitteeContribution)
+	}
+	if dst, err = c.Contribution.MarshalSSZTo(dst); err != nil {
+		return
+	}
+
+	// Field (2) 'SelectionProof'
+	if len(c.SelectionProof) != 96 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, c.SelectionProof...)
+
+	return
+}
+
+// UnmarshalSSZ ssz unmarshals the ContributionAndProof object
+func (c *ContributionAndProof) UnmarshalSSZ(buf []byte) error {
+	var err error
+	size := uint64(len(buf))
+	if size != 280 {
+		return ssz.ErrSize
+	}
+
+	// Field (0) 'AggregatorIndex'
+	c.AggregatorIndex = github_com_prysmaticlabs_eth2_types.ValidatorIndex(ssz.UnmarshallUint64(buf[0:8]))
+
+	// Field (1) 'Contribution'
+	if c.Contribution == nil {
+		c.Contribution = new(SyncCommitteeContribution)
+	}
+	if err = c.Contribution.UnmarshalSSZ(buf[8:184]); err != nil {
+		return err
+	}
+
+	// Field (2) 'SelectionProof'
+	if cap(c.SelectionProof) == 0 {
+		c.SelectionProof = make([]byte, 0, len(buf[184:280]))
+	}
+	c.SelectionProof = append(c.SelectionProof, buf[184:280]...)
+
+	return err
+}
+
+// SizeSSZ returns the ssz encoded size in bytes for the ContributionAndProof object
+func (c *ContributionAndProof) SizeSSZ() (size int) {
+	size = 280
+	return
+}
+
+// HashTreeRoot ssz hashes the ContributionAndProof object
+func (c *ContributionAndProof) HashTreeRoot() ([32]byte, error) {
+	return ssz.HashWithDefaultHasher(c)
+}
+
+// HashTreeRootWith ssz hashes the ContributionAndProof object with a hasher
+func (c *ContributionAndProof) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+	indx := hh.Index()
+
+	// Field (0) 'AggregatorIndex'
+	hh.PutUint64(uint64(c.AggregatorIndex))
+
+	// Field (1) 'Contribution'
+	if err = c.Contribution.HashTreeRootWith(hh); err != nil {
+		return
+	}
+
+	// Field (2) 'SelectionProof'
+	if len(c.SelectionProof) != 96 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(c.SelectionProof)
+
+	hh.Merkleize(indx)
+	return
+}
+
+// MarshalSSZ ssz marshals the SignedContributionAndProof object
+func (s *SignedContributionAndProof) MarshalSSZ() ([]byte, error) {
+	return ssz.MarshalSSZ(s)
+}
+
+// MarshalSSZTo ssz marshals the SignedContributionAndProof object to a target array
+func (s *SignedContributionAndProof) MarshalSSZTo(buf []byte) (dst []byte, err error) {
+	dst = buf
+
+	// Field (0) 'Message'
+	if s.Message == nil {
+		s.Message = new(ContributionAndProof)
+	}
+	if dst, err = s.Message.MarshalSSZTo(dst); err != nil {
+		return
+	}
+
+	// Field (1) 'Signature'
+	if len(s.Signature) != 96 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	dst = append(dst, s.Signature...)
+
+	return
+}
+
+// UnmarshalSSZ ssz unmarshals the SignedContributionAndProof object
+func (s *SignedContributionAndProof) UnmarshalSSZ(buf []byte) error {
+	var err error
+	size := uint64(len(buf))
+	if size != 376 {
+		return ssz.ErrSize
+	}
+
+	// Field (0) 'Message'
+	if s.Message == nil {
+		s.Message = new(ContributionAndProof)
+	}
+	if err = s.Message.UnmarshalSSZ(buf[0:280]); err != nil {
+		return err
+	}
+
+	// Field (1) 'Signature'
+	if cap(s.Signature) == 0 {
+		s.Signature = make([]byte, 0, len(buf[280:376]))
+	}
+	s.Signature = append(s.Signature, buf[280:376]...)
+
+	return err
+}
+
+// SizeSSZ returns the ssz encoded size in bytes for the SignedContributionAndProof object
+func (s *SignedContributionAndProof) SizeSSZ() (size int) {
+	size = 376
+	return
+}
+
+// HashTreeRoot ssz hashes the SignedContributionAndProof object
+func (s *SignedContributionAndProof) HashTreeRoot() ([32]byte, error) {
+	return ssz.HashWithDefaultHasher(s)
+}
+
+// HashTreeRootWith ssz hashes the SignedContributionAndProof object with a hasher
+func (s *SignedContributionAndProof) HashTreeRootWith(hh *ssz.Hasher) (err error) {
+	indx := hh.Index()
+
+	// Field (0) 'Message'
+	if err = s.Message.HashTreeRootWith(hh); err != nil {
+		return
+	}
+
+	// Field (1) 'Signature'
+	if len(s.Signature) != 96 {
+		err = ssz.ErrBytesLength
+		return
+	}
+	hh.PutBytes(s.Signature)
+
+	hh.Merkleize(indx)
+	return
+}
+
 // MarshalSSZ ssz marshals the Validator object
 func (v *Validator) MarshalSSZ() ([]byte, error) {
 	return ssz.MarshalSSZ(v)

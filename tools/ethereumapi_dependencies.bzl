@@ -407,7 +407,6 @@ def ethereumapi_deps():
         sum = "h1:Ovs26xHkKqVztRpIrF/92BcuyuQ/YW4NSIpoGtfXNho=",
         version = "v1.2.0",
     )
-
     go_repository(
         name = "com_github_grpc_ecosystem_grpc_gateway",
         importpath = "github.com/grpc-ecosystem/grpc-gateway",
@@ -418,10 +417,9 @@ def ethereumapi_deps():
         name = "com_github_grpc_ecosystem_grpc_gateway_v2",
         importpath = "github.com/grpc-ecosystem/grpc-gateway/v2",
         replace = "github.com/prysmaticlabs/grpc-gateway/v2",
-        sum = "h1:dyspW8MEfrfRxiTsOx0ekSQakjHXQY/InYlikXrH/x4=",
-        version = "v2.3.1-0.20210405183733-d2d58057c645",
+        sum = "h1:jltdKmCI4DoEyVZrJR5/2j4PeTHYim08dSEIzgjZNac=",
+        version = "v2.3.1-0.20210524202756-cefc26c3f2bf",
     )
-
     go_repository(
         name = "com_github_hashicorp_consul_api",
         importpath = "github.com/hashicorp/consul/api",

@@ -43,6 +43,13 @@ service BeaconDebug {
     };
   }
 
+  // GetBeaconStateSsz returns the SSZ-serialized version of the full BeaconState object for given stateId.
+  rpc GetBeaconStateSsz(StateRequest) returns (BeaconStateSszResponse) {
+    option (google.api.http) = {
+      get: "/eth/v1/debug/beacon/states/{state_id}/ssz"
+    };
+  }
+
   // ListForkChoiceHeads retrieves all possible chain heads (leaves of fork choice tree).
   rpc ListForkChoiceHeads(google.protobuf.Empty) returns (ForkChoiceHeadsResponse) {
     option (google.api.http) = {
@@ -62,4 +69,8 @@ message ForkChoiceHead {
 
 message BeaconStateResponse {
   BeaconState data = 1;
+}
+
+message BeaconStateSszResponse {
+  bytes data = 1;
 }
