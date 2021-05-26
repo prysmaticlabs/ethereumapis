@@ -61,6 +61,7 @@ func (a *Attestation) UnmarshalSSZ(buf []byte) error {
 	if o0 = ssz.ReadOffset(buf[0:4]); o0 > size {
 		return ssz.ErrOffset
 	}
+
 	if o0 < 228 {
 		return ssz.ErrInvalidVariableOffset
 	}
@@ -188,6 +189,7 @@ func (a *AggregateAttestationAndProof) UnmarshalSSZ(buf []byte) error {
 	if o1 = ssz.ReadOffset(buf[8:12]); o1 > size {
 		return ssz.ErrOffset
 	}
+
 	if o1 < 108 {
 		return ssz.ErrInvalidVariableOffset
 	}
@@ -299,6 +301,7 @@ func (s *SignedAggregateAttestationAndProof) UnmarshalSSZ(buf []byte) error {
 	if o0 = ssz.ReadOffset(buf[0:4]); o0 > size {
 		return ssz.ErrOffset
 	}
+
 	if o0 < 100 {
 		return ssz.ErrInvalidVariableOffset
 	}
@@ -631,6 +634,7 @@ func (b *BeaconBlock) UnmarshalSSZ(buf []byte) error {
 	if o4 = ssz.ReadOffset(buf[80:84]); o4 > size {
 		return ssz.ErrOffset
 	}
+
 	if o4 < 84 {
 		return ssz.ErrInvalidVariableOffset
 	}
@@ -746,6 +750,7 @@ func (s *SignedBeaconBlock) UnmarshalSSZ(buf []byte) error {
 	if o0 = ssz.ReadOffset(buf[0:4]); o0 > size {
 		return ssz.ErrOffset
 	}
+
 	if o0 < 100 {
 		return ssz.ErrInvalidVariableOffset
 	}
@@ -972,6 +977,7 @@ func (b *BeaconBlockBody) UnmarshalSSZ(buf []byte) error {
 	if o3 = ssz.ReadOffset(buf[200:204]); o3 > size {
 		return ssz.ErrOffset
 	}
+
 	if o3 < 220 {
 		return ssz.ErrInvalidVariableOffset
 	}
@@ -980,32 +986,20 @@ func (b *BeaconBlockBody) UnmarshalSSZ(buf []byte) error {
 	if o4 = ssz.ReadOffset(buf[204:208]); o4 > size || o3 > o4 {
 		return ssz.ErrOffset
 	}
-	if o4 < o3 {
-		return ssz.ErrInvalidVariableOffset
-	}
 
 	// Offset (5) 'Attestations'
 	if o5 = ssz.ReadOffset(buf[208:212]); o5 > size || o4 > o5 {
 		return ssz.ErrOffset
-	}
-	if o5 < o4 {
-		return ssz.ErrInvalidVariableOffset
 	}
 
 	// Offset (6) 'Deposits'
 	if o6 = ssz.ReadOffset(buf[212:216]); o6 > size || o5 > o6 {
 		return ssz.ErrOffset
 	}
-	if o6 < o5 {
-		return ssz.ErrInvalidVariableOffset
-	}
 
 	// Offset (7) 'VoluntaryExits'
 	if o7 = ssz.ReadOffset(buf[216:220]); o7 > size || o6 > o7 {
 		return ssz.ErrOffset
-	}
-	if o7 < o6 {
-		return ssz.ErrInvalidVariableOffset
 	}
 
 	// Field (3) 'ProposerSlashings'
@@ -1384,6 +1378,7 @@ func (a *AttesterSlashing) UnmarshalSSZ(buf []byte) error {
 	if o0 = ssz.ReadOffset(buf[0:4]); o0 > size {
 		return ssz.ErrOffset
 	}
+
 	if o0 < 8 {
 		return ssz.ErrInvalidVariableOffset
 	}
@@ -1391,9 +1386,6 @@ func (a *AttesterSlashing) UnmarshalSSZ(buf []byte) error {
 	// Offset (1) 'Attestation_2'
 	if o1 = ssz.ReadOffset(buf[4:8]); o1 > size || o0 > o1 {
 		return ssz.ErrOffset
-	}
-	if o1 < o0 {
-		return ssz.ErrInvalidVariableOffset
 	}
 
 	// Field (0) 'Attestation_1'
@@ -2057,6 +2049,7 @@ func (i *IndexedAttestation) UnmarshalSSZ(buf []byte) error {
 	if o0 = ssz.ReadOffset(buf[0:4]); o0 > size {
 		return ssz.ErrOffset
 	}
+
 	if o0 < 228 {
 		return ssz.ErrInvalidVariableOffset
 	}
@@ -2298,6 +2291,7 @@ func (s *SignedBeaconBlockAltair) UnmarshalSSZ(buf []byte) error {
 	if o0 = ssz.ReadOffset(buf[0:4]); o0 > size {
 		return ssz.ErrOffset
 	}
+
 	if o0 < 100 {
 		return ssz.ErrInvalidVariableOffset
 	}
@@ -2437,6 +2431,7 @@ func (b *BeaconBlockAltair) UnmarshalSSZ(buf []byte) error {
 	if o4 = ssz.ReadOffset(buf[80:84]); o4 > size {
 		return ssz.ErrOffset
 	}
+
 	if o4 < 84 {
 		return ssz.ErrInvalidVariableOffset
 	}
@@ -2678,6 +2673,7 @@ func (b *BeaconBlockBodyAltair) UnmarshalSSZ(buf []byte) error {
 	if o3 = ssz.ReadOffset(buf[200:204]); o3 > size {
 		return ssz.ErrOffset
 	}
+
 	if o3 < 380 {
 		return ssz.ErrInvalidVariableOffset
 	}
@@ -2686,32 +2682,20 @@ func (b *BeaconBlockBodyAltair) UnmarshalSSZ(buf []byte) error {
 	if o4 = ssz.ReadOffset(buf[204:208]); o4 > size || o3 > o4 {
 		return ssz.ErrOffset
 	}
-	if o4 < o3 {
-		return ssz.ErrInvalidVariableOffset
-	}
 
 	// Offset (5) 'Attestations'
 	if o5 = ssz.ReadOffset(buf[208:212]); o5 > size || o4 > o5 {
 		return ssz.ErrOffset
-	}
-	if o5 < o4 {
-		return ssz.ErrInvalidVariableOffset
 	}
 
 	// Offset (6) 'Deposits'
 	if o6 = ssz.ReadOffset(buf[212:216]); o6 > size || o5 > o6 {
 		return ssz.ErrOffset
 	}
-	if o6 < o5 {
-		return ssz.ErrInvalidVariableOffset
-	}
 
 	// Offset (7) 'VoluntaryExits'
 	if o7 = ssz.ReadOffset(buf[216:220]); o7 > size || o6 > o7 {
 		return ssz.ErrOffset
-	}
-	if o7 < o6 {
-		return ssz.ErrInvalidVariableOffset
 	}
 
 	// Field (8) 'SyncAggregate'
