@@ -1,0 +1,8 @@
+version: v1beta1
+name: buf.build/prysmaticlabs/ethereumapis
+build:
+  roots:
+    - eth/ext
+deps:
+  - buf.build/beta/googleapis
+  - buf.build/grpc-ecosystem/grpc-gateway
