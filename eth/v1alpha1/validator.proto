@@ -220,6 +220,21 @@ service BeaconNodeValidator {
             body: "*"  
         };
     }
+
+    // Finds a duplicate validator given following request arguments :
+    // 1. Target Epoch of the Validator
+    // 2. N (2 past) Epochs to check for duplicate
+    // 3. Array of pubKeys
+    // The rpc endpoint then does this logic
+    // if Head - Target < 2 , return false (no duplicate check)
+    // Else for each pubKey perform the following
+    // if the  balance_@Head - balance_@Head-1 > -2*base_reward (done for @head-1 > @head-2 also)
+    // then return True (a duplicate) otherwise false.
+    rpc DetectDoppelgangerTargetHeadNEpochs(DetectDoppelgangerRequest) returns (DetectDoppelgangerResponse) {
+        option (google.api.http) = {
+            get: "/eth/v1alpha1/validator/doppelganger"
+        };
+    }
 }
 
 message DomainRequest {
@@ -234,6 +249,23 @@ message DomainResponse {
     // The signature domain is a byte array used by validators when
     // signing data related to block proposals and attestations.
     bytes signature_domain = 1;
+}
+
+message DetectDoppelgangerRequest{
+    // Validator Last recorded Target
+    // N Epochs to detect a duplicate
+    // PubKeys
+    uint64 target_epoch = 1;
+    uint64 n_epoch_duplicate_check = 2;
+    repeated bytes pub_keys= 3;
+}
+
+message DetectDoppelgangerResponse{
+    // Bool of whether a duplicate was found
+    // False could mean that the Target vs Head conditions were not met
+    // Or that the balance decreased due to inactivity
+    bool duplicate_found = 1;
+    bytes pub_key = 2;
 }
 
 message ValidatorActivationRequest {
