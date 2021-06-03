@@ -1,0 +1,1726 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "eth/v1/beacon_chain_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "BeaconChain"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/eth/v1/beacon/blocks": {
+      "post": {
+        "summary": "SubmitBlock instructs the beacon node to broadcast a newly signed beacon block to the beacon network, to be\nincluded in the beacon chain. The beacon node is not required to validate the signed BeaconBlock, and a successful\nresponse (20X) only indicates that the broadcast has been successful. The beacon node is expected to integrate the\nnew block into its state, and therefore validate the block internally, however blocks which fail the validation are\nstill broadcast but a different status code is returned (202).",
+        "operationId": "BeaconChain_SubmitBlock",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1BeaconBlockContainer"
+            }
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/blocks/{blockId}": {
+      "get": {
+        "summary": "GetBlock retrieves block details for given block id.",
+        "operationId": "BeaconChain_GetBlock",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BlockResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "blockId",
+            "description": "The block identifier. Can be one of: \"head\" (canonical head in node's view), \"genesis\",\n\"finalized\", \u003cslot\u003e, \u003chex encoded blockRoot with 0x prefix\u003e.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "byte"
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/blocks/{blockId}/attestations": {
+      "get": {
+        "summary": "ListBlockAttestations retrieves attestation included in requested block.",
+        "operationId": "BeaconChain_ListBlockAttestations",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BlockAttestationsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "blockId",
+            "description": "The block identifier. Can be one of: \"head\" (canonical head in node's view), \"genesis\",\n\"finalized\", \u003cslot\u003e, \u003chex encoded blockRoot with 0x prefix\u003e.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "byte"
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/blocks/{blockId}/root": {
+      "get": {
+        "summary": "GetBlockRoot retrieves hashTreeRoot of BeaconBlock/BeaconBlockHeader.",
+        "operationId": "BeaconChain_GetBlockRoot",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BlockRootResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "blockId",
+            "description": "The block identifier. Can be one of: \"head\" (canonical head in node's view), \"genesis\",\n\"finalized\", \u003cslot\u003e, \u003chex encoded blockRoot with 0x prefix\u003e.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "byte"
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/blocks/{blockId}/ssz": {
+      "get": {
+        "summary": "GetBlockSsz returns the SSZ-serialized version of block details for given block id.",
+        "operationId": "BeaconChain_GetBlockSsz",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BlockSszResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "blockId",
+            "description": "The block identifier. Can be one of: \"head\" (canonical head in node's view), \"genesis\",\n\"finalized\", \u003cslot\u003e, \u003chex encoded blockRoot with 0x prefix\u003e.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "byte"
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/genesis": {
+      "get": {
+        "summary": "GetGenesis retrieves details of the chain's genesis which can be used to identify chain.",
+        "operationId": "BeaconChain_GetGenesis",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GenesisResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/headers": {
+      "get": {
+        "summary": "ListBlockHeaders retrieves block headers matching given query. By default it will fetch current head slot blocks.",
+        "operationId": "BeaconChain_ListBlockHeaders",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BlockHeadersResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "slot",
+            "description": "Beacon chain slot of the requested block.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "parentRoot",
+            "description": "32 byte merkle tree root of the ssz encoded parent block.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "byte"
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/headers/{blockId}": {
+      "get": {
+        "summary": "GetBlockHeader retrieves block header for given block id.",
+        "operationId": "BeaconChain_GetBlockHeader",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1BlockHeaderResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "blockId",
+            "description": "The block identifier. Can be one of: \"head\" (canonical head in node's view), \"genesis\",\n\"finalized\", \u003cslot\u003e, \u003chex encoded blockRoot with 0x prefix\u003e.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "byte"
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/pool/attestations": {
+      "get": {
+        "summary": "ListPoolAttestations retrieves attestations known by the node but\nnot necessarily incorporated into any block.",
+        "operationId": "BeaconChain_ListPoolAttestations",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AttestationsPoolResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "slot",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "committeeIndex",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      },
+      "post": {
+        "summary": "SubmitAttestations submits Attestation objects to node. If attestation passes all validation\nconstraints, node MUST publish attestation on appropriate subnet.",
+        "operationId": "BeaconChain_SubmitAttestations",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SubmitAttestationsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/pool/attester_slashings": {
+      "get": {
+        "summary": "ListPoolAttesterSlashings retrieves attester slashings known by the node but\nnot necessarily incorporated into any block.",
+        "operationId": "BeaconChain_ListPoolAttesterSlashings",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AttesterSlashingsPoolResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "BeaconChain"
+        ]
+      },
+      "post": {
+        "summary": "SubmitAttesterSlashing submits AttesterSlashing object to node's pool and\nif passes validation node MUST broadcast it to network.",
+        "operationId": "BeaconChain_SubmitAttesterSlashing",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1AttesterSlashing"
+            }
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/pool/proposer_slashings": {
+      "get": {
+        "summary": "ListPoolProposerSlashings retrieves proposer slashings known by the node\nbut not necessarily incorporated into any block.",
+        "operationId": "BeaconChain_ListPoolProposerSlashings",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ProposerSlashingPoolResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "BeaconChain"
+        ]
+      },
+      "post": {
+        "summary": "SubmitProposerSlashing submits AttesterSlashing object to node's pool and if\npasses validation node MUST broadcast it to network.",
+        "operationId": "BeaconChain_SubmitProposerSlashing",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1ProposerSlashing"
+            }
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/pool/voluntary_exits": {
+      "get": {
+        "summary": "ListPoolVoluntaryExits retrieves voluntary exits known by the node but\nnot necessarily incorporated into any block.",
+        "operationId": "BeaconChain_ListPoolVoluntaryExits",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1VoluntaryExitsPoolResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "BeaconChain"
+        ]
+      },
+      "post": {
+        "summary": "SubmitVoluntaryExit submits SignedVoluntaryExit object to node's pool\nand if passes validation node MUST broadcast it to network.",
+        "operationId": "BeaconChain_SubmitVoluntaryExit",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1SignedVoluntaryExit"
+            }
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/states/{stateId}/committees": {
+      "get": {
+        "summary": "ListCommittees retrieves the committees for the given state at the given epoch.",
+        "operationId": "BeaconChain_ListCommittees",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1StateCommitteesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "stateId",
+            "description": "The state id which can be any of: \"head\" (canonical head in node's view),\n\"genesis\", \"finalized\", \"justified\", \u003cslot\u003e, \u003chex encoded stateRoot with 0x prefix\u003e.\nUses the provided state_id for the request.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "byte"
+          },
+          {
+            "name": "epoch",
+            "description": "The epoch to retrieve the committees of.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "index",
+            "description": "Committee index requested.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "slot",
+            "description": "Committee slot requested.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/states/{stateId}/finality_checkpoints": {
+      "get": {
+        "summary": "GetFinalityCheckpoints returns finality checkpoints for state with given 'stateId'. In case finality is\nnot yet achieved, checkpoint should return epoch 0 and ZERO_HASH as root.",
+        "operationId": "BeaconChain_GetFinalityCheckpoints",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1StateFinalityCheckpointResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "stateId",
+            "description": "The state id which can be any of: \"head\" (canonical head in node's view),\n\"genesis\", \"finalized\", \"justified\", \u003cslot\u003e, \u003chex encoded stateRoot with 0x prefix\u003e.\nUses the provided state_id for the request.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "byte"
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/states/{stateId}/fork": {
+      "get": {
+        "summary": "GetStateFork returns Fork object for state with given 'stateId'.",
+        "operationId": "BeaconChain_GetStateFork",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1StateForkResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "stateId",
+            "description": "The state id which can be any of: \"head\" (canonical head in node's view),\n\"genesis\", \"finalized\", \"justified\", \u003cslot\u003e, \u003chex encoded stateRoot with 0x prefix\u003e.\nUses the provided state_id for the request.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "byte"
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/states/{stateId}/root": {
+      "get": {
+        "summary": "GetStateRoot calculates HashTreeRoot for state with given 'stateId'. If stateId is root, same value will be returned.",
+        "operationId": "BeaconChain_GetStateRoot",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1StateRootResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "stateId",
+            "description": "The state id which can be any of: \"head\" (canonical head in node's view),\n\"genesis\", \"finalized\", \"justified\", \u003cslot\u003e, \u003chex encoded stateRoot with 0x prefix\u003e.\nUses the provided state_id for the request.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "byte"
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/states/{stateId}/validator_balances": {
+      "get": {
+        "summary": "ListValidators returns a filterable list of validator balances.",
+        "operationId": "BeaconChain_ListValidatorBalances",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ValidatorBalancesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "stateId",
+            "description": "The state id which can be any of: \"head\" (canonical head in node's view),\n\"genesis\", \"finalized\", \"justified\", \u003cslot\u003e, \u003chex encoded stateRoot with 0x prefix\u003e.\nUses the provided state_id for the request.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "byte"
+          },
+          {
+            "name": "id",
+            "description": "An array of either hex encoded public keys (with 0x prefix) or validator indexes.",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "byte"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/states/{stateId}/validators": {
+      "get": {
+        "summary": "ListValidators returns a filterable list of validators with their balance, status and index.",
+        "operationId": "BeaconChain_ListValidators",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1StateValidatorsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "stateId",
+            "description": "The state id which can be any of: \"head\" (canonical head in node's view),\n\"genesis\", \"finalized\", \"justified\", \u003cslot\u003e, \u003chex encoded stateRoot with 0x prefix\u003e.\nUses the provided state_id for the request.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "byte"
+          },
+          {
+            "name": "id",
+            "description": "An array of either hex encoded public keys (with 0x prefix) or validator indexes.",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "byte"
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "status",
+            "description": "The status to query validators for, can be one of: pending_initialized, pending_queued, active_ongoing,\nactive_exiting, active_slashed, exited_unslashed, exited_slashed, withdrawal_possible,\nwithdrawal_done, active, pending, exited, withdrawal.",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "PENDING_INITIALIZED",
+                "PENDING_QUEUED",
+                "ACTIVE_ONGOING",
+                "ACTIVE_EXITING",
+                "ACTIVE_SLASHED",
+                "EXITED_UNSLASHED",
+                "EXITED_SLASHED",
+                "WITHDRAWAL_POSSIBLE",
+                "WITHDRAWAL_DONE",
+                "ACTIVE",
+                "PENDING",
+                "EXITED",
+                "WITHDRAWAL"
+              ]
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/beacon/states/{stateId}/validators/{validatorId}": {
+      "get": {
+        "summary": "GetValidator returns a validator specified by state and id or public key along with status and balance.",
+        "operationId": "BeaconChain_GetValidator",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1StateValidatorResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "stateId",
+            "description": "The state id which can be any of: \"head\" (canonical head in node's view),\n\"genesis\", \"finalized\", \"justified\", \u003cslot\u003e, \u003chex encoded stateRoot with 0x prefix\u003e.\nUses the provided state_id for the request.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "byte"
+          },
+          {
+            "name": "validatorId",
+            "description": "The public key or index for the validator to retrieve information for.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "byte"
+          }
+        ],
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/config/deposit_contract": {
+      "get": {
+        "summary": "GetDepositContract retrieves deposit contract address and genesis fork version.",
+        "operationId": "BeaconChain_GetDepositContract",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1DepositContractResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/config/fork_schedule": {
+      "get": {
+        "summary": "GetForkSchedule retrieve all scheduled upcoming forks this node is aware of.",
+        "operationId": "BeaconChain_GetForkSchedule",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ForkScheduleResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    },
+    "/eth/v1/config/spec": {
+      "get": {
+        "summary": "Spec retrieves specification configuration (without Phase 1 params) used on this node. Specification params list\nValues are returned with following format:\n- any value starting with 0x in the spec is returned as a hex string\n- all other values are returned as number",
+        "operationId": "BeaconChain_GetSpec",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1SpecResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "BeaconChain"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "DepositData": {
+      "type": "object",
+      "properties": {
+        "pubkey": {
+          "type": "string",
+          "format": "byte",
+          "description": "48 byte BLS public key of the validator."
+        },
+        "withdrawalCredentials": {
+          "type": "string",
+          "format": "byte",
+          "description": "A 32 byte hash of the withdrawal address public key."
+        },
+        "amount": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Deposit amount in gwei."
+        },
+        "signature": {
+          "type": "string",
+          "format": "byte",
+          "description": "96 byte signature from the validators public key."
+        }
+      }
+    },
+    "GenesisResponseGenesis": {
+      "type": "object",
+      "properties": {
+        "genesisTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC time specified in the chain start event in the deposit contract."
+        },
+        "genesisValidatorsRoot": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte hash tree root of the genesis validator set."
+        },
+        "genesisForkVersion": {
+          "type": "string",
+          "format": "byte",
+          "description": "4 byte genesis fork version."
+        }
+      }
+    },
+    "StateFinalityCheckpointResponseStateFinalityCheckpoint": {
+      "type": "object",
+      "properties": {
+        "previousJustified": {
+          "$ref": "#/definitions/v1Checkpoint"
+        },
+        "currentJustified": {
+          "$ref": "#/definitions/v1Checkpoint"
+        },
+        "finalized": {
+          "$ref": "#/definitions/v1Checkpoint"
+        }
+      }
+    },
+    "StateRootResponseStateRoot": {
+      "type": "object",
+      "properties": {
+        "root": {
+          "type": "string",
+          "format": "byte",
+          "description": "SSZ encoded state root for the requested state."
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1Attestation": {
+      "type": "object",
+      "properties": {
+        "aggregationBits": {
+          "type": "string",
+          "format": "byte",
+          "description": "A bitfield representation of validator indices that have voted exactly\nthe same vote and have been aggregated into this attestation."
+        },
+        "data": {
+          "$ref": "#/definitions/v1AttestationData"
+        },
+        "signature": {
+          "type": "string",
+          "format": "byte",
+          "description": "96 byte BLS aggregate signature."
+        }
+      }
+    },
+    "v1AttestationData": {
+      "type": "object",
+      "properties": {
+        "slot": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Slot of the attestation attesting for."
+        },
+        "index": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The committee index that submitted this attestation."
+        },
+        "beaconBlockRoot": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte root of the LMD GHOST block vote."
+        },
+        "source": {
+          "$ref": "#/definitions/v1Checkpoint",
+          "title": "The most recent justified checkpoint in the beacon state"
+        },
+        "target": {
+          "$ref": "#/definitions/v1Checkpoint",
+          "title": "The checkpoint attempting to be justified for the current epoch and its epoch boundary block"
+        }
+      }
+    },
+    "v1AttestationsPoolResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Attestation"
+          }
+        }
+      }
+    },
+    "v1AttesterSlashing": {
+      "type": "object",
+      "properties": {
+        "attestation1": {
+          "$ref": "#/definitions/v1IndexedAttestation",
+          "description": "First conflicting attestation."
+        },
+        "attestation2": {
+          "$ref": "#/definitions/v1IndexedAttestation",
+          "description": "Second conflicting attestation."
+        }
+      },
+      "description": "Attestor slashings are proofs that a slashable offense has been committed by\nattestating to two conflicting pieces of information by the same validator."
+    },
+    "v1AttesterSlashingsPoolResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1AttesterSlashing"
+          }
+        }
+      }
+    },
+    "v1BeaconBlock": {
+      "type": "object",
+      "properties": {
+        "slot": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Beacon chain slot that this block represents."
+        },
+        "proposerIndex": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Validator index of the validator that proposed the block header."
+        },
+        "parentRoot": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte root of the parent block."
+        },
+        "stateRoot": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte root of the resulting state after processing this block."
+        },
+        "body": {
+          "$ref": "#/definitions/v1BeaconBlockBody",
+          "description": "The block body itself."
+        }
+      },
+      "description": "The Ethereum 2.0 beacon block. The message does not contain a validator signature."
+    },
+    "v1BeaconBlockBody": {
+      "type": "object",
+      "properties": {
+        "randaoReveal": {
+          "type": "string",
+          "format": "byte",
+          "description": "The validators RANDAO reveal 96 byte value."
+        },
+        "eth1Data": {
+          "$ref": "#/definitions/v1Eth1Data",
+          "description": "A reference to the Ethereum 1.x chain."
+        },
+        "graffiti": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte field of arbitrary data. This field may contain any data and\nis not used for anything other than a fun message."
+        },
+        "proposerSlashings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ProposerSlashing"
+          },
+          "description": "At most MAX_PROPOSER_SLASHINGS."
+        },
+        "attesterSlashings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1AttesterSlashing"
+          },
+          "description": "At most MAX_ATTESTER_SLASHINGS."
+        },
+        "attestations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Attestation"
+          },
+          "description": "At most MAX_ATTESTATIONS."
+        },
+        "deposits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Deposit"
+          },
+          "description": "At most MAX_DEPOSITS."
+        },
+        "voluntaryExits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SignedVoluntaryExit"
+          },
+          "description": "At most MAX_VOLUNTARY_EXITS."
+        }
+      },
+      "description": "The block body of an Ethereum 2.0 beacon block."
+    },
+    "v1BeaconBlockContainer": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/v1BeaconBlock",
+          "description": "The unsigned beacon block."
+        },
+        "signature": {
+          "type": "string",
+          "format": "byte",
+          "description": "96 byte BLS signature from the validator that produced this block."
+        }
+      }
+    },
+    "v1BeaconBlockHeader": {
+      "type": "object",
+      "properties": {
+        "slot": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Beacon chain slot that this block represents."
+        },
+        "proposerIndex": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Validator index of the validator that proposed the block header."
+        },
+        "parentRoot": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte merkle tree root of the parent ssz encoded block."
+        },
+        "stateRoot": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte merkle tree root of the resulting ssz encoded state after processing this block."
+        },
+        "bodyRoot": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte merkle tree root of the ssz encoded block body."
+        }
+      },
+      "description": "A beacon block header is essentially a beacon block with only a reference to\nthe beacon body as a 32 byte merkle tree root. This type of message is more\nlightweight than a full beacon block. The message does not contain\na validator signature."
+    },
+    "v1BeaconBlockHeaderContainer": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/v1BeaconBlockHeader",
+          "description": "The unsigned beacon block header."
+        },
+        "signature": {
+          "type": "string",
+          "format": "byte",
+          "description": "96 byte BLS signature from the validator that produced this block header."
+        }
+      }
+    },
+    "v1BlockAttestationsResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Attestation"
+          }
+        }
+      }
+    },
+    "v1BlockHeaderContainer": {
+      "type": "object",
+      "properties": {
+        "root": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte merkle tree root of the ssz encoded block."
+        },
+        "canonical": {
+          "type": "boolean",
+          "description": "Boolean indicating whether the block is canonical."
+        },
+        "header": {
+          "$ref": "#/definitions/v1BeaconBlockHeaderContainer",
+          "description": "Container for a signed beacon block header."
+        }
+      }
+    },
+    "v1BlockHeaderResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/v1BlockHeaderContainer"
+        }
+      }
+    },
+    "v1BlockHeadersResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1BlockHeaderContainer"
+          }
+        }
+      }
+    },
+    "v1BlockResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/v1BeaconBlockContainer"
+        }
+      }
+    },
+    "v1BlockRootContainer": {
+      "type": "object",
+      "properties": {
+        "root": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte merkle tree root of the ssz encoded block."
+        }
+      }
+    },
+    "v1BlockRootResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/v1BlockRootContainer"
+        }
+      }
+    },
+    "v1BlockSszResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "v1Checkpoint": {
+      "type": "object",
+      "properties": {
+        "epoch": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Epoch the checkpoint references."
+        },
+        "root": {
+          "type": "string",
+          "format": "byte",
+          "description": "Block root of the checkpoint references."
+        }
+      }
+    },
+    "v1Committee": {
+      "type": "object",
+      "properties": {
+        "index": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "slot": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "validators": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uint64"
+          }
+        }
+      }
+    },
+    "v1Deposit": {
+      "type": "object",
+      "properties": {
+        "proof": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "byte"
+          },
+          "description": "32 byte roots in the deposit tree branch."
+        },
+        "data": {
+          "$ref": "#/definitions/DepositData"
+        }
+      },
+      "description": "Deposit into the Ethereum 2.0 from the Ethereum 1.x deposit contract."
+    },
+    "v1DepositContract": {
+      "type": "object",
+      "properties": {
+        "chainId": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The chain_id of the network."
+        },
+        "address": {
+          "type": "string",
+          "description": "The address of the deployed deposit contract in use."
+        }
+      }
+    },
+    "v1DepositContractResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/v1DepositContract"
+        }
+      }
+    },
+    "v1Eth1Data": {
+      "type": "object",
+      "properties": {
+        "depositRoot": {
+          "type": "string",
+          "format": "byte",
+          "description": "The 32 byte deposit tree root for the last deposit included in this\nblock."
+        },
+        "depositCount": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The total number of deposits included in the beacon chain since genesis\nincluding the deposits in this block."
+        },
+        "blockHash": {
+          "type": "string",
+          "format": "byte",
+          "description": "The 32 byte block hash of the Ethereum 1.x block considered for deposit\ninclusion."
+        }
+      },
+      "description": "Eth1Data represents references to the Ethereum 1.x deposit contract."
+    },
+    "v1Fork": {
+      "type": "object",
+      "properties": {
+        "previousVersion": {
+          "type": "string",
+          "format": "byte"
+        },
+        "currentVersion": {
+          "type": "string",
+          "format": "byte"
+        },
+        "epoch": {
+          "type": "string",
+          "format": "uint64"
+        }
+      },
+      "description": "Fork structure used for indicating beacon chain versioning and forks."
+    },
+    "v1ForkScheduleResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Fork"
+          },
+          "description": "The fork data used for beacon chain versioning."
+        }
+      }
+    },
+    "v1GenesisResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/GenesisResponseGenesis"
+        }
+      }
+    },
+    "v1IndexedAttestation": {
+      "type": "object",
+      "properties": {
+        "attestingIndices": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uint64"
+          }
+        },
+        "data": {
+          "$ref": "#/definitions/v1AttestationData"
+        },
+        "signature": {
+          "type": "string",
+          "format": "byte",
+          "description": "96 bytes aggregate signature."
+        }
+      }
+    },
+    "v1ProposerSlashing": {
+      "type": "object",
+      "properties": {
+        "signedHeader1": {
+          "$ref": "#/definitions/v1SignedBeaconBlockHeader",
+          "description": "First conflicting signed block header."
+        },
+        "signedHeader2": {
+          "$ref": "#/definitions/v1SignedBeaconBlockHeader",
+          "description": "Second conflicting signed block header."
+        }
+      },
+      "description": "Proposer slashings are proofs that a slashable offense has been committed by\nproposing two conflicting blocks from the same validator."
+    },
+    "v1ProposerSlashingPoolResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ProposerSlashing"
+          }
+        }
+      }
+    },
+    "v1SignedBeaconBlockHeader": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/v1BeaconBlockHeader",
+          "description": "The unsigned beacon block header itself."
+        },
+        "signature": {
+          "type": "string",
+          "format": "byte",
+          "description": "96 byte BLS signature from the validator that produced this block header."
+        }
+      }
+    },
+    "v1SignedVoluntaryExit": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/v1VoluntaryExit",
+          "description": "The unsigned voluntary exit itself."
+        },
+        "signature": {
+          "type": "string",
+          "format": "byte",
+          "title": "Validator's 96 byte signature"
+        }
+      },
+      "description": "The signed version of voluntary exit."
+    },
+    "v1SpecResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "title": "Spec response is a generic flat map of key values.\nValues are returned with following format:\n- any value starting with 0x in the spec is returned as a hex string\n- all other values are returned as string-number"
+    },
+    "v1StateCommitteesResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Committee"
+          }
+        }
+      }
+    },
+    "v1StateFinalityCheckpointResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/StateFinalityCheckpointResponseStateFinalityCheckpoint"
+        }
+      }
+    },
+    "v1StateForkResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/v1Fork"
+        }
+      }
+    },
+    "v1StateRootResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/StateRootResponseStateRoot"
+        }
+      }
+    },
+    "v1StateValidatorResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/v1ValidatorContainer"
+        }
+      }
+    },
+    "v1StateValidatorsResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ValidatorContainer"
+          }
+        }
+      }
+    },
+    "v1SubmitAttestationsRequest": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Attestation"
+          }
+        }
+      }
+    },
+    "v1Validator": {
+      "type": "object",
+      "properties": {
+        "pubkey": {
+          "type": "string",
+          "format": "byte",
+          "description": "48 byte BLS public key used for the validator's activities."
+        },
+        "withdrawalCredentials": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte hash of the withdrawal destination public key."
+        },
+        "effectiveBalance": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The validators current effective balance in gwei."
+        },
+        "slashed": {
+          "type": "boolean",
+          "description": "Whether or not the validator has been slashed."
+        },
+        "activationEligibilityEpoch": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Epoch when the validator became eligible for activation. This field may\nbe zero if the validator was present in the Ethereum 2.0 genesis. This\nfield is FAR_FUTURE_EPOCH if the validator has not been activated."
+        },
+        "activationEpoch": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Epoch when the validator was activated. This field may be zero if the\nvalidator was present in the Ethereum 2.0 genesis. This field is\nFAR_FUTURE_EPOCH if the validator has not been activated."
+        },
+        "exitEpoch": {
+          "type": "string",
+          "format": "uint64",
+          "title": "Epoch when the validator was exited. This field is FAR_FUTURE_EPOCH if\nthe validator has not exited.\nFAR_FUTURE_EPOCH is a constant defined by the official Ethereum 2.0 specification:\nhttps://github.com/ethereum/eth2.0-specs/blob/v0.9.2/specs/core/0_beacon-chain.md#constants"
+        },
+        "withdrawableEpoch": {
+          "type": "string",
+          "format": "uint64",
+          "title": "Epoch when the validator is eligible to withdraw their funds. This field\nis FAR_FUTURE_EPOCH if the validator has not exited.\nFAR_FUTURE_EPOCH is a constant defined by the official Ethereum 2.0 specification:\nhttps://github.com/ethereum/eth2.0-specs/blob/v0.9.2/specs/core/0_beacon-chain.md#constants"
+        }
+      },
+      "description": "An Ethereum 2.0 validator."
+    },
+    "v1ValidatorBalance": {
+      "type": "object",
+      "properties": {
+        "index": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The index of the validator the retrieved balance is for."
+        },
+        "balance": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The balance of the requested validator."
+        }
+      }
+    },
+    "v1ValidatorBalancesResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ValidatorBalance"
+          }
+        }
+      }
+    },
+    "v1ValidatorContainer": {
+      "type": "object",
+      "properties": {
+        "index": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "balance": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "status": {
+          "$ref": "#/definitions/v1ValidatorStatus"
+        },
+        "validator": {
+          "$ref": "#/definitions/v1Validator"
+        }
+      }
+    },
+    "v1ValidatorStatus": {
+      "type": "string",
+      "enum": [
+        "PENDING_INITIALIZED",
+        "PENDING_QUEUED",
+        "ACTIVE_ONGOING",
+        "ACTIVE_EXITING",
+        "ACTIVE_SLASHED",
+        "EXITED_UNSLASHED",
+        "EXITED_SLASHED",
+        "WITHDRAWAL_POSSIBLE",
+        "WITHDRAWAL_DONE",
+        "ACTIVE",
+        "PENDING",
+        "EXITED",
+        "WITHDRAWAL"
+      ],
+      "default": "PENDING_INITIALIZED"
+    },
+    "v1VoluntaryExit": {
+      "type": "object",
+      "properties": {
+        "epoch": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The epoch on when exit request becomes valid."
+        },
+        "validatorIndex": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Index of the exiting validator."
+        }
+      },
+      "description": "A message that represents a validator signaling that they want to voluntarily\nwithdraw from the active validator set. The message does not contain a\nvalidator signature."
+    },
+    "v1VoluntaryExitsPoolResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SignedVoluntaryExit"
+          }
+        }
+      }
+    }
+  }
+}

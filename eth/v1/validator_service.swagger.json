@@ -1,0 +1,860 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "eth/v1/validator_service.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "BeaconValidator"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/eth/v1/validator/aggregate_and_proofs": {
+      "post": {
+        "summary": "SubmitAggregateAndProofs verifies given aggregate and proofs and publishes them on appropriate gossipsub topic.",
+        "description": "Response usage:\n- 200: Successful response\n\n- 400: Invalid request syntax.\n\n- 500: Beacon node internal error.",
+        "operationId": "BeaconValidator_SubmitAggregateAndProofs",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1AggregateAndProofsSubmit"
+            }
+          }
+        ],
+        "tags": [
+          "BeaconValidator"
+        ]
+      }
+    },
+    "/eth/v1/validator/aggregate_attestation": {
+      "get": {
+        "summary": "GetAggregateAttestation aggregates all attestations matching the given attestation data root and slot,\nreturning the aggregated result.",
+        "operationId": "BeaconValidator_GetAggregateAttestation",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AttestationResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "attestationDataRoot",
+            "description": "The root of the attestation data requesting the aggregate for.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "byte"
+          },
+          {
+            "name": "slot",
+            "description": "The slot for the requested aggregate attestation.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "BeaconValidator"
+        ]
+      }
+    },
+    "/eth/v1/validator/attestation_data": {
+      "get": {
+        "summary": "GetAttestationData requests that the beacon node provides the attestation data for\nthe requested committee index and slot based on the nodes current head.",
+        "operationId": "BeaconValidator_GetAttestationData",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AttestationDataResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "slot",
+            "description": "Slot for which the attestation data should be retrieved for.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "committeeIndex",
+            "description": "Committee index for which the attestation data should be retrieved for.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "BeaconValidator"
+        ]
+      }
+    },
+    "/eth/v1/validator/beacon_committee_subscriptions": {
+      "post": {
+        "summary": "SubmitBeaconCommitteeSubscription requests the beacon node to search using discv5 for peers related to\nthe provided subnet information and replaces current peers with those ones if necessary.",
+        "description": "If validator is_aggregator, beacon node must:\n  - announce subnet topic subscription on gossipsub.\n  - aggregate attestations received on that subnet.\n\nResponse usage:\n- 200: Slot signature is valid and beacon node has prepared the attestation subnet.\n  Note that, we cannot be certain Beacon node will find peers for that subnet for various reasons.\n\n- 500: Beacon node internal error.\n\n- 503: Beacon node is currently syncing, try again later.",
+        "operationId": "BeaconValidator_SubmitBeaconCommitteeSubscription",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1BeaconCommitteeSubscribeSubmit"
+            }
+          }
+        ],
+        "tags": [
+          "BeaconValidator"
+        ]
+      }
+    },
+    "/eth/v1/validator/blocks/{slot}": {
+      "get": {
+        "summary": "GetBlock requests the beacon node to produce a valid unsigned beacon block,\nwhich can then be signed by a proposer and submitted.",
+        "operationId": "BeaconValidator_GetBlock",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ProposerBlockResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "slot",
+            "description": "The slot to request a block for.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "randaoReveal",
+            "description": "The validators RANDAO reveal 96 byte value.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "byte"
+          },
+          {
+            "name": "graffiti",
+            "description": "32 byte field of arbitrary data. This field may contain any data and\nis not used for anything other than a fun message.",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "byte"
+          }
+        ],
+        "tags": [
+          "BeaconValidator"
+        ]
+      }
+    },
+    "/eth/v1/validator/duties/attester/{epoch}": {
+      "get": {
+        "summary": "GetAttesterDuties requests the beacon node to provide a set of attestation duties, which should be performed\nby validators, for a particular epoch. Duties should only need to be checked once per epoch, however\na chain reorganization (of \u003e MIN_SEED_LOOKAHEAD epochs) could occur, resulting in a change of duties.\nFor full safety, you should monitor chain reorganization events.",
+        "operationId": "BeaconValidator_GetAttesterDuties",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1AttesterDutiesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "epoch",
+            "description": "Epoch to request, should only be allowed 1 epoch ahead.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          },
+          {
+            "name": "index",
+            "description": "Validator index to request duties for.",
+            "in": "query",
+            "required": false,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uint64"
+            },
+            "collectionFormat": "multi"
+          }
+        ],
+        "tags": [
+          "BeaconValidator"
+        ]
+      }
+    },
+    "/eth/v1/validator/duties/proposer/{epoch}": {
+      "get": {
+        "summary": "GetProposerDuties requests beacon node to provide all validators that are scheduled to\npropose a block in the given epoch",
+        "operationId": "BeaconValidator_GetProposerDuties",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ProposerDutiesResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "epoch",
+            "description": "Epoch to request duties for.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "uint64"
+          }
+        ],
+        "tags": [
+          "BeaconValidator"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "DepositData": {
+      "type": "object",
+      "properties": {
+        "pubkey": {
+          "type": "string",
+          "format": "byte",
+          "description": "48 byte BLS public key of the validator."
+        },
+        "withdrawalCredentials": {
+          "type": "string",
+          "format": "byte",
+          "description": "A 32 byte hash of the withdrawal address public key."
+        },
+        "amount": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Deposit amount in gwei."
+        },
+        "signature": {
+          "type": "string",
+          "format": "byte",
+          "description": "96 byte signature from the validators public key."
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1AggregateAndProofsSubmit": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SignedAggregateAttestationAndProof"
+          }
+        }
+      }
+    },
+    "v1AggregateAttestationAndProof": {
+      "type": "object",
+      "properties": {
+        "aggregatorIndex": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The aggregator index that submitted this aggregated attestation and proof."
+        },
+        "aggregate": {
+          "$ref": "#/definitions/v1Attestation",
+          "description": "The aggregated attestation that was submitted."
+        },
+        "selectionProof": {
+          "type": "string",
+          "format": "byte",
+          "description": "96 byte selection proof signed by the aggregator, which is the signature of the slot to aggregate."
+        }
+      }
+    },
+    "v1Attestation": {
+      "type": "object",
+      "properties": {
+        "aggregationBits": {
+          "type": "string",
+          "format": "byte",
+          "description": "A bitfield representation of validator indices that have voted exactly\nthe same vote and have been aggregated into this attestation."
+        },
+        "data": {
+          "$ref": "#/definitions/v1AttestationData"
+        },
+        "signature": {
+          "type": "string",
+          "format": "byte",
+          "description": "96 byte BLS aggregate signature."
+        }
+      }
+    },
+    "v1AttestationData": {
+      "type": "object",
+      "properties": {
+        "slot": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Slot of the attestation attesting for."
+        },
+        "index": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The committee index that submitted this attestation."
+        },
+        "beaconBlockRoot": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte root of the LMD GHOST block vote."
+        },
+        "source": {
+          "$ref": "#/definitions/v1Checkpoint",
+          "title": "The most recent justified checkpoint in the beacon state"
+        },
+        "target": {
+          "$ref": "#/definitions/v1Checkpoint",
+          "title": "The checkpoint attempting to be justified for the current epoch and its epoch boundary block"
+        }
+      }
+    },
+    "v1AttestationDataResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/v1AttestationData"
+        }
+      }
+    },
+    "v1AttestationResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/v1Attestation"
+        }
+      }
+    },
+    "v1AttesterDutiesResponse": {
+      "type": "object",
+      "properties": {
+        "dependentRoot": {
+          "type": "string",
+          "format": "byte"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1AttesterDuty"
+          }
+        }
+      }
+    },
+    "v1AttesterDuty": {
+      "type": "object",
+      "properties": {
+        "pubkey": {
+          "type": "string",
+          "format": "byte",
+          "description": "48 byte BLS public key for the validator who's assigned to perform a duty."
+        },
+        "validatorIndex": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The index of the validator in the beacon state."
+        },
+        "committeeIndex": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The index of the committee where the validator belongs to."
+        },
+        "committeeLength": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The length of the committee the validator belongs to."
+        },
+        "committeesAtSlot": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The total amount of committees for this slot."
+        },
+        "validatorCommitteeIndex": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The index of the committee the validator belongs to."
+        },
+        "slot": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The slot this duty is for."
+        }
+      }
+    },
+    "v1AttesterSlashing": {
+      "type": "object",
+      "properties": {
+        "attestation1": {
+          "$ref": "#/definitions/v1IndexedAttestation",
+          "description": "First conflicting attestation."
+        },
+        "attestation2": {
+          "$ref": "#/definitions/v1IndexedAttestation",
+          "description": "Second conflicting attestation."
+        }
+      },
+      "description": "Attestor slashings are proofs that a slashable offense has been committed by\nattestating to two conflicting pieces of information by the same validator."
+    },
+    "v1BeaconBlock": {
+      "type": "object",
+      "properties": {
+        "slot": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Beacon chain slot that this block represents."
+        },
+        "proposerIndex": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Validator index of the validator that proposed the block header."
+        },
+        "parentRoot": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte root of the parent block."
+        },
+        "stateRoot": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte root of the resulting state after processing this block."
+        },
+        "body": {
+          "$ref": "#/definitions/v1BeaconBlockBody",
+          "description": "The block body itself."
+        }
+      },
+      "description": "The Ethereum 2.0 beacon block. The message does not contain a validator signature."
+    },
+    "v1BeaconBlockBody": {
+      "type": "object",
+      "properties": {
+        "randaoReveal": {
+          "type": "string",
+          "format": "byte",
+          "description": "The validators RANDAO reveal 96 byte value."
+        },
+        "eth1Data": {
+          "$ref": "#/definitions/v1Eth1Data",
+          "description": "A reference to the Ethereum 1.x chain."
+        },
+        "graffiti": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte field of arbitrary data. This field may contain any data and\nis not used for anything other than a fun message."
+        },
+        "proposerSlashings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ProposerSlashing"
+          },
+          "description": "At most MAX_PROPOSER_SLASHINGS."
+        },
+        "attesterSlashings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1AttesterSlashing"
+          },
+          "description": "At most MAX_ATTESTER_SLASHINGS."
+        },
+        "attestations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Attestation"
+          },
+          "description": "At most MAX_ATTESTATIONS."
+        },
+        "deposits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1Deposit"
+          },
+          "description": "At most MAX_DEPOSITS."
+        },
+        "voluntaryExits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1SignedVoluntaryExit"
+          },
+          "description": "At most MAX_VOLUNTARY_EXITS."
+        }
+      },
+      "description": "The block body of an Ethereum 2.0 beacon block."
+    },
+    "v1BeaconBlockHeader": {
+      "type": "object",
+      "properties": {
+        "slot": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Beacon chain slot that this block represents."
+        },
+        "proposerIndex": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Validator index of the validator that proposed the block header."
+        },
+        "parentRoot": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte merkle tree root of the parent ssz encoded block."
+        },
+        "stateRoot": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte merkle tree root of the resulting ssz encoded state after processing this block."
+        },
+        "bodyRoot": {
+          "type": "string",
+          "format": "byte",
+          "description": "32 byte merkle tree root of the ssz encoded block body."
+        }
+      },
+      "description": "A beacon block header is essentially a beacon block with only a reference to\nthe beacon body as a 32 byte merkle tree root. This type of message is more\nlightweight than a full beacon block. The message does not contain\na validator signature."
+    },
+    "v1BeaconCommitteeSubscribe": {
+      "type": "object",
+      "properties": {
+        "validatorIndex": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The validator index to subscribe for."
+        },
+        "committeeIndex": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The committee index to be subscribed to."
+        },
+        "committeesAtSlot": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The total amount of committees for the given slot."
+        },
+        "slot": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The slot to be subscribed to."
+        },
+        "isAggregator": {
+          "type": "boolean",
+          "description": "If subscribing for aggregator, the beacon node will aggregate all attestations received."
+        }
+      }
+    },
+    "v1BeaconCommitteeSubscribeSubmit": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1BeaconCommitteeSubscribe"
+          }
+        }
+      }
+    },
+    "v1Checkpoint": {
+      "type": "object",
+      "properties": {
+        "epoch": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Epoch the checkpoint references."
+        },
+        "root": {
+          "type": "string",
+          "format": "byte",
+          "description": "Block root of the checkpoint references."
+        }
+      }
+    },
+    "v1Deposit": {
+      "type": "object",
+      "properties": {
+        "proof": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "byte"
+          },
+          "description": "32 byte roots in the deposit tree branch."
+        },
+        "data": {
+          "$ref": "#/definitions/DepositData"
+        }
+      },
+      "description": "Deposit into the Ethereum 2.0 from the Ethereum 1.x deposit contract."
+    },
+    "v1Eth1Data": {
+      "type": "object",
+      "properties": {
+        "depositRoot": {
+          "type": "string",
+          "format": "byte",
+          "description": "The 32 byte deposit tree root for the last deposit included in this\nblock."
+        },
+        "depositCount": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The total number of deposits included in the beacon chain since genesis\nincluding the deposits in this block."
+        },
+        "blockHash": {
+          "type": "string",
+          "format": "byte",
+          "description": "The 32 byte block hash of the Ethereum 1.x block considered for deposit\ninclusion."
+        }
+      },
+      "description": "Eth1Data represents references to the Ethereum 1.x deposit contract."
+    },
+    "v1IndexedAttestation": {
+      "type": "object",
+      "properties": {
+        "attestingIndices": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uint64"
+          }
+        },
+        "data": {
+          "$ref": "#/definitions/v1AttestationData"
+        },
+        "signature": {
+          "type": "string",
+          "format": "byte",
+          "description": "96 bytes aggregate signature."
+        }
+      }
+    },
+    "v1ProposerBlockResponse": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "$ref": "#/definitions/v1BeaconBlock"
+        }
+      }
+    },
+    "v1ProposerDutiesResponse": {
+      "type": "object",
+      "properties": {
+        "dependentRoot": {
+          "type": "string",
+          "format": "byte"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1ProposerDuty"
+          }
+        }
+      }
+    },
+    "v1ProposerDuty": {
+      "type": "object",
+      "properties": {
+        "pubkey": {
+          "type": "string",
+          "format": "byte",
+          "description": "48 byte BLS public key for the validator who's assigned to perform a duty."
+        },
+        "validatorIndex": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The index of the validator in the beacon state."
+        },
+        "slot": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The slot this duty is for."
+        }
+      }
+    },
+    "v1ProposerSlashing": {
+      "type": "object",
+      "properties": {
+        "signedHeader1": {
+          "$ref": "#/definitions/v1SignedBeaconBlockHeader",
+          "description": "First conflicting signed block header."
+        },
+        "signedHeader2": {
+          "$ref": "#/definitions/v1SignedBeaconBlockHeader",
+          "description": "Second conflicting signed block header."
+        }
+      },
+      "description": "Proposer slashings are proofs that a slashable offense has been committed by\nproposing two conflicting blocks from the same validator."
+    },
+    "v1SignedAggregateAttestationAndProof": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/v1AggregateAttestationAndProof",
+          "description": "The aggregated attestation and selection proof itself."
+        },
+        "signature": {
+          "type": "string",
+          "format": "byte",
+          "description": "96 byte BLS aggregate signature signed by the aggregator over the message."
+        }
+      }
+    },
+    "v1SignedBeaconBlockHeader": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/v1BeaconBlockHeader",
+          "description": "The unsigned beacon block header itself."
+        },
+        "signature": {
+          "type": "string",
+          "format": "byte",
+          "description": "96 byte BLS signature from the validator that produced this block header."
+        }
+      }
+    },
+    "v1SignedVoluntaryExit": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/v1VoluntaryExit",
+          "description": "The unsigned voluntary exit itself."
+        },
+        "signature": {
+          "type": "string",
+          "format": "byte",
+          "title": "Validator's 96 byte signature"
+        }
+      },
+      "description": "The signed version of voluntary exit."
+    },
+    "v1VoluntaryExit": {
+      "type": "object",
+      "properties": {
+        "epoch": {
+          "type": "string",
+          "format": "uint64",
+          "description": "The epoch on when exit request becomes valid."
+        },
+        "validatorIndex": {
+          "type": "string",
+          "format": "uint64",
+          "description": "Index of the exiting validator."
+        }
+      },
+      "description": "A message that represents a validator signaling that they want to voluntarily\nwithdraw from the active validator set. The message does not contain a\nvalidator signature."
+    }
+  }
+}

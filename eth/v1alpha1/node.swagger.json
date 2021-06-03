@@ -1,0 +1,359 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "eth/v1alpha1/node.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "Node"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/eth/v1alpha1/node/genesis": {
+      "get": {
+        "summary": "Retrieve information about the genesis of Ethereum 2.0.",
+        "operationId": "Node_GetGenesis",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1Genesis"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Node"
+        ]
+      }
+    },
+    "/eth/v1alpha1/node/p2p": {
+      "get": {
+        "summary": "Retrieves the peer data of the local peer.",
+        "operationId": "Node_GetHost",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1HostData"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Node"
+        ]
+      }
+    },
+    "/eth/v1alpha1/node/peer": {
+      "get": {
+        "summary": "Retrieve the peer corresponding to the provided peer id.",
+        "operationId": "Node_GetPeer",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1Peer"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "peerId",
+            "description": "Peer id of the peer requested.",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Node"
+        ]
+      }
+    },
+    "/eth/v1alpha1/node/peers": {
+      "get": {
+        "summary": "Retrieve the list of peers currently connected to this node.",
+        "operationId": "Node_ListPeers",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1Peers"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Node"
+        ]
+      }
+    },
+    "/eth/v1alpha1/node/services": {
+      "get": {
+        "summary": "Retrieve the list of services implemented and enabled by this node.",
+        "description": "Any service not present in this list may return UNIMPLEMENTED or\nPERMISSION_DENIED. The server may also support fetching services by grpc\nreflection.",
+        "operationId": "Node_ListImplementedServices",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1ImplementedServices"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Node"
+        ]
+      }
+    },
+    "/eth/v1alpha1/node/syncing": {
+      "get": {
+        "summary": "Retrieve the current network sync status of the node.",
+        "operationId": "Node_GetSyncStatus",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1SyncStatus"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Node"
+        ]
+      }
+    },
+    "/eth/v1alpha1/node/version": {
+      "get": {
+        "summary": "Retrieve information about the running Ethereum 2.0 node.",
+        "operationId": "Node_GetVersion",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1alpha1Version"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/googlerpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "Node"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "typeUrl": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    },
+    "v1alpha1ConnectionState": {
+      "type": "string",
+      "enum": [
+        "DISCONNECTED",
+        "DISCONNECTING",
+        "CONNECTED",
+        "CONNECTING"
+      ],
+      "default": "DISCONNECTED",
+      "description": "ConnectionState states the current status of the peer."
+    },
+    "v1alpha1Genesis": {
+      "type": "object",
+      "properties": {
+        "genesisTime": {
+          "type": "string",
+          "format": "date-time",
+          "description": "UTC time specified in the chain start event in the deposit contract."
+        },
+        "depositContractAddress": {
+          "type": "string",
+          "format": "byte",
+          "description": "Address of the deposit contract in the Ethereum 1 chain."
+        },
+        "genesisValidatorsRoot": {
+          "type": "string",
+          "format": "byte",
+          "description": "Root of the genesis validators deposits; used for domain separation\nwhen signing data structures for this chain."
+        }
+      },
+      "description": "Information about the genesis of Ethereum 2.0."
+    },
+    "v1alpha1HostData": {
+      "type": "object",
+      "properties": {
+        "addresses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "All the  multiaddress of the peer, specified as a full multiaddr, for example:\n/ip4/37.221.192.134/tcp/13000/p2p/16Uiu2HAm8maLMjag1TAUM52zPfmLbVMGFdwUAWgoHu1HDQLR6e17"
+        },
+        "peerId": {
+          "type": "string",
+          "description": "The peer id of the peer."
+        },
+        "enr": {
+          "type": "string",
+          "description": "The latest ENR of the local peer."
+        }
+      },
+      "description": "P2P Data on the local host."
+    },
+    "v1alpha1ImplementedServices": {
+      "type": "object",
+      "properties": {
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "v1alpha1Peer": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string",
+          "title": "The address of the peer, as a full multiaddr, for example:\n/ip4/37.221.192.134/tcp/13000/p2p/16Uiu2HAm8maLMjag1TAUM52zPfmLbVMGFdwUAWgoHu1HDQLR6e17"
+        },
+        "direction": {
+          "$ref": "#/definitions/v1alpha1PeerDirection",
+          "description": "The direction of the connection (inbound/outbound)."
+        },
+        "connectionState": {
+          "$ref": "#/definitions/v1alpha1ConnectionState",
+          "title": "The connection state of the peer at the moment of the request. (e.g. Connecting)"
+        },
+        "peerId": {
+          "type": "string",
+          "description": "The peer id of the peer."
+        },
+        "enr": {
+          "type": "string",
+          "description": "The latest ENR of the peer that's in the record."
+        }
+      },
+      "description": "Peer provides details of a peer on the network."
+    },
+    "v1alpha1PeerDirection": {
+      "type": "string",
+      "enum": [
+        "UNKNOWN",
+        "INBOUND",
+        "OUTBOUND"
+      ],
+      "default": "UNKNOWN",
+      "description": "PeerDirection states the direction of the connection to a peer."
+    },
+    "v1alpha1Peers": {
+      "type": "object",
+      "properties": {
+        "peers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1alpha1Peer"
+          }
+        }
+      },
+      "description": "Peers is a list of peer messages."
+    },
+    "v1alpha1SyncStatus": {
+      "type": "object",
+      "properties": {
+        "syncing": {
+          "type": "boolean",
+          "description": "Whether or not the node is currently syncing."
+        }
+      },
+      "description": "Information about the current network sync status of the node."
+    },
+    "v1alpha1Version": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string",
+          "description": "A string that uniquely identifies the node and its version."
+        },
+        "metadata": {
+          "type": "string",
+          "description": "Additional metadata that the node would like to provide. This field may\nbe used to list any meaningful data to the client."
+        }
+      },
+      "description": "Information about the node version."
+    }
+  }
+}
