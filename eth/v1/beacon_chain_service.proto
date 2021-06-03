@@ -20,14 +20,14 @@ import "google/protobuf/descriptor.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
-import "eth/ext/options.proto";
-import "eth/v1/attestation.proto";
-import "eth/v1/beacon_block.proto";
-import "eth/v1/beacon_state.proto";
-import "eth/v1/validator.proto";
+import "proto/eth/ext/options.proto";
+import "proto/eth/v1/attestation.proto";
+import "proto/eth/v1/beacon_block.proto";
+import "proto/eth/v1/beacon_state.proto";
+import "proto/eth/v1/validator.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1";
-option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";
+option go_package = "github.com/prysmaticlabs/prysm/proto/eth/v1";
 option java_multiple_files = true;
 option java_outer_classname = "BeaconChainProto";
 option java_package = "org.ethereum.eth.v1";
@@ -129,13 +129,6 @@ service BeaconChain {
   rpc GetBlock(BlockRequest) returns (BlockResponse) {
     option (google.api.http) = {
       get: "/eth/v1/beacon/blocks/{block_id}"
-    };
-  }
-
-  // GetBlockSsz returns the SSZ-serialized version of block details for given block id.
-  rpc GetBlockSsz(BlockRequest) returns (BlockSszResponse) {
-    option (google.api.http) = {
-      get: "/eth/v1/beacon/blocks/{block_id}/ssz"
     };
   }
 
@@ -423,10 +416,6 @@ message BeaconBlockHeaderContainer {
 
 message BlockResponse {
   BeaconBlockContainer data = 1;
-}
-
-message BlockSszResponse {
-  bytes data = 1;
 }
 
 message BeaconBlockContainer {
