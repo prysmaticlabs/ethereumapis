@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.25.0
 // 	protoc        v3.15.8
-// source: proto/eth/ext/options.proto
+// source: eth/ext/options.proto
 
 package ext
 
@@ -32,7 +32,7 @@ var file_proto_eth_ext_options_proto_extTypes = []protoimpl.ExtensionInfo{
 		Field:         50000,
 		Name:          "ethereum.eth.ext.cast_type",
 		Tag:           "bytes,50000,opt,name=cast_type",
-		Filename:      "proto/eth/ext/options.proto",
+		Filename:      "eth/ext/options.proto",
 	},
 	{
 		ExtendedType:  (*descriptorpb.FieldOptions)(nil),
@@ -40,7 +40,7 @@ var file_proto_eth_ext_options_proto_extTypes = []protoimpl.ExtensionInfo{
 		Field:         50001,
 		Name:          "ethereum.eth.ext.ssz_size",
 		Tag:           "bytes,50001,opt,name=ssz_size",
-		Filename:      "proto/eth/ext/options.proto",
+		Filename:      "eth/ext/options.proto",
 	},
 	{
 		ExtendedType:  (*descriptorpb.FieldOptions)(nil),
@@ -48,7 +48,7 @@ var file_proto_eth_ext_options_proto_extTypes = []protoimpl.ExtensionInfo{
 		Field:         50002,
 		Name:          "ethereum.eth.ext.ssz_max",
 		Tag:           "bytes,50002,opt,name=ssz_max",
-		Filename:      "proto/eth/ext/options.proto",
+		Filename:      "eth/ext/options.proto",
 	},
 	{
 		ExtendedType:  (*descriptorpb.FieldOptions)(nil),
@@ -56,7 +56,7 @@ var file_proto_eth_ext_options_proto_extTypes = []protoimpl.ExtensionInfo{
 		Field:         50003,
 		Name:          "ethereum.eth.ext.spec_name",
 		Tag:           "bytes,50003,opt,name=spec_name",
-		Filename:      "proto/eth/ext/options.proto",
+		Filename:      "eth/ext/options.proto",
 	},
 }
 

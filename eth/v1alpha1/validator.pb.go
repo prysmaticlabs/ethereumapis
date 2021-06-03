@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.25.0
 // 	protoc        v3.15.8
-// source: proto/eth/v1alpha1/validator.proto
+// source: eth/v1alpha1/validator.proto
 
 package eth
 
@@ -3628,5 +3628,5 @@ var _BeaconNodeValidator_serviceDesc = grpc.ServiceDesc{
 			ServerStreams: true,
 		},
 	},
-	Metadata: "proto/eth/v1alpha1/validator.proto",
+	Metadata: "eth/v1alpha1/validator.proto",
 }

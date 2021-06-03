@@ -15,8 +15,8 @@ syntax = "proto3";
 
 package ethereum.eth.v1alpha1;
 
-import "proto/eth/ext/options.proto";
-import "proto/eth/v1alpha1/attestation.proto";
+import "eth/ext/options.proto";
+import "eth/v1alpha1/attestation.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1alpha1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1alpha1;eth";

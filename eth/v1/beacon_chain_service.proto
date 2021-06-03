@@ -20,11 +20,11 @@ import "google/protobuf/descriptor.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
-import "proto/eth/ext/options.proto";
-import "proto/eth/v1/attestation.proto";
-import "proto/eth/v1/beacon_block.proto";
-import "proto/eth/v1/beacon_state.proto";
-import "proto/eth/v1/validator.proto";
+import "eth/ext/options.proto";
+import "eth/v1/attestation.proto";
+import "eth/v1/beacon_block.proto";
+import "eth/v1/beacon_state.proto";
+import "eth/v1/validator.proto";
 
 option csharp_namespace = "Ethereum.Eth.v1";
 option go_package = "github.com/prysmaticlabs/ethereumapis/eth/v1";

@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.25.0
 // 	protoc        v3.15.8
-// source: proto/eth/v1/beacon_block.proto
+// source: eth/v1/beacon_block.proto
 
 package v1
 

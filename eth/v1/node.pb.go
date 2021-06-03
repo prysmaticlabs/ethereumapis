@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.25.0
 // 	protoc        v3.15.8
-// source: proto/eth/v1/node.proto
+// source: eth/v1/node.proto
 
 package v1
 
@@ -1713,5 +1713,5 @@ var _BeaconNode_serviceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/eth/v1/node.proto",
+	Metadata: "eth/v1/node.proto",
 }
