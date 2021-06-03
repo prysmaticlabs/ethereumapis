@@ -4,10 +4,10 @@ package eth
 
 import (
 	context "context"
+	empty "github.com/golang/protobuf/ptypes/empty"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -46,7 +46,7 @@ type BeaconNodeValidatorClient interface {
 	//
 	// If the chain has not yet started, this endpoint starts a server-side stream which updates
 	// the client when the beacon chain is ready.
-	WaitForChainStart(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (BeaconNodeValidator_WaitForChainStartClient, error)
+	WaitForChainStart(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (BeaconNodeValidator_WaitForChainStartClient, error)
 	// WaitForActivation checks if a validator public key exists in the active validator
 	// registry of the current beacon state. If the validator is NOT yet active, it starts a
 	// server-side stream which updates the client whenever the validator becomes active in
@@ -117,7 +117,7 @@ type BeaconNodeValidatorClient interface {
 	// The beacon node is expected to subscribe to the committee ID subnet given by the request. With this,
 	// beacon node serving attesters can find persistent peers on the subnet to publish attestation,
 	// and beacon node serving aggregator can join the subnet.
-	SubscribeCommitteeSubnets(ctx context.Context, in *CommitteeSubnetsSubscribeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	SubscribeCommitteeSubnets(ctx context.Context, in *CommitteeSubnetsSubscribeRequest, opts ...grpc.CallOption) (*empty.Empty, error)
 }
 
 type beaconNodeValidatorClient struct {
@@ -179,7 +179,7 @@ func (c *beaconNodeValidatorClient) DomainData(ctx context.Context, in *DomainRe
 }
 
 // Deprecated: Do not use.
-func (c *beaconNodeValidatorClient) WaitForChainStart(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (BeaconNodeValidator_WaitForChainStartClient, error) {
+func (c *beaconNodeValidatorClient) WaitForChainStart(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (BeaconNodeValidator_WaitForChainStartClient, error) {
 	stream, err := c.cc.NewStream(ctx, &_BeaconNodeValidator_serviceDesc.Streams[1], "/ethereum.eth.v1alpha1.BeaconNodeValidator/WaitForChainStart", opts...)
 	if err != nil {
 		return nil, err
@@ -333,8 +333,8 @@ func (c *beaconNodeValidatorClient) ProposeExit(ctx context.Context, in *SignedV
 	return out, nil
 }
 
-func (c *beaconNodeValidatorClient) SubscribeCommitteeSubnets(ctx context.Context, in *CommitteeSubnetsSubscribeRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
+func (c *beaconNodeValidatorClient) SubscribeCommitteeSubnets(ctx context.Context, in *CommitteeSubnetsSubscribeRequest, opts ...grpc.CallOption) (*empty.Empty, error) {
+	out := new(empty.Empty)
 	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconNodeValidator/SubscribeCommitteeSubnets", in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -374,7 +374,7 @@ type BeaconNodeValidatorServer interface {
 	//
 	// If the chain has not yet started, this endpoint starts a server-side stream which updates
 	// the client when the beacon chain is ready.
-	WaitForChainStart(*emptypb.Empty, BeaconNodeValidator_WaitForChainStartServer) error
+	WaitForChainStart(*empty.Empty, BeaconNodeValidator_WaitForChainStartServer) error
 	// WaitForActivation checks if a validator public key exists in the active validator
 	// registry of the current beacon state. If the validator is NOT yet active, it starts a
 	// server-side stream which updates the client whenever the validator becomes active in
@@ -445,7 +445,7 @@ type BeaconNodeValidatorServer interface {
 	// The beacon node is expected to subscribe to the committee ID subnet given by the request. With this,
 	// beacon node serving attesters can find persistent peers on the subnet to publish attestation,
 	// and beacon node serving aggregator can join the subnet.
-	SubscribeCommitteeSubnets(context.Context, *CommitteeSubnetsSubscribeRequest) (*emptypb.Empty, error)
+	SubscribeCommitteeSubnets(context.Context, *CommitteeSubnetsSubscribeRequest) (*empty.Empty, error)
 	mustEmbedUnimplementedBeaconNodeValidatorServer()
 }
 
@@ -462,7 +462,7 @@ func (UnimplementedBeaconNodeValidatorServer) StreamDuties(*DutiesRequest, Beaco
 func (UnimplementedBeaconNodeValidatorServer) DomainData(context.Context, *DomainRequest) (*DomainResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DomainData not implemented")
 }
-func (UnimplementedBeaconNodeValidatorServer) WaitForChainStart(*emptypb.Empty, BeaconNodeValidator_WaitForChainStartServer) error {
+func (UnimplementedBeaconNodeValidatorServer) WaitForChainStart(*empty.Empty, BeaconNodeValidator_WaitForChainStartServer) error {
 	return status.Errorf(codes.Unimplemented, "method WaitForChainStart not implemented")
 }
 func (UnimplementedBeaconNodeValidatorServer) WaitForActivation(*ValidatorActivationRequest, BeaconNodeValidator_WaitForActivationServer) error {
@@ -498,7 +498,7 @@ func (UnimplementedBeaconNodeValidatorServer) SubmitSignedAggregateSelectionProo
 func (UnimplementedBeaconNodeValidatorServer) ProposeExit(context.Context, *SignedVoluntaryExit) (*ProposeExitResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ProposeExit not implemented")
 }
-func (UnimplementedBeaconNodeValidatorServer) SubscribeCommitteeSubnets(context.Context, *CommitteeSubnetsSubscribeRequest) (*emptypb.Empty, error) {
+func (UnimplementedBeaconNodeValidatorServer) SubscribeCommitteeSubnets(context.Context, *CommitteeSubnetsSubscribeRequest) (*empty.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SubscribeCommitteeSubnets not implemented")
 }
 func (UnimplementedBeaconNodeValidatorServer) mustEmbedUnimplementedBeaconNodeValidatorServer() {}
@@ -572,7 +572,7 @@ func _BeaconNodeValidator_DomainData_Handler(srv interface{}, ctx context.Contex
 }
 
 func _BeaconNodeValidator_WaitForChainStart_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(emptypb.Empty)
+	m := new(empty.Empty)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}

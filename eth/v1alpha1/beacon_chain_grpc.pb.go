@@ -4,10 +4,10 @@ package eth
 
 import (
 	context "context"
+	empty "github.com/golang/protobuf/ptypes/empty"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -34,10 +34,10 @@ type BeaconChainClient interface {
 	ListIndexedAttestations(ctx context.Context, in *ListIndexedAttestationsRequest, opts ...grpc.CallOption) (*ListIndexedAttestationsResponse, error)
 	// Server-side stream of attestations as they are received by
 	// the beacon chain node.
-	StreamAttestations(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (BeaconChain_StreamAttestationsClient, error)
+	StreamAttestations(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (BeaconChain_StreamAttestationsClient, error)
 	// Server-side stream of indexed attestations as they are received by
 	// the beacon chain node.
-	StreamIndexedAttestations(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (BeaconChain_StreamIndexedAttestationsClient, error)
+	StreamIndexedAttestations(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (BeaconChain_StreamIndexedAttestationsClient, error)
 	// Retrieve attestations from pool.
 	//
 	// The server returns a list of attestations that have been seen but not
@@ -64,18 +64,18 @@ type BeaconChainClient interface {
 	//
 	// This includes the head block slot and root as well as information about
 	// the most recent finalized and justified slots.
-	StreamChainHead(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (BeaconChain_StreamChainHeadClient, error)
+	StreamChainHead(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (BeaconChain_StreamChainHeadClient, error)
 	// Retrieve information about the head of the beacon chain from the view of
 	// the beacon chain node.
 	//
 	// This includes the head block slot and root as well as information about
 	// the most recent finalized and justified slots.
-	GetChainHead(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ChainHead, error)
+	GetChainHead(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*ChainHead, error)
 	// Retrieve information about the weak subjectivity of the beacon chain from the view of
 	// the beacon chain node.
 	//
 	// This includes the weak subjectivity block root, state root and epoch number.
-	GetWeakSubjectivityCheckpoint(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*WeakSubjectivityCheckpoint, error)
+	GetWeakSubjectivityCheckpoint(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*WeakSubjectivityCheckpoint, error)
 	// Retrieve the beacon chain committees for a given epoch.
 	//
 	// If no filter criteria is specified, the response returns
@@ -103,7 +103,7 @@ type BeaconChainClient interface {
 	// information via a boolean query filter.
 	GetValidatorActiveSetChanges(ctx context.Context, in *GetValidatorActiveSetChangesRequest, opts ...grpc.CallOption) (*ActiveSetChanges, error)
 	// Retrieve the current validator queue information.
-	GetValidatorQueue(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ValidatorQueue, error)
+	GetValidatorQueue(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*ValidatorQueue, error)
 	// GetValidatorPerformance reports a validator's latest balance along with other important
 	// metrics on rewards and penalties throughout its lifecycle in the beacon chain.
 	// The request takes in a list of validator public keys and returns a performance report
@@ -122,7 +122,7 @@ type BeaconChainClient interface {
 	// information via a boolean query filter.
 	GetValidatorParticipation(ctx context.Context, in *GetValidatorParticipationRequest, opts ...grpc.CallOption) (*ValidatorParticipationResponse, error)
 	// Retrieve the current configuration parameters of the beacon chain.
-	GetBeaconConfig(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*BeaconConfig, error)
+	GetBeaconConfig(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*BeaconConfig, error)
 	// Server-side stream of validator information at each epoch.
 	StreamValidatorsInfo(ctx context.Context, opts ...grpc.CallOption) (BeaconChain_StreamValidatorsInfoClient, error)
 	// Submit an attester slashing object to the beacon node.
@@ -159,7 +159,7 @@ func (c *beaconChainClient) ListIndexedAttestations(ctx context.Context, in *Lis
 	return out, nil
 }
 
-func (c *beaconChainClient) StreamAttestations(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (BeaconChain_StreamAttestationsClient, error) {
+func (c *beaconChainClient) StreamAttestations(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (BeaconChain_StreamAttestationsClient, error) {
 	stream, err := c.cc.NewStream(ctx, &_BeaconChain_serviceDesc.Streams[0], "/ethereum.eth.v1alpha1.BeaconChain/StreamAttestations", opts...)
 	if err != nil {
 		return nil, err
@@ -191,7 +191,7 @@ func (x *beaconChainStreamAttestationsClient) Recv() (*Attestation, error) {
 	return m, nil
 }
 
-func (c *beaconChainClient) StreamIndexedAttestations(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (BeaconChain_StreamIndexedAttestationsClient, error) {
+func (c *beaconChainClient) StreamIndexedAttestations(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (BeaconChain_StreamIndexedAttestationsClient, error) {
 	stream, err := c.cc.NewStream(ctx, &_BeaconChain_serviceDesc.Streams[1], "/ethereum.eth.v1alpha1.BeaconChain/StreamIndexedAttestations", opts...)
 	if err != nil {
 		return nil, err
@@ -273,7 +273,7 @@ func (x *beaconChainStreamBlocksClient) Recv() (*SignedBeaconBlock, error) {
 	return m, nil
 }
 
-func (c *beaconChainClient) StreamChainHead(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (BeaconChain_StreamChainHeadClient, error) {
+func (c *beaconChainClient) StreamChainHead(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (BeaconChain_StreamChainHeadClient, error) {
 	stream, err := c.cc.NewStream(ctx, &_BeaconChain_serviceDesc.Streams[3], "/ethereum.eth.v1alpha1.BeaconChain/StreamChainHead", opts...)
 	if err != nil {
 		return nil, err
@@ -305,7 +305,7 @@ func (x *beaconChainStreamChainHeadClient) Recv() (*ChainHead, error) {
 	return m, nil
 }
 
-func (c *beaconChainClient) GetChainHead(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ChainHead, error) {
+func (c *beaconChainClient) GetChainHead(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*ChainHead, error) {
 	out := new(ChainHead)
 	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/GetChainHead", in, out, opts...)
 	if err != nil {
@@ -314,7 +314,7 @@ func (c *beaconChainClient) GetChainHead(ctx context.Context, in *emptypb.Empty,
 	return out, nil
 }
 
-func (c *beaconChainClient) GetWeakSubjectivityCheckpoint(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*WeakSubjectivityCheckpoint, error) {
+func (c *beaconChainClient) GetWeakSubjectivityCheckpoint(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*WeakSubjectivityCheckpoint, error) {
 	out := new(WeakSubjectivityCheckpoint)
 	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/GetWeakSubjectivityCheckpoint", in, out, opts...)
 	if err != nil {
@@ -368,7 +368,7 @@ func (c *beaconChainClient) GetValidatorActiveSetChanges(ctx context.Context, in
 	return out, nil
 }
 
-func (c *beaconChainClient) GetValidatorQueue(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ValidatorQueue, error) {
+func (c *beaconChainClient) GetValidatorQueue(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*ValidatorQueue, error) {
 	out := new(ValidatorQueue)
 	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/GetValidatorQueue", in, out, opts...)
 	if err != nil {
@@ -404,7 +404,7 @@ func (c *beaconChainClient) GetValidatorParticipation(ctx context.Context, in *G
 	return out, nil
 }
 
-func (c *beaconChainClient) GetBeaconConfig(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*BeaconConfig, error) {
+func (c *beaconChainClient) GetBeaconConfig(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*BeaconConfig, error) {
 	out := new(BeaconConfig)
 	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.BeaconChain/GetBeaconConfig", in, out, opts...)
 	if err != nil {
@@ -491,10 +491,10 @@ type BeaconChainServer interface {
 	ListIndexedAttestations(context.Context, *ListIndexedAttestationsRequest) (*ListIndexedAttestationsResponse, error)
 	// Server-side stream of attestations as they are received by
 	// the beacon chain node.
-	StreamAttestations(*emptypb.Empty, BeaconChain_StreamAttestationsServer) error
+	StreamAttestations(*empty.Empty, BeaconChain_StreamAttestationsServer) error
 	// Server-side stream of indexed attestations as they are received by
 	// the beacon chain node.
-	StreamIndexedAttestations(*emptypb.Empty, BeaconChain_StreamIndexedAttestationsServer) error
+	StreamIndexedAttestations(*empty.Empty, BeaconChain_StreamIndexedAttestationsServer) error
 	// Retrieve attestations from pool.
 	//
 	// The server returns a list of attestations that have been seen but not
@@ -521,18 +521,18 @@ type BeaconChainServer interface {
 	//
 	// This includes the head block slot and root as well as information about
 	// the most recent finalized and justified slots.
-	StreamChainHead(*emptypb.Empty, BeaconChain_StreamChainHeadServer) error
+	StreamChainHead(*empty.Empty, BeaconChain_StreamChainHeadServer) error
 	// Retrieve information about the head of the beacon chain from the view of
 	// the beacon chain node.
 	//
 	// This includes the head block slot and root as well as information about
 	// the most recent finalized and justified slots.
-	GetChainHead(context.Context, *emptypb.Empty) (*ChainHead, error)
+	GetChainHead(context.Context, *empty.Empty) (*ChainHead, error)
 	// Retrieve information about the weak subjectivity of the beacon chain from the view of
 	// the beacon chain node.
 	//
 	// This includes the weak subjectivity block root, state root and epoch number.
-	GetWeakSubjectivityCheckpoint(context.Context, *emptypb.Empty) (*WeakSubjectivityCheckpoint, error)
+	GetWeakSubjectivityCheckpoint(context.Context, *empty.Empty) (*WeakSubjectivityCheckpoint, error)
 	// Retrieve the beacon chain committees for a given epoch.
 	//
 	// If no filter criteria is specified, the response returns
@@ -560,7 +560,7 @@ type BeaconChainServer interface {
 	// information via a boolean query filter.
 	GetValidatorActiveSetChanges(context.Context, *GetValidatorActiveSetChangesRequest) (*ActiveSetChanges, error)
 	// Retrieve the current validator queue information.
-	GetValidatorQueue(context.Context, *emptypb.Empty) (*ValidatorQueue, error)
+	GetValidatorQueue(context.Context, *empty.Empty) (*ValidatorQueue, error)
 	// GetValidatorPerformance reports a validator's latest balance along with other important
 	// metrics on rewards and penalties throughout its lifecycle in the beacon chain.
 	// The request takes in a list of validator public keys and returns a performance report
@@ -579,7 +579,7 @@ type BeaconChainServer interface {
 	// information via a boolean query filter.
 	GetValidatorParticipation(context.Context, *GetValidatorParticipationRequest) (*ValidatorParticipationResponse, error)
 	// Retrieve the current configuration parameters of the beacon chain.
-	GetBeaconConfig(context.Context, *emptypb.Empty) (*BeaconConfig, error)
+	GetBeaconConfig(context.Context, *empty.Empty) (*BeaconConfig, error)
 	// Server-side stream of validator information at each epoch.
 	StreamValidatorsInfo(BeaconChain_StreamValidatorsInfoServer) error
 	// Submit an attester slashing object to the beacon node.
@@ -601,10 +601,10 @@ func (UnimplementedBeaconChainServer) ListAttestations(context.Context, *ListAtt
 func (UnimplementedBeaconChainServer) ListIndexedAttestations(context.Context, *ListIndexedAttestationsRequest) (*ListIndexedAttestationsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListIndexedAttestations not implemented")
 }
-func (UnimplementedBeaconChainServer) StreamAttestations(*emptypb.Empty, BeaconChain_StreamAttestationsServer) error {
+func (UnimplementedBeaconChainServer) StreamAttestations(*empty.Empty, BeaconChain_StreamAttestationsServer) error {
 	return status.Errorf(codes.Unimplemented, "method StreamAttestations not implemented")
 }
-func (UnimplementedBeaconChainServer) StreamIndexedAttestations(*emptypb.Empty, BeaconChain_StreamIndexedAttestationsServer) error {
+func (UnimplementedBeaconChainServer) StreamIndexedAttestations(*empty.Empty, BeaconChain_StreamIndexedAttestationsServer) error {
 	return status.Errorf(codes.Unimplemented, "method StreamIndexedAttestations not implemented")
 }
 func (UnimplementedBeaconChainServer) AttestationPool(context.Context, *AttestationPoolRequest) (*AttestationPoolResponse, error) {
@@ -616,13 +616,13 @@ func (UnimplementedBeaconChainServer) ListBlocks(context.Context, *ListBlocksReq
 func (UnimplementedBeaconChainServer) StreamBlocks(*StreamBlocksRequest, BeaconChain_StreamBlocksServer) error {
 	return status.Errorf(codes.Unimplemented, "method StreamBlocks not implemented")
 }
-func (UnimplementedBeaconChainServer) StreamChainHead(*emptypb.Empty, BeaconChain_StreamChainHeadServer) error {
+func (UnimplementedBeaconChainServer) StreamChainHead(*empty.Empty, BeaconChain_StreamChainHeadServer) error {
 	return status.Errorf(codes.Unimplemented, "method StreamChainHead not implemented")
 }
-func (UnimplementedBeaconChainServer) GetChainHead(context.Context, *emptypb.Empty) (*ChainHead, error) {
+func (UnimplementedBeaconChainServer) GetChainHead(context.Context, *empty.Empty) (*ChainHead, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetChainHead not implemented")
 }
-func (UnimplementedBeaconChainServer) GetWeakSubjectivityCheckpoint(context.Context, *emptypb.Empty) (*WeakSubjectivityCheckpoint, error) {
+func (UnimplementedBeaconChainServer) GetWeakSubjectivityCheckpoint(context.Context, *empty.Empty) (*WeakSubjectivityCheckpoint, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWeakSubjectivityCheckpoint not implemented")
 }
 func (UnimplementedBeaconChainServer) ListBeaconCommittees(context.Context, *ListCommitteesRequest) (*BeaconCommittees, error) {
@@ -640,7 +640,7 @@ func (UnimplementedBeaconChainServer) GetValidator(context.Context, *GetValidato
 func (UnimplementedBeaconChainServer) GetValidatorActiveSetChanges(context.Context, *GetValidatorActiveSetChangesRequest) (*ActiveSetChanges, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetValidatorActiveSetChanges not implemented")
 }
-func (UnimplementedBeaconChainServer) GetValidatorQueue(context.Context, *emptypb.Empty) (*ValidatorQueue, error) {
+func (UnimplementedBeaconChainServer) GetValidatorQueue(context.Context, *empty.Empty) (*ValidatorQueue, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetValidatorQueue not implemented")
 }
 func (UnimplementedBeaconChainServer) GetValidatorPerformance(context.Context, *ValidatorPerformanceRequest) (*ValidatorPerformanceResponse, error) {
@@ -652,7 +652,7 @@ func (UnimplementedBeaconChainServer) ListValidatorAssignments(context.Context, 
 func (UnimplementedBeaconChainServer) GetValidatorParticipation(context.Context, *GetValidatorParticipationRequest) (*ValidatorParticipationResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetValidatorParticipation not implemented")
 }
-func (UnimplementedBeaconChainServer) GetBeaconConfig(context.Context, *emptypb.Empty) (*BeaconConfig, error) {
+func (UnimplementedBeaconChainServer) GetBeaconConfig(context.Context, *empty.Empty) (*BeaconConfig, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetBeaconConfig not implemented")
 }
 func (UnimplementedBeaconChainServer) StreamValidatorsInfo(BeaconChain_StreamValidatorsInfoServer) error {
@@ -717,7 +717,7 @@ func _BeaconChain_ListIndexedAttestations_Handler(srv interface{}, ctx context.C
 }
 
 func _BeaconChain_StreamAttestations_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(emptypb.Empty)
+	m := new(empty.Empty)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
@@ -738,7 +738,7 @@ func (x *beaconChainStreamAttestationsServer) Send(m *Attestation) error {
 }
 
 func _BeaconChain_StreamIndexedAttestations_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(emptypb.Empty)
+	m := new(empty.Empty)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
@@ -816,7 +816,7 @@ func (x *beaconChainStreamBlocksServer) Send(m *SignedBeaconBlock) error {
 }
 
 func _BeaconChain_StreamChainHead_Handler(srv interface{}, stream grpc.ServerStream) error {
-	m := new(emptypb.Empty)
+	m := new(empty.Empty)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
@@ -837,7 +837,7 @@ func (x *beaconChainStreamChainHeadServer) Send(m *ChainHead) error {
 }
 
 func _BeaconChain_GetChainHead_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(empty.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -849,13 +849,13 @@ func _BeaconChain_GetChainHead_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/GetChainHead",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BeaconChainServer).GetChainHead(ctx, req.(*emptypb.Empty))
+		return srv.(BeaconChainServer).GetChainHead(ctx, req.(*empty.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _BeaconChain_GetWeakSubjectivityCheckpoint_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(empty.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -867,7 +867,7 @@ func _BeaconChain_GetWeakSubjectivityCheckpoint_Handler(srv interface{}, ctx con
 		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/GetWeakSubjectivityCheckpoint",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BeaconChainServer).GetWeakSubjectivityCheckpoint(ctx, req.(*emptypb.Empty))
+		return srv.(BeaconChainServer).GetWeakSubjectivityCheckpoint(ctx, req.(*empty.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -963,7 +963,7 @@ func _BeaconChain_GetValidatorActiveSetChanges_Handler(srv interface{}, ctx cont
 }
 
 func _BeaconChain_GetValidatorQueue_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(empty.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -975,7 +975,7 @@ func _BeaconChain_GetValidatorQueue_Handler(srv interface{}, ctx context.Context
 		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/GetValidatorQueue",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BeaconChainServer).GetValidatorQueue(ctx, req.(*emptypb.Empty))
+		return srv.(BeaconChainServer).GetValidatorQueue(ctx, req.(*empty.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1035,7 +1035,7 @@ func _BeaconChain_GetValidatorParticipation_Handler(srv interface{}, ctx context
 }
 
 func _BeaconChain_GetBeaconConfig_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(empty.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -1047,7 +1047,7 @@ func _BeaconChain_GetBeaconConfig_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: "/ethereum.eth.v1alpha1.BeaconChain/GetBeaconConfig",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(BeaconChainServer).GetBeaconConfig(ctx, req.(*emptypb.Empty))
+		return srv.(BeaconChainServer).GetBeaconConfig(ctx, req.(*empty.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }

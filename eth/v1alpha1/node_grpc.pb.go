@@ -4,10 +4,10 @@ package eth
 
 import (
 	context "context"
+	empty "github.com/golang/protobuf/ptypes/empty"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -19,23 +19,23 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NodeClient interface {
 	// Retrieve the current network sync status of the node.
-	GetSyncStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*SyncStatus, error)
+	GetSyncStatus(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*SyncStatus, error)
 	// Retrieve information about the genesis of Ethereum 2.0.
-	GetGenesis(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Genesis, error)
+	GetGenesis(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*Genesis, error)
 	// Retrieve information about the running Ethereum 2.0 node.
-	GetVersion(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Version, error)
+	GetVersion(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*Version, error)
 	// Retrieve the list of services implemented and enabled by this node.
 	//
 	// Any service not present in this list may return UNIMPLEMENTED or
 	// PERMISSION_DENIED. The server may also support fetching services by grpc
 	// reflection.
-	ListImplementedServices(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ImplementedServices, error)
+	ListImplementedServices(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*ImplementedServices, error)
 	// Retrieves the peer data of the local peer.
-	GetHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*HostData, error)
+	GetHost(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*HostData, error)
 	// Retrieve the peer corresponding to the provided peer id.
 	GetPeer(ctx context.Context, in *PeerRequest, opts ...grpc.CallOption) (*Peer, error)
 	// Retrieve the list of peers currently connected to this node.
-	ListPeers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Peers, error)
+	ListPeers(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*Peers, error)
 }
 
 type nodeClient struct {
@@ -46,7 +46,7 @@ func NewNodeClient(cc grpc.ClientConnInterface) NodeClient {
 	return &nodeClient{cc}
 }
 
-func (c *nodeClient) GetSyncStatus(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*SyncStatus, error) {
+func (c *nodeClient) GetSyncStatus(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*SyncStatus, error) {
 	out := new(SyncStatus)
 	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/GetSyncStatus", in, out, opts...)
 	if err != nil {
@@ -55,7 +55,7 @@ func (c *nodeClient) GetSyncStatus(ctx context.Context, in *emptypb.Empty, opts 
 	return out, nil
 }
 
-func (c *nodeClient) GetGenesis(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Genesis, error) {
+func (c *nodeClient) GetGenesis(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*Genesis, error) {
 	out := new(Genesis)
 	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/GetGenesis", in, out, opts...)
 	if err != nil {
@@ -64,7 +64,7 @@ func (c *nodeClient) GetGenesis(ctx context.Context, in *emptypb.Empty, opts ...
 	return out, nil
 }
 
-func (c *nodeClient) GetVersion(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Version, error) {
+func (c *nodeClient) GetVersion(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*Version, error) {
 	out := new(Version)
 	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/GetVersion", in, out, opts...)
 	if err != nil {
@@ -73,7 +73,7 @@ func (c *nodeClient) GetVersion(ctx context.Context, in *emptypb.Empty, opts ...
 	return out, nil
 }
 
-func (c *nodeClient) ListImplementedServices(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*ImplementedServices, error) {
+func (c *nodeClient) ListImplementedServices(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*ImplementedServices, error) {
 	out := new(ImplementedServices)
 	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/ListImplementedServices", in, out, opts...)
 	if err != nil {
@@ -82,7 +82,7 @@ func (c *nodeClient) ListImplementedServices(ctx context.Context, in *emptypb.Em
 	return out, nil
 }
 
-func (c *nodeClient) GetHost(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*HostData, error) {
+func (c *nodeClient) GetHost(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*HostData, error) {
 	out := new(HostData)
 	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/GetHost", in, out, opts...)
 	if err != nil {
@@ -100,7 +100,7 @@ func (c *nodeClient) GetPeer(ctx context.Context, in *PeerRequest, opts ...grpc.
 	return out, nil
 }
 
-func (c *nodeClient) ListPeers(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*Peers, error) {
+func (c *nodeClient) ListPeers(ctx context.Context, in *empty.Empty, opts ...grpc.CallOption) (*Peers, error) {
 	out := new(Peers)
 	err := c.cc.Invoke(ctx, "/ethereum.eth.v1alpha1.Node/ListPeers", in, out, opts...)
 	if err != nil {
@@ -114,23 +114,23 @@ func (c *nodeClient) ListPeers(ctx context.Context, in *emptypb.Empty, opts ...g
 // for forward compatibility
 type NodeServer interface {
 	// Retrieve the current network sync status of the node.
-	GetSyncStatus(context.Context, *emptypb.Empty) (*SyncStatus, error)
+	GetSyncStatus(context.Context, *empty.Empty) (*SyncStatus, error)
 	// Retrieve information about the genesis of Ethereum 2.0.
-	GetGenesis(context.Context, *emptypb.Empty) (*Genesis, error)
+	GetGenesis(context.Context, *empty.Empty) (*Genesis, error)
 	// Retrieve information about the running Ethereum 2.0 node.
-	GetVersion(context.Context, *emptypb.Empty) (*Version, error)
+	GetVersion(context.Context, *empty.Empty) (*Version, error)
 	// Retrieve the list of services implemented and enabled by this node.
 	//
 	// Any service not present in this list may return UNIMPLEMENTED or
 	// PERMISSION_DENIED. The server may also support fetching services by grpc
 	// reflection.
-	ListImplementedServices(context.Context, *emptypb.Empty) (*ImplementedServices, error)
+	ListImplementedServices(context.Context, *empty.Empty) (*ImplementedServices, error)
 	// Retrieves the peer data of the local peer.
-	GetHost(context.Context, *emptypb.Empty) (*HostData, error)
+	GetHost(context.Context, *empty.Empty) (*HostData, error)
 	// Retrieve the peer corresponding to the provided peer id.
 	GetPeer(context.Context, *PeerRequest) (*Peer, error)
 	// Retrieve the list of peers currently connected to this node.
-	ListPeers(context.Context, *emptypb.Empty) (*Peers, error)
+	ListPeers(context.Context, *empty.Empty) (*Peers, error)
 	mustEmbedUnimplementedNodeServer()
 }
 
@@ -138,25 +138,25 @@ type NodeServer interface {
 type UnimplementedNodeServer struct {
 }
 
-func (UnimplementedNodeServer) GetSyncStatus(context.Context, *emptypb.Empty) (*SyncStatus, error) {
+func (UnimplementedNodeServer) GetSyncStatus(context.Context, *empty.Empty) (*SyncStatus, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetSyncStatus not implemented")
 }
-func (UnimplementedNodeServer) GetGenesis(context.Context, *emptypb.Empty) (*Genesis, error) {
+func (UnimplementedNodeServer) GetGenesis(context.Context, *empty.Empty) (*Genesis, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGenesis not implemented")
 }
-func (UnimplementedNodeServer) GetVersion(context.Context, *emptypb.Empty) (*Version, error) {
+func (UnimplementedNodeServer) GetVersion(context.Context, *empty.Empty) (*Version, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetVersion not implemented")
 }
-func (UnimplementedNodeServer) ListImplementedServices(context.Context, *emptypb.Empty) (*ImplementedServices, error) {
+func (UnimplementedNodeServer) ListImplementedServices(context.Context, *empty.Empty) (*ImplementedServices, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListImplementedServices not implemented")
 }
-func (UnimplementedNodeServer) GetHost(context.Context, *emptypb.Empty) (*HostData, error) {
+func (UnimplementedNodeServer) GetHost(context.Context, *empty.Empty) (*HostData, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetHost not implemented")
 }
 func (UnimplementedNodeServer) GetPeer(context.Context, *PeerRequest) (*Peer, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetPeer not implemented")
 }
-func (UnimplementedNodeServer) ListPeers(context.Context, *emptypb.Empty) (*Peers, error) {
+func (UnimplementedNodeServer) ListPeers(context.Context, *empty.Empty) (*Peers, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPeers not implemented")
 }
 func (UnimplementedNodeServer) mustEmbedUnimplementedNodeServer() {}
@@ -173,7 +173,7 @@ func RegisterNodeServer(s *grpc.Server, srv NodeServer) {
 }
 
 func _Node_GetSyncStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(empty.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -185,13 +185,13 @@ func _Node_GetSyncStatus_Handler(srv interface{}, ctx context.Context, dec func(
 		FullMethod: "/ethereum.eth.v1alpha1.Node/GetSyncStatus",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).GetSyncStatus(ctx, req.(*emptypb.Empty))
+		return srv.(NodeServer).GetSyncStatus(ctx, req.(*empty.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Node_GetGenesis_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(empty.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -203,13 +203,13 @@ func _Node_GetGenesis_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: "/ethereum.eth.v1alpha1.Node/GetGenesis",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).GetGenesis(ctx, req.(*emptypb.Empty))
+		return srv.(NodeServer).GetGenesis(ctx, req.(*empty.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Node_GetVersion_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(empty.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -221,13 +221,13 @@ func _Node_GetVersion_Handler(srv interface{}, ctx context.Context, dec func(int
 		FullMethod: "/ethereum.eth.v1alpha1.Node/GetVersion",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).GetVersion(ctx, req.(*emptypb.Empty))
+		return srv.(NodeServer).GetVersion(ctx, req.(*empty.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Node_ListImplementedServices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(empty.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -239,13 +239,13 @@ func _Node_ListImplementedServices_Handler(srv interface{}, ctx context.Context,
 		FullMethod: "/ethereum.eth.v1alpha1.Node/ListImplementedServices",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).ListImplementedServices(ctx, req.(*emptypb.Empty))
+		return srv.(NodeServer).ListImplementedServices(ctx, req.(*empty.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Node_GetHost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(empty.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -257,7 +257,7 @@ func _Node_GetHost_Handler(srv interface{}, ctx context.Context, dec func(interf
 		FullMethod: "/ethereum.eth.v1alpha1.Node/GetHost",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).GetHost(ctx, req.(*emptypb.Empty))
+		return srv.(NodeServer).GetHost(ctx, req.(*empty.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -281,7 +281,7 @@ func _Node_GetPeer_Handler(srv interface{}, ctx context.Context, dec func(interf
 }
 
 func _Node_ListPeers_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(emptypb.Empty)
+	in := new(empty.Empty)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -293,7 +293,7 @@ func _Node_ListPeers_Handler(srv interface{}, ctx context.Context, dec func(inte
 		FullMethod: "/ethereum.eth.v1alpha1.Node/ListPeers",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(NodeServer).ListPeers(ctx, req.(*emptypb.Empty))
+		return srv.(NodeServer).ListPeers(ctx, req.(*empty.Empty))
 	}
 	return interceptor(ctx, in, info, handler)
 }
