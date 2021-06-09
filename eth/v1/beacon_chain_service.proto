@@ -132,13 +132,6 @@ service BeaconChain {
     };
   }
 
-  // GetBlockSsz returns the SSZ-serialized version of block details for given block id.
-  rpc GetBlockSsz(BlockRequest) returns (BlockSszResponse) {
-    option (google.api.http) = {
-      get: "/eth/v1/beacon/blocks/{block_id}/ssz"
-    };
-  }
-
   // GetBlockRoot retrieves hashTreeRoot of BeaconBlock/BeaconBlockHeader.
   rpc GetBlockRoot(BlockRequest) returns (BlockRootResponse) {
     option (google.api.http) = {
@@ -423,10 +416,6 @@ message BeaconBlockHeaderContainer {
 
 message BlockResponse {
   BeaconBlockContainer data = 1;
-}
-
-message BlockSszResponse {
-  bytes data = 1;
 }
 
 message BeaconBlockContainer {
