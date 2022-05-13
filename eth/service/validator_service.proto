@@ -20,6 +20,7 @@ import "google/protobuf/descriptor.proto";
 import "google/protobuf/empty.proto";
 
 import "eth/v1/validator.proto";
+import "eth/v2/ssz.proto";
 import "eth/v2/validator.proto";
 
 option csharp_namespace = "Ethereum.Eth.Service";
