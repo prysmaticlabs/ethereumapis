@@ -1,7 +1,7 @@
 # Ethereum APIs
 
 [![Build status](https://badge.buildkite.com/62be08099e9e228b165c2dba69c637eb9ca7a1ca95efd54b9f.svg?branch=master)](https://buildkite.com/prysmatic-labs/ethereum-apis)
-[![Discord](https://user-images.githubusercontent.com/7288322/34471967-1df7808a-efbb-11e7-9088-ed0b04151291.png)](https://discord.com/invite/prysmaticlabs)
+[![Discord](https://user-images.githubusercontent.com/7288322/34471967-1df7808a-efbb-11e7-9088-ed0b04151291.png)](https://discord.gg/prysmaticlabs)
 [![PyPI](https://img.shields.io/pypi/v/ethereumapis.svg)](https://pypi.org/project/ethereumapis/)
 
 
@@ -13,7 +13,7 @@ This repository is a **mirror** of [github.com/prysmaticlabs/prysm/proto/eth](ht
 
 ### Need assistance?
 
-For general information on the functionality of gRPC and protocol buffers, see the [gRPC guide](https://grpc.io/docs/guides/). If you still have questions, feel free to stop by either our [Discord](https://discord.com/invite/prysmaticlabs) and a member of the team or our community will be happy to assist you.
+For general information on the functionality of gRPC and protocol buffers, see the [gRPC guide](https://grpc.io/docs/guides/). If you still have questions, feel free to stop by either our [Discord](https://discord.gg/prysmaticlabs) and a member of the team or our community will be happy to assist you.
 
 ## Service definitions
 
