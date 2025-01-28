@@ -9,7 +9,7 @@ This repository hosts a **mirror** of [Prysm](https://github.com/prysmaticlabs/p
 
 ## Mirror details
 
-This repository is a **mirror** of [github.com/prysmaticlabs/prysm/proto/eth](https://github.com/prysmaticlabs/prysm/tree/develop/proto/eth). This means changes and contributions to protobufs **ARE NOT** accepted in this repository and must instead be made in the source repository instead. This project is updated on every new release of Prysm.
+This repository is a **mirror** of [github.com/prysmaticlabs/prysm/proto/eth](https://github.com/prysmaticlabs/prysm/tree/develop/proto/eth). This means changes and contributions to protobufs **ARE NOT** accepted in this repository and must instead be made in the source repository. This project is updated on every new release of Prysm.
 
 ### Need assistance?
 
@@ -53,7 +53,7 @@ Python libraries can be generated using [`scripts/build-py-package.py`](https://
 
 ### Making API Schema Changes
 
-Say you want to add a new endpoint to the `BeaconChain` gRPC service in our API schema to retrieve orphaned blocks. Keep in mind making strict changes to the API schema can often times be difficult without a significant reason as this API is used by many different developers building on eth2. If you are confident in your desired changes, you can proceed by modifying the protobuf schema:
+Say you want to add a new endpoint to the `BeaconChain` gRPC service in our API schema to retrieve orphaned blocks. Keep in mind making strict changes to the API schema can oftentimes be difficult without a significant reason as this API is used by many different developers building on eth2. If you are confident in your desired changes, you can proceed by modifying the protobuf schema:
 
 ```go
 service BeaconChain {
